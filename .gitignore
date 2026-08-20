@@ -1,0 +1,45 @@
+# --- Segredos: NUNCA versionar ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets.*
+service-account*.json
+
+# --- Dados sensíveis / pacientes ---
+# Diretórios de dado real de paciente ficam fora do git por padrão.
+/dados/
+/pacientes/
+/prontuarios/
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+*.bak
+/backups/
+/exports/
+
+# --- Dependências e build ---
+node_modules/
+dist/
+build/
+.next/
+out/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.cache/
+
+# --- Ferramentas / SO ---
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
+.claude/settings.local.json
