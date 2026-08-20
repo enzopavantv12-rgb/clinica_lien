@@ -256,6 +256,43 @@ export const equipe = {
   ],
 } as const;
 
+export const ambientes = {
+  tag: 'AMBIENTES',
+  // COPY NOVA — nao vem do prompt mestre (a secao Ambientes veio do prompt
+  // diretor, que nao trouxe copy). Derivada do vocabulario ja aprovado no hero
+  // e na Experiencia Lien para nao introduzir voz nova. Sujeita a aprovacao.
+  h2: 'Um espaço pensado para quem tem medo de dentista.',
+  sub: 'Cada ambiente da clínica foi escolhido para reduzir a tensão antes de a consulta começar.',
+  // CONFIRMAR a lista real de ambientes com a Dra. Natalia — nao presumimos
+  // salas que talvez nao existam.
+  espacos: [
+    {
+      titulo: 'Recepção',
+      foto: {
+        src: '/img/ambiente-recepcao.webp',
+        alt: 'Recepção da clínica Lien Reabilitação Oral no Cruzeiro, Belo Horizonte, com ambiente acolhedor',
+        pendente: true,
+      },
+    },
+    {
+      titulo: 'Sala de atendimento',
+      foto: {
+        src: '/img/ambiente-atendimento.webp',
+        alt: 'Sala de atendimento odontológico da clínica Lien em Belo Horizonte',
+        pendente: true,
+      },
+    },
+    {
+      titulo: 'Kit de boas-vindas',
+      foto: {
+        src: '/img/ambiente-kit-boas-vindas.webp',
+        alt: 'Kit de boas-vindas entregue aos pacientes da clínica Lien Reabilitação Oral em Belo Horizonte',
+        pendente: true,
+      },
+    },
+  ],
+} as const;
+
 export const depoimentos = {
   h2: 'O que dizem quem transformou o sorriso com a Lien.',
   sub: 'Histórias reais. Resultados reais.',

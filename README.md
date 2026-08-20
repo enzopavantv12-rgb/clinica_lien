@@ -52,7 +52,7 @@ src/
   lib/whatsapp.ts               buildWhatsAppUrl centralizado
   lib/tracking.ts               dataLayer.push com falha silenciosa
   components/ui/                Logo, botões, gráficos de marca, Reveal
-  components/sections/          as 9 seções, na ordem
+  components/sections/          as 10 seções, na ordem
 ```
 
 **Para editar qualquer texto do site, mexa só em `src/data/content.ts`.** Nenhuma string fica hardcoded em JSX.
@@ -110,6 +110,9 @@ src/
 | `equipe-maria-emilia.webp` | Headshot quadrado |
 | `equipe-isabela-guieiro.webp` | Headshot quadrado |
 | `equipe-alexander-pedrosa.webp` | Headshot quadrado |
+| `ambiente-recepcao.webp` | Recepção (4:3) |
+| `ambiente-atendimento.webp` | Sala de atendimento (4:3) |
+| `ambiente-kit-boas-vindas.webp` | Kit de boas-vindas (4:3) |
 
 Headshots com fundo neutro e iluminação consistente entre si. **Nunca banco de imagens** — o placeholder é preferível a uma stock photo. Ao adicionar cada foto, remova `pendente: true` do respectivo objeto em `content.ts`.
 
@@ -236,6 +239,34 @@ Medidas no navegador, não por inspeção visual:
 - **Lighthouse ≥90** nas 4 categorias — rode contra o `dist/` servido, não contra o dev server.
 - **Estrelas em Safari e Android reais** — validado só no Chromium.
 - **Tempo <3s em 4G** — depende do peso das fotos reais, que ainda não existem.
+
+---
+
+## Decisões de escopo registradas
+
+Pontos em que o **prompt diretor** (benchmarks/arquitetura) pediu algo que conflita com o **prompt mestre**, e o que foi decidido.
+
+### Galeria de antes/depois — NÃO construída
+
+O prompt diretor pede "galeria de casos antes/depois como elemento central de credibilidade". O prompt mestre restringe: *"Não exibir imagens de 'antes e depois' sem autorização documentada — a Resolução CFO 196/2019 restringe esse uso."*
+
+**Decisão: fora do escopo até análise de conformidade.** Não é uma decisão de design — é de conformidade, e passa pela Dra. Natália e pelo CRO dela. Se houver autorização documentada dos pacientes, a seção entra depois sem retrabalho: a estrutura de seções é modular e o padrão do `BrandImage` já cobre o caso.
+
+### Copy de jornada de transformação — NÃO aplicada
+
+O prompt diretor sugere copy no estilo "Você chegou pela dor ao mastigar. Vai sair com o sorriso de volta.". O prompt mestre diz que o texto atual está **aprovado e final** e proíbe copy nova sem base nele.
+
+**Decisão: manter a copy aprovada.** O H1 atual ("Devolvemos sua mastigação, seu sorriso e sua confiança") já carrega a promessa de transformação e passa no teste do próprio mestre: se um paciente com medo entendeu, está certo.
+
+### Selos/certificações — NÃO construída
+
+O prompt diretor pede um bloco de selos como reforço de autoridade. **Não há dado real** de títulos, especializações ou filiações no material recebido, e credencial de profissional de saúde não se inventa. Quando a lista existir, o bloco entra.
+
+### Ambientes — construída
+
+Entrou entre Corpo Clínico e Depoimentos, seguindo a estrutura de referência do prompt diretor (Hero → Sobre → Serviços → Equipe → **Ambientes** → Depoimentos). Três espaços com placeholder `[FOTO PENDENTE]`.
+
+> ⚠️ A copy dessa seção é **nova** — o prompt diretor pediu a seção mas não trouxe texto. Derivei do vocabulário já aprovado no hero e na Experiência Lien para não introduzir voz nova, mas **precisa de aprovação**. Está marcada como tal em `content.ts`. A lista de ambientes também é uma suposição conservadora: confirmar quais espaços a clínica realmente tem.
 
 ---
 

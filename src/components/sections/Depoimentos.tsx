@@ -33,7 +33,7 @@ function CincoEstrelas() {
 
 export function Depoimentos() {
   return (
-    <section id="depoimentos" className="bg-white py-20 sm:py-24 lg:py-28">
+    <section id="depoimentos" className="bg-cream py-20 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
         <SectionHeading titulo={depoimentos.h2} subtitulo={depoimentos.sub} />
 
@@ -44,7 +44,7 @@ export function Depoimentos() {
         >
           {depoimentos.itens.map((d, i) => (
             <Reveal as="li" key={d.nome} delay={i * 0.08}>
-              <article className="flex h-full flex-col rounded-3xl border border-brandgray bg-cream p-7 shadow-soft sm:p-8">
+              <article className="flex h-full flex-col rounded-3xl border border-brandgray bg-white p-7 shadow-soft sm:p-8">
                 <CincoEstrelas />
 
                 <blockquote className="mt-5 flex-1">
