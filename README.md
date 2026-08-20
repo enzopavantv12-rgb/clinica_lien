@@ -113,6 +113,56 @@ src/
 
 Headshots com fundo neutro e iluminação consistente entre si. **Nunca banco de imagens** — o placeholder é preferível a uma stock photo. Ao adicionar cada foto, remova `pendente: true` do respectivo objeto em `content.ts`.
 
+### Direção de fotografia (briefing para o fotógrafo)
+
+Diretrizes do prompt diretor. **Sem essas imagens o site não deve ir ao ar.**
+
+- **Paleta de cena:** tons neutros, off-white, bege e madeira. Evitar consultório "frio" azul/branco clínico — isso trabalha contra o posicionamento de acolhimento.
+- **Iluminação:** natural sempre que possível. Evitar fluorescente.
+- **Expressão:** natural e sorriso confortável. Nunca posada ou forçada.
+- **Composição:** espaço em branco generoso, para permitir sobreposição de texto.
+- **Referências de estilo:** Aesop, Hospital Albert Einstein, clínicas premium europeias.
+- **Prioridade máxima:** fotos reais de todos os profissionais, foto da clínica e do kit de boas-vindas.
+
+Note que a paleta de cena (bege/madeira/off-white) foi escolhida para conversar com o token `cream` (`#FAF8F6`) dos fundos alternados. Fotos com fundo branco-clínico frio vão brigar visualmente com o site.
+
+---
+
+## Roadmap — Fase 2
+
+Páginas internas otimizadas para SEO local. Os placeholders já estão comentados em `public/sitemap.xml`; descomentar conforme cada página for publicada.
+
+Cada página deve ter: H1 com palavra-chave + cidade, explicação sem jargão, indicação, "Como funciona na Lien" (Método Lien aplicado ao tratamento), FAQ com schema próprio, depoimento específico do tratamento e CTA WhatsApp contextual.
+
+| Página | Prioridade no sitemap |
+|---|---|
+| Implante Dentário em Belo Horizonte | 0.9 |
+| Reabilitação Oral em Belo Horizonte | 0.8 |
+| Prótese Dentária em Belo Horizonte | 0.8 |
+| Periodontia em Belo Horizonte | 0.7 |
+| Lentes de Contato Dental em BH | 0.7 |
+| Disfunção de ATM em Belo Horizonte | 0.7 |
+| Sobre a Dra. Natália (história + trajetória) | — |
+| FAQ geral | — |
+
+**Blog institucional** — há 14 artigos já redigidos para usar como base de autoridade: implantes, prótese vs. implante, protocolo, reabilitação oral completa, perda óssea, enxerto ósseo, facetas/lentes, dentes desgastados, dentadura fixa, mordida desalinhada, sangramento gengival, doença periodontal, periodontia e hormônios, e Ozempic/Wegovy e saúde bucal.
+
+> A arquitetura atual é single-page. Publicar páginas internas exige adicionar roteamento (`react-router-dom`) e trocar o `.htaccess` de fallback-SPA para servir cada rota — hoje ele joga tudo no `index.html`.
+
+---
+
+## Ações fora do código (antes do lançamento)
+
+Do prompt diretor, seção 4. Nada disso é implementável no repositório:
+
+- [ ] **GA4** — bloco já preparado e comentado no `index.html`; falta o Measurement ID
+- [ ] **Google Search Console** — verificar o domínio e submeter o `sitemap.xml` existente
+- [ ] **Google Business Profile** — criar/atualizar com link direto para o site
+- [ ] **SSL/HTTPS** ativo em produção (o `.htaccess` já força o redirect)
+- [ ] **Auditoria Lighthouse/PageSpeed** mobile-first, meta <3s — só faz sentido depois das fotos reais
+
+> Se o GTM for usado para gerenciar tags, instale o GA4 **por dentro** do GTM e mantenha o bloco do `index.html` comentado. Os dois juntos duplicam pageviews.
+
 ---
 
 ## Regras de marca travadas no código
