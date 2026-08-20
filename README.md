@@ -143,7 +143,26 @@ Poppins como família única. Apenas os 5 pesos autorizados: 300, 400, 500, 700,
 > **Este logo é um placeholder desenhado em SVG.** Substitua por `public/logo-lien.svg` oficial quando disponível, mantendo as duas variantes e o padding de proteção.
 
 ### Elementos gráficos
-`src/components/ui/BrandGraphics.tsx` — a curva do "sorriso" (underline de headline) e o padrão de ondas (textura de fundo a 5% no hero, 6% no CTA final). Ambos SVG inline, nunca raster.
+`src/components/ui/BrandGraphics.tsx` — a curva do "sorriso" (underline de headline) e o padrão de ondas. Ambos SVG inline, nunca raster.
+
+O padrão de ondas foi remedido sobre o print do manual e reproduz o original: arcos **grossos e afilados** (paths preenchidos por dois arcos de raios diferentes que se encontram em ponta — `stroke` não serve, pois tem espessura constante), cadeia com **mordida** nas junções, e linhas alternadas deslocadas em meio período. Proporções normalizadas para período = 100:
+
+| Constante | Valor | Origem no print |
+|---|---|---|
+| `P` | 100 | período crista→crista (~305px) |
+| `AMP` | 16 | profundidade do arco (~50px) — ~1/3 da largura |
+| `ESP` | 7 | espessura no ápice (~21px) |
+| `ALT` | 108 | 2 linhas × 54 de entrelinha (~165px) |
+| `GAP` | 2 | folga horizontal — mordida, não vão |
+
+> O tile é mais **alto** que largo de propósito. Forçar 100×100 faz o vale de uma linha invadir a crista da linha acima, e o padrão vira uma malha de estrelas em vez de ondas.
+
+Aplicado a **8%** de opacidade no hero e no CTA final — topo da faixa de 4–8% do prompt mestre, para que a geometria do manual seja legível. Para suavizar, mude `opacidade` em `Hero.tsx` e `CtaFinal.tsx`.
+
+### Ícone do WhatsApp
+`src/components/ui/WhatsAppIcon.tsx` — SVG inline próprio, em **todos os 10 CTAs** que abrem o WhatsApp (header, hero, os 6 cards de especialidade, CTA final e botão flutuante). Usa `currentColor`, então herda a cor do contexto: branco sobre magenta, teal sobre card branco, magenta sobre botão branco.
+
+> Deliberadamente **não** usa o verde do WhatsApp. Verde não existe no manual e os "usos incorretos" vedam cores fora da paleta.
 
 ---
 
@@ -160,6 +179,7 @@ Medidas no navegador, não por inspeção visual:
 - **CTA final com exatamente 1 botão.**
 - **Sem overflow horizontal.** Console limpo, sem erros.
 - **FAQ** — 8 perguntas, texto presente no DOM mesmo com o accordion fechado (indexável), espelhando o schema `FAQPage`.
+- **Ícone do WhatsApp nos 10 CTAs** — verificado por `fill=currentColor` computado em cada um, com a cor correta do contexto.
 
 ### Ainda não verificado
 

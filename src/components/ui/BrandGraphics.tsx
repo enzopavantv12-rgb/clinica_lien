@@ -5,6 +5,50 @@
 
 let padraoId = 0;
 
+/*
+ * Geometria do padrao de ondas, reproduzida do manual.
+ *
+ * Caracteristicas do original que a implementacao precisa manter:
+ *  - Arcos GROSSOS e AFILADOS: espessos no apice, terminando em ponta.
+ *    Por isso sao paths PREENCHIDOS (dois arcos de raios diferentes que se
+ *    encontram nas pontas), e nao linhas com stroke — stroke tem espessura
+ *    constante e nao afina.
+ *  - Cadeia DESCONTINUA: crista e vale nao se emendam. O vale fica um pouco
+ *    deslocado, criando a mordida caracteristica nas juncoes.
+ *  - Linhas alternadas deslocadas em meio periodo na horizontal.
+ *  - Espacamento vertical entre linhas = meio periodo.
+ */
+/*
+ * Proporcoes medidas sobre o print do manual, normalizadas para periodo = 100:
+ *   periodo (crista -> crista)   ~305px -> 100
+ *   profundidade do arco          ~50px ->  16   (AMP) — ~1/3 da largura
+ *   espessura no apice            ~21px ->   7   (ESP)
+ *   entrelinha                   ~165px ->  54   (ALT / 2)
+ *
+ * O tile e mais ALTO que largo por isso: com entrelinha 54 e amplitude 18, duas
+ * linhas ocupam 108 unidades de altura. Tentar encaixar em um tile 100x100 faz
+ * o vale de uma linha invadir a crista da linha de cima e o padrao vira uma
+ * malha de estrelas em vez de ondas.
+ */
+const P = 100; // periodo completo (crista + vale)
+const MEIO = P / 2;
+const ALT = 108; // altura do tile: 2 linhas x 54 de entrelinha
+const GAP = 2; // folga horizontal — mordida subtil, nao um vao
+const LARG = MEIO - GAP; // largura de cada arco
+const AMP = 16; // profundidade ~1/3 da largura, como no print (16/48)
+const ESP = 7; // espessura maxima, no apice
+const DESLOC_VALE = 3; // vale levemente abaixo da crista
+
+/** Crescente com apice para CIMA, de (x, y) a (x + LARG, y). */
+const crista = (x: number, y: number) =>
+  `M${x},${y} Q${x + LARG / 2},${y - 2 * AMP} ${x + LARG},${y} ` +
+  `Q${x + LARG / 2},${y - 2 * AMP + 2 * ESP} ${x},${y} Z`;
+
+/** Crescente com apice para BAIXO, de (x, y) a (x + LARG, y). */
+const vale = (x: number, y: number) =>
+  `M${x},${y} Q${x + LARG / 2},${y + 2 * AMP} ${x + LARG},${y} ` +
+  `Q${x + LARG / 2},${y + 2 * AMP - 2 * ESP} ${x},${y} Z`;
+
 /**
  * Padrao de ondas: malha de arcos teal repetidos.
  * Uso previsto: textura de fundo em opacidade 4–8% (hero e CTA final).
@@ -12,13 +56,27 @@ let padraoId = 0;
 export function PadraoOndas({
   className = '',
   cor = '#037E99',
-  opacidade = 0.06,
+  opacidade = 0.08,
 }: {
   className?: string;
   cor?: string;
   opacidade?: number;
 }) {
   const id = `ondas-${++padraoId}`;
+
+  // Duas linhas por tile: a segunda deslocada em meio periodo na horizontal.
+  const linhaA = 27;
+  const linhaB = 81;
+
+  // Cada arco cabe inteiro dentro do tile (0..LARG e MEIO..MEIO+LARG), entao o
+  // padrao fecha sem costura sem precisar de repeticoes nas bordas.
+  const d = [
+    crista(0, linhaA),
+    vale(MEIO, linhaA + DESLOC_VALE),
+    vale(0, linhaB + DESLOC_VALE),
+    crista(MEIO, linhaB),
+  ].join(' ');
+
   return (
     <svg
       className={className}
@@ -27,28 +85,13 @@ export function PadraoOndas({
       style={{ opacity: opacidade }}
     >
       <defs>
-        <pattern id={id} width="72" height="36" patternUnits="userSpaceOnUse">
-          <path
-            d="M0 28 Q18 8 36 28 T72 28"
-            fill="none"
-            stroke={cor}
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-          <path
-            d="M-36 10 Q-18 -10 0 10 T36 10"
-            fill="none"
-            stroke={cor}
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-          <path
-            d="M36 10 Q54 -10 72 10 T108 10"
-            fill="none"
-            stroke={cor}
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
+        <pattern
+          id={id}
+          width={P}
+          height={ALT}
+          patternUnits="userSpaceOnUse"
+        >
+          <path d={d} fill={cor} />
         </pattern>
       </defs>
       <rect width="100%" height="100%" fill={`url(#${id})`} />

@@ -11,7 +11,7 @@ export function Hero() {
       {/* Padrao de ondas teal a 5% no fundo da coluna de texto. */}
       <PadraoOndas
         className="pointer-events-none absolute -left-24 top-10 h-[560px] w-[820px]"
-        opacidade={0.05}
+        opacidade={0.08}
       />
 
       <div className="relative mx-auto max-w-[1200px] px-5 pb-16 sm:px-8 sm:pb-20 lg:pb-28">

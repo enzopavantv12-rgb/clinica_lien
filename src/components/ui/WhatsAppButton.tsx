@@ -1,4 +1,4 @@
-import { MessageCircle } from 'lucide-react';
+import { WhatsAppIcon } from './WhatsAppIcon';
 import { whatsappUrlPor } from '../../lib/whatsapp';
 import { trackWhatsAppClick } from '../../lib/tracking';
 import type { OrigemWhatsApp } from '../../data/content';
@@ -46,7 +46,7 @@ export function WhatsAppButton({
       onClick={() => trackWhatsAppClick(origem)}
       className={`inline-flex items-center justify-center gap-2.5 rounded-2xl font-medium transition-all duration-300 ease-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 motion-safe:hover:-translate-y-0.5 ${variantes[variante]} ${tamanhos[tamanho]} ${className}`}
     >
-      {comIcone && <MessageCircle size={20} strokeWidth={2} aria-hidden="true" />}
+      {comIcone && <WhatsAppIcon size={20} />}
       {children}
     </a>
   );

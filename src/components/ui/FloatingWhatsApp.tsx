@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MessageCircle } from 'lucide-react';
+import { WhatsAppIcon } from './WhatsAppIcon';
 import { whatsappUrlPor } from '../../lib/whatsapp';
 import { trackWhatsAppClick } from '../../lib/tracking';
 
@@ -32,7 +32,7 @@ export function FloatingWhatsApp() {
       }`}
       style={{ bottom: 'max(1.25rem, env(safe-area-inset-bottom))' }}
     >
-      <MessageCircle size={26} strokeWidth={2} aria-hidden="true" />
+      <WhatsAppIcon size={28} />
     </a>
   );
 }

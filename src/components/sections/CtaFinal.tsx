@@ -14,7 +14,7 @@ export function CtaFinal() {
       <PadraoOndas
         className="pointer-events-none absolute inset-0 h-full w-full"
         cor="#FFFFFF"
-        opacidade={0.06}
+        opacidade={0.08}
       />
 
       <div className="relative mx-auto max-w-[760px] px-5 text-center sm:px-8">

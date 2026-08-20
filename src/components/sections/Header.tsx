@@ -64,7 +64,6 @@ export function Header() {
           <WhatsAppButton
             origem="menu"
             tamanho="md"
-            comIcone={false}
             className="hidden sm:inline-flex"
           >
             {rodape.agendarLabel}

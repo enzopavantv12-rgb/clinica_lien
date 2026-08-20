@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+import { WhatsAppIcon } from '../ui/WhatsAppIcon';
 import { Icon } from '../ui/Icon';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeading } from '../ui/SectionHeading';
@@ -67,13 +67,11 @@ export function Especialidades() {
                     }`}
                     aria-label={`${especialidades.ctaLabel} sobre ${item.titulo} pelo WhatsApp`}
                   >
-                    {especialidades.ctaLabel}
-                    <ArrowRight
-                      size={17}
-                      strokeWidth={2}
-                      aria-hidden="true"
-                      className="transition-transform duration-300 motion-safe:group-hover:translate-x-1"
+                    <WhatsAppIcon
+                      size={18}
+                      className="transition-transform duration-300 motion-safe:group-hover:scale-110"
                     />
+                    {especialidades.ctaLabel}
                   </a>
                 </article>
               </Reveal>
