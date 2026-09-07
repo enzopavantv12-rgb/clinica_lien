@@ -3,7 +3,7 @@
  * Cobre a parte automatizavel da secao 11 da spec de migracao.
  * Uso: npm run build && npm run verificar
  */
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, statSync } from 'node:fs';
 
 const CAMINHO = 'out/index.html';
 
@@ -23,6 +23,12 @@ const checar = (nome, condicao, detalhe = '') => {
 
 const contar = (regex) => (html.match(regex) ?? []).length;
 
+// Marcacao renderizada, sem os <script>: o export embute o payload RSC, que
+// repete cada palavra do site e envenena qualquer contagem de conteudo. Regra
+// que este projeto ja adotou para assertions de conteudo.
+const marcacao = html.replace(/<script[\s\S]*?<\/script>/g, '');
+const contarNaMarcacao = (regex) => (marcacao.match(regex) ?? []).length;
+
 // --- O objetivo da migracao: conteudo dentro do HTML, sem executar JS ---
 const H1 = 'Devolvemos sua mastigação, seu sorriso e sua confiança.';
 checar('H1 do hero presente no HTML', html.includes(H1));
@@ -33,7 +39,7 @@ checar(
 );
 
 // --- CTAs de WhatsApp ---
-const ctas = contar(/https:\/\/wa\.me\//g);
+const ctas = contarNaMarcacao(/https:\/\/wa\.me\//g);
 checar('10 CTAs de WhatsApp', ctas === 10, `achou ${ctas}`);
 
 // --- FAQ indexavel com accordion fechado ---
@@ -66,11 +72,17 @@ const blocos = [...html.matchAll(
 checar('3 blocos ld+json', blocos.length === 3, `achou ${blocos.length}`);
 
 let schemas = [];
-try {
-  schemas = blocos.map((b) => JSON.parse(b));
-  passou.push('todos os ld+json fazem parse');
-} catch (erro) {
-  falhas.push(`ld+json invalido — ${erro.message}`);
+// Guarda contra o vacuo: com zero blocos o map nao lanca e a assertion
+// passaria sem ter validado nada.
+if (blocos.length === 0) {
+  falhas.push('todos os ld+json fazem parse — nenhum bloco ld+json para validar');
+} else {
+  try {
+    schemas = blocos.map((b) => JSON.parse(b));
+    passou.push('todos os ld+json fazem parse');
+  } catch (erro) {
+    falhas.push(`ld+json invalido — ${erro.message}`);
+  }
 }
 
 const tipos = schemas.flatMap((s) => [s['@type']].flat());
@@ -84,6 +96,43 @@ checar(
   'FAQPage com 8 perguntas',
   faqSchema?.mainEntity?.length === 8,
   `achou ${faqSchema?.mainEntity?.length}`,
+);
+
+// --- A folha de estilo existe e tem CSS de verdade ---
+// Sem isto um site totalmente sem estilo passaria em todas as outras
+// assertions — o proprio plano registrou esse buraco.
+const hrefCss = html.match(/<link[^>]*rel="stylesheet"[^>]*href="([^"]+)"/)?.[1];
+const bytesCss = hrefCss && existsSync(`out${hrefCss}`) ? statSync(`out${hrefCss}`).size : 0;
+checar(
+  '<link> de stylesheet apontando para CSS nao-trivial',
+  bytesCss > 10240,
+  `${hrefCss ?? 'nenhum <link rel="stylesheet">'} — ${bytesCss} bytes`,
+);
+
+// --- O elemento LCP nao pode sair com opacidade zero ---
+// Elemento com opacity:0 nao e candidato a LCP: o LCP passa a esperar o
+// bundle hidratar, que e o custo que esta migracao existe para eliminar.
+const inicioHero = marcacao.indexOf('<section id="inicio"');
+const hero = marcacao.slice(inicioHero, marcacao.indexOf('</section>', inicioHero));
+// `(?![.\d])` e obrigatorio: o padrao de ondas do hero e legitimamente
+// `opacity:0.08`, e sem a guarda o "0" dele casaria e reprovaria o build.
+const OPACIDADE_ZERO = /opacity:\s*0(?![.\d])/g;
+checar(
+  'nenhum opacity:0 no hero renderizado (o H1 e o elemento LCP)',
+  inicioHero !== -1 && !OPACIDADE_ZERO.test(hero),
+  `achou ${(hero.match(OPACIDADE_ZERO) ?? []).length}`,
+);
+
+// --- Os numeros saem com o valor real, nao com o 0 inicial da animacao ---
+// O contador anima de 0 ate o valor; se o estado inicial fosse 0, o HTML
+// estatico publicaria "+0 pacientes" e "0,0 estrelas" como conteudo
+// rastreavel — e os numeros reais ainda sao pendencia de go-live.
+const stats = [...marcacao.matchAll(/<p class="text-stat[^"]*"[^>]*>[^<]*<span>(\d+)<\/span>/g)]
+  .map((m) => m[1]);
+checar(
+  '4 numeros com o valor real (nenhum zero)',
+  stats.length === 4 && stats.every((v) => v !== '0'),
+  `achou [${stats.join(', ')}]`,
 );
 
 // --- Regras editoriais permanentes ---
