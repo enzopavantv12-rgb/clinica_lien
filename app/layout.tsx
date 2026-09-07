@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import { preload } from 'react-dom';
 import { seo, site } from '@/data/content';
+import { schemaDentist, schemaFaq, schemaPerson } from '@/data/schema';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -42,20 +44,35 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  // Preload da Poppins 700 (usada no H1 do hero). Caminho estavel em
+  // /public/fonts/ para casar exatamente com o @font-face do CSS.
+  //
+  // Por que a API `preload()` e nao um <link rel="preload"> em JSX: com o
+  // elemento na arvore o React 19 emite DOIS preloads identicos da mesma
+  // fonte — registra o recurso E hasteia o elemento renderizado, e a
+  // deduplicacao nao cruza os dois caminhos. Vale dentro do <head> explicito
+  // e dentro do <body>. `preload()` registra o recurso uma vez so.
+  preload('/fonts/poppins-latin-700-normal.woff2', {
+    as: 'font',
+    type: 'font/woff2',
+    crossOrigin: 'anonymous',
+  });
+
   return (
     <html lang="pt-BR">
-      <head>
-        {/* Preload da Poppins 700 (usada no H1 do hero). Caminho estavel em
-            /public/fonts/ para casar exatamente com o @font-face do CSS. */}
-        <link
-          rel="preload"
-          as="font"
-          type="font/woff2"
-          href="/fonts/poppins-latin-700-normal.woff2"
-          crossOrigin="anonymous"
-        />
-      </head>
-      <body>{children}</body>
+      <body>
+        {/* JSON-LD no body e o padrao recomendado pelo Next; o Google le o
+            schema em qualquer lugar do documento. O dado e nosso, nao vem de
+            entrada de usuario. */}
+        {[schemaDentist, schemaFaq, schemaPerson].map((schema, i) => (
+          <script
+            key={i}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
+        ))}
+        {children}
+      </body>
     </html>
   );
 }
