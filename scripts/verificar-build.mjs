@@ -39,7 +39,12 @@ checar('10 CTAs de WhatsApp', ctas === 10, `achou ${ctas}`);
 // --- FAQ indexavel com accordion fechado ---
 const detalhes = contar(/<details[\s>]/g);
 checar('8 <details> no FAQ', detalhes === 8, `achou ${detalhes}`);
-checar('nenhum <details> aberto por padrao', !/<details[^>]*\sopen[\s>]/.test(html));
+// `[\s=>]` e obrigatorio: o React serializa atributo booleano como
+// `open=""`, nao `open` puro. Sem o `=`, esta assertion nunca casaria.
+checar(
+  'nenhum <details> aberto por padrao',
+  !/<details\b[^>]*\sopen(?:[\s=>]|$)/.test(html),
+);
 
 // --- Metadata (Task 5) ---
 checar(
