@@ -9,7 +9,10 @@ import { numeros } from '../../data/content';
 function Contador({ valor }: { valor: number }) {
   const reduzir = useReducedMotion();
   const ref = useRef<HTMLSpanElement>(null);
-  const [atual, setAtual] = useState(reduzir ? valor : 0);
+  // Semeado com o valor REAL: e o que o prerender estatico publica. Se
+  // comecasse em 0, o out/index.html sairia com "+0 pacientes" e "0,0 ★" como
+  // conteudo rastreavel — durante o prerender `useReducedMotion()` e falso.
+  const [atual, setAtual] = useState(valor);
   const jaRodou = useRef(false);
 
   useEffect(() => {
@@ -19,6 +22,10 @@ function Contador({ valor }: { valor: number }) {
     }
     const no = ref.current;
     if (!no) return;
+
+    // Zera so no cliente, antes de observar: a animacao continua partindo do
+    // 0 e o HTML servido continua com o numero real.
+    setAtual(0);
 
     const observer = new IntersectionObserver(
       (entradas) => {
