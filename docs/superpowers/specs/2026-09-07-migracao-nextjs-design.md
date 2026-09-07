@@ -97,7 +97,7 @@ trailingSlash: true
 
 ### Ficam intocados
 
-`src/data/content.ts`, `src/lib/whatsapp.ts`, `src/lib/tracking.ts`, `tailwind.config.ts`, `public/robots.txt`, `public/sitemap.xml`, `public/llms.txt`, `public/llms-full.txt`, `public/favicon.svg`, `public/fonts/`, `scripts/gen-sitemap.mjs`, `assets/`.
+`src/data/content.ts`, `src/lib/whatsapp.ts`, `src/lib/tracking.ts`, `public/robots.txt`, `public/sitemap.xml`, `public/llms.txt`, `public/llms-full.txt`, `public/favicon.svg`, `public/fonts/`, `scripts/gen-sitemap.mjs`, `assets/`.
 
 Em `src/components/sections/` há 12 arquivos: as 10 seções da página mais `Header` e `Footer`. Destes, **9 ficam intocados** — os 3 exceções (`Header`, `Numeros`, `Especialidades`) aparecem em "Modificados" abaixo por receberem `'use client'`, sem alteração de conteúdo.
 
@@ -108,6 +108,7 @@ Em `src/components/sections/` há 12 arquivos: as 10 seções da página mais `H
 | `package.json` | Scripts e dependências — §9 |
 | `tsconfig.json` | `jsx: preserve`, plugin do Next, `include` cobrindo `app` e `src` |
 | `.gitignore` | Adiciona `out/` e `.next/` |
+| `tailwind.config.ts` | Apenas o `content`: `['./index.html', './src/**/*.{ts,tsx}']` → `['./app/**/*.{ts,tsx}', './src/**/*.{ts,tsx}']`. **Nenhum token de cor, fonte ou escala muda.** Sem isso o Tailwind purga todas as classes usadas em `app/` |
 | `public/.htaccess` | Remove o fallback de SPA — §8 |
 | `src/components/ui/BrandImage.tsx` | `<img>` → `<picture>` — §6 |
 | `README.md` | Stack, comandos, e `dist/` → `out/` no deploy |
