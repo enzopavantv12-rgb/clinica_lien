@@ -1,3 +1,5 @@
+'use client';
+
 import { WhatsAppIcon } from '../ui/WhatsAppIcon';
 import { Icon } from '../ui/Icon';
 import { Reveal } from '../ui/Reveal';

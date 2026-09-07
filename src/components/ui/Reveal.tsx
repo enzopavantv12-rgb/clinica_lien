@@ -1,4 +1,6 @@
-import { motion, useReducedMotion } from 'framer-motion';
+'use client';
+
+import { motion, useReducedMotion } from 'motion/react';
 
 /**
  * Animacao de entrada: fade-in + translate-Y sutil, uma unica vez.

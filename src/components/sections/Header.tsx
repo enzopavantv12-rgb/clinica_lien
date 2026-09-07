@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { Instagram, Menu, X } from 'lucide-react';
 import { Logo } from '../ui/Logo';

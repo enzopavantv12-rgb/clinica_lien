@@ -1,3 +1,5 @@
+'use client';
+
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { whatsappUrlPor } from '../../lib/whatsapp';
 import { trackWhatsAppClick } from '../../lib/tracking';

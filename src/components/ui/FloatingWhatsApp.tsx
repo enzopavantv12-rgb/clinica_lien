@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { whatsappUrlPor } from '../../lib/whatsapp';
