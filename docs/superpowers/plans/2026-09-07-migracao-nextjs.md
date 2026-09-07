@@ -66,7 +66,7 @@ Usados pelas assertions. Conferidos em `src/data/content.ts` e `index.html` ante
 **Files:**
 - Create: `next.config.ts`, `app/layout.tsx`, `app/page.tsx`, `app/globals.css`
 - Modify: `package.json`, `tsconfig.json`, `tailwind.config.ts`, `.gitignore`
-- Delete: nada ainda (a limpeza do Vite é a Task 8)
+- Delete: `src/main.tsx`, `src/App.tsx`, `vite.config.ts` — orfaos apos o Step 1, e o novo `include` do tsconfig os type-checa importando deps ja desinstaladas. **`index.html` NAO** — a Task 6 o usa como fonte dos schemas, e sendo HTML nao participa do type-check.
 
 **Interfaces:**
 - Consumes: nada
@@ -947,7 +947,7 @@ ainda nao existem."
 **Objetivo:** apagar o que ficou órfão e corrigir a documentação de deploy.
 
 **Files:**
-- Delete: `index.html`, `src/main.tsx`, `src/App.tsx`, `vite.config.ts`, `tsconfig.tsbuildinfo`
+- Delete: `index.html`, `tsconfig.tsbuildinfo` (os arquivos do Vite ja morreram na Task 1)
 - **Nao apagar:** `postcss.config.js` — e ele que registra o Tailwind como plugin do PostCSS (ver Task 1 Step 1)
 - Modify: `public/.htaccess`, `README.md`
 
@@ -963,7 +963,7 @@ Expected: nenhuma saída. Se houver, resolva antes de apagar.
 - [ ] **Step 2: Apagar**
 
 ```bash
-git rm index.html src/main.tsx src/App.tsx vite.config.ts
+git rm index.html
 git rm --cached tsconfig.tsbuildinfo 2>/dev/null || true
 rm -f tsconfig.tsbuildinfo
 ```

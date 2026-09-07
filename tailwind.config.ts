@@ -7,7 +7,7 @@ import type { Config } from 'tailwindcss';
  * NAO alterar sem atualizar o manual.
  */
 export default {
-  content: ['./index.html', './src/**/*.{ts,tsx}'],
+  content: ['./app/**/*.{ts,tsx}', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
