@@ -30,6 +30,7 @@ dist/
 build/
 .next/
 out/
+tsconfig.tsbuildinfo
 __pycache__/
 *.py[cod]
 .venv/

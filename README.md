@@ -10,15 +10,15 @@ O objetivo de conversão é **um único evento**: clique no botão que abre o Wh
 
 | Item | Versão |
 |---|---|
-| React | 18.3 |
-| Vite | 5.4 |
+| Next.js | 16.3.4 |
+| React | 19 |
 | TypeScript | 5.6 |
 | Tailwind CSS | 3.4 |
-| Framer Motion | 11.11 |
+| Motion | 13.2 |
 | lucide-react | 0.460 |
-| react-helmet-async | 2.0 |
+| sharp | 0.35 (build) |
 
-Build estático em `dist/`. Não requer servidor Node em produção.
+Build estático em `out/`. Não requer servidor Node em produção.
 
 ---
 
@@ -27,9 +27,11 @@ Build estático em `dist/`. Não requer servidor Node em produção.
 ```bash
 npm install        # instala dependências
 npm run dev        # servidor de desenvolvimento
-npm run build      # gera dist/ (roda tsc antes)
-npm run preview    # serve o dist/ localmente
+npm run build      # gera out/
+npm run preview    # serve o out/ localmente
 npm run sitemap    # regenera sitemap.xml com o lastmod de hoje
+npm run images     # gera as variantes das fotos
+npm run verificar  # roda as assertions do build
 ```
 
 ---
@@ -37,13 +39,12 @@ npm run sitemap    # regenera sitemap.xml com o lastmod de hoje
 ## Estrutura
 
 ```
-index.html                      metas de fallback + 3 schemas JSON-LD
 tailwind.config.ts              design system (paleta e escala do manual)
 public/
   robots.txt                    permissivo para crawlers de IA
   sitemap.xml                   Fase 1 + placeholders Fase 2 comentados
   llms.txt / llms-full.txt      contexto para agentes de IA
-  .htaccess                     Hostinger: text/plain, SPA, HTTPS, cache
+  .htaccess                     Hostinger: text/plain, HTTPS, cache
   favicon.svg
   fonts/                        Poppins self-hospedada, subset latin
   img/                          fotos reais (ver pendências)
@@ -62,11 +63,10 @@ src/
 ## Deploy na Hostinger
 
 1. `npm run sitemap && npm run build`
-2. Suba **o conteúdo de `dist/`** (não a pasta) para `public_html/` via hPanel → Gerenciador de Arquivos, ou FTP.
+2. Suba **o conteúdo de `out/`** (não a pasta) para `public_html/` via hPanel → Gerenciador de Arquivos, ou FTP.
 3. Confirme que o `.htaccess` subiu — arquivos com ponto às vezes ficam ocultos no upload. Ele é o que garante:
    - `llms.txt` servido como `text/plain`
    - redirect forçado para HTTPS (o canonical aponta para `https://`)
-   - fallback de SPA para o `index.html`
 4. Ative o SSL em hPanel → SSL, se ainda não estiver ativo.
 5. Valide, nesta ordem:
    - `https://lienreabilitacaooral.com.br/robots.txt`
@@ -76,6 +76,10 @@ src/
 6. Cadastre o sitemap no Google Search Console.
 
 **Vercel/Netlify:** o `.htaccess` é ignorado. Configure o `Content-Type` de `llms*.txt` e o rewrite de SPA no `vercel.json` / `netlify.toml`.
+
+> A arquitetura é Next.js com `output: 'export'`: o build gera HTML estático
+> em `out/`, sem runtime Node. O `.htaccess` não tem mais fallback de SPA —
+> cada rota é um arquivo real, e URL inexistente devolve 404 de verdade.
 
 ---
 
@@ -236,7 +240,7 @@ Medidas no navegador, não por inspeção visual:
 
 ### Ainda não verificado
 
-- **Lighthouse ≥90** nas 4 categorias — rode contra o `dist/` servido, não contra o dev server.
+- **Lighthouse ≥90** nas 4 categorias — rode contra o `out/` servido, não contra o dev server.
 - **Estrelas em Safari e Android reais** — validado só no Chromium.
 - **Tempo <3s em 4G** — depende do peso das fotos reais, que ainda não existem.
 

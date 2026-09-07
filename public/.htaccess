@@ -6,17 +6,6 @@
   Header set Content-Type "text/plain; charset=utf-8"
 </FilesMatch>
 
-# --- SPA: tudo que não é arquivo real cai no index.html ---
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /
-  RewriteRule ^index\.html$ - [L]
-  RewriteCond %{REQUEST_FILENAME} -f [OR]
-  RewriteCond %{REQUEST_FILENAME} -d
-  RewriteRule ^ - [L]
-  RewriteRule . /index.html [L]
-</IfModule>
-
 # --- Força HTTPS (canonical aponta para https) ---
 <IfModule mod_rewrite.c>
   RewriteCond %{HTTPS} off
