@@ -1,4 +1,7 @@
 import { ImageOff } from 'lucide-react';
+import larguras from '@/data/imagens.json';
+
+const LARGURAS_POR_SLOT = larguras as Record<string, number[]>;
 
 type Dados = { src: string; alt: string; pendente?: boolean };
 
@@ -19,6 +22,7 @@ export function BrandImage({
   height,
   prioridade = false,
   proporcao = 'aspect-[4/5]',
+  sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
 }: {
   dados: Dados;
   className?: string;
@@ -26,6 +30,7 @@ export function BrandImage({
   height: number;
   prioridade?: boolean;
   proporcao?: string;
+  sizes?: string;
 }) {
   if (dados.pendente) {
     return (
@@ -45,17 +50,28 @@ export function BrandImage({
     );
   }
 
+  // Nome base sem extensao: /img/hero-dra-natalia.webp -> hero-dra-natalia
+  const nomeBase = dados.src.replace(/^\/img\//, '').replace(/\.[^.]+$/, '');
+  const larguras = LARGURAS_POR_SLOT[nomeBase] ?? [];
+  const srcset = (ext: string) =>
+    larguras.map((l) => `/img/${nomeBase}-${l}.${ext} ${l}w`).join(', ');
+  const intermediaria = larguras[Math.floor(larguras.length / 2)];
+
   return (
-    <img
-      src={dados.src}
-      alt={dados.alt}
-      width={width}
-      height={height}
-      loading={prioridade ? 'eager' : 'lazy'}
-      // fetchPriority alto apenas na imagem do hero.
-      {...(prioridade ? { fetchPriority: 'high' as const } : {})}
-      decoding={prioridade ? 'sync' : 'async'}
-      className={`${proporcao} w-full rounded-3xl object-cover ${className}`}
-    />
+    <picture>
+      <source type="image/avif" srcSet={srcset('avif')} sizes={sizes} />
+      <source type="image/webp" srcSet={srcset('webp')} sizes={sizes} />
+      <img
+        src={`/img/${nomeBase}-${intermediaria}.webp`}
+        alt={dados.alt}
+        width={width}
+        height={height}
+        loading={prioridade ? 'eager' : 'lazy'}
+        // fetchPriority alto apenas na imagem do hero.
+        {...(prioridade ? { fetchPriority: 'high' as const } : {})}
+        decoding={prioridade ? 'sync' : 'async'}
+        className={`${proporcao} w-full rounded-3xl object-cover ${className}`}
+      />
+    </picture>
   );
 }
