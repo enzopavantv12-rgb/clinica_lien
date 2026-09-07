@@ -213,6 +213,8 @@ out/
 .next/
 ```
 
+(Se `out/` e `.next/` ja estiverem la, nao ha nada a fazer neste step.)
+
 - [ ] **Step 11: Buildar e conferir que o export saiu**
 
 Run: `npm run build`
@@ -554,7 +556,8 @@ Confirme os campos de `site` e `seo`. **Não invente valores** — tudo vem daí
 Insira acima do `RootLayout`, mantendo o `<head>` com o preload da fonte.
 
 ```tsx
-import type { Metadata, ReactNode } from 'react';
+import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 import { seo, site } from '@/data/content';
 import './globals.css';
 
@@ -694,9 +697,44 @@ export const schemaPerson = {
 
 **Confirme os nomes dos campos** antes de escrever o `map`: rode `sed -n '311,357p' src/data/content.ts` e veja se as chaves são `itens`/`pergunta`/`resposta` ou outras. Use os nomes reais.
 
-- [ ] **Step 3: Injetar no `app/layout.tsx`**
+- [ ] **Step 3: Remover o `<head>` explicito do `app/layout.tsx`**
 
-Dentro do `<head>`, depois do preload da fonte:
+O HTML sai com dois preloads identicos da mesma fonte. **Atencao: remover o
+`<head>` NAO resolve isso** — foi verificado empiricamente. O React 19 emite
+um `<link rel="preload">` presente na arvore duas vezes (registra o recurso E
+hastea o elemento renderizado), dentro de `<head>` ou de `<body>` igualmente.
+
+A correcao e usar `preload()` do `react-dom`, a API oficial do React 19 para
+resource hint: o caminho imperativo registra a dica sem renderizar um
+elemento, entao nao ha o que duplicar. Remover o `<head>` continua sendo boa
+higiene (a Metadata API constroi o head), mas nao e o que corrige a contagem.
+
+Tire o `<head>` (boa higiene: a Metadata API constroi o head) e substitua o
+elemento `<link>` pela chamada imperativa. O `preload()` roda no corpo do
+componente, nao no JSX:
+
+```tsx
+    <html lang="pt-BR">
+      <body>
+        {/* Preload da Poppins 700 (usada no H1 do hero). Caminho estavel em
+            /public/fonts/ para casar exatamente com o @font-face do CSS.
+            Sem <head> explicito: o React 19 hastea daqui, uma vez so. */}
+        <link
+          rel="preload"
+          as="font"
+          type="font/woff2"
+          href="/fonts/poppins-latin-700-normal.woff2"
+          crossOrigin="anonymous"
+        />
+        {children}
+      </body>
+    </html>
+```
+
+- [ ] **Step 4: Injetar o JSON-LD no `app/layout.tsx`**
+
+Dentro do `<body>`, depois do `<link>` de preload. JSON-LD no body e o padrao
+recomendado pelo Next, e o Google le o schema em qualquer lugar do documento:
 
 ```tsx
         {[schemaDentist, schemaFaq, schemaPerson].map((schema, i) => (
@@ -712,18 +750,31 @@ Adicione o import: `import { schemaDentist, schemaFaq, schemaPerson } from '@/da
 
 `dangerouslySetInnerHTML` é o caminho correto aqui — é como se injeta JSON-LD em React, e o conteúdo vem de dado nosso, não de entrada de usuário.
 
-- [ ] **Step 4: Buildar e verificar**
+- [ ] **Step 5: Buildar e verificar**
 
 Run: `npm run build && npm run verificar`
 Expected: **tudo verde**, exit 0. `3 blocos ld+json`, `todos os ld+json fazem parse`, `schema Dentist`, `schema LocalBusiness`, `schema FAQPage`, `schema Person` e `FAQPage com 8 perguntas` passam.
 
-- [ ] **Step 5: Validar o JSON-LD de fora**
+- [ ] **Step 6: Confirmar que o preload duplicado morreu**
 
-Run: `node -e "const h=require('fs').readFileSync('out/index.html','utf8'); const b=[...h.matchAll(/ld\+json[^>]*>([\s\S]*?)<\/script>/g)].map(m=>JSON.parse(m[1])); console.log(JSON.stringify(b,null,2))"`
+Run: `node -e "const h=require('fs').readFileSync('out/index.html','utf8'); const n=(h.match(/rel=\"preload\"[^>]*poppins-latin-700/g)||[]).length; console.log('preloads da fonte:', n); if(n!==1) throw new Error('esperado 1, achou '+n)"`
+Expected: `preloads da fonte: 1`
+
+Antes desta task eram 2. Se der 0, o React nao hasteou o `<link>` de dentro do
+`<body>` — reporte, nao devolva o `<head>`.
+
+- [ ] **Step 7: Validar o JSON-LD de fora**
+
+Run: `node -e "const h=require('fs').readFileSync('out/index.html','utf8'); const b=[...h.matchAll(/<script[^>]*type=\"application\/ld\+json\"[^>]*>([\s\S]*?)<\/script>/g)].map(m=>JSON.parse(m[1])); console.log(JSON.stringify(b,null,2))"`
+
+A regex tem de ancorar na tag `<script>` completa com o `type`. Uma regex
+solta em `ld+json` tambem casa ocorrencias dentro do payload de hidratacao
+RSC e lanca no `JSON.parse`. Vale a regra geral: assertion sobre **conteudo**
+precisa descontar o payload; assertion sobre tag ou atributo de markup, nao.
 
 Leia a saída. Compare com `sed -n '45,160p' index.html`. Qualquer propriedade que existia e sumiu é regressão de SEO.
 
-- [ ] **Step 6: Commit**
+- [ ] **Step 8: Commit**
 
 ```bash
 git add src/data/schema.ts app/layout.tsx
@@ -923,8 +974,13 @@ E aceite uma prop `sizes` opcional com default por slot:
 Run: `npm run build && npm run verificar`
 Expected: exit 0, tudo verde. Todas as 9 imagens têm `pendente: true`, então a página deve renderizar 9 placeholders — o mesmo que hoje.
 
-Run: `node -e "const h=require('fs').readFileSync('out/index.html','utf8'); const n=(h.match(/Foto pendente/gi)||[]).length; console.log('placeholders:', n); if(n!==9) throw new Error('esperado 9')"`
-Expected: `placeholders: 9`
+Run: `node -e "const h=require('fs').readFileSync('out/index.html','utf8'); const m=h.replace(/<script[\s\S]*?<\/script>/g,''); const n=(m.match(/Foto pendente/gi)||[]).length; console.log('placeholders visiveis:', n); if(n!==9) throw new Error('esperado 9, achou '+n)"`
+Expected: `placeholders visiveis: 9`
+
+O `replace` que remove `<script>` e **obrigatorio**. Sem ele a contagem da 18:
+as secoes com placeholder sao children de `Reveal`, que e Client Component,
+entao o conteudo serializado aparece tambem no payload de hidratacao RSC.
+Contar o HTML cru faria a assertion falhar sem haver defeito nenhum.
 
 - [ ] **Step 8: Commit**
 
@@ -967,6 +1023,10 @@ git rm index.html
 git rm --cached tsconfig.tsbuildinfo 2>/dev/null || true
 rm -f tsconfig.tsbuildinfo
 ```
+
+Acrescente tambem `tsconfig.tsbuildinfo` ao `.gitignore`, junto de `out/` e
+`.next/`. Sem isso ele volta a ser versionado no proximo build e passa a
+sujar todo diff — um revisor chegou a evitar rodar o build por causa disso.
 
 O `index.html` só pode sair **agora** — a Task 6 o usa como fonte dos schemas.
 
