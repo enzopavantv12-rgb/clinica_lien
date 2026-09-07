@@ -91,7 +91,7 @@ src/
 |---|---|---|
 | 1 | **CRO-MG da Dra. Natália** — obrigatório por norma do CFO | `content.ts` → `site.responsavelTecnico` |
 | 2 | **Fotos reais** — 6 imagens. Enquanto não chegarem, aparece o placeholder `[FOTO PENDENTE]` | `public/img/` + `content.ts` |
-| 3 | **CEP e coordenadas geo** do endereço | `index.html` → schema `Dentist` |
+| 3 | **CEP e coordenadas geo** do endereço | `src/data/schema.ts` → schema `Dentist` |
 | 4 | **`og-image.jpg` 1200×630** — não gerado, precisa de design | `public/og-image.jpg` |
 
 ### Confirmar com a Dra. Natália
@@ -99,9 +99,9 @@ src/
 | # | Item | Onde |
 |---|---|---|
 | 5 | Números reais: +150 pacientes, 5,0★, 3 especialidades, +8 anos | `content.ts` → `numeros` |
-| 6 | Atende convênio? (resposta do FAQ está genérica) | `content.ts` → `faq` **e** `index.html` → `FAQPage` |
+| 6 | Atende convênio? (resposta do FAQ está genérica) | `content.ts` → `faq` (o schema `FAQPage` em `src/data/schema.ts` deriva desse objeto automaticamente) |
 | 7 | Mais depoimentos reais (hoje só 1) — priorizar os que citam implante, reabilitação, prótese ou mastigação | `content.ts` → `depoimentos` |
-| 8 | ID do container GTM | `index.html` (bloco comentado) |
+| 8 | ID do container GTM | bloco preparado recuperável via `git show 8bc8a42:index.html` (apagado do repo; instalar em `app/layout.tsx` com `next/script`) |
 | 9 | Meta Pixel e GA4 | via GTM |
 
 ### Fotos esperadas
@@ -162,13 +162,13 @@ Cada página deve ter: H1 com palavra-chave + cidade, explicação sem jargão, 
 
 Do prompt diretor, seção 4. Nada disso é implementável no repositório:
 
-- [ ] **GA4** — bloco já preparado e comentado no `index.html`; falta o Measurement ID
+- [ ] **GA4** — bloco preparado (gtag) foi apagado com o `index.html`; recuperável via `git show 8bc8a42:index.html`. Instalar em `app/layout.tsx` com `next/script`. Falta o Measurement ID
 - [ ] **Google Search Console** — verificar o domínio e submeter o `sitemap.xml` existente
 - [ ] **Google Business Profile** — criar/atualizar com link direto para o site
 - [ ] **SSL/HTTPS** ativo em produção (o `.htaccess` já força o redirect)
 - [ ] **Auditoria Lighthouse/PageSpeed** mobile-first, meta <3s — só faz sentido depois das fotos reais
 
-> Se o GTM for usado para gerenciar tags, instale o GA4 **por dentro** do GTM e mantenha o bloco do `index.html` comentado. Os dois juntos duplicam pageviews.
+> Se o GTM for usado para gerenciar tags, instale o GA4 **por dentro** do GTM em vez de instalar os dois separadamente. O bloco GTM também foi apagado com o `index.html` (recuperável via `git show 8bc8a42:index.html`; instalar em `app/layout.tsx` com `next/script`). GA4 e GTM juntos duplicam pageviews.
 
 ---
 
