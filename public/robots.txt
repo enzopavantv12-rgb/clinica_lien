@@ -2,6 +2,10 @@
 
 User-agent: *
 Allow: /
+Disallow: /index.txt
+Disallow: /__next
+Disallow: /_not-found
+Disallow: /404
 
 # --- Crawlers de busca ---
 User-agent: Googlebot
@@ -48,5 +52,12 @@ Allow: /
 # --- Bloqueios ---
 Disallow: /admin
 Disallow: /*.json$
+# Dumps de payload RSC gerados pelo export do Next: duplicata rastreavel de
+# cada palavra do site, servida como text/plain pelo .htaccess.
+Disallow: /index.txt
+Disallow: /__next
+# Paginas de erro que o export publica com status 200.
+Disallow: /_not-found
+Disallow: /404
 
 Sitemap: https://lienreabilitacaooral.com.br/sitemap.xml

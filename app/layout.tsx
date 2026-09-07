@@ -9,6 +9,12 @@ export const metadata: Metadata = {
   title: seo.title,
   description: seo.description,
   alternates: { canonical: seo.canonical },
+  // Sem isto o Next nao emite <link rel="icon"> nenhum: o favicon.svg vive em
+  // public/, nao em app/, entao a convencao de arquivo do App Router nao o
+  // pega. O index.html do Vite declarava este link.
+  icons: {
+    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+  },
   robots: {
     index: true,
     follow: true,
@@ -63,12 +69,18 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         {/* JSON-LD no body e o padrao recomendado pelo Next; o Google le o
             schema em qualquer lugar do documento. O dado e nosso, nao vem de
-            entrada de usuario. */}
+            entrada de usuario.
+
+            O `<` escapado como \u003c e obrigatorio: JSON.stringify nao
+            escapa `<`, e uma string do content.ts que viesse a conter
+            `</script` fecharia o bloco no meio e truncaria o documento. */}
         {[schemaDentist, schemaFaq, schemaPerson].map((schema, i) => (
           <script
             key={i}
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(schema).replace(/</g, '\\u003c'),
+            }}
           />
         ))}
         {children}

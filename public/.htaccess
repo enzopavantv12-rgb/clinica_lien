@@ -6,6 +6,9 @@
   Header set Content-Type "text/plain; charset=utf-8"
 </FilesMatch>
 
+# --- Pagina de erro (o build gera out/404.html; sem isto nada a serve) ---
+ErrorDocument 404 /404.html
+
 # --- Força HTTPS (canonical aponta para https) ---
 <IfModule mod_rewrite.c>
   RewriteCond %{HTTPS} off
