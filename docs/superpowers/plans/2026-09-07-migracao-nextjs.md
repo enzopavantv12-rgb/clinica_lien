@@ -714,26 +714,33 @@ elemento `<link>` pela chamada imperativa. O `preload()` roda no corpo do
 componente, nao no JSX:
 
 ```tsx
+import { preload } from 'react-dom';
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  // Preload da Poppins 700 (usada no H1 do hero). Caminho estavel em
+  // /public/fonts/ para casar exatamente com o @font-face do CSS.
+  // `preload()` registra o recurso uma vez so — nao ha elemento na arvore
+  // para o React hastear de novo, que era a origem do preload duplicado.
+  preload('/fonts/poppins-latin-700-normal.woff2', {
+    as: 'font',
+    type: 'font/woff2',
+    crossOrigin: 'anonymous',
+  });
+
+  return (
     <html lang="pt-BR">
       <body>
-        {/* Preload da Poppins 700 (usada no H1 do hero). Caminho estavel em
-            /public/fonts/ para casar exatamente com o @font-face do CSS.
-            Sem <head> explicito: o React 19 hastea daqui, uma vez so. */}
-        <link
-          rel="preload"
-          as="font"
-          type="font/woff2"
-          href="/fonts/poppins-latin-700-normal.woff2"
-          crossOrigin="anonymous"
-        />
         {children}
       </body>
     </html>
+  );
+}
 ```
 
 - [ ] **Step 4: Injetar o JSON-LD no `app/layout.tsx`**
 
-Dentro do `<body>`, depois do `<link>` de preload. JSON-LD no body e o padrao
+Dentro do `<body>`. A chamada `preload()` fica no corpo do componente, nao no
+JSX, entao nao ha `<link>` para o JSON-LD vir depois. JSON-LD no body e o padrao
 recomendado pelo Next, e o Google le o schema em qualquer lugar do documento:
 
 ```tsx
