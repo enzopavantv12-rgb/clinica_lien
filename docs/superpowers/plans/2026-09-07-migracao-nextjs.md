@@ -75,10 +75,12 @@ Usados pelas assertions. Conferidos em `src/data/content.ts` e `index.html` ante
 - [ ] **Step 1: Trocar as dependências**
 
 ```bash
-npm uninstall vite @vitejs/plugin-react framer-motion react-helmet-async postcss autoprefixer
+npm uninstall vite @vitejs/plugin-react framer-motion react-helmet-async
 npm install next@latest react@19 react-dom@19 motion@latest
 npm install -D @types/react@19 @types/react-dom@19 sharp
 ```
+
+**Não desinstale `postcss` nem `autoprefixer`, e não apague `postcss.config.js`.** O Next empacota PostCSS, mas **não** registra o Tailwind como plugin — quem faz isso é o `postcss.config.js` do projeto. Sem ele, `@tailwind base/components/utilities` não compila e o site sai sem estilo nenhum, e o verificador automatizado não pega (ele checa conteúdo do HTML, não CSS).
 
 - [ ] **Step 2: Registrar a versão resolvida**
 
@@ -299,9 +301,11 @@ checar(
   'title correto',
   html.includes('Lien Reabilitação Oral | Implantes e Reabilitação em Belo Horizonte'),
 );
-checar('canonical', html.includes('https://lienreabilitacaooral.com.br/'));
+// Por atributo: a URL crua tambem aparece em og:url e no JSON-LD.
+checar('canonical', /rel="canonical"/.test(html));
 checar('robots com max-image-preview', html.includes('max-image-preview:large'));
-checar('theme-color da marca', html.includes('#9C1781'));
+// Por atributo: o hex tambem pode aparecer em CSS inlinado pelo Next.
+checar('theme-color da marca', /name="theme-color"/.test(html));
 checar('og:image', html.includes('og-image.jpg'));
 checar('twitter:card', html.includes('summary_large_image'));
 
@@ -335,10 +339,9 @@ checar(
 // --- Regras editoriais permanentes ---
 checar('zero ocorrencias de "Coleções Lien"', !html.includes('Coleções Lien'));
 checar('zero href="#"', !html.includes('href="#"'));
-checar(
-  'zero emoji no HTML',
-  !/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(html),
-);
+// Somente pictogramas. O bloco de dingbats (U+2600-27BF) NAO entra: contem
+// U+2605 (estrela), usado legitimamente em `numeros` como ",0 *".
+checar('zero emoji no HTML', !/[\u{1F300}-\u{1FAFF}]/u.test(html));
 
 // --- Relatorio ---
 console.log(`\n${passou.length} passou, ${falhas.length} falhou\n`);
@@ -747,6 +750,30 @@ Verificador: tudo verde."
 - Consumes: originais em `assets/fotos-originais/`
 - Produces: `public/img/<nome>-<largura>.avif` e `.webp`; `BrandImage` com a mesma prop pública de hoje
 
+- [ ] **Step 0: Criar `src/data/imagens.json` — fonte unica das larguras**
+
+O script de build e o `BrandImage` precisam do mesmo mapa. Duplicar convida
+divergencia silenciosa: o `srcset` passa a apontar para arquivo que o script
+nunca gerou. Um JSON serve aos dois — `resolveJsonModule` ja esta no tsconfig
+(Task 1) e o Node importa com `with { type: 'json' }`.
+
+```json
+{
+  "hero-dra-natalia": [640, 960, 1280],
+  "experiencia-recepcao": [320, 480, 640],
+  "equipe-natalia-simoes": [320, 480, 640],
+  "equipe-maria-emilia": [320, 480, 640],
+  "equipe-isabela-guieiro": [320, 480, 640],
+  "equipe-alexander-pedrosa": [320, 480, 640],
+  "ambiente-recepcao": [480, 768, 1024],
+  "ambiente-atendimento": [480, 768, 1024],
+  "ambiente-kit-boas-vindas": [480, 768, 1024]
+}
+```
+
+Se o import de JSON com `with { type: 'json' }` falhar no Node desta maquina,
+**pare e reporte** — nao volte a duplicar o mapa sem avisar.
+
 - [ ] **Step 1: Criar `scripts/gen-images.mjs`**
 
 ```js
@@ -763,22 +790,13 @@ Verificador: tudo verde."
 import { readdirSync, mkdirSync, existsSync } from 'node:fs';
 import { basename, extname, join } from 'node:path';
 import sharp from 'sharp';
+// Larguras por slot: fonte unica, compartilhada com o BrandImage.
+// Se os dois divergirem, o srcset aponta para arquivo que nao existe.
+import LARGURAS from '../src/data/imagens.json' with { type: 'json' };
 
 const ENTRADA = 'assets/fotos-originais';
 const SAIDA = 'public/img';
 
-// Larguras por slot, conforme a seccao 6 da spec.
-const LARGURAS = {
-  'hero-dra-natalia': [640, 960, 1280],
-  'experiencia-recepcao': [320, 480, 640],
-  'equipe-natalia-simoes': [320, 480, 640],
-  'equipe-maria-emilia': [320, 480, 640],
-  'equipe-isabela-guieiro': [320, 480, 640],
-  'equipe-alexander-pedrosa': [320, 480, 640],
-  'ambiente-recepcao': [480, 768, 1024],
-  'ambiente-atendimento': [480, 768, 1024],
-  'ambiente-kit-boas-vindas': [480, 768, 1024],
-};
 
 if (!existsSync(ENTRADA)) {
   console.log(`${ENTRADA} nao existe — nada a gerar. As fotos reais ainda nao chegaram.`);
@@ -885,20 +903,13 @@ Só o bloco de retorno da imagem muda. O bloco de placeholder fica **idêntico**
   );
 ```
 
-Adicione no topo do arquivo, espelhando o mapa do script (os dois precisam concordar):
+Adicione no topo do arquivo. **Fonte unica** — o mesmo JSON que o `gen-images.mjs` le,
+para que script e componente nao possam divergir:
 
 ```tsx
-const LARGURAS_POR_SLOT: Record<string, number[]> = {
-  'hero-dra-natalia': [640, 960, 1280],
-  'experiencia-recepcao': [320, 480, 640],
-  'equipe-natalia-simoes': [320, 480, 640],
-  'equipe-maria-emilia': [320, 480, 640],
-  'equipe-isabela-guieiro': [320, 480, 640],
-  'equipe-alexander-pedrosa': [320, 480, 640],
-  'ambiente-recepcao': [480, 768, 1024],
-  'ambiente-atendimento': [480, 768, 1024],
-  'ambiente-kit-boas-vindas': [480, 768, 1024],
-};
+import larguras from '@/data/imagens.json';
+
+const LARGURAS_POR_SLOT = larguras as Record<string, number[]>;
 ```
 
 E aceite uma prop `sizes` opcional com default por slot:
@@ -936,7 +947,8 @@ ainda nao existem."
 **Objetivo:** apagar o que ficou órfão e corrigir a documentação de deploy.
 
 **Files:**
-- Delete: `index.html`, `src/main.tsx`, `src/App.tsx`, `vite.config.ts`, `postcss.config.js`, `tsconfig.tsbuildinfo`
+- Delete: `index.html`, `src/main.tsx`, `src/App.tsx`, `vite.config.ts`, `tsconfig.tsbuildinfo`
+- **Nao apagar:** `postcss.config.js` — e ele que registra o Tailwind como plugin do PostCSS (ver Task 1 Step 1)
 - Modify: `public/.htaccess`, `README.md`
 
 **Interfaces:**
@@ -951,7 +963,7 @@ Expected: nenhuma saída. Se houver, resolva antes de apagar.
 - [ ] **Step 2: Apagar**
 
 ```bash
-git rm index.html src/main.tsx src/App.tsx vite.config.ts postcss.config.js
+git rm index.html src/main.tsx src/App.tsx vite.config.ts
 git rm --cached tsconfig.tsbuildinfo 2>/dev/null || true
 rm -f tsconfig.tsbuildinfo
 ```
@@ -1009,9 +1021,9 @@ Isto pega dependência fantasma — algo que só funcionava porque ainda estava 
 git add -A
 git commit -m "chore: remover Vite, ajustar .htaccess e README
 
-- index.html, main.tsx, App.tsx, vite.config.ts e postcss.config.js
-  apagados (index.html so agora, pois a Task 6 o usava como fonte
-  dos schemas)
+- index.html, main.tsx, App.tsx e vite.config.ts apagados (index.html
+  so agora, pois a Task 6 o usava como fonte dos schemas)
+- postcss.config.js MANTIDO: registra o Tailwind no PostCSS
 - .htaccess: fallback de SPA removido; export estatico tem arquivo real
   por rota, e o catch-all criava conteudo duplicado
 - README: stack, comandos e dist/ -> out/ no deploy"

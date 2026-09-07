@@ -46,3 +46,6 @@ Thumbs.db
 
 # --- Build e dependências ---
 /dist/
+
+# --- Workspace do subagent-driven-development (scratch) ---
+.superpowers/
