@@ -16,20 +16,36 @@ function Contador({ valor }: { valor: number }) {
   const jaRodou = useRef(false);
 
   useEffect(() => {
-    if (reduzir) {
-      setAtual(valor);
-      return;
-    }
+    // `reduzir` ja e o valor real semeado no useState: nada a fazer.
+    if (reduzir) return;
     const no = ref.current;
-    if (!no) return;
+    // Guard obrigatorio: `useReducedMotion` resolve depois da primeira
+    // renderizacao, entao este efeito re-executa. Sem o guard, o zeramento
+    // rodava de novo enquanto `jaRodou` bloqueava a segunda animacao — e o
+    // contador ficava travado em 0 para o usuario.
+    if (!no || jaRodou.current) return;
 
-    // Zera so no cliente, antes de observar: a animacao continua partindo do
-    // 0 e o HTML servido continua com o numero real.
-    setAtual(0);
+    let primeiraChamada = true;
 
     const observer = new IntersectionObserver(
       (entradas) => {
-        const visivel = entradas[0]?.isIntersecting;
+        const visivel = entradas[0]?.isIntersecting ?? false;
+
+        // O IntersectionObserver dispara uma chamada inicial com o estado
+        // atual. Se o bloco ja esta na tela nesse momento, o usuario ja leu o
+        // numero: manter o valor real e nao animar evita o flash 150 -> 0.
+        if (primeiraChamada) {
+          primeiraChamada = false;
+          if (visivel) {
+            jaRodou.current = true;
+            observer.disconnect();
+            return;
+          }
+          // Fora da tela: prepara a contagem.
+          setAtual(0);
+          return;
+        }
+
         if (!visivel || jaRodou.current) return;
         jaRodou.current = true;
 
