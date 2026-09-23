@@ -1,4 +1,4 @@
-import { CurvaSorriso } from './BrandGraphics';
+import { Simbolo } from './BrandGraphics';
 import { Reveal } from './Reveal';
 
 /**
@@ -49,10 +49,9 @@ export function SectionHeading({
       </Reveal>
       {comCurva && (
         <Reveal delay={0.12}>
-          <CurvaSorriso
-            className="mt-4 h-3 w-28"
-            cor={claro ? '#F0B6F2' : '#037E99'}
-          />
+          {/* Simbolo oficial, sem distorcer: so a largura e fixada. O
+              alinhamento vem do flex-col do wrapper, como nos demais itens. */}
+          <Simbolo variante={claro ? 'cyano' : 'rgb'} className="mt-4 block h-auto w-14" />
         </Reveal>
       )}
       {subtitulo && (

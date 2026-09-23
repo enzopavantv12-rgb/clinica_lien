@@ -135,6 +135,26 @@ checar(
   `achou [${stats.join(', ')}]`,
 );
 
+// --- Arquivos oficiais de marca ---
+// Todo /marca/* citado no HTML precisa existir no export. Uma referencia
+// quebrada aqui vira logo sem imagem, favicon ausente ou padronagem invisivel
+// — nada disso falha o build, e mascara CSS quebrada nem gera erro visivel.
+const refsMarca = [...new Set(html.match(/\/marca\/[\w.-]+/g) ?? [])];
+const faltando = refsMarca.filter((r) => !existsSync(`out${r}`));
+checar(
+  'todo arquivo /marca/* citado existe no export',
+  refsMarca.length > 0 && faltando.length === 0,
+  refsMarca.length === 0 ? 'nenhuma referencia encontrada' : `faltando: ${faltando.join(', ')}`,
+);
+// `lastIndexOf` para o rodape: os depoimentos tem <footer> proprio (a
+// atribuicao da citacao), antes do rodape do site.
+const header = marcacao.slice(marcacao.indexOf('<header'), marcacao.indexOf('</header>'));
+const rodape = marcacao.slice(marcacao.lastIndexOf('<footer'), marcacao.lastIndexOf('</footer>'));
+checar(
+  'logo oficial: colorida no header, branca no rodape',
+  header.includes('/marca/logo-rgb.png') && rodape.includes('/marca/logo-branca.png'),
+);
+
 // --- Regras editoriais permanentes ---
 checar('zero ocorrencias de "Coleções Lien"', !html.includes('Coleções Lien'));
 checar('zero href="#"', !html.includes('href="#"'));

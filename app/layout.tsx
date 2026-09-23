@@ -9,11 +9,15 @@ export const metadata: Metadata = {
   title: seo.title,
   description: seo.description,
   alternates: { canonical: seo.canonical },
-  // Sem isto o Next nao emite <link rel="icon"> nenhum: o favicon.svg vive em
-  // public/, nao em app/, entao a convencao de arquivo do App Router nao o
-  // pega. O index.html do Vite declarava este link.
+  // Sem isto o Next nao emite <link rel="icon"> nenhum: os icones vivem em
+  // public/marca/, nao em app/, entao a convencao de arquivo do App Router nao
+  // os pega. Simbolo oficial sobre o magenta da marca, gerado por `npm run marca`.
   icons: {
-    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+    icon: [
+      { url: '/marca/favicon-32.png', type: 'image/png', sizes: '32x32' },
+      { url: '/marca/icon-512.png', type: 'image/png', sizes: '512x512' },
+    ],
+    apple: [{ url: '/marca/apple-icon.png', sizes: '180x180' }],
   },
   robots: {
     index: true,

@@ -1,76 +1,44 @@
 /**
- * Logotipo Lien.
+ * Logotipo Lien — arquivos oficiais enviados pela clinica.
+ *
+ * Originais em assets/Pastas/; as versoes servidas saem de `npm run marca`.
  *
  * Regras do manual respeitadas pela construcao deste componente:
- * - Area de protecao X/2 em todos os lados, minimo de 10px no digital
- *   (aplicada via padding no wrapper).
- * - Sem sombra, sem contorno, sem distorcao (aspect ratio preservado
- *   pelo viewBox + `preserveAspectRatio` padrao).
- * - Duas versoes apenas: colorida (fundo branco/cream) e branca
- *   monocromatica (fundos magenta ou teal).
- *
- * O arquivo oficial deve substituir este desenho: /public/logo-lien.svg
- * Enquanto nao chegar, este componente reproduz a estrutura da marca
- * (palavra + curva do "sorriso" no `e` + assinatura) com os pesos e cores
- * corretos, para nao bloquear o desenvolvimento.
+ * - Area de protecao minima de 10px no digital, aplicada via padding no
+ *   wrapper (os arquivos gerados tem as bordas transparentes aparadas).
+ * - Sem sombra, sem contorno, sem distorcao: so a altura e fixada, e a
+ *   largura segue a proporcao natural do arquivo.
+ * - Duas versoes: colorida (fundo branco/cream) e branca (fundos escuros,
+ *   magenta ou teal).
  */
+const ARQUIVOS = {
+  // width/height sao as dimensoes dos arquivos gerados. So servem para o
+  // navegador reservar o espaco antes do carregamento — a proporcao exibida e
+  // sempre a do arquivo, entao nao ha distorcao se ele for regerado.
+  colorida: { src: '/marca/logo-rgb.png', width: 600, height: 302 },
+  branca: { src: '/marca/logo-branca.png', width: 600, height: 283 },
+} as const;
+
 export function Logo({
   variante = 'colorida',
   className = '',
-  comAssinatura = true,
 }: {
-  variante?: 'colorida' | 'branca';
+  variante?: keyof typeof ARQUIVOS;
   className?: string;
-  comAssinatura?: boolean;
 }) {
-  const corPalavra = variante === 'branca' ? '#FFFFFF' : '#9C1781';
-  const corCurva = variante === 'branca' ? '#FFFFFF' : '#037E99';
-  const corAssinatura = variante === 'branca' ? '#FFFFFF' : '#037E99';
+  const arquivo = ARQUIVOS[variante];
 
   return (
     // p-[10px] garante o respiro digital minimo exigido pelo manual.
     <span className={`inline-block p-[10px] ${className}`}>
-      <svg
-        viewBox="0 0 200 68"
-        role="img"
-        aria-label="Lien Reabilitação Oral"
+      <img
+        src={arquivo.src}
+        width={arquivo.width}
+        height={arquivo.height}
+        alt="Lien Reabilitação Oral"
         className="h-full w-auto"
-      >
-        <text
-          x="0"
-          y="36"
-          fill={corPalavra}
-          fontFamily="Poppins, sans-serif"
-          fontWeight={700}
-          fontSize="40"
-          letterSpacing="-1"
-        >
-          lien
-        </text>
-        {/* A curva do "sorriso": o arco teal que forma o `e`.
-            Geometria mantida acima de y=46 para nao colidir com a
-            assinatura (cujo topo de caixa fica em ~y=51). */}
-        <path
-          d="M60 39 Q81 48 102 39"
-          fill="none"
-          stroke={corCurva}
-          strokeWidth="3.5"
-          strokeLinecap="round"
-        />
-        {comAssinatura && (
-          <text
-            x="1"
-            y="60"
-            fill={corAssinatura}
-            fontFamily="Poppins, sans-serif"
-            fontWeight={400}
-            fontSize="9"
-            letterSpacing="2.1"
-          >
-            REABILITAÇÃO ORAL
-          </text>
-        )}
-      </svg>
+        decoding="async"
+      />
     </span>
   );
 }

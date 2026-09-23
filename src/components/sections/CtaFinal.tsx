@@ -10,7 +10,7 @@ import { ctaFinal } from '../../data/content';
 export function CtaFinal() {
   return (
     <section id="agendar" className="relative overflow-hidden bg-magenta py-20 sm:py-24 lg:py-28">
-      {/* Padrao de ondas a 6% de opacidade, em branco sobre o magenta. */}
+      {/* Padronagem oficial a 8%, em branco sobre o magenta. */}
       <PadraoOndas
         className="pointer-events-none absolute inset-0 h-full w-full"
         cor="#FFFFFF"

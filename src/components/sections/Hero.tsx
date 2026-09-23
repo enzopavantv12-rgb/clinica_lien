@@ -19,7 +19,7 @@ import { hero } from '../../data/content';
 export function Hero() {
   return (
     <section id="inicio" className="relative overflow-hidden bg-white pt-28 sm:pt-32 lg:pt-36">
-      {/* Padrao de ondas teal a 5% no fundo da coluna de texto. */}
+      {/* Padronagem oficial em teal a 8%, no fundo da coluna de texto. */}
       <PadraoOndas
         className="pointer-events-none absolute -left-24 top-10 h-[560px] w-[820px]"
         opacidade={0.08}

@@ -31,6 +31,7 @@ npm run build      # gera out/
 npm run preview    # serve o out/ localmente
 npm run sitemap    # regenera sitemap.xml com o lastmod de hoje
 npm run images     # gera as variantes das fotos
+npm run marca      # gera as versões web dos arquivos oficiais de marca
 npm run verificar  # roda as assertions do build
 ```
 
@@ -48,18 +49,25 @@ app/
   globals.css                   @font-face + camadas do Tailwind
 scripts/
   gen-images.mjs                npm run images — gera as variantes das fotos
+  gen-marca.mjs                 npm run marca — gera public/marca/ a partir
+                                de assets/Pastas/
   gen-sitemap.mjs               npm run sitemap — atualiza o lastmod
   verificar-build.mjs           npm run verificar — assertions sobre out/
 assets/
   fotos-originais/              ENTRADA das fotos originais; fora do deploy.
                                 Não existe no repo até a primeira foto chegar
+  Pastas/                       ORIGINAIS de marca enviados pela clínica:
+                                logo RGB, logo branca, símbolo (RGB, ciano,
+                                negativo) e padronagem. Fonte, fora do deploy
   icones/                       SVGs de referência
 public/
   robots.txt                    permissivo para crawlers de IA
   sitemap.xml                   Fase 1 + placeholders Fase 2 comentados
   llms.txt / llms-full.txt      contexto para agentes de IA
   .htaccess                     Hostinger: text/plain, 404, HTTPS, cache
-  favicon.svg
+  marca/                        SAÍDA gerada pelo npm run marca — logos,
+                                símbolos, padronagem e favicons. Não editar
+                                à mão: troque o original e rode de novo
   fonts/                        Poppins self-hospedada, subset latin
   img/                          SAÍDA gerada pelo npm run images —
                                 <nome>-<largura>.{avif,webp}. Não editar
@@ -245,26 +253,29 @@ Não existe "navy" no manual. Onde o plano estratégico pedia navy, o código us
 Poppins como família única. Apenas os 5 pesos autorizados: 300, 400, 500, 700, 900. Self-hospedada em `public/fonts/`, subset latin apenas.
 
 ### Logo
-`src/components/ui/Logo.tsx` — respeita área de proteção (padding de 10px), sem sombra, sem contorno, sem distorção. Duas variantes: `colorida` (fundo branco/cream) e `branca` (fundos magenta/teal/ink).
+`src/components/ui/Logo.tsx` — arquivos oficiais da clínica. Respeita área de proteção (padding de 10px), sem sombra, sem contorno, sem distorção: só a altura é fixada, e a largura segue a proporção natural do arquivo. Duas variantes: `colorida` (`LIEN_logo_rgb.png` — header, fundo branco) e `branca` (`Logo Lien Branca.png` — rodapé, fundo `ink`).
 
-> **Este logo é um placeholder desenhado em SVG.** Substitua por `public/logo-lien.svg` oficial quando disponível, mantendo as duas variantes e o padding de proteção.
+> A logo branca veio com uma textura de ruído no próprio arquivo: 35% dos pixels são semi-transparentes, contra 2% na colorida. No tamanho do rodapé é invisível, mas aparece se for ampliada. Vale pedir à clínica uma versão limpa.
 
-### Elementos gráficos
-`src/components/ui/BrandGraphics.tsx` — a curva do "sorriso" (underline de headline) e o padrão de ondas. Ambos SVG inline, nunca raster.
+### Símbolo
+O sorriso isolado, em três variações: `rgb` (teal, fundos claros), `cyano` (ciano, fundos escuros) e `negativo` (branco, sobre magenta ou teal). Componente `Simbolo` em `BrandGraphics.tsx`.
 
-O padrão de ondas foi remedido sobre o print do manual e reproduz o original: arcos **grossos e afilados** (paths preenchidos por dois arcos de raios diferentes que se encontram em ponta — `stroke` não serve, pois tem espessura constante), cadeia com **mordida** nas junções, e linhas alternadas deslocadas em meio período. Proporções normalizadas para período = 100:
+- **Underline dos títulos de seção** — variação `rgb`, 56px de largura, sem distorcer.
+- **Favicon** — `negativo` sobre quadrado magenta, gerado em 32, 180 (Apple) e 512px.
 
-| Constante | Valor | Origem no print |
-|---|---|---|
-| `P` | 100 | período crista→crista (~305px) |
-| `AMP` | 16 | profundidade do arco (~50px) — ~1/3 da largura |
-| `ESP` | 7 | espessura no ápice (~21px) |
-| `ALT` | 108 | 2 linhas × 54 de entrelinha (~165px) |
-| `GAP` | 2 | folga horizontal — mordida, não vão |
+### Padronagem
+`PadraoOndas` em `src/components/ui/BrandGraphics.tsx` — arquivo oficial `LIEN_padronagem.png`: o símbolo do sorriso repetido em ondas.
 
-> O tile é mais **alto** que largo de propósito. Forçar 100×100 faz o vale de uma linha invadir a crista da linha acima, e o padrão vira uma malha de estrelas em vez de ondas.
+O arquivo é branco sobre transparente, então entra como **máscara CSS**: o canal alfa recorta a forma e a cor de fundo pinta. Um único arquivo serve em qualquer cor — teal no hero, branco sobre o magenta no CTA final.
 
-Aplicado a **8%** de opacidade no hero e no CTA final — topo da faixa de 4–8% do prompt mestre, para que a geometria do manual seja legível. Para suavizar, mude `opacidade` em `Hero.tsx` e `CtaFinal.tsx`.
+Vai **inteiro**, com `mask-size: cover`, sem ser retalhado em mosaico. O arquivo tem margens desiguais (topo e base diferentes) e não fecha sem emenda se repetido.
+
+Aplicado a **8%** de opacidade no hero e no CTA final — topo da faixa de 4–8% do prompt mestre. Para suavizar, mude `opacidade` em `Hero.tsx` e `CtaFinal.tsx`.
+
+O original tem 11.839px e 854KB. O `npm run marca` gera uma versão de 2.000px e 44KB, com perda leve: é textura a 8%, e a borda segue limpa mesmo ampliada.
+
+### Raster × vetor
+A versão anterior deste README registrava que o manual pede os elementos gráficos em vetor. Os arquivos enviados pela clínica são PNG, e o site usa esses arquivos. Se existir versão vetorial (SVG, PDF, AI ou EPS), ela é preferível: logo nítida em qualquer tamanho e padronagem de poucos KB. Basta colocar em `assets/Pastas/`, adaptar o `gen-marca.mjs` e rodar de novo.
 
 ### Ícone do WhatsApp
 `src/components/ui/WhatsAppIcon.tsx` — SVG inline próprio, em **todos os 10 CTAs** que abrem o WhatsApp (header, hero, os 6 cards de especialidade, CTA final e botão flutuante). Usa `currentColor`, então herda a cor do contexto: branco sobre magenta, teal sobre card branco, magenta sobre botão branco.

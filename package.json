@@ -9,7 +9,8 @@
     "preview": "npx serve out",
     "verificar": "node scripts/verificar-build.mjs",
     "sitemap": "node scripts/gen-sitemap.mjs",
-    "images": "node scripts/gen-images.mjs"
+    "images": "node scripts/gen-images.mjs",
+    "marca": "node scripts/gen-marca.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.460.0",
