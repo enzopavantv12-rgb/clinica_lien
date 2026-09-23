@@ -5,15 +5,15 @@ import { faq } from '../../data/content';
 
 /**
  * FAQ visivel — obrigatorio para AEO.
- * As perguntas/respostas aqui espelham exatamente o schema FAQPage do
- * index.html. Se editar uma, editar a outra.
+ * O schema FAQPage e gerado do mesmo objeto `faq` (src/data/schema.ts): editar
+ * uma pergunta aqui ja atualiza o schema. Nao ha segunda copia para manter.
  *
  * Usa <details>/<summary> nativo: acessivel por teclado de graca, e o conteudo
  * fica no DOM (indexavel) mesmo fechado.
  */
 export function Faq() {
   return (
-    <section id="faq" className="bg-white py-20 sm:py-24 lg:py-28">
+    <section id="duvidas" className="bg-white py-20 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-[860px] px-5 sm:px-8">
         <SectionHeading tag={faq.tag} titulo={faq.h2} />
 

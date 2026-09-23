@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { preload } from 'react-dom';
 import { seo, site } from '@/data/content';
-import { schemaDentist, schemaFaq, schemaPerson } from '@/data/schema';
+import { schemaDentist, schemaPerson } from '@/data/schema';
+import { JsonLd } from '@/components/ui/JsonLd';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
         url: seo.ogImage,
         width: 1200,
         height: 630,
-        alt: 'Lien Reabilitação Oral — implantes e reabilitação oral em Belo Horizonte',
+        alt: seo.ogImageAlt,
       },
     ],
   },
@@ -71,22 +72,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-BR">
       <body>
-        {/* JSON-LD no body e o padrao recomendado pelo Next; o Google le o
-            schema em qualquer lugar do documento. O dado e nosso, nao vem de
-            entrada de usuario.
-
-            O `<` escapado como \u003c e obrigatorio: JSON.stringify nao
-            escapa `<`, e uma string do content.ts que viesse a conter
-            `</script` fecharia o bloco no meio e truncaria o documento. */}
-        {[schemaDentist, schemaFaq, schemaPerson].map((schema, i) => (
-          <script
-            key={i}
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify(schema).replace(/</g, '\\u003c'),
-            }}
-          />
-        ))}
+        {/* Dados da clinica, validos em qualquer pagina. O FAQPage fica so na
+            home (app/page.tsx): o Google exige que schema de FAQ corresponda
+            a perguntas visiveis na propria pagina. */}
+        <JsonLd schemas={[schemaDentist, schemaPerson]} />
         {children}
       </body>
     </html>

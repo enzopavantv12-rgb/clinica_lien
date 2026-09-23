@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Instagram, Menu, X } from 'lucide-react';
 import { Logo } from '../ui/Logo';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
-import { navegacao, rodape, site } from '../../data/content';
+import { header, navegacao, site } from '../../data/content';
 
 export function Header() {
   const [aberto, setAberto] = useState(false);
@@ -27,13 +27,14 @@ export function Header() {
 
   return (
     <header
+      id="topo"
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-brand ${
         rolou ? 'bg-white/95 shadow-soft backdrop-blur-md' : 'bg-white/80 backdrop-blur-sm'
       }`}
     >
       <div className="mx-auto flex max-w-[1200px] items-center justify-between px-5 py-3 sm:px-8">
         <a
-          href="#inicio"
+          href="/#inicio"
           aria-label={`${site.nome} — início`}
           className="rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta"
         >
@@ -54,10 +55,10 @@ export function Header() {
 
         <div className="flex items-center gap-2 sm:gap-3">
           <a
-            href={site.instagram}
+            href={site.instagram.url}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`Instagram da Lien Reabilitação Oral (${site.arroba})`}
+            aria-label={`Instagram da Dra. Natália Simões (${site.instagram.arroba})`}
             className="hidden rounded-xl p-2 text-teal transition-colors hover:bg-teal/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal sm:block"
           >
             <Instagram size={22} strokeWidth={1.75} aria-hidden="true" />
@@ -68,7 +69,7 @@ export function Header() {
             tamanho="md"
             className="hidden sm:inline-flex"
           >
-            {rodape.agendarLabel}
+            {header.cta}
           </WhatsAppButton>
 
           <button
@@ -101,7 +102,7 @@ export function Header() {
               </a>
             ))}
             <a
-              href={site.instagram}
+              href={site.instagram.url}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2.5 border-b border-brandgray/70 py-4 text-base font-medium text-ink transition-colors hover:text-magenta"
@@ -111,7 +112,7 @@ export function Header() {
             </a>
           </nav>
           <WhatsAppButton origem="menu" className="mt-6 w-full">
-            {rodape.agendarLabel}
+            {header.cta}
           </WhatsAppButton>
         </div>
       )}

@@ -1,78 +1,91 @@
-import { CONFIRMAR, equipe, faq, seo, site } from './content';
+import { equipe, faq, seo, site, tratamentos } from './content';
 
 /**
  * JSON-LD derivado do content.ts.
  *
- * Motivo de existir: antes, o FAQ vivia em dois lugares — content.ts e o
- * schema FAQPage escrito a mao no index.html — e qualquer edicao tinha que
- * ser feita nos dois. Agora o FAQPage e um map sobre o mesmo objeto `faq`.
+ * O FAQPage e um map sobre o mesmo objeto `faq` da secao de duvidas: editar
+ * uma pergunta la ja atualiza o schema. A lista de servicos vem de
+ * `tratamentos`, pelo mesmo motivo.
  *
- * Os tres blocos sao um porte 1:1 do que estava no index.html: nenhuma
- * propriedade foi acrescentada ou removida. CEP e coordenadas continuam
- * placeholders — pendencia 3 do README, dona a clinica.
+ * Atualizado pelo briefing oficial (set/2026):
+ * - horario, CEP, Instagram e nome completo da responsavel tecnica corrigidos;
+ * - `geo` REMOVIDO ate as coordenadas serem confirmadas. Um placeholder em
+ *   latitude/longitude invalida o bloco inteiro — melhor sem o campo.
+ *   [PENDENTE: latitude e longitude do Edificio Asteca]
+ * - `priceRange` REMOVIDO: o briefing proibe qualquer referencia a preco.
+ * - sem `aggregateRating`: autoavaliacao em schema proprio contraria a
+ *   politica do Google (briefing, secao 7).
  */
 
 /** @id do bloco da clinica. O `worksFor` do Person aponta para ele. */
 const idClinica = `${site.url}/#clinica`;
 
-/** Cargo da Dra. Natalia no schema — mais formal que o `titulo` do content.ts. */
+const natalia = equipe.membros[0];
+
+/** Cargo da Dra. Natalia no schema — mais formal que o do card. */
 const cargoNatalia = 'Cirurgiã-Dentista — Implantodontia, Prótese e Periodontia';
+
+const logo = `${site.url}/marca/logo-rgb.png`;
+
+const endereco = {
+  '@type': 'PostalAddress',
+  streetAddress: `${site.endereco.rua} — ${site.endereco.edificio}`,
+  addressLocality: site.endereco.cidade,
+  addressRegion: site.endereco.uf,
+  postalCode: site.endereco.cep,
+  addressCountry: 'BR',
+};
+
+const servicos = [
+  tratamentos.destaque,
+  ...tratamentos.medios,
+  ...tratamentos.grade,
+  ...tratamentos.compactos,
+].map((t) => ({ '@type': 'MedicalProcedure', name: t.nome }));
 
 export const schemaDentist = {
   '@context': 'https://schema.org',
   '@type': ['Dentist', 'LocalBusiness', 'MedicalBusiness'],
   '@id': idClinica,
   name: site.nome,
-  description:
-    'Clínica especializada em implantodontia, reabilitação oral e prótese dentária em Belo Horizonte, com atendimento humanizado para pacientes com ansiedade odontológica.',
+  legalName: site.razaoSocial,
+  description: seo.description,
   url: site.url,
   telephone: site.telefoneE164,
-  priceRange: '$$$',
-  image: seo.ogImage,
-  logo: `${site.url}/logo-lien.svg`,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Av. do Contorno, 5351 — Edifício Asteca',
-    addressLocality: 'Belo Horizonte',
-    addressRegion: 'MG',
-    postalCode: '[[CONFIRMAR CEP]]',
-    addressCountry: 'BR',
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: CONFIRMAR,
-    longitude: CONFIRMAR,
-  },
+  email: site.email,
+  // [PENDENTE: foto real da clinica — ate la, a logo oficial]
+  image: logo,
+  logo,
+  address: endereco,
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      dayOfWeek: ['Monday', 'Tuesday', 'Thursday', 'Friday'],
       opens: '08:00',
-      closes: '19:00',
+      closes: '18:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Wednesday'],
+      opens: '09:00',
+      closes: '20:00',
     },
   ],
   areaServed: { '@type': 'City', name: 'Belo Horizonte' },
   medicalSpecialty: 'Dentistry',
-  availableService: [
-    { '@type': 'MedicalProcedure', name: 'Implantodontia Digital' },
-    { '@type': 'MedicalProcedure', name: 'Reabilitação Oral Completa' },
-    { '@type': 'MedicalProcedure', name: 'Prótese Dentária' },
-    { '@type': 'MedicalProcedure', name: 'Periodontia' },
-    { '@type': 'MedicalProcedure', name: 'Lentes de Contato Dental' },
-    { '@type': 'MedicalProcedure', name: 'Tratamento de Disfunção de ATM' },
-  ],
+  availableService: servicos,
   founder: {
     '@type': 'Person',
-    name: equipe.membros[0].nome,
+    name: site.responsavelTecnica,
     jobTitle: cargoNatalia,
   },
-  sameAs: [site.instagram, site.tiktok],
+  sameAs: [site.instagram.url, ...(site.tiktok.exibir ? [site.tiktok.url] : [])],
 };
 
 export const schemaFaq = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  '@id': `${site.url}/#faq`,
+  '@id': `${site.url}/#duvidas`,
   mainEntity: faq.itens.map((item) => ({
     '@type': 'Question',
     name: item.pergunta,
@@ -87,26 +100,22 @@ export const schemaPerson = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   '@id': `${site.url}/#natalia-simoes`,
-  name: equipe.membros[0].nome,
+  name: site.responsavelTecnica,
+  honorificPrefix: 'Dra.',
   jobTitle: cargoNatalia,
-  description:
-    'Fundadora da Lien Reabilitação Oral e referência em reabilitação oral completa em Belo Horizonte, com atenção especial a pacientes com ansiedade odontológica.',
+  description: `Fundadora e responsável técnica da ${site.nome}, em Belo Horizonte. ${natalia.bio}`,
+  identifier: {
+    '@type': 'PropertyValue',
+    propertyID: 'CRO-MG',
+    value: site.cro.replace('CRO-MG ', ''),
+  },
   worksFor: {
     '@type': ['Dentist', 'LocalBusiness', 'MedicalBusiness'],
     '@id': idClinica,
     name: site.nome,
   },
   url: site.url,
-  telephone: site.telefoneE164,
-  workLocation: {
-    '@type': 'Place',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: 'Av. do Contorno, 5351 — Edifício Asteca',
-      addressLocality: 'Belo Horizonte',
-      addressRegion: 'MG',
-      addressCountry: 'BR',
-    },
-  },
+  workLocation: { '@type': 'Place', address: endereco },
   knowsAbout: ['Implantodontia', 'Reabilitação Oral', 'Prótese Dentária', 'Periodontia'],
+  sameAs: [site.instagram.url],
 };

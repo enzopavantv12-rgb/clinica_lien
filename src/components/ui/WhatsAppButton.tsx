@@ -23,7 +23,13 @@ const tamanhos = {
 
 /**
  * CTA de conversao. Todo clique dispara `click_whatsapp` no dataLayer com a
- * `origem` da secao — requisito de rastreamento do prompt mestre.
+ * `origem` da secao, e a mesma origem vai no HTML como `data-cta`, para medir
+ * qual secao converte.
+ *
+ * Acessibilidade: o texto visivel continua sendo o nome acessivel, com um
+ * sufixo so para leitor de tela. Um `aria-label` diferente do texto visivel
+ * quebraria a WCAG 2.5.3 (label in name) — quem usa comando de voz fala o
+ * que ve escrito, e o botao nao responderia.
  */
 export function WhatsAppButton({
   origem,
@@ -46,10 +52,12 @@ export function WhatsAppButton({
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => trackWhatsAppClick(origem)}
+      data-cta={origem}
       className={`inline-flex items-center justify-center gap-2.5 rounded-2xl font-medium transition-all duration-300 ease-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 motion-safe:hover:-translate-y-0.5 ${variantes[variante]} ${tamanhos[tamanho]} ${className}`}
     >
       {comIcone && <WhatsAppIcon size={20} />}
       {children}
+      <span className="sr-only"> (abre o WhatsApp)</span>
     </a>
   );
 }

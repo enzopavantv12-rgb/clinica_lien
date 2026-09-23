@@ -6,6 +6,15 @@
   Header set Content-Type "text/plain; charset=utf-8"
 </FilesMatch>
 
+# --- Dumps de payload RSC do export do Next: nao indexar ---
+# index.txt e __next.*.txt repetem cada palavra do site em formato serializado.
+# O header funciona para qualquer crawler; o Disallow do robots.txt nao alcanca
+# os crawlers nomeados, porque grupos de robots.txt nao herdam.
+<FilesMatch "^(index|__next.*)\.txt$">
+  Header set X-Robots-Tag "noindex"
+</FilesMatch>
+
+
 # --- Pagina de erro (o build gera out/404.html; sem isto nada a serve) ---
 ErrorDocument 404 /404.html
 

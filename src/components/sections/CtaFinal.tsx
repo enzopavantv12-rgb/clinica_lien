@@ -1,4 +1,5 @@
 import { PadraoOndas } from '../ui/BrandGraphics';
+import { Logo } from '../ui/Logo';
 import { Reveal } from '../ui/Reveal';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
 import { ctaFinal } from '../../data/content';
@@ -18,6 +19,11 @@ export function CtaFinal() {
       />
 
       <div className="relative mx-auto max-w-[760px] px-5 text-center sm:px-8">
+        {/* Logo branca sobre o magenta — versao do manual para fundos de cor. */}
+        <Reveal>
+          <Logo variante="branca" className="mx-auto mb-8 h-16 sm:h-20" />
+        </Reveal>
+
         <Reveal>
           <h2 className="mx-auto max-w-[22ch] text-h2 sm:text-h2-lg font-bold text-white">
             {ctaFinal.h2}
@@ -26,13 +32,13 @@ export function CtaFinal() {
 
         <Reveal delay={0.08}>
           <p className="mx-auto mt-5 max-w-prose text-sub sm:text-sub-lg text-white/90">
-            {ctaFinal.sub}
+            {ctaFinal.texto}
           </p>
         </Reveal>
 
         <Reveal delay={0.16}>
           <div className="mt-10">
-            <WhatsAppButton origem="ctaFinal" variante="branco">
+            <WhatsAppButton origem="final" variante="branco">
               {ctaFinal.cta}
             </WhatsAppButton>
           </div>

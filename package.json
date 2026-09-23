@@ -8,7 +8,6 @@
     "build": "next build",
     "preview": "npx serve out",
     "verificar": "node scripts/verificar-build.mjs",
-    "sitemap": "node scripts/gen-sitemap.mjs",
     "images": "node scripts/gen-images.mjs",
     "marca": "node scripts/gen-marca.mjs"
   },

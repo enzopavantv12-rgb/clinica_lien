@@ -1,53 +1,43 @@
-import { Icon } from '../ui/Icon';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeading } from '../ui/SectionHeading';
-import { metodoLien } from '../../data/content';
+import { metodo } from '../../data/content';
 
-// Fundos alternados a 25%, conforme especificado.
-const fundos = [
-  'bg-magenta-light/25',
-  'bg-teal-light/25',
-  'bg-magenta-light/25',
-  'bg-teal-light/25',
-];
-
+/**
+ * Metodo Lien em 4 etapas, como linha do tempo: horizontal no desktop,
+ * vertical no mobile. Numeros em magenta, 44 -> 64px.
+ * Proibido "avaliacao" e "orcamento" em qualquer etapa (briefing, 5.5).
+ */
 export function MetodoLien() {
   return (
-    <section id="metodo-lien" className="bg-white py-20 sm:py-24 lg:py-28">
+    <section id="metodo" className="bg-white py-20 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
-        <SectionHeading
-          tag={metodoLien.tag}
-          titulo={metodoLien.h2}
-          subtitulo={metodoLien.sub}
-        />
+        <SectionHeading tag={metodo.tag} titulo={metodo.h2} subtitulo={metodo.sub} />
 
-        <ul className="mt-14 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
-          {metodoLien.pilares.map((pilar, i) => (
-            <Reveal
-              as="li"
-              key={pilar.numero}
-              delay={i * 0.08}
-              className={`relative overflow-hidden rounded-3xl p-6 sm:p-7 ${fundos[i]}`}
-            >
-              {/* Numeral grande em marca-d'agua no canto do card. */}
+        <ol className="relative mt-14 grid gap-10 lg:grid-cols-4 lg:gap-8">
+          {/* Trilho da linha do tempo: vertical no mobile, horizontal no desktop. */}
+          <span
+            aria-hidden="true"
+            className="absolute bottom-4 left-[1.3rem] top-4 w-px bg-brandgray lg:bottom-auto lg:left-4 lg:right-4 lg:top-8 lg:h-px lg:w-auto"
+          />
+
+          {metodo.etapas.map((etapa, i) => (
+            <Reveal as="li" key={etapa.numero} delay={i * 0.08} className="relative pl-16 lg:pl-0">
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute -right-1 -top-3 select-none text-[4.5rem] font-bold leading-none text-ink/[0.07] sm:text-[5.5rem]"
+                className="absolute left-0 top-0 block bg-white pr-2 text-stat font-black leading-none text-magenta lg:static lg:inline-block lg:text-stat-lg lg:pr-4"
               >
-                {pilar.numero}
+                {etapa.numero}
               </span>
-
-              <Icon nome={pilar.icone} size={30} className="relative text-teal" />
-
-              <h3 className="relative mt-5 text-h3 sm:text-h3-lg font-semibold text-ink">
-                {pilar.titulo}
+              <h3 className="text-h3 sm:text-h3-lg font-semibold text-ink lg:mt-5">
+                <span className="sr-only">Etapa {etapa.numero}: </span>
+                {etapa.titulo}
               </h3>
-              <p className="relative mt-2.5 text-body sm:text-body-lg text-ink-muted">
-                {pilar.descricao}
+              <p className="mt-2.5 max-w-prose text-body sm:text-body-lg text-ink-muted">
+                {etapa.texto}
               </p>
             </Reveal>
           ))}
-        </ul>
+        </ol>
       </div>
     </section>
   );

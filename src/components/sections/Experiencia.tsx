@@ -5,43 +5,37 @@ import { SectionHeading } from '../ui/SectionHeading';
 import { experiencia } from '../../data/content';
 
 /**
- * Secao de maior diferencial competitivo (paciente com ansiedade).
- * Prioridade absoluta no mobile: a lista de diferenciais vem antes da foto
- * no DOM, entao no empilhamento mobile o conteudo de conversao aparece primeiro.
+ * Experiencia Lien — o maior diferencial para o paciente com ansiedade.
+ * Oito diferenciais sensoriais, com icones lucide em teal (nunca emoji).
+ *
+ * Mobile-first: a lista vem antes da foto no DOM, entao no empilhamento o
+ * conteudo aparece primeiro.
  */
 export function Experiencia() {
   return (
     <section id="experiencia" className="bg-white py-20 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          {/* Coluna de conteudo — primeira no DOM (mobile-first). */}
-          <div className="lg:order-2">
-            <SectionHeading
-              tag={experiencia.tag}
-              titulo={experiencia.h2}
-              subtitulo={experiencia.sub}
-              centralizado={false}
-            />
+        <SectionHeading tag={experiencia.tag} titulo={experiencia.h2} subtitulo={experiencia.sub} />
 
-            <ul className="mt-10 flex flex-col gap-5">
-              {experiencia.diferenciais.map((d, i) => (
-                <Reveal as="li" key={d.icone} delay={i * 0.08}>
-                  <div className="flex items-start gap-4">
-                    <span className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-teal/10">
-                      <Icon nome={d.icone} size={22} className="text-teal" />
-                    </span>
-                    <p className="max-w-prose pt-2 text-body sm:text-body-lg text-ink">
-                      {d.texto}
-                    </p>
+        <div className="mt-14 grid items-start gap-12 lg:grid-cols-[1.35fr_1fr] lg:gap-14">
+          <ul className="grid gap-x-8 gap-y-7 sm:grid-cols-2">
+            {experiencia.diferenciais.map((d, i) => (
+              <Reveal as="li" key={d.titulo} delay={i * 0.05}>
+                <div className="flex items-start gap-4">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-teal/10">
+                    <Icon nome={d.icone} size={22} className="text-teal" />
+                  </span>
+                  <div>
+                    <h3 className="text-[1.0625rem] sm:text-h3 font-semibold text-ink">{d.titulo}</h3>
+                    <p className="mt-1.5 text-body text-ink-muted">{d.texto}</p>
                   </div>
-                </Reveal>
-              ))}
-            </ul>
-          </div>
+                </div>
+              </Reveal>
+            ))}
+          </ul>
 
-          {/* Foto real da clinica. */}
-          <Reveal delay={0.14} className="lg:order-1">
-            <div className="relative">
+          <Reveal delay={0.14}>
+            <div className="relative lg:sticky lg:top-28">
               <div className="absolute -inset-3 -z-10 rounded-[2rem] bg-teal-light/25" />
               <BrandImage
                 dados={experiencia.imagem}

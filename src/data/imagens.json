@@ -1,11 +1,62 @@
 {
-  "hero-dra-natalia": [640, 960, 1280],
-  "experiencia-recepcao": [320, 480, 640],
-  "equipe-natalia-simoes": [320, 480, 640],
-  "equipe-maria-emilia": [320, 480, 640],
-  "equipe-isabela-guieiro": [320, 480, 640],
-  "equipe-alexander-pedrosa": [320, 480, 640],
-  "ambiente-recepcao": [480, 768, 1024],
-  "ambiente-atendimento": [480, 768, 1024],
-  "ambiente-kit-boas-vindas": [480, 768, 1024]
+  "hero-dra-natalia": [
+    640,
+    960,
+    1280
+  ],
+  "experiencia-recepcao": [
+    320,
+    480,
+    640
+  ],
+  "equipe-natalia-simoes": [
+    320,
+    480,
+    640
+  ],
+  "equipe-maria-emilia": [
+    320,
+    480,
+    640
+  ],
+  "equipe-isabela-guieiro": [
+    320,
+    480,
+    640
+  ],
+  "equipe-alexander-pedrosa": [
+    320,
+    480,
+    640
+  ],
+  "ambiente-recepcao": [
+    480,
+    768,
+    1024
+  ],
+  "ambiente-atendimento": [
+    480,
+    768,
+    1024
+  ],
+  "ambiente-kit-boas-vindas": [
+    480,
+    768,
+    1024
+  ],
+  "sobre-dra-natalia": [
+    480,
+    720,
+    960
+  ],
+  "equipe-gabriela-ribeiro": [
+    320,
+    480,
+    640
+  ],
+  "equipe-luiza-henriques": [
+    320,
+    480,
+    640
+  ]
 }
