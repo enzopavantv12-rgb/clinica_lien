@@ -36,7 +36,8 @@ export function WhatsAppLink({
       data-cta={origem}
       className={`group/link inline-flex items-center gap-2 self-start rounded-xl text-[0.9375rem] font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 ${
         claro
-          ? 'text-white hover:text-magenta-light focus-visible:outline-white'
+          ? // Hover sublinhado, nao em magenta-light: o manual veda magenta-light como texto.
+            'text-white underline-offset-4 hover:underline focus-visible:outline-white'
           : 'text-teal hover:text-magenta focus-visible:outline-magenta'
       } ${className}`}
     >

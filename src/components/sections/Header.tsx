@@ -41,12 +41,12 @@ export function Header() {
           <Logo variante="colorida" className="h-12 sm:h-14" />
         </a>
 
-        <nav aria-label="Navegação principal" className="hidden items-center gap-8 lg:flex">
+        <nav aria-label="Navegação principal" className="hidden items-center gap-5 lg:flex xl:gap-8">
           {navegacao.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="rounded text-[0.9375rem] font-medium text-ink transition-colors hover:text-magenta focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-magenta"
+              className="whitespace-nowrap rounded text-[0.9375rem] font-medium text-ink transition-colors hover:text-magenta focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-magenta"
             >
               {item.label}
             </a>
@@ -59,7 +59,7 @@ export function Header() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Instagram da Dra. Natália Simões (${site.instagram.arroba})`}
-            className="hidden rounded-xl p-2 text-teal transition-colors hover:bg-teal/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal sm:block"
+            className="hidden rounded-xl p-2 text-teal transition-colors hover:bg-teal/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal sm:block lg:hidden xl:block"
           >
             <Instagram size={22} strokeWidth={1.75} aria-hidden="true" />
           </a>
@@ -67,7 +67,7 @@ export function Header() {
           <WhatsAppButton
             origem="menu"
             tamanho="md"
-            className="hidden sm:inline-flex"
+            className="hidden whitespace-nowrap sm:inline-flex"
           >
             {header.cta}
           </WhatsAppButton>

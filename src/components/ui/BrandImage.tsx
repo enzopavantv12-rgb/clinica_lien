@@ -50,7 +50,9 @@ export function BrandImage({
             assets/fotos-originais/ — o `npm run images` e que gera as
             variantes em /img/. Imprimir `dados.src` aqui mandava a pessoa
             criar um arquivo que o BrandImage nunca pede. */}
-        <p className="max-w-[22ch] px-6 text-center text-[0.6875rem] leading-snug text-ink-muted/80">
+        {/* ink-muted cheio: a 80% o texto de 11px media 3,74:1 sobre o cinza
+            e reprovava AA (minimo 4,5:1). Cheio mede 5,4:1. */}
+        <p className="max-w-[22ch] px-6 text-center text-[0.6875rem] leading-snug text-ink-muted">
           {`assets/fotos-originais/${nomeBase}.jpg`}
         </p>
       </div>

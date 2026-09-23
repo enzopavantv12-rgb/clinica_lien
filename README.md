@@ -29,7 +29,6 @@ npm install        # instala dependências
 npm run dev        # servidor de desenvolvimento
 npm run build      # gera out/
 npm run preview    # serve o out/ localmente
-npm run sitemap    # regenera sitemap.xml com o lastmod de hoje
 npm run images     # gera as variantes das fotos
 npm run marca      # gera as versões web dos arquivos oficiais de marca
 npm run verificar  # roda as assertions do build
@@ -44,14 +43,17 @@ next.config.ts                  output: 'export' + trailingSlash: true
 tailwind.config.ts              design system (paleta e escala do manual)
 app/
   layout.tsx                    shell HTML, Metadata API, favicon, preload
-                                da fonte, JSON-LD
-  page.tsx                      compõe as seções, na ordem
+                                da fonte, JSON-LD da clínica (Dentist, Person)
+  page.tsx                      compõe as seções, na ordem do briefing;
+                                JSON-LD FAQPage (só aqui: FAQ visível)
+  privacidade/page.tsx          política de privacidade (rascunho LGPD)
+  robots.txt/ sitemap.xml/      rotas GERADAS no build a partir do
+  llms.txt/ llms-full.txt/      content.ts — o domínio vem de site.url
   globals.css                   @font-face + camadas do Tailwind
 scripts/
   gen-images.mjs                npm run images — gera as variantes das fotos
   gen-marca.mjs                 npm run marca — gera public/marca/ a partir
                                 de assets/Pastas/
-  gen-sitemap.mjs               npm run sitemap — atualiza o lastmod
   verificar-build.mjs           npm run verificar — assertions sobre out/
 assets/
   fotos-originais/              ENTRADA das fotos originais; fora do deploy.
@@ -61,10 +63,8 @@ assets/
                                 negativo) e padronagem. Fonte, fora do deploy
   icones/                       SVGs de referência
 public/
-  robots.txt                    permissivo para crawlers de IA
-  sitemap.xml                   Fase 1 + placeholders Fase 2 comentados
-  llms.txt / llms-full.txt      contexto para agentes de IA
-  .htaccess                     Hostinger: text/plain, 404, HTTPS, cache
+  .htaccess                     Hostinger: text/plain, noindex dos dumps
+                                RSC, 404, HTTPS, cache
   marca/                        SAÍDA gerada pelo npm run marca — logos,
                                 símbolos, padronagem e favicons. Não editar
                                 à mão: troque o original e rode de novo
@@ -80,31 +80,41 @@ src/
                                 compartilhada por gen-images.mjs e BrandImage
   lib/whatsapp.ts               buildWhatsAppUrl centralizado
   lib/tracking.ts               dataLayer.push com falha silenciosa
+  lib/llms.ts                   gera o llms.txt e o llms-full.txt
   components/ui/                Logo, botões, gráficos de marca, Reveal
-  components/sections/          as 10 seções
+  components/sections/          as seções da página, na ordem do briefing
+vercel.json                     Vercel: noindex nos dumps RSC do export
 out/                            build estático (gerado, fora do git)
 ```
 
-**Para editar qualquer texto do site, mexa só em `src/data/content.ts`.** Nenhuma string fica hardcoded em JSX.
+**Para editar qualquer texto do site, mexa só em `src/data/content.ts`.** Nenhuma string fica hardcoded em JSX. O mesmo arquivo alimenta o schema, o `robots.txt`, o `sitemap.xml` e os `llms.txt`.
+
+**Domínio de produção:** `site.url` em `src/data/content.ts` — hoje `https://clinica-lien.vercel.app`. Quando o domínio próprio for apontado, basta trocar essa linha: canonical, Open Graph, schema, sitemap, robots e `llms.txt` acompanham.
+
+**Copy:** reescrita em setembro de 2026 a partir do briefing oficial da clínica. O que mudou, o que está pendente e o que precisa de validação está em [`RELATORIO-ALTERACOES.md`](RELATORIO-ALTERACOES.md).
 
 ---
 
-## Deploy na Hostinger
+## Deploy
 
-1. `npm run sitemap && npm run build`
+**Produção atual: Vercel**, em `clinica-lien.vercel.app`. O `vercel.json` marca como `noindex` os dumps de payload RSC que o export gera (`index.txt`, `__next.*.txt`) e as cópias 200 da página de erro. Depois do primeiro deploy, confira que `/index.txt` responde com o header `X-Robots-Tag: noindex`.
+
+### Alternativa: Hostinger
+
+1. `npm run build`
 2. Suba **o conteúdo de `out/`** (não a pasta) para `public_html/` via hPanel → Gerenciador de Arquivos, ou FTP.
 3. Confirme que o `.htaccess` subiu — arquivos com ponto às vezes ficam ocultos no upload. Ele é o que garante:
    - `llms.txt` servido como `text/plain`
    - redirect forçado para HTTPS (o canonical aponta para `https://`)
 4. Ative o SSL em hPanel → SSL, se ainda não estiver ativo.
 5. Valide, nesta ordem:
-   - `https://lienreabilitacaooral.com.br/robots.txt`
-   - `https://lienreabilitacaooral.com.br/sitemap.xml`
-   - `https://lienreabilitacaooral.com.br/llms.txt` (precisa abrir como texto puro, não baixar)
+   - `/robots.txt`
+   - `/sitemap.xml`
+   - `/llms.txt` (precisa abrir como texto puro, não baixar)
    - [Rich Results Test](https://search.google.com/test/rich-results) → deve detectar `Dentist`, `FAQPage` e `Person`
 6. Cadastre o sitemap no Google Search Console.
 
-**Vercel/Netlify:** o `.htaccess` é ignorado. Configure o `Content-Type` de `llms*.txt` e a página de erro 404 no `vercel.json` / `netlify.toml`. **Não** configure rewrite de SPA: cada rota já é um arquivo real, e um catch-all para o `index.html` recria a duplicata de conteúdo que a migração eliminou.
+**Vercel/Netlify:** o `.htaccess` é ignorado. A Vercel já serve `.txt` como texto, HTTPS, compressão e a página 404; o `noindex` dos dumps está no `vercel.json`. **Não** configure rewrite de SPA: cada rota já é um arquivo real, e um catch-all para o `index.html` recria a duplicata de conteúdo que a migração eliminou.
 
 > A arquitetura é Next.js com `output: 'export'`: o build gera HTML estático
 > em `out/`, sem runtime Node. O `.htaccess` não tem mais fallback de SPA —
@@ -115,24 +125,27 @@ out/                            build estático (gerado, fora do git)
 
 ## Pendências antes do deploy de produção
 
+A lista completa, com cada `[PENDENTE]` e `[SUGESTÃO]` agrupado por seção, está em [`RELATORIO-ALTERACOES.md`](RELATORIO-ALTERACOES.md). Os bloqueios principais:
+
 ### Bloqueiam o go-live
 
-| # | Item | Onde |
+| # | Item | Situação |
 |---|---|---|
-| 1 | **CRO-MG da Dra. Natália** — obrigatório por norma do CFO | `content.ts` → `site.responsavelTecnico` |
-| 2 | **Fotos reais** — 9 imagens. Enquanto não chegarem, aparece o placeholder `[FOTO PENDENTE]` | `assets/fotos-originais/` → `npm run images` → `content.ts` |
-| 3 | **CEP e coordenadas geo** do endereço | `src/data/schema.ts` → schema `Dentist` |
-| 4 | **`og-image.jpg` 1200×630** — não gerado, precisa de design | `public/og-image.jpg` |
+| 1 | CRO-MG da Dra. Natália | ✅ **Resolvido pelo briefing**: CRO-MG 49.821, no rodapé e no schema |
+| 2 | **Fotos reais** — 12 imagens (hero, sobre, experiência, 6 profissionais, 3 ambientes). Enquanto não chegarem, aparece o placeholder `[FOTO PENDENTE]` | `assets/fotos-originais/` → `npm run images` → remover `pendente: true` em `content.ts` |
+| 3 | CEP do endereço | ✅ **Resolvido pelo briefing**: 30110-035. As **coordenadas** seguem pendentes — foram retiradas do schema até lá, porque o placeholder invalidava o bloco |
+| 4 | **`og-image.jpg` 1200×630** com foto real da clínica — o arquivo não existe, e o compartilhamento em rede sai sem imagem | `public/og-image.jpg` |
+| 5 | **Validação da copy** marcada como `[SUGESTÃO]` e da redação da sedação | ver `RELATORIO-ALTERACOES.md` |
+| 6 | **Revisão jurídica** da política de privacidade | `app/privacidade/` + `content.ts` → `privacidade` |
 
 ### Confirmar com a Dra. Natália
 
 | # | Item | Onde |
 |---|---|---|
-| 5 | Números reais: +150 pacientes, 5,0★, 3 especialidades, +8 anos | `content.ts` → `numeros` |
-| 6 | Atende convênio? (resposta do FAQ está genérica) | `content.ts` → `faq` (o schema `FAQPage` em `src/data/schema.ts` deriva desse objeto automaticamente) |
-| 7 | Mais depoimentos reais (hoje só 1) — priorizar os que citam implante, reabilitação, prótese ou mastigação | `content.ts` → `depoimentos` |
-| 8 | ID do container GTM | bloco preparado (inerte) em [`docs/analytics-blocos-preparados.md`](docs/analytics-blocos-preparados.md); instalar em `app/layout.tsx` com `next/script` |
-| 9 | Meta Pixel e GA4 | via GTM |
+| 7 | Depoimentos reais autorizados — hoje a seção mostra só o selo do Google. Priorizar os que citam implante, reabilitação, prótese ou mastigação | `content.ts` → `depoimentos` |
+| 8 | Casos de antes e depois autorizados (Resolução CFO 196/2019) — seção pronta e oculta | `content.ts` → `resultados` + `SHOW_RESULTS` |
+| 9 | ID do container GTM | bloco preparado (inerte) em [`docs/analytics-blocos-preparados.md`](docs/analytics-blocos-preparados.md); instalar em `app/layout.tsx` com `next/script`. **Junto com o GTM entram o banner de consentimento e a atualização da política de privacidade** |
+| 10 | Meta Pixel e GA4 | via GTM, com a mesma ressalva |
 
 ### Fotos esperadas
 
@@ -278,7 +291,7 @@ O original tem 11.839px e 854KB. O `npm run marca` gera uma versão de 2.000px e
 A versão anterior deste README registrava que o manual pede os elementos gráficos em vetor. Os arquivos enviados pela clínica são PNG, e o site usa esses arquivos. Se existir versão vetorial (SVG, PDF, AI ou EPS), ela é preferível: logo nítida em qualquer tamanho e padronagem de poucos KB. Basta colocar em `assets/Pastas/`, adaptar o `gen-marca.mjs` e rodar de novo.
 
 ### Ícone do WhatsApp
-`src/components/ui/WhatsAppIcon.tsx` — SVG inline próprio, em **todos os 10 CTAs** que abrem o WhatsApp (header, hero, os 6 cards de especialidade, CTA final e botão flutuante). Usa `currentColor`, então herda a cor do contexto: branco sobre magenta, teal sobre card branco, magenta sobre botão branco.
+`src/components/ui/WhatsAppIcon.tsx` — SVG inline próprio, em **todos os CTAs** que abrem o WhatsApp — header, hero, os 8 cards do cardápio, os 10 tratamentos, sedação, CTA final e botão flutuante. Usa `currentColor`, então herda a cor do contexto: branco sobre magenta ou teal, teal sobre card branco, magenta sobre botão branco.
 
 > Deliberadamente **não** usa o verde do WhatsApp. Verde não existe no manual e os "usos incorretos" vedam cores fora da paleta.
 
@@ -286,24 +299,33 @@ A versão anterior deste README registrava que o manual pede os elementos gráfi
 
 ## Verificações já feitas neste build
 
-Medidas no navegador, não por inspeção visual:
+**Automáticas** — `npm run verificar`, 60 assertions sobre o `out/`, com teste negativo das principais (cada uma foi forçada a falhar e falhou pelo motivo certo):
 
-- **Estrelas dos depoimentos preenchidas** — `fill` computado = `rgb(156, 23, 129)`. Estrela vazia lê como avaliação zero e destrói a conversão; por isso o `fill="currentColor"` vem acompanhado de `stroke` na mesma cor, para não abrir halo no Safari.
-- **Contraste WCAG AA** — 10 pares de texto/fundo medidos. **9 passam; 1 falha** (ver a decisão aberta logo abaixo). O par medido em `4.72:1` é a tag teal 12px sobre **branco** — esse passa, com margem pequena; não escureça o fundo nem clareie o teal sem remedir.
-- **Um único `<h1>`**, hierarquia h2→h3 sem pular nível.
-- **10 CTAs de WhatsApp**, cada um com a mensagem pré-preenchida correta da sua origem.
-- **`dataLayer.push`** disparando: `{event: 'click_whatsapp', origem: 'hero'}`.
-- **Zero links mortos**, zero `href="#"`, zero ocorrências de "Coleções Lien", zero cores fora da paleta, zero emoji no HTML.
-- **CTA final com exatamente 1 botão.**
-- **Sem overflow horizontal.** Console limpo, sem erros.
-- **FAQ** — 8 perguntas, texto presente no DOM mesmo com o accordion fechado (indexável), espelhando o schema `FAQPage`.
-- **Ícone do WhatsApp nos 10 CTAs** — verificado por `fill=currentColor` computado em cada um, com a cor correta do contexto.
+- Conteúdo dentro do HTML, sem executar JS; um único `<h1>`; seções na ordem do briefing.
+- Todo CTA de WhatsApp com o número da clínica, mensagem pré-preenchida e `data-cta`; todas as 23 origens presentes.
+- FAQ com 12 perguntas indexáveis com o accordion fechado; `FAQPage` só na home.
+- Vocabulário do briefing varrido no HTML, no JSON-LD, nas mensagens de WhatsApp, na privacidade e nos `llms.txt`.
+- Nenhum marcador `[PENDENTE]` / `[SUGESTÃO]` publicado; nenhum número inflado; domínio único.
+- Schema sem `aggregateRating`, sem `priceRange`, sem placeholder.
+- CSS compilado, H1 fora de `opacity:0`, arquivos de marca existentes.
+
+**No navegador**, contra o `out/` servido:
+
+- Página viva: 23 CTAs com `data-cta` e o número certo; console limpo.
+- `dataLayer.push` disparando: `{event: 'click_whatsapp', origem: 'hero'}`.
+- Contraste medido em **300 elementos de texto**: só reprova o par da decisão abaixo. O aprovado mais apertado é o link teal nos cards compactos de tratamento, a 4,64:1.
+- Sem overflow horizontal em 375, 1024 e 1280px; header sem quebra de linha a 1024px.
+- Mapa do Google: nenhum iframe antes do clique.
+- Botão flutuante: oculto sobre o hero, visível depois, com foco e `aria-hidden` coerentes.
+- Estrelas dos depoimentos com `fill` e `stroke` em `currentColor` magenta.
 
 ### Falha de contraste em aberto — decisão do dono do produto
 
 A tag teal de 12px sobre o fundo `cream` (`#FAF8F6`) mede **4.46:1**, abaixo
-do mínimo **4.5:1** de AA para texto pequeno. Acontece nas seções
-`#especialidades` e `#equipe`, as de fundo alternado. A variante medida antes
+do mínimo **4.5:1** de AA para texto pequeno. Acontece nas tags das seções de
+fundo alternado: `#sobre`, `#tratamentos`, `#estrutura` e `#depoimentos`.
+A arquitetura do briefing tem mais seções em cream, e **as ocorrências subiram
+de 2 para 4**. A variante medida antes
 em `4.72:1` era a mesma tag sobre **branco**; a variante sobre `cream` nunca
 havia sido medida.
 
@@ -322,7 +344,10 @@ Precisa de decisão de quem responde pelo manual de identidade.
 
 ### Ainda não verificado
 
-- **Lighthouse ≥90** nas 4 categorias — rode contra o `out/` servido, não contra o dev server.
+- **Lighthouse** (o briefing pede Performance ≥ 85, Acessibilidade ≥ 95, SEO ≥ 95) — rode contra o `out/` servido, não contra o dev server.
+- **Rich Results Test** do schema — exige o site publicado.
+- **Animações de entrada das seções** — o navegador de teste rodou com a página oculta, o que pausa as animações. Os 102 elementos em espera têm a assinatura exata do estado inicial do `Reveal`; confira rolando num navegador visível.
+- **CTAs em celular real.**
 - **Estrelas em Safari e Android reais** — validado só no Chromium.
 - **Tempo <3s em 4G** — depende do peso das fotos reais, que ainda não existem.
 
@@ -330,29 +355,21 @@ Precisa de decisão de quem responde pelo manual de identidade.
 
 ## Decisões de escopo registradas
 
-Pontos em que o **prompt diretor** (benchmarks/arquitetura) pediu algo que conflita com o **prompt mestre**, e o que foi decidido.
+### Copy — reescrita pelo briefing oficial (setembro de 2026)
 
-### Galeria de antes/depois — NÃO construída
+A copy anterior, dada como "aprovada e final" pelo prompt mestre, foi substituída pela do briefing oficial preenchido pela clínica. O briefing tem precedência: é a fonte da própria clínica. O que mudou e o que ficou pendente está em [`RELATORIO-ALTERACOES.md`](RELATORIO-ALTERACOES.md).
 
-O prompt diretor pede "galeria de casos antes/depois como elemento central de credibilidade". O prompt mestre restringe: *"Não exibir imagens de 'antes e depois' sem autorização documentada — a Resolução CFO 196/2019 restringe esse uso."*
+### Galeria de antes e depois — construída, oculta
 
-**Decisão: fora do escopo até análise de conformidade.** Não é uma decisão de design — é de conformidade, e passa pela Dra. Natália e pelo CRO dela. Se houver autorização documentada dos pacientes, a seção entra depois sem retrabalho: a estrutura de seções é modular e o padrão do `BrandImage` já cobre o caso.
+O briefing registra que existem casos de reabilitação e facetas com autorização assinada. A seção está pronta, com a legenda obrigatória em cada caso ("Imagem publicada com autorização do paciente" e "Os resultados variam de pessoa para pessoa e dependem de diagnóstico individual"), e **oculta** por `SHOW_RESULTS` até os arquivos chegarem e o enquadramento na Resolução CFO 196/2019 ser confirmado.
 
-### Copy de jornada de transformação — NÃO aplicada
+### Selos e certificações — não construído
 
-O prompt diretor sugere copy no estilo "Você chegou pela dor ao mastigar. Vai sair com o sorriso de volta.". O prompt mestre diz que o texto atual está **aprovado e final** e proíbe copy nova sem base nele.
+O briefing não pede um bloco de selos. Os diferenciais técnicos (escâner intraoral, agregados plaquetários, sedação) aparecem como selos dentro do card de implantodontia. Credencial de profissional de saúde não se inventa.
 
-**Decisão: manter a copy aprovada.** O H1 atual ("Devolvemos sua mastigação, seu sorriso e sua confiança") já carrega a promessa de transformação e passa no teste do próprio mestre: se um paciente com medo entendeu, está certo.
+### Ambientes — absorvida
 
-### Selos/certificações — NÃO construída
-
-O prompt diretor pede um bloco de selos como reforço de autoridade. **Não há dado real** de títulos, especializações ou filiações no material recebido, e credencial de profissional de saúde não se inventa. Quando a lista existir, o bloco entra.
-
-### Ambientes — construída
-
-Entrou entre Corpo Clínico e Depoimentos, seguindo a estrutura de referência do prompt diretor (Hero → Sobre → Serviços → Equipe → **Ambientes** → Depoimentos). Três espaços com placeholder `[FOTO PENDENTE]`.
-
-> ⚠️ A copy dessa seção é **nova** — o prompt diretor pediu a seção mas não trouxe texto. Derivei do vocabulário já aprovado no hero e na Experiência Lien para não introduzir voz nova, mas **precisa de aprovação**. Está marcada como tal em `content.ts`. A lista de ambientes também é uma suposição conservadora: confirmar quais espaços a clínica realmente tem.
+A seção "Ambientes" não existe na arquitetura do briefing. As três fotos (recepção, atendimento, kit de boas-vindas) passaram para **Estrutura e tecnologia**.
 
 ---
 
@@ -362,7 +379,10 @@ Entrou entre Corpo Clínico e Depoimentos, seguindo a estrutura de referência d
 - Nunca avatar com iniciais no corpo clínico. Foto de rosto é o maior fator de confiança em saúde.
 - Nunca promessa de resultado clínico garantido (Código de Ética Odontológica do CFO).
 - Nunca "antes e depois" sem autorização documentada (Resolução CFO 196/2019).
-- Nunca preço, promoção, desconto ou linguagem de varejo.
+- Nunca preço, valor da consulta, parcelamento, promoção, desconto, urgência artificial ("últimas vagas") ou linguagem de varejo. As informações comerciais do briefing servem só para o atendimento no WhatsApp.
+- **Vocabulário do briefing:** nunca "avaliação" no sentido de consulta (use **consulta** ou **consulta e planejamento**), nunca "orçamento" (use **planejamento individual**), nunca "indolor"/"sem dor" como promessa, nunca superlativo vazio. "Investimento" só na FAQ, sem número. O `npm run verificar` reprova o build se algum aparecer.
+- Nunca inventar dado clínico, número, título, CRO, depoimento ou nome. Onde falta informação, `[PENDENTE]` em comentário de código — nunca no texto publicado.
+- Nunca imagem gerada por IA.
 - Nunca banco de imagens.
 - Frase-teste da copy: **se um paciente com medo entendeu, o copy está certo.**
 
@@ -372,20 +392,8 @@ Entrou entre Corpo Clínico e Depoimentos, seguindo a estrutura de referência d
 
 O acesso está **liberado** para crawlers de IA (GPTBot, ClaudeBot, PerplexityBot, Google-Extended e outros). A decisão é estratégica: para uma clínica local, ser citada em respostas do tipo "melhor clínica de implante em BH" vale mais do que proteger conteúdo institucional.
 
-Para restringir, troque `Allow: /` por `Disallow: /` nos blocos de IA em `public/robots.txt`.
+O arquivo é **gerado no build** por `app/robots.txt/route.ts`, com o domínio de `site.url`. Para restringir os agentes de IA, tire-os da lista `agentesIA` nesse arquivo.
 
-O `export` do Next publica também `index.txt` e os `__next.*.txt` — dumps do
-payload RSC, ou seja, uma duplicata rastreável de cada palavra do site — mais
-`_not-found/` e `404/` com status 200. Todos estão em `Disallow`, no grupo
-`User-agent: *` e no bloco de bloqueios do fim do arquivo.
+O `export` do Next publica também `index.txt` e os `__next.*.txt` — dumps do payload RSC, uma duplicata rastreável de cada palavra do site — mais `_not-found/` e `404/` com status 200. Eles recebem **`X-Robots-Tag: noindex`**, pelo `vercel.json` na Vercel e pelo `.htaccess` na Hostinger.
 
-> **Limitação conhecida, em aberto:** pelo padrão do robots.txt um crawler
-> obedece **só** ao grupo mais específico que casa com ele, e não herda nada
-> do grupo `*`. Como Googlebot, Bingbot e cada agente de IA têm grupo próprio
-> com apenas `Allow: /`, nenhum deles recebe esses `Disallow` — nem os de
-> `/admin` e `/*.json$`, que já eram assim antes desta mudança. Corrigir exige
-> repetir os bloqueios dentro de cada grupo, ou consolidar os `User-agent` em
-> um grupo único: as duas coisas mexem na estrutura da allow-list de IA, que é
-> decisão estratégica registrada — fica para o dono. Alternativa que não passa
-> pelo robots.txt: `Header set X-Robots-Tag "noindex"` para esses caminhos no
-> `.htaccess`.
+> Por que o header, e não só o `Disallow`: pelo padrão do robots.txt um crawler obedece **só** ao grupo mais específico que casa com ele. Googlebot, Bingbot e cada agente de IA têm grupo próprio com `Allow: /`, então não herdam os `Disallow` do grupo `*`. O header funciona para qualquer crawler — e ele precisa poder buscar o arquivo para ler o `noindex`, que é exatamente o que acontece.

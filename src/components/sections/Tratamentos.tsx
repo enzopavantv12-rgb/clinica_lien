@@ -17,7 +17,9 @@ function Campos({
   claro?: boolean;
   semOQueE?: boolean;
 }) {
-  const rotulo = claro ? 'text-magenta-light' : 'text-teal';
+  // Sobre o magenta, rotulo em branco: o manual veda magenta-light como texto
+  // ("fundos suaves, tags — nunca texto").
+  const rotulo = claro ? 'text-white' : 'text-teal';
   const texto = claro ? 'text-white/90' : 'text-ink-muted';
   const linhas = [
     !semOQueE && { rotulo: tratamentos.rotulos.oQueE, texto: item.oQueE },
