@@ -133,7 +133,7 @@ A lista completa, com cada `[PENDENTE]` e `[SUGESTÃO]` agrupado por seção, es
 |---|---|---|
 | 1 | CRO-MG da Dra. Natália | ✅ **Resolvido pelo briefing**: CRO-MG 49.821, no rodapé e no schema |
 | 2 | **Fotos reais** — 12 imagens (hero, sobre, experiência, 6 profissionais, 3 ambientes). Enquanto não chegarem, aparece o placeholder `[FOTO PENDENTE]` | `assets/fotos-originais/` → `npm run images` → remover `pendente: true` em `content.ts` |
-| 3 | CEP do endereço | ✅ **Resolvido pelo briefing**: 30110-035. As **coordenadas** seguem pendentes — foram retiradas do schema até lá, porque o placeholder invalidava o bloco |
+| 3 | CEP do endereço | ✅ **Resolvido**: 30110-923 (corrigido em set/2026; o briefing trazia 30110-035). As **coordenadas** seguem pendentes — foram retiradas do schema até lá, porque o placeholder invalidava o bloco |
 | 4 | **`og-image.jpg` 1200×630** com foto real da clínica — o arquivo não existe, e o compartilhamento em rede sai sem imagem | `public/og-image.jpg` |
 | 5 | **Validação da copy** marcada como `[SUGESTÃO]` e da redação da sedação | ver `RELATORIO-ALTERACOES.md` |
 | 6 | **Revisão jurídica** da política de privacidade | `app/privacidade/` + `content.ts` → `privacidade` |

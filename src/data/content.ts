@@ -43,10 +43,13 @@ export const site = {
     bairro: 'Cruzeiro',
     cidade: 'Belo Horizonte',
     uf: 'MG',
-    cep: '30110-035',
+    cep: '30110-923',
     // [PENDENTE: numero da sala e ponto de referencia]
   },
-  enderecoCompleto: 'Edifício Asteca · Av. do Contorno, 5351 — Cruzeiro, Belo Horizonte/MG · CEP 30110-035',
+  enderecoCompleto: 'Edifício Asteca · Av. do Contorno, 5351 — Cruzeiro, Belo Horizonte/MG · CEP 30110-923',
+  // Grafia usada no Google Maps (busca, rota, embed e hasMap do schema). Manter
+  // identica a do perfil no Google Empresa, por consistencia de SEO local.
+  enderecoMaps: 'Av. do Contorno, 5351 - Cruzeiro, Belo Horizonte - MG, 30110-923',
   enderecoCurto: 'Edifício Asteca · Av. do Contorno, 5351 — Cruzeiro, BH',
   horarios: [
     { dias: 'Segunda, terça, quinta e sexta', horas: '8h às 18h' },
@@ -111,6 +114,9 @@ export const whatsappMensagens = {
   'tratamento-clareamento': `${OLA} gostaria de conversar sobre clareamento dental.`,
 
   sedacao: `${OLA} gostaria de entender como funciona a sedação para implantes e cirurgias.`,
+
+  sobre: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
+  rodape: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
 } as const;
 
 export type OrigemWhatsApp = keyof typeof whatsappMensagens;
@@ -198,7 +204,7 @@ export const cardapio = {
 };
 
 export const sobre = {
-  tag: 'Sobre a Lien',
+  tag: 'Clínica Lien Reabilitação Oral',
   h2: 'Lien quer dizer vínculo.',
   paragrafos: [
     'Em francês, lien significa laço, ligação, confiança. Foi esse o nome que escolhemos porque é isso que acreditamos que a odontologia deve ser: uma relação.',
@@ -207,6 +213,9 @@ export const sobre = {
     'A Lien nasceu em 2024 do sonho da Dra. Natália Simões de ter um espaço onde cada paciente fosse atendido com tempo, escuta e cuidado de verdade.',
     'Aqui, consulta não tem pressa. Cada tratamento é planejado para a sua necessidade real — nem mais, nem menos.',
   ],
+  cta: 'Agende sua consulta',
+  // Missao, filosofia e fechamento sairam da secao no layout editorial
+  // (set/2026). Continuam aqui porque o llms.txt ainda os publica.
   missao: {
     titulo: 'Missão',
     // [SUGESTAO: complemento "tecnica, tecnologia e acolhimento em cada etapa"]
@@ -219,12 +228,19 @@ export const sobre = {
   },
   fechamento:
     'Na Lien, você não recebe apenas um tratamento. Você vive uma experiência de cuidado — e ganha uma equipe que caminha com você.',
+  // [PENDENTE: foto ampla da recepcao ou de um consultorio]
   imagem: {
-    src: '/img/sobre-dra-natalia.webp',
-    alt: 'Dra. Natália Simões, fundadora da Lien Reabilitação Oral, em Belo Horizonte',
+    src: '/img/sobre-recepcao.webp',
+    alt: 'Recepção da Lien Reabilitação Oral, no Cruzeiro, em Belo Horizonte',
     pendente: true,
   },
-} as const;
+  // [PENDENTE: video de 8 a 15 s em loop, sem audio, 1080x1080, WebM (VP9) e
+  // MP4 (H.264) ate 3MB cada, em /public/videos/. Poster em /public/videos/.
+  // Enquanto for null, a forma de gota mostra um placeholder.]
+  video: null as null | { webm: string; mp4: string; poster: string },
+  rotuloPausar: 'Pausar vídeo',
+  rotuloReproduzir: 'Reproduzir vídeo',
+};
 
 export const metodo = {
   tag: 'Método Lien',
@@ -743,9 +759,12 @@ export const ctaFinal = {
 export const rodape = {
   titulos: { navegacao: 'Navegação', contato: 'Contato', horarios: 'Horários' },
   comoChegar: 'Como chegar',
+  abrirNoMaps: 'Abrir no Google Maps',
+  tracarRota: 'Traçar rota',
+  conversarWhatsApp: 'Conversar pelo WhatsApp',
   // O mapa so carrega com clique: o iframe do Google grava cookies, e isso
-  // exigiria consentimento (LGPD). O link "Como chegar" nao depende dele.
-  mostrarMapa: 'Ver mapa',
+  // exigiria consentimento (LGPD). Os botoes de rota nao dependem dele.
+  mostrarMapa: 'Ver mapa interativo',
   avisoMapa: 'Ao carregar o mapa, o Google pode coletar dados de navegação.',
   privacidade: 'Política de privacidade',
 } as const;

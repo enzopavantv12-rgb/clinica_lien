@@ -1,6 +1,7 @@
-import { Clock, Instagram, Mail, MapPin, Navigation, Phone } from 'lucide-react';
+import { Clock, ExternalLink, Instagram, Mail, MapPin, Navigation, Phone } from 'lucide-react';
 import { Logo } from '../ui/Logo';
 import { MapaSobDemanda } from '../ui/MapaSobDemanda';
+import { WhatsAppLink } from '../ui/WhatsAppLink';
 import { navegacao, rodape, site } from '../../data/content';
 
 /** Icone do TikTok — lucide-react nao inclui marcas. */
@@ -16,6 +17,8 @@ const icone = 'mt-1 shrink-0 text-teal';
 const link =
   'rounded transition-colors hover:text-magenta focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-magenta';
 const titulo = 'text-legend font-semibold uppercase tracking-[0.16em] text-ink';
+const botaoMapa =
+  'inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-[0.9375rem] font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta';
 const botaoRede =
   'rounded-xl border border-ink/15 p-2.5 text-teal transition-colors hover:border-teal hover:bg-teal/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal';
 
@@ -28,17 +31,21 @@ const botaoRede =
  * aparece em icones (exigencia de 3:1 para elemento grafico); todo texto e ink,
  * ink-muted ou magenta.
  *
+ * Bloco "Como chegar" acima da linha legal: endereco, horarios, WhatsApp e
+ * botoes de rota a esquerda (5/12), mapa a direita (7/12). O mapa continua
+ * carregando so com clique (LGPD) — ver MapaSobDemanda.
+ *
  * Linha legal obrigatoria: razao social, CNPJ e responsavel tecnica com CRO.
  */
 export function Footer() {
-  const comoChegar = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    `${site.endereco.rua}, ${site.endereco.bairro}, ${site.endereco.cidade} - ${site.endereco.uf}, ${site.endereco.cep}`,
-  )}`;
+  const destino = encodeURIComponent(site.enderecoMaps);
+  const abrirNoMaps = `https://www.google.com/maps/search/?api=1&query=${destino}`;
+  const tracarRota = `https://www.google.com/maps/dir/?api=1&destination=${destino}`;
 
   return (
     <footer className="border-t border-brandgray bg-cream pt-16 pb-10 text-ink">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.25fr_0.8fr_1.1fr_1.1fr]">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]">
           {/* Marca */}
           <div>
             <Logo variante="colorida" className="h-16" />
@@ -86,22 +93,6 @@ export function Footer() {
             <h2 className={titulo}>{rodape.titulos.contato}</h2>
             <ul className="mt-5 flex flex-col gap-4 text-body text-ink-muted">
               <li className="flex items-start gap-3">
-                <MapPin size={18} strokeWidth={1.75} aria-hidden="true" className={icone} />
-                <span>
-                  {site.enderecoCompleto}
-                  {/* [PENDENTE: numero da sala e ponto de referencia] */}
-                  <a
-                    href={comoChegar}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`mt-2 flex w-fit items-center gap-1.5 font-medium text-magenta ${link}`}
-                  >
-                    <Navigation size={15} strokeWidth={2} aria-hidden="true" />
-                    {rodape.comoChegar}
-                  </a>
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
                 <Phone size={18} strokeWidth={1.75} aria-hidden="true" className={icone} />
                 <a href={`tel:${site.telefoneE164}`} className={link}>
                   {site.telefoneExibicao}
@@ -115,11 +106,18 @@ export function Footer() {
               </li>
             </ul>
           </div>
+        </div>
 
-          {/* Horarios + mapa */}
-          <div>
-            <h2 className={titulo}>{rodape.titulos.horarios}</h2>
-            <ul className="mt-5 flex flex-col gap-3 text-body text-ink-muted">
+        {/* Como chegar */}
+        <div className="mt-14 grid gap-8 border-t border-ink/10 pt-12 md:grid-cols-12 md:gap-10">
+          <div className="md:col-span-5">
+            <h2 className="text-h3 sm:text-h3-lg font-semibold text-ink">{rodape.comoChegar}</h2>
+            <ul className="mt-6 flex flex-col gap-4 text-body text-ink-muted">
+              <li className="flex items-start gap-3">
+                <MapPin size={18} strokeWidth={1.75} aria-hidden="true" className={icone} />
+                {/* [PENDENTE: numero da sala e ponto de referencia] */}
+                <span>{site.enderecoCompleto}</span>
+              </li>
               {site.horarios.map((h) => (
                 <li key={h.dias} className="flex items-start gap-3">
                   <Clock size={18} strokeWidth={1.75} aria-hidden="true" className={icone} />
@@ -130,14 +128,40 @@ export function Footer() {
                   </span>
                 </li>
               ))}
+              <li>
+                <WhatsAppLink origem="rodape" contexto={rodape.comoChegar} className="!text-magenta hover:!text-ink">
+                  {rodape.conversarWhatsApp} · {site.telefoneExibicao}
+                </WhatsAppLink>
+              </li>
             </ul>
-            <div className="mt-6">
-              <MapaSobDemanda
-                endereco={`${site.endereco.edificio}, ${site.endereco.rua}, ${site.endereco.bairro}, ${site.endereco.cidade} - ${site.endereco.uf}`}
-                rotulo={rodape.mostrarMapa}
-                aviso={rodape.avisoMapa}
-              />
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <a
+                href={abrirNoMaps}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${botaoMapa} border border-ink/25 text-ink hover:border-ink hover:bg-ink/[0.04]`}
+              >
+                <ExternalLink size={16} strokeWidth={2} aria-hidden="true" />
+                {rodape.abrirNoMaps}
+              </a>
+              <a
+                href={tracarRota}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${botaoMapa} bg-magenta text-white hover:bg-[#87146F]`}
+              >
+                <Navigation size={16} strokeWidth={2} aria-hidden="true" />
+                {rodape.tracarRota}
+              </a>
             </div>
+          </div>
+
+          <div className="md:col-span-7">
+            <MapaSobDemanda
+              endereco={site.enderecoMaps}
+              rotulo={rodape.mostrarMapa}
+              aviso={rodape.avisoMapa}
+            />
           </div>
         </div>
 

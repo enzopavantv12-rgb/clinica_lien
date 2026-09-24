@@ -96,3 +96,50 @@
     outline-color: #9C1781;
   }
 }
+
+@layer components {
+  /*
+   * Secao Sobre — composicao editorial.
+   * Magenta (primaria) = 156 23 129 · Teal (secundaria) = 3 126 153.
+   */
+
+  /* CTA em pilula: sombra difusa nas duas cores da marca. */
+  .lien-cta {
+    box-shadow:
+      0 24px 60px -12px rgb(156 23 129 / 0.35),
+      0 8px 24px -8px rgb(3 126 153 / 0.25);
+  }
+  .lien-cta:hover {
+    box-shadow:
+      0 24px 60px -12px rgb(156 23 129 / 0.45),
+      0 8px 24px -8px rgb(3 126 153 / 0.35);
+  }
+
+  /* Forma de gota: tres cantos redondos e o superior direito quase reto. */
+  .lien-gota {
+    border-radius: 50% 28px 50% 50%;
+  }
+
+  /* So a borda da gota, em degradê magenta -> teal claro. A mascara recorta
+     o miolo e deixa apenas os 3px da borda. */
+  .lien-outline {
+    border: 3px solid transparent;
+    background: linear-gradient(135deg, #9C1781, #68C0D4) border-box;
+    -webkit-mask:
+      linear-gradient(#000 0 0) padding-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Foto de fundo "some" na base: teal transparente no topo, 55% embaixo. */
+  .lien-fundo-degrade {
+    background: linear-gradient(180deg, transparent 35%, rgb(3 126 153 / 0.55) 100%);
+  }
+
+  /* Cantos assimetricos da foto de fundo. */
+  .lien-fundo {
+    border-radius: 24px 120px 40px 160px;
+  }
+}

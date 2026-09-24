@@ -57,6 +57,7 @@ export const schemaDentist = {
   image: logo,
   logo,
   address: endereco,
+  hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.enderecoMaps)}`,
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',

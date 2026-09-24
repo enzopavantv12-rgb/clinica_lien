@@ -5,7 +5,7 @@ import { whatsappUrlPor } from '../../lib/whatsapp';
 import { trackWhatsAppClick } from '../../lib/tracking';
 import type { OrigemWhatsApp } from '../../data/content';
 
-type Variante = 'magenta' | 'branco' | 'outline';
+type Variante = 'magenta' | 'branco' | 'outline' | 'pilula';
 
 const variantes: Record<Variante, string> = {
   magenta:
@@ -14,11 +14,14 @@ const variantes: Record<Variante, string> = {
     'bg-white text-magenta hover:bg-cream focus-visible:outline-white shadow-soft',
   outline:
     'bg-transparent text-ink border border-ink/25 hover:border-ink hover:bg-ink/[0.04] focus-visible:outline-ink',
+  // Secao Sobre: pilula branca com sombra colorida (.lien-cta, globals.css).
+  pilula: 'lien-cta bg-white text-magenta uppercase tracking-[0.02em] focus-visible:outline-magenta',
 };
 
 const tamanhos = {
   md: 'px-5 py-3 text-[0.9375rem]',
   lg: 'px-7 py-4 text-base sm:text-[1.0625rem]',
+  pilula: 'h-[58px] px-10 text-base sm:text-lg',
 };
 
 /**
@@ -53,7 +56,7 @@ export function WhatsAppButton({
       rel="noopener noreferrer"
       onClick={() => trackWhatsAppClick(origem)}
       data-cta={origem}
-      className={`inline-flex items-center justify-center gap-2.5 rounded-2xl font-medium transition-all duration-300 ease-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 motion-safe:hover:-translate-y-0.5 ${variantes[variante]} ${tamanhos[tamanho]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2.5 ${variante === 'pilula' ? 'rounded-full' : 'rounded-2xl'} font-medium transition-all duration-300 ease-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 motion-safe:hover:-translate-y-0.5 ${variantes[variante]} ${tamanhos[tamanho]} ${className}`}
     >
       {comIcone && <WhatsAppIcon size={20} />}
       {children}
