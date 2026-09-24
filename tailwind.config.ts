@@ -32,6 +32,18 @@ export default {
           muted: '#5A5260',
         },
         cream: '#FAF8F6',
+        // Tokens shadcn (components/ui/card.tsx, marquee-03.tsx). Valores em
+        // :root no globals.css, apontando para a paleta acima.
+        background: 'rgb(var(--background) / <alpha-value>)',
+        foreground: 'rgb(var(--foreground) / <alpha-value>)',
+        card: {
+          DEFAULT: 'rgb(var(--card) / <alpha-value>)',
+          foreground: 'rgb(var(--card-foreground) / <alpha-value>)',
+        },
+        muted: {
+          foreground: 'rgb(var(--muted-foreground) / <alpha-value>)',
+        },
+        border: 'rgb(var(--border) / <alpha-value>)',
       },
       fontFamily: {
         sans: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],

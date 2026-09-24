@@ -689,14 +689,12 @@ export const depoimentos = {
   // [PENDENTE: avaliacoes reais do Google, copiadas sem edicao, com o nome
   // como aparece na avaliacao — e o aval da Dra. Natalia sobre as normas de
   // publicidade do CFO e do CRO-MG antes de publicar]
-  itens: [] as readonly { nome: string; tratamento?: string; texto: string }[],
-  // Com pelo menos este numero de avaliacoes, elas passam a rolar na faixa em
-  // marquee da secao Sobre (e saem do carrossel daqui, para nao repetir).
-  // Abaixo disso o marquee repetiria cards visivelmente.
+  // `foto`: opcional, URL da foto de perfil; sem ela, o card mostra iniciais.
+  itens: [] as readonly { nome: string; texto: string; foto?: string }[],
+  // Abaixo deste numero o marquee repetiria cards visivelmente: a faixa so
+  // aparece a partir dele.
   minimoMarquee: 6,
   faixa: {
-    tag: 'Quem já criou vínculo com a Lien',
-    h3: 'O que nossos pacientes dizem',
     origem: 'Avaliação no Google',
     verTodas: 'Ver todas as avaliações no Google',
     pausar: 'Pausar depoimentos',

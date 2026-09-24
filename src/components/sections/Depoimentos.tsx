@@ -1,4 +1,5 @@
 import { CincoEstrelas } from '../ui/CincoEstrelas';
+import { DepoimentosMarquee } from './DepoimentosMarquee';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeading } from '../ui/SectionHeading';
 import { depoimentos } from '../../data/content';
@@ -35,15 +36,16 @@ function SeloGoogle() {
 /**
  * Depoimentos + avaliacoes do Google.
  *
- * Nunca inventar depoimento. Sem nenhum cadastrado, a secao mostra so o selo
- * do Google — prova social real — sem texto de "em breve".
- * Com depoimentos: carrossel horizontal com scroll-snap (CSS puro, sem JS).
- * A partir de `minimoMarquee` avaliacoes, elas passam para a faixa em marquee
- * da secao Sobre e o carrossel daqui some, para nao repetir os mesmos textos.
+ * Nunca inventar depoimento. Abaixo de `minimoMarquee` avaliacoes reais, a
+ * secao mostra so o selo do Google — prova social real — sem texto de
+ * "em breve". A partir dele, as avaliacoes rolam no marquee-03 (vertical).
+ *
+ * `--background` redefinido para o cream da secao: e a cor do fade no topo e
+ * na base do marquee (`from-background`).
  */
 export function Depoimentos() {
   return (
-    <section id="depoimentos" className="bg-cream py-20 sm:py-24 lg:py-28">
+    <section id="depoimentos" className="bg-cream py-20 [--background:250_248_246] sm:py-24 lg:py-28">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
         <SectionHeading tag={depoimentos.tag} titulo={depoimentos.h2} />
 
@@ -51,24 +53,7 @@ export function Depoimentos() {
           <SeloGoogle />
         </Reveal>
 
-        {depoimentos.itens.length > 0 && depoimentos.itens.length < depoimentos.minimoMarquee && (
-          <ul className="-mx-5 mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 sm:mx-0 sm:px-0">
-            {depoimentos.itens.map((d) => (
-              <li key={d.nome} className="w-[86%] shrink-0 snap-start sm:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.834rem)]">
-                <article className="flex h-full flex-col rounded-3xl border border-brandgray bg-white p-7 shadow-soft sm:p-8">
-                  <CincoEstrelas />
-                  <blockquote className="mt-5 flex-1">
-                    <p className="max-w-prose text-body sm:text-body-lg text-ink">&ldquo;{d.texto}&rdquo;</p>
-                  </blockquote>
-                  <footer className="mt-6 border-t border-brandgray pt-4">
-                    <p className="text-[0.9375rem] font-semibold text-ink">{d.nome}</p>
-                    {d.tratamento && <p className="mt-0.5 text-legend text-teal">{d.tratamento}</p>}
-                  </footer>
-                </article>
-              </li>
-            ))}
-          </ul>
-        )}
+        {depoimentos.itens.length >= depoimentos.minimoMarquee && <DepoimentosMarquee />}
       </div>
     </section>
   );

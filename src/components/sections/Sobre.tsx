@@ -2,7 +2,6 @@ import { BrandImage } from '../ui/BrandImage';
 import { Reveal } from '../ui/Reveal';
 import { VideoGota } from '../ui/VideoGota';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
-import { SobreDepoimentos } from './SobreDepoimentos';
 import { sobre, type Trecho } from '../../data/content';
 
 /** Paragrafo com `lien` em italico e os destaques em semibold magenta. */
@@ -31,9 +30,6 @@ function Paragrafo({ trechos }: { trechos: readonly Trecho[] }) {
  *   1. foto da recepcao, cantos assimetricos, degradê teal na base;
  *   2. contorno em degradê com a forma do video, deslocado para cima e a direita;
  *   3. video em forma de gota por cima de tudo.
- *
- * Abaixo, a faixa de depoimentos em marquee (SobreDepoimentos), que so
- * aparece com avaliacoes reais cadastradas.
  *
  * Tipografia toda em Poppins: titulo Bold com tracking -0.02em (Poppins
  * Bold grande fica espacada demais sem isso), paragrafos Regular 16/18px.
@@ -126,8 +122,6 @@ export function Sobre() {
             </div>
           </div>
         </div>
-
-        <SobreDepoimentos />
       </div>
     </section>
   );

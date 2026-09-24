@@ -64,6 +64,15 @@
 @layer base {
   :root {
     color-scheme: light;
+
+    /* Tokens shadcn, em RGB, mapeados para a paleta da Lien. Uma secao pode
+       redefinir --background para o fade do marquee casar com o fundo dela. */
+    --background: 255 255 255; /* branco */
+    --foreground: 26 20 32; /* ink */
+    --card: 255 255 255;
+    --card-foreground: 26 20 32;
+    --muted-foreground: 90 82 96; /* ink-muted */
+    --border: 225 225 225; /* brandgray */
   }
 
   html {
