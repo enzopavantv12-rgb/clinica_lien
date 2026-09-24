@@ -563,7 +563,7 @@ type Membro = {
   especialidade: string | null;
   cro: string | null;
   bio: string | null;
-  foto: { src: string; alt: string; pendente: boolean };
+  foto: { src: string; alt: string; pendente?: boolean };
 };
 
 /**
@@ -587,7 +587,6 @@ export const equipe = {
       foto: {
         src: '/img/equipe-natalia-simoes.webp',
         alt: 'Dra. Natália Simões, fundadora da Lien e especialista em implantodontia e reabilitação oral em Belo Horizonte',
-        pendente: true,
       },
     },
     {
@@ -599,7 +598,6 @@ export const equipe = {
       foto: {
         src: '/img/equipe-maria-emilia.webp',
         alt: 'Dra. Maria Emília, especialista em endodontia na clínica Lien em Belo Horizonte',
-        pendente: true,
       },
     },
     {
@@ -610,7 +608,6 @@ export const equipe = {
       foto: {
         src: '/img/equipe-isabela-guieiro.webp',
         alt: 'Dra. Isabela Guieiro, especialista em harmonização orofacial e ortodontia na clínica Lien em Belo Horizonte',
-        pendente: true,
       },
     },
     {
@@ -621,31 +618,28 @@ export const equipe = {
       foto: {
         src: '/img/equipe-alexander-pedrosa.webp',
         alt: 'Dr. Alexander Pedrosa, cirurgião bucomaxilofacial da clínica Lien em Belo Horizonte',
-        pendente: true,
       },
     },
     {
       nome: 'Dra. Gabriela Ribeiro',
       especialidade: 'Dor orofacial e DTM',
       cro: 'CRO-MG 65.103',
-      // [PENDENTE: bio e foto]
+      // [PENDENTE: bio]
       bio: null,
       foto: {
         src: '/img/equipe-gabriela-ribeiro.webp',
         alt: 'Dra. Gabriela Ribeiro, especialista em dor orofacial e DTM na clínica Lien em Belo Horizonte',
-        pendente: true,
       },
     },
     {
       nome: 'Dra. Luiza Henriques',
-      // [PENDENTE: especialidade, CRO, bio e foto]
+      // [PENDENTE: especialidade, CRO e bio]
       especialidade: null,
       cro: null,
       bio: null,
       foto: {
         src: '/img/equipe-luiza-henriques.webp',
         alt: 'Dra. Luiza Henriques, da equipe da clínica Lien em Belo Horizonte',
-        pendente: true,
       },
     },
   ],
