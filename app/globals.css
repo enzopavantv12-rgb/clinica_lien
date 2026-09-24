@@ -89,6 +89,11 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
+    /* Marquee parado de vez (a regra acima so encurta a animacao). */
+    .animate-marquee,
+    .animate-marquee-vertical {
+      animation: none !important;
+    }
   }
 
   /* Foco visivel consistente em todo elemento interativo. */

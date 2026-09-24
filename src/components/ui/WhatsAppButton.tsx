@@ -15,13 +15,13 @@ const variantes: Record<Variante, string> = {
   outline:
     'bg-transparent text-ink border border-ink/25 hover:border-ink hover:bg-ink/[0.04] focus-visible:outline-ink',
   // Secao Sobre: pilula branca com sombra colorida (.lien-cta, globals.css).
-  pilula: 'lien-cta bg-white text-magenta uppercase tracking-[0.02em] focus-visible:outline-magenta',
+  pilula: 'lien-cta bg-white text-magenta uppercase tracking-[0.06em] focus-visible:outline-magenta',
 };
 
 const tamanhos = {
   md: 'px-5 py-3 text-[0.9375rem]',
   lg: 'px-7 py-4 text-base sm:text-[1.0625rem]',
-  pilula: 'h-[58px] px-10 text-base sm:text-lg',
+  pilula: 'h-[58px] px-10 text-[0.9375rem] sm:text-base',
 };
 
 /**

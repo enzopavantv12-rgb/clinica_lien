@@ -203,16 +203,39 @@ export const cardapio = {
   [k: string]: unknown;
 };
 
+/**
+ * Trecho de texto com estilo: `italico` para termo estrangeiro, `destaque`
+ * para os pontos de ancoragem (semibold em magenta). O llms.txt usa o texto
+ * plano via `textoPlano`.
+ */
+export type Trecho = string | { texto: string; estilo: 'italico' | 'destaque' };
+
+export const textoPlano = (trechos: readonly Trecho[]) =>
+  trechos.map((t) => (typeof t === 'string' ? t : t.texto)).join('');
+
 export const sobre = {
   tag: 'Clínica Lien Reabilitação Oral',
   h2: 'Lien quer dizer vínculo.',
+  // Mesmo titulo em duas linhas: quebra forcada no desktop, natural no mobile.
+  // O ponto final entra a parte, em teal (assinatura visual).
+  tituloLinhas: ['Lien quer dizer', 'vínculo'],
   paragrafos: [
-    'Em francês, lien significa laço, ligação, confiança. Foi esse o nome que escolhemos porque é isso que acreditamos que a odontologia deve ser: uma relação.',
+    [
+      'Em francês, ',
+      { texto: 'lien', estilo: 'italico' },
+      ' significa laço, ligação, confiança. Foi esse o nome que escolhemos porque é isso que acreditamos que a odontologia deve ser: ',
+      { texto: 'uma relação.', estilo: 'destaque' },
+    ],
     // [SUGESTAO: o original foi cortado em "em ter um espaço que eu possa…";
     // completar com a Dra. Natalia]
-    'A Lien nasceu em 2024 do sonho da Dra. Natália Simões de ter um espaço onde cada paciente fosse atendido com tempo, escuta e cuidado de verdade.',
-    'Aqui, consulta não tem pressa. Cada tratamento é planejado para a sua necessidade real — nem mais, nem menos.',
-  ],
+    [
+      'A Lien nasceu em 2024 do sonho da Dra. Natália Simões de ter um espaço onde cada paciente fosse atendido com tempo, escuta e cuidado de verdade.',
+    ],
+    [
+      'Aqui, consulta não tem pressa. Cada tratamento é planejado para a sua necessidade real: ',
+      { texto: 'nem mais, nem menos.', estilo: 'destaque' },
+    ],
+  ] as Trecho[][],
   cta: 'Agende sua consulta',
   // Missao, filosofia e fechamento sairam da secao no layout editorial
   // (set/2026). Continuam aqui porque o llms.txt ainda os publica.
@@ -663,7 +686,22 @@ export const depoimentos = {
     total: 57,
     url: null as string | null,
   },
-  itens: [] as readonly { nome: string; tratamento: string; texto: string }[],
+  // [PENDENTE: avaliacoes reais do Google, copiadas sem edicao, com o nome
+  // como aparece na avaliacao — e o aval da Dra. Natalia sobre as normas de
+  // publicidade do CFO e do CRO-MG antes de publicar]
+  itens: [] as readonly { nome: string; tratamento?: string; texto: string }[],
+  // Com pelo menos este numero de avaliacoes, elas passam a rolar na faixa em
+  // marquee da secao Sobre (e saem do carrossel daqui, para nao repetir).
+  // Abaixo disso o marquee repetiria cards visivelmente.
+  minimoMarquee: 6,
+  faixa: {
+    tag: 'Quem já criou vínculo com a Lien',
+    h3: 'O que nossos pacientes dizem',
+    origem: 'Avaliação no Google',
+    verTodas: 'Ver todas as avaliações no Google',
+    pausar: 'Pausar depoimentos',
+    retomar: 'Retomar depoimentos',
+  },
 } as const;
 
 /**

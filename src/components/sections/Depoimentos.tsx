@@ -1,35 +1,7 @@
-import { Star } from 'lucide-react';
+import { CincoEstrelas } from '../ui/CincoEstrelas';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeading } from '../ui/SectionHeading';
 import { depoimentos } from '../../data/content';
-
-/**
- * CRITICO: as estrelas precisam renderizar PREENCHIDAS.
- * Estrela vazia e lida como avaliacao zero e destroi a conversao.
- *
- * Implementacao a prova de navegador:
- * - `fill="currentColor"` preenche o corpo do icone.
- * - `stroke="currentColor"` na mesma cor evita halo/contorno claro no Safari.
- * - a cor vem de `text-magenta` no wrapper, entao `currentColor` sempre resolve.
- * - `aria-hidden` nas estrelas + texto acessivel unico em <span class="sr-only">.
- */
-function CincoEstrelas({ tamanho = 18 }: { tamanho?: number }) {
-  return (
-    <div className="flex items-center gap-1 text-magenta">
-      {Array.from({ length: 5 }, (_, i) => (
-        <Star
-          key={i}
-          size={tamanho}
-          fill="currentColor"
-          stroke="currentColor"
-          strokeWidth={1}
-          aria-hidden="true"
-        />
-      ))}
-      <span className="sr-only">5 de 5 estrelas</span>
-    </div>
-  );
-}
 
 /** Selo da nota no Google. Vira link quando a URL do perfil for cadastrada. */
 function SeloGoogle() {
@@ -66,6 +38,8 @@ function SeloGoogle() {
  * Nunca inventar depoimento. Sem nenhum cadastrado, a secao mostra so o selo
  * do Google — prova social real — sem texto de "em breve".
  * Com depoimentos: carrossel horizontal com scroll-snap (CSS puro, sem JS).
+ * A partir de `minimoMarquee` avaliacoes, elas passam para a faixa em marquee
+ * da secao Sobre e o carrossel daqui some, para nao repetir os mesmos textos.
  */
 export function Depoimentos() {
   return (
@@ -77,7 +51,7 @@ export function Depoimentos() {
           <SeloGoogle />
         </Reveal>
 
-        {depoimentos.itens.length > 0 && (
+        {depoimentos.itens.length > 0 && depoimentos.itens.length < depoimentos.minimoMarquee && (
           <ul className="-mx-5 mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 sm:mx-0 sm:px-0">
             {depoimentos.itens.map((d) => (
               <li key={d.nome} className="w-[86%] shrink-0 snap-start sm:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.834rem)]">
@@ -88,7 +62,7 @@ export function Depoimentos() {
                   </blockquote>
                   <footer className="mt-6 border-t border-brandgray pt-4">
                     <p className="text-[0.9375rem] font-semibold text-ink">{d.nome}</p>
-                    <p className="mt-0.5 text-legend text-teal">{d.tratamento}</p>
+                    {d.tratamento && <p className="mt-0.5 text-legend text-teal">{d.tratamento}</p>}
                   </footer>
                 </article>
               </li>

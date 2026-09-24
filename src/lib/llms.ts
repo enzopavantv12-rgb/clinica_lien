@@ -9,6 +9,7 @@ import {
   seo,
   site,
   sobre,
+  textoPlano,
   tratamentos,
 } from '../data/content';
 
@@ -62,7 +63,7 @@ export function llmsResumo() {
     ...todosTratamentos.map((t) => `- ${t.nome}: ${t.oQueE}`),
     '',
     '## Diferencial',
-    `${sobre.paragrafos[2]} ${experiencia.sub}`,
+    `${textoPlano(sobre.paragrafos[2])} ${experiencia.sub}`,
     '',
     '## Como agendar',
     `Pelo WhatsApp ${site.telefoneExibicao}. ${faq.itens[0].resposta}`,
@@ -92,7 +93,7 @@ export function llmsCompleto() {
     identificacao(),
     '',
     `## ${sobre.h2}`,
-    ...sobre.paragrafos,
+    ...sobre.paragrafos.map(textoPlano),
     `${sobre.missao.titulo}: ${sobre.missao.texto}`,
     `${sobre.filosofia.titulo}: ${sobre.filosofia.texto}`,
     '',
