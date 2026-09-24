@@ -10,6 +10,11 @@ export default {
   content: ['./app/**/*.{ts,tsx}', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
+      screens: {
+        // Tela baixa (notebook 1280x720, celular pequeno). `raw` entra depois
+        // dos breakpoints de largura no CSS, entao sobrescreve sm:/lg:.
+        baixa: { raw: '(max-height: 780px)' },
+      },
       colors: {
         // Paleta oficial do manual
         magenta: {

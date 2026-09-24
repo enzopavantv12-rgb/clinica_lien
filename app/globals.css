@@ -143,3 +143,33 @@
     border-radius: 24px 120px 40px 160px;
   }
 }
+
+@layer components {
+  /*
+   * Geometria da linha do tempo do Metodo Lien (Timeline.tsx).
+   * Etapas pares em cima, impares embaixo, alternando: por isso o passo pode
+   * ser menor que a largura sem sobrepor texto da mesma fileira.
+   */
+  .timeline-trilho {
+    --inicio: 6vw;
+    --passo: 48vw;
+    --largura: 80vw;
+    --altura: min(600px, calc(100svh - 110px));
+  }
+  /* Tablet e notebook: colunas mais largas, senao o texto nao cabe na
+     metade da altura (26vw em 800px sao so 208px). */
+  @media (min-width: 768px) {
+    .timeline-trilho {
+      --inicio: 4vw;
+      --passo: 30vw;
+      --largura: 44vw;
+      --altura: min(660px, calc(100svh - 120px));
+    }
+  }
+  @media (min-width: 1280px) {
+    .timeline-trilho {
+      --passo: 22vw;
+      --largura: 26vw;
+    }
+  }
+}

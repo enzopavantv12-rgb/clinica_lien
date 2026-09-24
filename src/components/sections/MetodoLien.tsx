@@ -1,44 +1,36 @@
-import { Reveal } from '../ui/Reveal';
-import { SectionHeading } from '../ui/SectionHeading';
+import { PadraoOndas, Simbolo } from '../ui/BrandGraphics';
+import { Timeline } from '../ui/Timeline';
 import { metodo } from '../../data/content';
 
 /**
- * Metodo Lien em 4 etapas, como linha do tempo: horizontal no desktop,
- * vertical no mobile. Numeros em magenta, 44 -> 64px.
+ * Metodo Lien em 4 etapas, como linha do tempo horizontal com scroll: a secao
+ * fixa na tela e as etapas passam da direita para a esquerda (Timeline.tsx).
+ *
+ * O painel de abertura carrega o titulo da secao em branco sobre magenta —
+ * combinacao prevista no manual — com a padronagem oficial a 10%.
  * Proibido "avaliacao" e "orcamento" em qualquer etapa (briefing, 5.5).
  */
 export function MetodoLien() {
   return (
-    <section id="metodo" className="bg-white py-20 sm:py-24 lg:py-28">
-      <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
-        <SectionHeading tag={metodo.tag} titulo={metodo.h2} subtitulo={metodo.sub} />
-
-        <ol className="relative mt-14 grid gap-10 lg:grid-cols-4 lg:gap-8">
-          {/* Trilho da linha do tempo: vertical no mobile, horizontal no desktop. */}
-          <span
-            aria-hidden="true"
-            className="absolute bottom-4 left-[1.3rem] top-4 w-px bg-brandgray lg:bottom-auto lg:left-4 lg:right-4 lg:top-8 lg:h-px lg:w-auto"
-          />
-
-          {metodo.etapas.map((etapa, i) => (
-            <Reveal as="li" key={etapa.numero} delay={i * 0.08} className="relative pl-16 lg:pl-0">
-              <span
-                aria-hidden="true"
-                className="absolute left-0 top-0 block bg-white pr-2 text-stat font-black leading-none text-magenta lg:static lg:inline-block lg:text-stat-lg lg:pr-4"
-              >
-                {etapa.numero}
-              </span>
-              <h3 className="text-h3 sm:text-h3-lg font-semibold text-ink lg:mt-5">
-                <span className="sr-only">Etapa {etapa.numero}: </span>
-                {etapa.titulo}
-              </h3>
-              <p className="mt-2.5 max-w-prose text-body sm:text-body-lg text-ink-muted">
-                {etapa.texto}
-              </p>
-            </Reveal>
-          ))}
-        </ol>
-      </div>
-    </section>
+    <Timeline
+      id="metodo"
+      etapas={metodo.etapas}
+      painel={
+        <>
+          <PadraoOndas className="pointer-events-none absolute inset-0" cor="#FFFFFF" opacidade={0.1} />
+          <div className="relative flex h-full flex-col">
+            <p
+              className="text-tag sm:text-tag-lg font-semibold uppercase text-white"
+              style={{ letterSpacing: '0.18em' }}
+            >
+              {metodo.tag}
+            </p>
+            <h2 className="mt-5 text-h2 sm:text-h2-lg font-bold text-white">{metodo.h2}</h2>
+            <p className="mt-5 text-sub sm:text-sub-lg text-white/90">{metodo.sub}</p>
+            <Simbolo variante="negativo" className="mt-auto block h-auto w-28 pt-8 sm:w-36" />
+          </div>
+        </>
+      }
+    />
   );
 }
