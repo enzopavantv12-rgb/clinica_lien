@@ -134,7 +134,7 @@ export function Header() {
       <nav
         ref={navRef}
         aria-label="Menu principal"
-        className={`glass-nav pointer-events-auto flex items-center gap-6 pl-3 pr-2 lg:pl-5 lg:pr-2.5 ${rolou ? 'is-scrolled' : ''}`}
+        className={`glass-nav pointer-events-auto flex items-center gap-6 lg:gap-4 xl:gap-6 pl-3 pr-2 lg:pl-5 lg:pr-2.5 ${rolou ? 'is-scrolled' : ''}`}
       >
         <a
           href="/#inicio"
@@ -169,7 +169,7 @@ export function Header() {
                   href={item.href}
                   data-secao={id}
                   aria-current={atual ? 'true' : undefined}
-                  className={`inline-flex h-11 items-center whitespace-nowrap rounded-full px-3.5 text-[0.9375rem] font-medium transition-colors hover:text-magenta xl:px-4 ${
+                  className={`inline-flex h-11 items-center whitespace-nowrap rounded-full px-3.5 text-[0.9375rem] font-medium transition-colors hover:text-magenta lg:px-3 xl:px-4 ${
                     atual ? 'text-ink' : 'text-ink/85'
                   } ${focoVisivel}`}
                 >
@@ -215,7 +215,7 @@ export function Header() {
         ref={painelRef}
         id="mobile-menu"
         inert={!aberto}
-        className={`glass-painel pointer-events-auto absolute right-3 top-[68px] w-[min(calc(100%-24px),420px)] p-3 lg:hidden ${
+        className={`glass-painel pointer-events-auto absolute left-3 right-3 top-[68px] ml-auto max-w-[420px] p-3 lg:hidden ${
           aberto ? 'is-open visible scale-100 opacity-100' : 'invisible scale-90 opacity-0'
         }`}
       >
