@@ -11,9 +11,19 @@ export default {
   theme: {
     extend: {
       screens: {
+        // Layout da hero com foto de fundo: desktop ou tablet DEITADO. Tela em
+        // pe ate 1279px (celular, tablet, iPad Pro) fica no layout empilhado:
+        // em 768x1024 o texto cobria o rosto. `hlg` repete o lg depois do `hl`
+        // na cascata. Espelhado em MEDIA_* no Hero.tsx.
+        // Ordem importa: os raw entram no CSS nesta ordem.
+        hl: { raw: '(min-width: 1280px), (min-width: 768px) and (orientation: landscape)' },
+        hlg: { raw: '(min-width: 1024px)' },
         // Tela baixa (notebook 1280x720, celular pequeno). `raw` entra depois
         // dos breakpoints de largura no CSS, entao sobrescreve sm:/lg:.
         baixa: { raw: '(max-height: 780px)' },
+        // Paisagem baixa (notebook pequeno deitado): hero mais compacta para o
+        // CTA caber sem rolar.
+        paisagem: { raw: '(min-width: 768px) and (max-height: 699px)' },
       },
       colors: {
         // Paleta oficial do manual

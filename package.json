@@ -9,7 +9,8 @@
     "preview": "npx serve out",
     "verificar": "node scripts/verificar-build.mjs",
     "images": "node scripts/gen-images.mjs",
-    "marca": "node scripts/gen-marca.mjs"
+    "marca": "node scripts/gen-marca.mjs",
+    "hero": "node scripts/optimize-hero.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

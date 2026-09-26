@@ -78,7 +78,8 @@
   html {
     scroll-behavior: smooth;
     /* Compensa o header fixo ao pular para uma ancora. */
-    scroll-padding-top: 5.5rem;
+    /* Menu flutuante: 16px do topo + 68px de capsula + folga. */
+    scroll-padding-top: 110px;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -184,6 +185,210 @@
     .timeline-trilho {
       --passo: 22vw;
       --largura: 26vw;
+    }
+  }
+}
+
+@layer components {
+  /*
+   * Hero com foto de fundo (Hero.tsx).
+   * Veu de legibilidade so na metade esquerda, entre a foto e o texto.
+   *
+   * Mais forte que o do prompt (92/78/35/0 em 0/28/46/58%): medido no canvas,
+   * o texto na ponta direita da coluna (~50% da largura) caia a 4,0-4,4:1
+   * sobre a sombra quente do arco. Estes valores passam AA (>= 4,5:1) em todo
+   * o texto e zeram em 56%, logo depois de onde a coluna termina (~51%).
+   */
+  .hero-veu {
+    background: linear-gradient(
+      90deg,
+      rgba(250, 248, 246, 0.94) 0%,
+      rgba(250, 248, 246, 0.9) 30%,
+      rgba(250, 248, 246, 0.86) 44%,
+      rgba(250, 248, 246, 0.62) 50%,
+      rgba(250, 248, 246, 0) 56%
+    );
+  }
+
+  /* Foto do mobile: topo em arco (raio = metade da largura), eco do sorriso
+     da marca. Numa caixa 3:4, metade da largura = 37,5% da altura. */
+  .hero-arco {
+    border-radius: 50% 50% 28px 28px / 37.5% 37.5% 28px 28px;
+  }
+
+  /* Entrada em sequencia: --i e a posicao do elemento (atraso de 80ms cada). */
+  @keyframes hero-entra {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+  @keyframes hero-assenta {
+    from {
+      transform: scale(1.04);
+    }
+  }
+  .hero-entra {
+    animation: hero-entra 0.6s ease-out both;
+    animation-delay: calc(var(--i, 0) * 80ms);
+  }
+  .hero-foto {
+    animation: hero-assenta 1.4s ease-out both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-entra,
+    .hero-foto {
+      animation: none !important;
+    }
+  }
+}
+
+@layer components {
+  /*
+   * Menu flutuante "Liquid Glass" (Header.tsx), no estilo do iOS 26:
+   * desfoque forte + saturacao, brilho especular no topo, borda luminosa,
+   * capsula e sombra difusa. `backdrop-filter` so aqui e no painel mobile —
+   * nunca em areas grandes — e nunca animado.
+   */
+  .glass-nav,
+  .glass-painel {
+    --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.62) 0%, rgba(255, 255, 255, 0.28) 100%);
+    --glass-borda: rgba(255, 255, 255, 0.65);
+    --glass-sombra: 0 10px 40px -12px rgba(26, 20, 32, 0.18), 0 2px 6px rgba(26, 20, 32, 0.05);
+    position: relative;
+    isolation: isolate;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(22px) saturate(180%) brightness(1.04);
+    backdrop-filter: blur(22px) saturate(180%) brightness(1.04);
+    border: 1px solid var(--glass-borda);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.25),
+      inset 0 0 0 0.5px rgba(255, 255, 255, 0.35),
+      var(--glass-sombra);
+  }
+
+  .glass-nav {
+    width: min(1160px, 100%);
+    height: 60px;
+    border-radius: 999px;
+    transition:
+      height 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+      width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+      background 0.35s ease,
+      box-shadow 0.35s ease;
+  }
+  @media (min-width: 1024px) {
+    .glass-nav {
+      height: 68px;
+    }
+    .glass-nav.is-scrolled {
+      height: 58px;
+      width: min(1080px, 100%);
+    }
+  }
+  .glass-nav.is-scrolled {
+    --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.4) 100%);
+    --glass-sombra: 0 14px 44px -12px rgba(26, 20, 32, 0.24), 0 2px 8px rgba(26, 20, 32, 0.07);
+  }
+
+  /* Reflexo de luz "liquido": highlight curvo no topo e um toque de rosa
+     da marca embaixo, a direita. */
+  .glass-nav::before,
+  .glass-painel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(120% 140% at 20% -40%, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 45%),
+      radial-gradient(80% 120% at 90% 140%, rgba(240, 182, 242, 0.22) 0%, rgba(240, 182, 242, 0) 60%);
+  }
+
+  /* Borda com gradiente de luz: a "espessura" do vidro. */
+  .glass-nav::after,
+  .glass-painel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    pointer-events: none;
+    background: linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.95),
+      rgba(255, 255, 255, 0.15) 40%,
+      rgba(255, 255, 255, 0.05) 60%,
+      rgba(255, 255, 255, 0.6)
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  /* Indicador ativo: uma "gota de vidro" que desliza entre os links. */
+  .glass-indicador {
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow:
+      inset 0 1px 0 #fff,
+      0 4px 12px -4px rgba(26, 20, 32, 0.15);
+    border-radius: 999px;
+    transition:
+      transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+      width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 0.25s ease;
+  }
+
+  /* Painel mobile: cresce a partir da capsula (origem no topo direito). */
+  .glass-painel {
+    border-radius: 32px;
+    transform-origin: top right;
+    /* Fechando: some so depois da animacao. Abrindo (.is-open): visivel na
+       hora — senao o foco no primeiro link falha, porque um elemento com
+       visibility:hidden nao recebe foco. */
+    transition:
+      transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 0.32s ease,
+      visibility 0s linear 0.32s;
+  }
+  .glass-painel.is-open {
+    transition:
+      transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 0.32s ease,
+      visibility 0s;
+  }
+
+  /* --- Fallbacks e acessibilidade --- */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass-nav,
+    .glass-painel {
+      --glass-bg: rgba(250, 248, 246, 0.94);
+    }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .glass-nav,
+    .glass-painel {
+      --glass-bg: #faf8f6;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .glass-nav,
+    .glass-indicador,
+    .glass-painel {
+      transition: none;
+    }
+  }
+  @media (prefers-contrast: more) {
+    .glass-nav,
+    .glass-painel {
+      --glass-bg: #fff;
+      --glass-borda: #1a1420;
     }
   }
 }

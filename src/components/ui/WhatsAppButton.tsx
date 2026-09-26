@@ -5,7 +5,7 @@ import { whatsappUrlPor } from '../../lib/whatsapp';
 import { trackWhatsAppClick } from '../../lib/tracking';
 import type { OrigemWhatsApp } from '../../data/content';
 
-type Variante = 'magenta' | 'branco' | 'outline' | 'pilula';
+type Variante = 'magenta' | 'branco' | 'outline' | 'pilula' | 'capsula';
 
 const variantes: Record<Variante, string> = {
   magenta:
@@ -16,12 +16,16 @@ const variantes: Record<Variante, string> = {
     'bg-transparent text-ink border border-ink/25 hover:border-ink hover:bg-ink/[0.04] focus-visible:outline-ink',
   // Secao Sobre: pilula branca com sombra colorida (.lien-cta, globals.css).
   pilula: 'lien-cta bg-white text-magenta uppercase tracking-[0.06em] focus-visible:outline-magenta',
+  // Hero e menu glass: capsula magenta. A sombra fica a cargo de quem usa.
+  capsula: 'bg-magenta text-white font-semibold hover:bg-[#8A1472] focus-visible:outline-magenta-light',
 };
 
 const tamanhos = {
   md: 'px-5 py-3 text-[0.9375rem]',
   lg: 'px-7 py-4 text-base sm:text-[1.0625rem]',
   pilula: 'h-[58px] px-10 text-[0.9375rem] sm:text-base',
+  capsula: 'h-14 px-7 text-base',
+  capsulaMenu: 'h-12 px-[22px] text-[0.9375rem]',
 };
 
 /**
@@ -56,7 +60,7 @@ export function WhatsAppButton({
       rel="noopener noreferrer"
       onClick={() => trackWhatsAppClick(origem)}
       data-cta={origem}
-      className={`inline-flex items-center justify-center gap-2.5 ${variante === 'pilula' ? 'rounded-full' : 'rounded-2xl'} font-medium transition-all duration-300 ease-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 motion-safe:hover:-translate-y-0.5 ${variantes[variante]} ${tamanhos[tamanho]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2.5 ${variante === 'pilula' || variante === 'capsula' ? 'rounded-full' : 'rounded-2xl'} font-medium transition-all duration-300 ease-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 motion-safe:hover:-translate-y-0.5 ${variantes[variante]} ${tamanhos[tamanho]} ${className}`}
     >
       {comIcone && <WhatsAppIcon size={20} />}
       {children}

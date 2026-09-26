@@ -88,7 +88,7 @@ const OLA = 'Olá! Conheci a Lien pelo site e';
  */
 export const whatsappMensagens = {
   // [SUGESTAO: o original foi cortado depois de "Podem me"]
-  hero: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
+  hero: `${OLA} gostaria de agendar uma consulta.`,
   menu: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
   final: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
   flutuante: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
@@ -137,23 +137,23 @@ export const header = {
 
 export const hero = {
   tag: 'Reabilitação oral · Belo Horizonte',
-  h1: 'Recuperar o sorriso, a mastigação e a confiança começa com um cuidado de verdade.',
-  // Alternativa B do briefing:
-  // h1: 'Seu sorriso, sua mastigação e sua qualidade de vida, recuperados com planejamento e cuidado.',
+  // H1 do prompt da hero glass (set/2026). "de verdade." sai em magenta.
+  h1: 'Recuperar o sorriso começa com um cuidado de verdade.',
+  h1Partes: ['Recuperar o sorriso começa com um cuidado ', 'de verdade.'],
   sub: 'A Lien oferece odontologia de excelência, com planejamento individual, tecnologia digital e uma experiência pensada para quem quer se sentir seguro — inclusive quem tem medo de dentista.',
   cta: 'Agende sua consulta',
-  microcopy: 'Atendimento particular · Cruzeiro, Belo Horizonte · Resposta em horário comercial',
+  microcopy: 'Atendimento particular · Cruzeiro, BH',
   /**
-   * Video da experiencia Lien. Quando existir, preencha `video` e o hero passa
-   * a tocar (muted, autoplay, loop, playsinline), com o poster como fallback e
-   * como unica imagem para quem pede movimento reduzido. Limite: 3 MB.
-   * [PENDENTE: decidir junto com a clinica entre video e imagem estatica]
+   * Foto da hero. Variantes geradas por `npm run hero` (scripts/optimize-hero.mjs)
+   * a partir do original em assets/hero/. O recorte mobile e vertical (3:4).
    */
-  video: null as null | { src: string; tipo: string },
   imagem: {
-    src: '/img/hero-dra-natalia.webp',
-    alt: 'Dra. Natália Simões, especialista em implantodontia em Belo Horizonte, na clínica Lien',
-    pendente: true,
+    base: '/img/hero-lien',
+    larguras: [1024, 1440, 2000],
+    mobile: '/img/hero-lien-mobile-900',
+    width: 2000,
+    height: 1125,
+    alt: 'Dra. Natália Simões, fundadora da Lien Reabilitação Oral, sorrindo em ambiente claro e acolhedor',
   },
 } as const;
 
