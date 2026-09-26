@@ -64,9 +64,12 @@ const SIMBOLOS = {
 export function Simbolo({
   variante = 'rgb',
   className = '',
+  carregamento = 'lazy',
 }: {
   variante?: keyof typeof SIMBOLOS;
   className?: string;
+  /** `eager` quando aparece logo na abertura da pagina (hero). */
+  carregamento?: 'lazy' | 'eager';
 }) {
   return (
     <img
@@ -79,7 +82,7 @@ export function Simbolo({
       alt=""
       aria-hidden="true"
       className={className}
-      loading="lazy"
+      loading={carregamento}
       decoding="async"
     />
   );

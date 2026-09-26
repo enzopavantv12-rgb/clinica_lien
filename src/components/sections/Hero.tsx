@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import { Star } from 'lucide-react';
+import { Simbolo } from '../ui/BrandGraphics';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
 import { depoimentos, hero } from '../../data/content';
 
@@ -95,18 +96,10 @@ export function Hero() {
             <span className="text-magenta">{hero.h1Partes[1]}</span>
           </h1>
 
-          {/* O "sorriso" da marca, curto, sob o titulo. */}
-          <svg
-            width="72"
-            height="12"
-            viewBox="0 0 72 12"
-            fill="none"
-            aria-hidden="true"
-            className="hero-entra mt-4 text-teal"
-            style={ordem(2)}
-          >
-            <path d="M2 2.5C18 11 54 11 70 2.5" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-          </svg>
+          {/* Simbolo oficial da Lien (o sorriso), sob o titulo. */}
+          <span className="hero-entra mt-4 block" style={ordem(2)}>
+            <Simbolo variante="rgb" carregamento="eager" className="block h-auto w-[72px]" />
+          </span>
 
           <p
             className="hero-entra mt-6 max-w-[46ch] text-[clamp(1rem,1.4vw,1.1875rem)] leading-[1.55] text-ink-muted paisagem:mt-4"
