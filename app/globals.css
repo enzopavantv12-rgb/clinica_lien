@@ -67,8 +67,9 @@
 
     /* Tokens shadcn, em RGB, mapeados para a paleta da Lien. Uma secao pode
        redefinir --background para o fade do marquee casar com o fundo dela. */
-    --background: 255 255 255; /* branco */
+    --background: 250 248 246; /* cream */
     --foreground: 26 20 32; /* ink */
+    --primary: 156 23 129; /* magenta */
     --card: 255 255 255;
     --card-foreground: 26 20 32;
     --muted-foreground: 90 82 96; /* ink-muted */
@@ -130,13 +131,13 @@
       0 8px 24px -8px rgb(3 126 153 / 0.35);
   }
 
-  /* Forma de gota: tres cantos redondos e o superior direito quase reto. */
-  .lien-gota {
-    border-radius: 50% 28px 50% 50%;
+  /* Moldura do video: topo em arco (o sorriso da marca), base arredondada. */
+  .lien-arco {
+    border-radius: 999px 999px 32px 32px;
   }
 
-  /* So a borda da gota, em degradê magenta -> teal claro. A mascara recorta
-     o miolo e deixa apenas os 3px da borda. */
+  /* So a borda da moldura, em degradê magenta -> teal claro. A mascara
+     recorta o miolo e deixa apenas os 3px da borda. */
   .lien-outline {
     border: 3px solid transparent;
     background: linear-gradient(135deg, #9C1781, #68C0D4) border-box;
@@ -153,10 +154,6 @@
     background: linear-gradient(180deg, transparent 35%, rgb(3 126 153 / 0.55) 100%);
   }
 
-  /* Cantos assimetricos da foto de fundo. */
-  .lien-fundo {
-    border-radius: 24px 120px 40px 160px;
-  }
 }
 
 @layer components {
@@ -390,5 +387,28 @@
       --glass-bg: #fff;
       --glass-borda: #1a1420;
     }
+  }
+}
+
+@layer components {
+  /*
+   * Depoimentos (testimonials-columns-1). O componente fica identico ao
+   * original; o visual da Lien entra por aqui: card branco, texto ink 15px,
+   * nome Poppins 500 e `role` em teal cheio — a 60% de opacidade do original
+   * o teal sobre branco cairia abaixo de 4,5:1.
+   */
+  .lien-depoimentos .rounded-3xl {
+    background: #fff;
+    color: #1a1420;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+  .lien-depoimentos .rounded-3xl .font-medium {
+    font-weight: 500;
+  }
+  .lien-depoimentos .rounded-3xl .opacity-60 {
+    opacity: 1;
+    color: #037e99;
+    font-size: 0.8125rem;
   }
 }

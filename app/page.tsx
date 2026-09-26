@@ -1,6 +1,7 @@
 import { Header } from '@/components/sections/Header';
 import { Hero, MEDIA_EMPILHADO, MEDIA_FUNDO } from '@/components/sections/Hero';
-import { Confianca } from '@/components/sections/Confianca';
+import { TrustMarquee } from '@/components/sections/TrustMarquee';
+import { Testimonials } from '@/components/sections/Testimonials';
 import { Cardapio } from '@/components/sections/Cardapio';
 import { Sobre } from '@/components/sections/Sobre';
 import { MetodoLien } from '@/components/sections/MetodoLien';
@@ -10,7 +11,6 @@ import { Experiencia } from '@/components/sections/Experiencia';
 import { Estrutura } from '@/components/sections/Estrutura';
 import { Equipe } from '@/components/sections/Equipe';
 import { Resultados } from '@/components/sections/Resultados';
-import { Depoimentos } from '@/components/sections/Depoimentos';
 import { Faq } from '@/components/sections/Faq';
 import { CtaFinal } from '@/components/sections/CtaFinal';
 import { Footer } from '@/components/sections/Footer';
@@ -21,9 +21,10 @@ import { hero } from '@/data/content';
 import { preload } from 'react-dom';
 
 /**
- * Ordem das secoes = arquitetura da secao 4 do briefing. Nao reordenar sem
- * atualizar o briefing: a sequencia conduz o paciente da identificacao
- * (cardapio) a confianca (metodo, equipe, prova social) e a conversao.
+ * Ordem das secoes: prompt "numeros, depoimentos e midia" (set/2026). Prova
+ * social logo apos o hero (faixa de numeros + depoimentos), depois o manifesto
+ * (Sobre), o Metodo e o cardapio de situacoes levando aos tratamentos. O
+ * verificar-build.mjs confere esta ordem — atualize os dois juntos.
  * `Resultados` so renderiza com SHOW_RESULTS ligado.
  */
 export default function Home() {
@@ -55,17 +56,17 @@ export default function Home() {
 
       <main>
         <Hero />
-        <Confianca />
-        <Cardapio />
+        <TrustMarquee />
+        <Testimonials />
         <Sobre />
         <MetodoLien />
+        <Cardapio />
         <Tratamentos />
         <Sedacao />
         <Experiencia />
         <Estrutura />
         <Equipe />
         <Resultados />
-        <Depoimentos />
         <Faq />
         <CtaFinal />
       </main>

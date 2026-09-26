@@ -55,10 +55,10 @@ checar('H1 do hero presente no HTML', textoH1 === H1, `achou "${textoH1}"`);
 checar('exatamente um <h1>', contar(marcacao, /<h1[\s>]/g) === 1, `achou ${contar(marcacao, /<h1[\s>]/g)}`);
 checar('subtitulo do hero presente', marcacao.includes('planejamento individual, tecnologia digital'));
 
-// --- Ordem das secoes = arquitetura da secao 4 do briefing ---
+// --- Ordem das secoes (app/page.tsx; prompt de set/2026) ---
 const ORDEM = [
-  'inicio', 'confianca', 'para-voce', 'sobre', 'metodo', 'tratamentos', 'sedacao',
-  'experiencia', 'estrutura', 'equipe', 'depoimentos', 'duvidas', 'agendar',
+  'inicio', 'depoimentos', 'sobre', 'metodo', 'para-voce', 'tratamentos', 'sedacao',
+  'experiencia', 'estrutura', 'equipe', 'duvidas', 'agendar',
 ];
 const idsNaPagina = [...marcacao.matchAll(/<section id="([a-z-]+)"/g)].map((m) => m[1]);
 checar(

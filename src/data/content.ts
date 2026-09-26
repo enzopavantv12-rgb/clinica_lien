@@ -117,6 +117,7 @@ export const whatsappMensagens = {
 
   sobre: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
   rodape: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
+  depoimentos: `${OLA} gostaria de agendar uma consulta.`,
 } as const;
 
 export type OrigemWhatsApp = keyof typeof whatsappMensagens;
@@ -251,15 +252,16 @@ export const sobre = {
   },
   fechamento:
     'Na Lien, você não recebe apenas um tratamento. Você vive uma experiência de cuidado — e ganha uma equipe que caminha com você.',
-  // [PENDENTE: foto ampla da recepcao ou de um consultorio]
+  // Foto de fundo: assets/fotos/consultorio/consultorio lien 3.png (recepcao),
+  // copiada para assets/fotos-originais/sobre-recepcao.png -> `npm run images`.
   imagem: {
     src: '/img/sobre-recepcao.webp',
-    alt: 'Recepção da Lien Reabilitação Oral, no Cruzeiro, em Belo Horizonte',
-    pendente: true,
+    alt: 'Consultório da Lien Reabilitação Oral: recepção com poltronas e o logo da clínica',
   },
-  // [PENDENTE: video de 8 a 15 s em loop, sem audio, 1080x1080, WebM (VP9) e
-  // MP4 (H.264) ate 3MB cada, em /public/videos/. Poster em /public/videos/.
-  // Enquanto for null, a forma de gota mostra um placeholder.]
+  // [PENDENTE: video do consultorio, 6 a 12 s em loop, sem audio, 720-1080px
+  // de largura, MP4 (H.264) e WebM (VP9) ate 3 MB, mais o poster (1o quadro)
+  // em WebP, em public/videos/. Enquanto for null, a moldura mostra o
+  // placeholder cream com o arco teal.]
   video: null as null | { webm: string; mp4: string; poster: string },
   rotuloPausar: 'Pausar vídeo',
   rotuloReproduzir: 'Reproduzir vídeo',
@@ -267,6 +269,12 @@ export const sobre = {
 
 export const metodo = {
   tag: 'Método Lien',
+  // Foto do painel de abertura: assets/fotos/consultorio/consultorio lien 2.png,
+  // copiada para assets/fotos-originais/metodo-consulta.png -> `npm run images`.
+  imagem: {
+    src: '/img/metodo-consulta.webp',
+    alt: 'Sala de consulta da Lien Reabilitação Oral, com mesa e cadeiras brancas, onde começa o planejamento de cada tratamento',
+  },
   h2: 'Um caminho claro, do primeiro encontro ao cuidado contínuo.',
   sub: 'Você sabe o que vai acontecer antes de acontecer.',
   etapas: [
@@ -680,20 +688,11 @@ export const depoimentos = {
     total: 57,
     url: null as string | null,
   },
-  // [PENDENTE: avaliacoes reais do Google, copiadas sem edicao, com o nome
-  // como aparece na avaliacao — e o aval da Dra. Natalia sobre as normas de
-  // publicidade do CFO e do CRO-MG antes de publicar]
-  // `foto`: opcional, URL da foto de perfil; sem ela, o card mostra iniciais.
-  itens: [] as readonly { nome: string; texto: string; foto?: string }[],
-  // Abaixo deste numero o marquee repetiria cards visivelmente: a faixa so
-  // aparece a partir dele.
-  minimoMarquee: 6,
-  faixa: {
-    origem: 'Avaliação no Google',
-    verTodas: 'Ver todas as avaliações no Google',
-    pausar: 'Pausar depoimentos',
-    retomar: 'Retomar depoimentos',
-  },
+  // Os textos ficam em src/content/testimonials.ts (so avaliacoes reais).
+  verTodas: 'Ver todas as avaliações no Google',
+  cta: 'Agende sua consulta',
+  pausar: 'Pausar depoimentos',
+  retomar: 'Retomar depoimentos',
 } as const;
 
 /**

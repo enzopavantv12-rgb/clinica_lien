@@ -220,3 +220,45 @@ O `grep` literal do checklist da seção 9 reprovaria copy que o próprio briefi
 2. `npm run verificar` roda as 60 verificações. Tem de terminar com **"Tudo verde"**.
 3. **Vercel** (produção atual): o `vercel.json` já marca os arquivos internos do Next como `noindex`. ⚠️ Esse arquivo **não pôde ser testado localmente** — confira depois do primeiro deploy que `https://clinica-lien.vercel.app/index.txt` responde com o header `X-Robots-Tag: noindex`.
 4. **Hostinger** (alternativa): subir o **conteúdo** de `out/` para `public_html/`. O `.htaccess` já tem a mesma regra.
+
+---
+
+## Faixa de números, depoimentos em colunas e mídia (set/2026)
+
+Prompt: `prompt-claude-code-secoes-numeros-depoimentos-midia-lien.md`.
+
+### Nova ordem da página
+Hero → **faixa de números** → **Depoimentos** → Sobre → Método Lien → Para você → Tratamentos → Sedação → Experiência → Estrutura → Equipe → Dúvidas → CTA final. O `verificar-build.mjs` confere essa ordem.
+
+- "Para você" (cardápio) foi para depois do Método, por decisão da clínica.
+- Removidas: a barra de confiança antiga (`Confianca`) e a seção de depoimentos de baixo (duplicata, com o marquee-03).
+
+### Arquivos
+- **Criados:** `components/ui/marquee-effect.tsx`, `components/ui/testimonials-columns-1.tsx`, `components/sections/TrustMarquee.tsx`, `components/sections/Testimonials.tsx`, `content/testimonials.ts`, `components/ui/VideoArco.tsx`, `public/assets/avatars/lien-avatar.svg`, variantes `public/img/sobre-recepcao-*` e `public/img/metodo-consulta-*`.
+- **Alterados:** `app/page.tsx`, `app/globals.css`, `tailwind.config.ts`, `Sobre.tsx`, `MetodoLien.tsx`, `content.ts`, `imagens.json`, `verificar-build.mjs`.
+- **Removidos:** `Confianca.tsx`, `Depoimentos.tsx`, `DepoimentosMarquee.tsx`, `marquee-03.tsx`, `marquee-03-utils/marquee.tsx`, `CincoEstrelas.tsx`, `VideoGota.tsx`.
+- **Dependências:** `framer-motion`, `@motionone/utils` (o `motion` já existia).
+- **Tema shadcn:** `--background` cream, `--foreground` ink, `--primary` magenta, `--border` #E1E1E1 (também como cor padrão da classe `border`).
+
+### Alterações nos componentes, e por quê
+- **`marquee-effect.tsx`:** o parâmetro `t` virou `_t`. O `tsconfig` proíbe parâmetro sem uso e o arquivo não compilava; o comportamento não muda.
+- **Faixas:** espessura ajustada pela `className` (`py-2 md:py-2.5`) para 44 px. O "✦" vem de uma fonte de sistema mais alta que a Poppins e engrossava a linha.
+- **`testimonials-columns-1.tsx`:** idêntico ao original, exceto a tipagem documentada no prompt.
+- **Pausa dos depoimentos:** o componente anima por JavaScript (transform inline a cada quadro). A regra CSS `animation-play-state` do prompt não tem efeito, e pausar no hover exigiria alterar o componente. No lugar, o botão "Pausar depoimentos" troca as colunas por uma grade estática com todos os depoimentos.
+- **Seção de depoimentos:** `py-20` no lugar de `my-20`, porque a margem mostrava faixas brancas entre as seções creme.
+- **Colunas:** com menos de 6 avaliações, 1 coluna; com 6 ou mais, 2; com 9 ou mais, 3. Nada é duplicado. Como no demo, a 2ª e a 3ª coluna ficam ocultas no celular e no tablet.
+- **Sobre:** a foto continua no fundo, com os cantos assimétricos. O vídeo foi para uma moldura com topo em arco (borda creme de 6 px), que salta 32 px para fora da foto. No celular: faixa 4:3 e a moldura a 80% da largura, logo abaixo.
+- **Método:** a linha do tempo horizontal foi mantida, por decisão da clínica. A foto entrou no painel de abertura, com cantos de 32 px e o símbolo da marca atrás.
+
+### Caminhos de mídia
+- As fotos chegaram em `assets/fotos/consultorio/` ("consultorio lien 1/2/3.png"), não em `fotos consultório/`.
+- Entraram pelo pipeline do projeto com nomes sem espaço nem acento (`sobre-recepcao`, `metodo-consulta`), então o problema de caminho com espaço e acento não existe.
+- **Sobre:** "consultorio lien 3" (recepção com o logo).
+- **Método:** "consultorio lien 2" (sala de consulta).
+
+### Pendências
+- **[PENDENTE] Vídeo do consultório** para a seção Sobre: 6 a 12 s, sem áudio, MP4 e WebM até 3 MB, mais o poster. Até lá, a moldura mostra o placeholder creme com o arco teal.
+- **[PENDENTE] Depoimentos reais:** 9 avaliações do Google, com autorização, no formato "Nome S.". Sem eles, a seção mostra só o título, a nota e o CTA.
+- **[PENDENTE] Link do perfil no Google,** para o "Ver todas as avaliações no Google".
+- **[PENDENTE] "+200 pacientes"** só entra na faixa se a clínica confirmar.
+- **Lighthouse:** não foi rodado. Recomenda-se rodar no site publicado.

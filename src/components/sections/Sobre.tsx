@@ -1,6 +1,6 @@
 import { BrandImage } from '../ui/BrandImage';
 import { Reveal } from '../ui/Reveal';
-import { VideoGota } from '../ui/VideoGota';
+import { VideoArco } from '../ui/VideoArco';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
 import { sobre, type Trecho } from '../../data/content';
 
@@ -28,8 +28,8 @@ function Paragrafo({ trechos }: { trechos: readonly Trecho[] }) {
  *
  * Texto a esquerda; a direita, composicao em tres camadas:
  *   1. foto da recepcao, cantos assimetricos, degradê teal na base;
- *   2. contorno em degradê com a forma do video, deslocado para cima e a direita;
- *   3. video em forma de gota por cima de tudo.
+ *   2. contorno em degradê com a forma da moldura, deslocado para cima e a direita;
+ *   3. video em loop ("efeito GIF") numa moldura com topo em arco (VideoArco).
  *
  * Tipografia toda em Poppins: titulo Bold com tracking -0.02em (Poppins
  * Bold grande fica espacada demais sem isso), paragrafos Regular 16/18px.
@@ -77,23 +77,26 @@ export function Sobre() {
             </Reveal>
           </div>
 
-          {/* Composicao visual */}
+          {/* Composicao visual: foto de fundo + video em moldura de arco.
+              Desktop: foto a direita (62%), moldura sobreposta a esquerda,
+              saltando 32px para fora da foto. Mobile: faixa 4:3 e a moldura
+              centralizada logo abaixo, a 80% da largura. */}
           <div className="mx-auto w-full max-w-[640px] lg:col-span-6 lg:max-w-none">
-            <div className="relative aspect-[1/0.95] w-full">
-              {/* Camada 1 — foto de fundo */}
+            <div className="relative lg:aspect-[1/0.95]">
+              {/* Camada 1 — foto de fundo (recepcao) */}
               <Reveal
                 y={0}
                 duracao={0.6}
                 escala={1.04}
-                className="lien-fundo absolute right-0 top-0 h-full w-[62%] overflow-hidden"
+                className="relative aspect-[4/3] overflow-hidden rounded-[28px] lg:absolute lg:right-0 lg:top-0 lg:aspect-auto lg:h-full lg:w-[62%] lg:rounded-[24px_120px_40px_160px]"
               >
                 <BrandImage
                   dados={sobre.imagem}
-                  width={960}
-                  height={1470}
+                  width={941}
+                  height={1672}
                   proporcao="h-full"
-                  className="!rounded-none"
-                  sizes="(max-width: 768px) 62vw, 380px"
+                  className="!rounded-none object-[50%_45%]"
+                  sizes="(max-width: 1024px) 90vw, 380px"
                 />
                 <div
                   aria-hidden="true"
@@ -101,19 +104,24 @@ export function Sobre() {
                 />
               </Reveal>
 
-              {/* Camada 2 — contorno em degradê, atras do video */}
+              {/* Camada 2 — contorno em degradê com o formato da moldura, atras dela */}
               <Reveal
                 y={0}
                 duracao={0.6}
                 delay={0.15}
-                className="lien-outline lien-gota absolute left-[2%] top-[9%] aspect-square w-[66%]"
+                className="lien-outline lien-arco absolute hidden aspect-[380/480] w-[58%] max-w-[380px] lg:bottom-[-16px] lg:left-[16px] lg:block"
               >
                 <span aria-hidden="true" />
               </Reveal>
 
-              {/* Camada 3 — video em gota */}
-              <Reveal y={24} duracao={0.6} delay={0.15} className="absolute left-0 top-[12%] w-[66%]">
-                <VideoGota
+              {/* Camada 3 — video em loop (efeito GIF) */}
+              <Reveal
+                y={16}
+                duracao={0.6}
+                delay={0.15}
+                className="relative z-10 mx-auto -mt-16 w-[80%] max-w-[380px] lg:absolute lg:bottom-[-32px] lg:left-0 lg:mx-0 lg:mt-0 lg:w-[58%]"
+              >
+                <VideoArco
                   video={sobre.video}
                   rotuloPausar={sobre.rotuloPausar}
                   rotuloReproduzir={sobre.rotuloReproduzir}

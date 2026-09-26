@@ -54,6 +54,7 @@ export default {
           foreground: 'rgb(var(--muted-foreground) / <alpha-value>)',
         },
         border: 'rgb(var(--border) / <alpha-value>)',
+        primary: 'rgb(var(--primary) / <alpha-value>)',
       },
       fontFamily: {
         sans: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
@@ -80,6 +81,10 @@ export default {
       borderRadius: {
         '2xl': '1rem',
         '3xl': '1.5rem',
+      },
+      // Cor padrao da classe `border` (tema shadcn): #E1E1E1 da paleta.
+      borderColor: {
+        DEFAULT: 'rgb(var(--border) / <alpha-value>)',
       },
       boxShadow: {
         // Sombras suaves e difusas. Nunca duras. Nunca sobre o logo.
