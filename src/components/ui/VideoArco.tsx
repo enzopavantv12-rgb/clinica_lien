@@ -88,6 +88,10 @@ export function VideoArco({
         <video
           ref={ref}
           className="h-full w-full object-cover"
+          // autoPlay e seguro aqui: o <video> so e montado depois da checagem
+          // de movimento reduzido e economia de dados. O observador abaixo
+          // pausa quando a secao sai da tela.
+          autoPlay
           muted
           loop
           playsInline

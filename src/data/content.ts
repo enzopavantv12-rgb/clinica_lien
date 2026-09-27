@@ -138,10 +138,12 @@ export const header = {
 
 export const hero = {
   tag: 'Reabilitação oral · Belo Horizonte',
-  // H1 do prompt da hero glass (set/2026). "de verdade." sai em magenta.
-  h1: 'Recuperar o sorriso começa com um cuidado de verdade.',
-  h1Partes: ['Recuperar o sorriso começa com um cuidado ', 'de verdade.'],
-  sub: 'A Lien oferece odontologia de excelência, com planejamento individual, tecnologia digital e uma experiência pensada para quem quer se sentir seguro — inclusive quem tem medo de dentista.',
+  // Copy sugerida pela Dra. Natalia Simoes (set/2026). O trecho final do H1
+  // sai em magenta.
+  h1: 'Reabilitação oral com excelência clínica, tecnologia e cuidado em cada detalhe.',
+  h1Partes: ['Reabilitação oral com excelência clínica, tecnologia e ', 'cuidado em cada detalhe.'],
+  sub: 'Planejamento personalizado e uma experiência pensada para quem valoriza segurança, conforto e previsibilidade em cada etapa.',
+  apoio: 'Se você tem medo de dentista, talvez ainda não tenha conhecido a Lien.',
   cta: 'Agende sua consulta',
   microcopy: 'Atendimento particular · Cruzeiro, BH',
   /**
@@ -262,7 +264,13 @@ export const sobre = {
   // de largura, MP4 (H.264) e WebM (VP9) ate 3 MB, mais o poster (1o quadro)
   // em WebP, em public/videos/. Enquanto for null, a moldura mostra o
   // placeholder cream com o arco teal.]
-  video: null as null | { webm: string; mp4: string; poster: string },
+  // Video institucional (assets/vídeos/vídeo lien institucional .mp4, 7,4 s):
+  // recortado em 4:5 (a proporcao da moldura), 720x900, sem audio.
+  video: {
+    webm: '/videos/sobre-lien.webm',
+    mp4: '/videos/sobre-lien.mp4',
+    poster: '/videos/sobre-lien-poster.webp',
+  } as null | { webm: string; mp4: string; poster: string },
   rotuloPausar: 'Pausar vídeo',
   rotuloReproduzir: 'Reproduzir vídeo',
 };

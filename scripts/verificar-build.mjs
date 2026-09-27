@@ -48,12 +48,12 @@ const secao = (id) => {
 };
 
 // --- O objetivo da migracao: conteudo dentro do HTML, sem executar JS ---
-const H1 = 'Recuperar o sorriso começa com um cuidado de verdade.';
+const H1 = 'Reabilitação oral com excelência clínica, tecnologia e cuidado em cada detalhe.';
 // Texto do <h1> sem tags: o trecho final sai num <span> em magenta.
 const textoH1 = (marcacao.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? '').replace(/<[^>]+>/g, '').trim();
 checar('H1 do hero presente no HTML', textoH1 === H1, `achou "${textoH1}"`);
 checar('exatamente um <h1>', contar(marcacao, /<h1[\s>]/g) === 1, `achou ${contar(marcacao, /<h1[\s>]/g)}`);
-checar('subtitulo do hero presente', marcacao.includes('planejamento individual, tecnologia digital'));
+checar('subtitulo do hero presente', marcacao.includes('segurança, conforto e previsibilidade'));
 
 // --- Ordem das secoes (app/page.tsx; prompt de set/2026) ---
 const ORDEM = [

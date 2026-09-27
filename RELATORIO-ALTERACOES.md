@@ -257,8 +257,15 @@ Hero → **faixa de números** → **Depoimentos** → Sobre → Método Lien �
 - **Método:** "consultorio lien 2" (sala de consulta).
 
 ### Pendências
-- **[PENDENTE] Vídeo do consultório** para a seção Sobre: 6 a 12 s, sem áudio, MP4 e WebM até 3 MB, mais o poster. Até lá, a moldura mostra o placeholder creme com o arco teal.
+- ✅ **Vídeo do consultório:** `assets/vídeos/vídeo lien institucional .mp4` (7,4 s, 1080×1920), recortado em 4:5 (a proporção da moldura), 720×900, sem áudio → `public/videos/sobre-lien.webm` (755 KB), `.mp4` (1,0 MB) e poster (26 KB). Toca em loop automático.
 - **[PENDENTE] Depoimentos reais:** 9 avaliações do Google, com autorização, no formato "Nome S.". Sem eles, a seção mostra só o título, a nota e o CTA.
 - **[PENDENTE] Link do perfil no Google,** para o "Ver todas as avaliações no Google".
 - **[PENDENTE] "+200 pacientes"** só entra na faixa se a clínica confirmar.
 - **Lighthouse:** não foi rodado. Recomenda-se rodar no site publicado.
+
+### Copy da hero (sugestão da Dra. Natália Simões, set/2026)
+- **H1:** "Reabilitação oral com excelência clínica, tecnologia e cuidado em cada detalhe." ("cuidado em cada detalhe." em magenta).
+- **Subtexto:** "Planejamento personalizado e uma experiência pensada para quem valoriza segurança, conforto e previsibilidade em cada etapa."
+- **Apoio** (novo, abaixo do subtexto, em destaque): "Se você tem medo de dentista, talvez ainda não tenha conhecido a Lien."
+- O H1 ficou mais longo (79 caracteres, contra 52), então o tamanho máximo no desktop caiu de 60 para 52 px. Assim ele fica em 4 a 5 linhas e a hero dentro do teto de 920 px.
+- Contraste AA remedido sobre a foto, de 1024 a 1920 px: o menor valor é 4,55:1.

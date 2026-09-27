@@ -89,7 +89,7 @@ export function Hero() {
           </p>
 
           <h1
-            className="hero-entra mt-5 text-[2.125rem] font-bold leading-[1.08] text-ink hl:text-[2.625rem] hlg:text-[clamp(2.625rem,4.2vw,3.75rem)] paisagem:mt-4 paisagem:text-[clamp(1.875rem,3.4vw,3rem)]"
+            className="hero-entra mt-5 text-[2.125rem] font-bold leading-[1.08] text-ink hl:text-[2.625rem] hlg:text-[clamp(2.5rem,3.4vw,3.25rem)] paisagem:mt-4 paisagem:text-[clamp(1.875rem,3.4vw,3rem)]"
             style={ordem(1)}
           >
             {hero.h1Partes[0]}
@@ -108,7 +108,14 @@ export function Hero() {
             {hero.sub}
           </p>
 
-          <div className="hero-entra mt-8 paisagem:mt-6" style={ordem(4)}>
+          <p
+            className="hero-entra mt-4 max-w-[46ch] text-[clamp(1rem,1.3vw,1.125rem)] font-medium leading-[1.5] text-ink paisagem:mt-3"
+            style={ordem(4)}
+          >
+            {hero.apoio}
+          </p>
+
+          <div className="hero-entra mt-8 paisagem:mt-6" style={ordem(5)}>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
               <WhatsAppButton
                 origem="hero"
