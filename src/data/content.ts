@@ -118,6 +118,7 @@ export const whatsappMensagens = {
   sobre: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
   rodape: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
   depoimentos: `${OLA} gostaria de agendar uma consulta.`,
+  duvidas: `${OLA} tenho uma dúvida sobre o atendimento. Podem me ajudar?`,
 } as const;
 
 export type OrigemWhatsApp = keyof typeof whatsappMensagens;
@@ -710,44 +711,64 @@ export const depoimentos = {
 export const faq = {
   tag: 'Dúvidas',
   h2: 'Dúvidas frequentes',
+  sub: 'Escolha um tema e abra as perguntas.',
+  // Temas das abas (ordem = ordem das abas). O icone e um nome do lucide-react.
+  temas: [
+    { valor: 'consulta', rotulo: 'Consulta', icone: 'ClipboardList' },
+    { valor: 'conforto', rotulo: 'Conforto', icone: 'HeartHandshake' },
+    { valor: 'tratamentos', rotulo: 'Tratamentos', icone: 'Stethoscope' },
+    { valor: 'atendimento', rotulo: 'Atendimento', icone: 'CalendarClock' },
+  ],
+  ajudou: 'Esta resposta ajudou?',
+  sim: 'Sim',
+  nao: 'Não',
+  obrigado: 'Obrigado pelo retorno.',
+  cta: 'Ainda tem dúvidas? Fale com a equipe',
   itens: [
     {
+      categoria: 'consulta',
       pergunta: 'Como funciona a primeira consulta na Lien?',
       // [SUGESTAO: complemento a partir de "o que voce espera do tratamento"]
       resposta:
         'É um momento de escuta, investigação e diagnóstico. Conversamos sobre suas necessidades, seu histórico de saúde e o que você espera do tratamento. A partir disso, montamos um planejamento individual e explicamos cada etapa com clareza.',
     },
     {
+      categoria: 'consulta',
       pergunta: 'Já sei qual tratamento quero fazer. Ainda preciso passar por uma consulta?',
       // [SUGESTAO: complemento a partir de "para confirmar"]
       resposta:
         'Sim. Mesmo quando você já sabe o que deseja, a consulta é indispensável para confirmar se esse é o melhor caminho para a sua saúde e planejar o tratamento com segurança.',
     },
     {
+      categoria: 'conforto',
       pergunta: 'Tenho medo de dentista. A Lien está preparada para me atender?',
       // [SUGESTAO: complemento a partir de "tranquila"]
       resposta:
         'Sim. A Lien foi criada especialmente para proporcionar uma experiência mais tranquila: recepção acolhedora, aromaterapia, fones com isolamento de ruído, comunicação em cada etapa e, quando indicado, opção de sedação.',
     },
     {
+      categoria: 'conforto',
       pergunta: 'Com os recursos atuais, o tratamento odontológico ainda dói?',
       // [SUGESTAO: abertura e fecho] Sem prometer ausencia de dor.
       resposta:
         'A odontologia conta hoje com anestesias e tecnologias que tornam os procedimentos muito mais confortáveis. Na Lien, cada etapa é conduzida com cuidado, respeitando o seu tempo e o seu limite.',
     },
     {
+      categoria: 'tratamentos',
       pergunta: 'Qual é a diferença entre facetas em resina e laminados cerâmicos?',
       // [SUGESTAO: abertura e fecho]
       resposta:
         'As facetas em resina são confeccionadas diretamente sobre os dentes pelo cirurgião-dentista. Os laminados cerâmicos são produzidos em laboratório, a partir de um planejamento digital. A indicação depende do seu caso e é definida na consulta.',
     },
     {
+      categoria: 'tratamentos',
       pergunta: 'Sangramento na gengiva é normal?',
       // [SUGESTAO: complemento a partir de "tratado"]
       resposta:
         'Não. O sangramento frequente pode indicar uma inflamação gengival ou uma doença periodontal. Quando não é tratado, pode evoluir e comprometer a sustentação dos dentes. Vale agendar uma consulta.',
     },
     {
+      categoria: 'atendimento',
       pergunta: 'Consigo saber o valor do meu tratamento pelo WhatsApp?',
       // [SUGESTAO: complemento a partir de "parecidas"] Sem valores, parcelas
       // ou formas de pagamento.
@@ -755,26 +776,31 @@ export const faq = {
         'Cada tratamento é planejado individualmente, pois pacientes com necessidades aparentemente parecidas podem precisar de soluções bem diferentes. Por isso, o investimento só pode ser apresentado depois da consulta e do planejamento.',
     },
     {
+      categoria: 'tratamentos',
       pergunta: 'Estalos e dores na mandíbula podem ser sinais de DTM?',
       // [SUGESTAO: abertura e fecho]
       resposta:
         'Podem ser. Os sinais mais comuns são dor na mandíbula ou na face, cansaço ao mastigar, travamentos, limitação para abrir a boca e estalos acompanhados de desconforto. A consulta com uma especialista em DTM ajuda a entender a causa.',
     },
     {
+      categoria: 'atendimento',
       pergunta: 'A Lien atende convênios?',
       resposta: 'A Lien realiza atendimento particular.',
     },
     {
+      categoria: 'atendimento',
       pergunta: 'Onde fica a Lien e qual é o horário?',
       resposta:
         'No Edifício Asteca, Av. do Contorno, 5351 — Cruzeiro, Belo Horizonte. Atendemos segunda, terça, quinta e sexta, das 8h às 18h, e quarta, das 9h às 20h.',
     },
     {
+      categoria: 'conforto',
       pergunta: 'Vocês fazem implante com sedação?',
       // [PENDENTE: validar — ver sedacao]
       resposta: 'Sim, quando indicado no planejamento.',
     },
     {
+      categoria: 'atendimento',
       pergunta: 'A Lien atende urgências?',
       resposta: 'Atendemos urgências de pacientes em tratamento na Lien.',
     },

@@ -100,11 +100,11 @@ const mensagens = linksWhats.map(([, href]) =>
   decodeURIComponent(href.split('?text=')[1].replace(/&amp;/g, '&')),
 );
 
-// --- FAQ indexavel com accordion fechado ---
-const detalhesFaq = contar(secao('duvidas'), /<details[\s>]/g);
-checar('12 perguntas no FAQ', detalhesFaq === 12, `achou ${detalhesFaq}`);
-// `[\s=>]` e obrigatorio: o React serializa atributo booleano como `open=""`.
-checar('nenhum <details> aberto por padrao', !/<details\b[^>]*\sopen(?:[\s=>]|$)/.test(marcacao));
+// --- FAQ indexavel com abas e accordion fechados ---
+// Radix com forceMount: toda pergunta e toda resposta ficam no HTML estatico,
+// mesmo em aba inativa ou item fechado (ocultas por `hidden`).
+const itensFaq = contar(secao('duvidas'), /data-faq-item=""/g);
+checar('12 perguntas no FAQ', itensFaq === 12, `achou ${itensFaq}`);
 
 // --- Metadata ---
 checar('title do briefing', html.includes('<title>Implantes Dentários e Reabilitação Oral em BH | Lien — Cruzeiro</title>'));
@@ -129,6 +129,13 @@ const tipos = schemas.flatMap((s) => [s['@type']].flat());
 for (const t of ['Dentist', 'LocalBusiness', 'FAQPage', 'Person']) checar(`schema ${t}`, tipos.includes(t));
 const faqSchema = schemas.find((s) => [s['@type']].flat().includes('FAQPage'));
 checar('FAQPage com 12 perguntas', faqSchema?.mainEntity?.length === 12, `achou ${faqSchema?.mainEntity?.length}`);
+// Toda resposta do schema precisa estar visivel (no HTML) na secao de duvidas.
+const escaparHtml = (t) =>
+  t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;');
+const respostasFora = (faqSchema?.mainEntity ?? []).filter(
+  (q) => !secao('duvidas').includes(escaparHtml(q.acceptedAnswer.text)),
+);
+checar('todas as respostas do FAQ no HTML', respostasFora.length === 0, `faltam ${respostasFora.length}`);
 const jsonLd = blocos.join('\n');
 checar('sem aggregateRating (autoavaliacao)', !jsonLd.includes('aggregateRating'));
 checar('sem priceRange (briefing proibe preco)', !jsonLd.includes('priceRange'));

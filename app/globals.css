@@ -70,6 +70,12 @@
     --background: 250 248 246; /* cream */
     --foreground: 26 20 32; /* ink */
     --primary: 156 23 129; /* magenta */
+    --primary-foreground: 255 255 255;
+    --muted: 250 248 246; /* cream: aba ativa do FAQ */
+    --accent: 250 248 246;
+    --accent-foreground: 26 20 32;
+    --input: 225 225 225; /* brandgray */
+    --ring: 156 23 129;
     --card: 255 255 255;
     --card-foreground: 26 20 32;
     --muted-foreground: 90 82 96; /* ink-muted */
@@ -410,5 +416,17 @@
     opacity: 1;
     color: #037e99;
     font-size: 0.8125rem;
+  }
+}
+
+@layer components {
+  /*
+   * FAQ (Faq.tsx): o accordion usa `forceMount` para toda resposta ficar no
+   * HTML (SEO/AEO). Com isso o Radix para de aplicar `hidden` na resposta
+   * fechada — oculta aqui pelo estado. O className do AccordionContent do
+   * shadcn vai para a div interna, entao a regra mira o elemento do Radix.
+   */
+  [data-faq-item] > [role='region'][data-state='closed'] {
+    display: none;
   }
 }

@@ -21,3 +21,14 @@ export const trackWhatsAppClick = (origem: string) => {
     // Silencio proposital: rastreamento nunca deve quebrar a conversao.
   }
 };
+
+/** Feedback "Esta resposta ajudou?" do FAQ. Mesma regra: falha silenciosa. */
+export const trackFaqFeedback = (pergunta: string, ajudou: boolean) => {
+  try {
+    if (typeof window === 'undefined') return;
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'faq_feedback', pergunta, ajudou });
+  } catch {
+    // Silencio proposital.
+  }
+};
