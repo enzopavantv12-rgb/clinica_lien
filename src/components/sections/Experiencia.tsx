@@ -42,7 +42,10 @@ export function Experiencia() {
                 width={900}
                 height={900}
                 proporcao="aspect-square"
-                className="shadow-soft"
+                // Foto vertical num quadro quadrado: 62% mostra a cadeira
+                // inteira e a vista da janela.
+                className="shadow-soft object-[50%_62%]"
+                sizes="(max-width: 1024px) 90vw, 470px"
               />
             </div>
           </Reveal>

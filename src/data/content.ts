@@ -527,10 +527,11 @@ export const experiencia = {
     { icone: 'Gift', titulo: 'Kit pós-operatório', texto: 'O cuidado não termina quando você sai da cadeira.' },
     { icone: 'Hourglass', titulo: 'Consulta sem pressa', texto: 'Tempo dedicado a você, com atenção exclusiva.' },
   ],
+  // Foto: assets/fotos/consultorio/consultorio lien 1.png, copiada para
+  // assets/fotos-originais/experiencia-consultorio.png -> `npm run images`.
   imagem: {
-    src: '/img/experiencia-recepcao.webp',
-    alt: 'Recepção da clínica Lien Reabilitação Oral em Belo Horizonte, com ambiente acolhedor para pacientes com ansiedade odontológica',
-    pendente: true,
+    src: '/img/experiencia-consultorio.webp',
+    alt: 'Consultório da Lien Reabilitação Oral em Belo Horizonte: cadeira odontológica em ambiente claro, com vista para a cidade',
   },
 } as const;
 
