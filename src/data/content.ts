@@ -187,20 +187,21 @@ export const confianca = {
 
 /** "Cardapio de necessidades": o paciente escolhe pela dor, nas palavras dele. */
 export const cardapio = {
+  // `icone`: arquivo em /public/icones/<nome>.svg (originais em assets/icones/).
   tag: 'Para você',
   h2: 'Por onde você quer começar?',
   sub: 'Conte o que está sentindo. A gente mostra o caminho — e o planejamento começa na consulta.',
   cta: 'Conversar pelo WhatsApp',
   verTratamento: 'Conhecer o tratamento',
   itens: [
-    { texto: 'Quero comer com segurança', leva: 'Implantodontia digital e prótese', ancora: '#tratamento-implante', origem: 'cardapio-comer', icone: 'Smile' },
-    { texto: 'Perdi um ou mais dentes', leva: 'Implantodontia digital', ancora: '#tratamento-implante', origem: 'cardapio-dentes', icone: 'MonitorSmartphone' },
-    { texto: 'Minha prótese incomoda', leva: 'Prótese e reabilitação oral', ancora: '#tratamento-protese', origem: 'cardapio-protese', icone: 'Layers' },
-    { texto: 'Quero melhorar meu sorriso', leva: 'Lentes de contato dental, facetas e clareamento', ancora: '#tratamento-lentes', origem: 'cardapio-sorriso', icone: 'Gem' },
-    { texto: 'Tenho vários problemas ao mesmo tempo', leva: 'Reabilitação oral completa', ancora: '#tratamento-reabilitacao', origem: 'cardapio-completo', icone: 'ClipboardList' },
-    { texto: 'Sinto dor ou estalos na mandíbula', leva: 'DTM e dor orofacial', ancora: '#tratamento-dtm', origem: 'cardapio-mandibula', icone: 'Activity' },
-    { texto: 'Minha gengiva sangra', leva: 'Periodontia', ancora: '#tratamento-periodontia', origem: 'cardapio-gengiva', icone: 'ShieldCheck' },
-    { texto: 'Tenho medo de dentista', leva: 'Experiência Lien e sedação', ancora: '#sedacao', origem: 'cardapio-medo', icone: 'Headphones' },
+    { texto: 'Quero comer com segurança', leva: 'Implantodontia digital e prótese', ancora: '#tratamento-implante', origem: 'cardapio-comer', icone: 'mao-dente' },
+    { texto: 'Perdi um ou mais dentes', leva: 'Implantodontia digital', ancora: '#tratamento-implante', origem: 'cardapio-dentes', icone: 'implante' },
+    { texto: 'Minha prótese incomoda', leva: 'Prótese e reabilitação oral', ancora: '#tratamento-protese', origem: 'cardapio-protese', icone: 'instrumentos' },
+    { texto: 'Quero melhorar meu sorriso', leva: 'Lentes de contato dental, facetas e clareamento', ancora: '#tratamento-lentes', origem: 'cardapio-sorriso', icone: 'dente-brilho' },
+    { texto: 'Tenho vários problemas ao mesmo tempo', leva: 'Reabilitação oral completa', ancora: '#tratamento-reabilitacao', origem: 'cardapio-completo', icone: 'caries-dentarias' },
+    { texto: 'Sinto dor ou estalos na mandíbula', leva: 'DTM e dor orofacial', ancora: '#tratamento-dtm', origem: 'cardapio-mandibula', icone: 'dente-localizacao' },
+    { texto: 'Minha gengiva sangra', leva: 'Periodontia', ancora: '#tratamento-periodontia', origem: 'cardapio-gengiva', icone: 'cuidado-dental' },
+    { texto: 'Tenho medo de dentista', leva: 'Experiência Lien e sedação', ancora: '#sedacao', origem: 'cardapio-medo', icone: 'cadeira-de-dentista' },
   ],
 } as const satisfies {
   itens: readonly { origem: OrigemWhatsApp; ancora: string; texto: string; leva: string; icone: string }[];

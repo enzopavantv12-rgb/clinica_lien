@@ -3,7 +3,6 @@
 import { useRef } from 'react';
 import { ArrowDown } from 'lucide-react';
 import { MotionConfig, type Variants } from 'motion/react';
-import { Icon } from '../ui/Icon';
 import { Simbolo } from '../ui/BrandGraphics';
 import { TimelineContent } from '../ui/timeline-animation';
 import { WhatsAppLink } from '../ui/WhatsAppLink';
@@ -24,8 +23,8 @@ type Estilo = 'creme' | 'teal' | 'magenta';
  * Branco so sobre magenta/teal, como preve o manual. No card cream o link de
  * WhatsApp vai em magenta: teal sobre cream mede 4,46:1 e reprova AA.
  *
- * No lugar das fotos de logo do template, o icone do tratamento (o mesmo da
- * secao Tratamentos). Cada card mantem as duas saidas: a conversa no WhatsApp
+ * No lugar das fotos de logo do template, um icone odontologico por card
+ * (public/icones/, enviados pela clinica). Cada card mantem as duas saidas: a conversa no WhatsApp
  * com a mensagem daquela dor e o link para o tratamento.
  */
 const revealVariants: Variants = {
@@ -58,6 +57,31 @@ const estilos: Record<Estilo, { card: string; leva: string; link: string; icone:
     icone: 'bg-white/15 text-white',
   },
 };
+
+/**
+ * Icone SVG do cardapio como mascara CSS: o arquivo da a forma e a cor vem do
+ * `currentColor` do card (branco no magenta/teal, teal no cream). Os arquivos
+ * sao monocromaticos, entao a mascara usa so o canal alfa.
+ */
+function IconeCard({ nome }: { nome: string }) {
+  const url = `url(/icones/${nome}.svg)`;
+  return (
+    <span
+      aria-hidden="true"
+      className="block size-8 bg-current lg:size-9"
+      style={{
+        WebkitMaskImage: url,
+        maskImage: url,
+        WebkitMaskSize: 'contain',
+        maskSize: 'contain',
+        WebkitMaskRepeat: 'no-repeat',
+        maskRepeat: 'no-repeat',
+        WebkitMaskPosition: 'center',
+        maskPosition: 'center',
+      }}
+    />
+  );
+}
 
 /** Grade sutil dos cards grandes, com mascara radial (do template). */
 function Grade() {
@@ -124,7 +148,7 @@ function Card({
             aria-hidden="true"
             className={`flex size-12 shrink-0 items-center justify-center rounded-2xl lg:size-14 ${e.icone}`}
           >
-            <Icon nome={item.icone} size={24} />
+            <IconeCard nome={item.icone} />
           </span>
         </div>
       </article>
