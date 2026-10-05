@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef, useSyncExternalStore, type ReactNode } from 'r
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
+import { FundoGrade } from './background-snippets';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -146,8 +147,9 @@ export function Timeline({
     <section
       ref={secaoRef}
       id={id}
-      className="relative flex h-svh flex-col justify-center overflow-hidden bg-white pt-20 sm:pt-[88px]"
+      className="relative isolate flex h-svh flex-col justify-center overflow-hidden pt-20 sm:pt-[88px]"
     >
+      <FundoGrade />
       <div ref={trilhoRef} className="timeline-trilho flex w-max items-stretch gap-[7vw] px-[7vw] md:gap-[4vw] md:px-[5vw]">
         {/* Painel de abertura */}
         <div className="relative w-[85vw] shrink-0 overflow-hidden rounded-3xl bg-magenta p-7 text-white sm:p-10 md:w-[max(34vw,320px)]">

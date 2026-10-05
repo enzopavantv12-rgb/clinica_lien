@@ -2,6 +2,7 @@ import { Check } from 'lucide-react';
 import { Reveal } from '../ui/Reveal';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
 import { sedacao } from '../../data/content';
+import { FundoGrade } from '../ui/background-snippets';
 
 /**
  * Implantes e cirurgias com sedacao — pedido explicito da clinica, conversa
@@ -16,7 +17,8 @@ import { sedacao } from '../../data/content';
  */
 export function Sedacao() {
   return (
-    <section id="sedacao" className="bg-white py-20 sm:py-24 lg:py-28">
+    <section id="sedacao" className="relative isolate py-20 sm:py-24 lg:py-28">
+      <FundoGrade />
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
         <Reveal>
           <div className="grid gap-10 rounded-3xl bg-teal p-8 text-white shadow-lift sm:p-12 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:gap-16">

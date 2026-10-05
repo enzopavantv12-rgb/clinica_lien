@@ -3,6 +3,7 @@ import { Icon } from '../ui/Icon';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeading } from '../ui/SectionHeading';
 import { experiencia } from '../../data/content';
+import { FundoGrade } from '../ui/background-snippets';
 
 /**
  * Experiencia Lien — o maior diferencial para o paciente com ansiedade.
@@ -13,7 +14,8 @@ import { experiencia } from '../../data/content';
  */
 export function Experiencia() {
   return (
-    <section id="experiencia" className="bg-white py-20 sm:py-24 lg:py-28">
+    <section id="experiencia" className="relative isolate py-20 sm:py-24 lg:py-28">
+      <FundoGrade />
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
         <SectionHeading tag={experiencia.tag} titulo={experiencia.h2} subtitulo={experiencia.sub} />
 

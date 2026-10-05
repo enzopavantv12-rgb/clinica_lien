@@ -7,6 +7,7 @@ import { Simbolo } from '../ui/BrandGraphics';
 import { TimelineContent } from '../ui/timeline-animation';
 import { WhatsAppLink } from '../ui/WhatsAppLink';
 import { cardapio } from '../../data/content';
+import { FundoGrade } from '../ui/background-snippets';
 
 type Item = (typeof cardapio.itens)[number];
 type Estilo = 'creme' | 'teal' | 'magenta';
@@ -167,7 +168,8 @@ export function Cardapio() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <section id="para-voce" ref={ref} className="relative overflow-x-clip bg-white py-20 sm:py-24 lg:py-28">
+      <section id="para-voce" ref={ref} className="relative isolate overflow-x-clip py-20 sm:py-24 lg:py-28">
+        <FundoGrade />
         <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
           <div className="mx-auto flex max-w-screen-md flex-col items-center text-center">
             <TimelineContent

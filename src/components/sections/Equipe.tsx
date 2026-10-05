@@ -2,6 +2,7 @@ import { BrandImage } from '../ui/BrandImage';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeading } from '../ui/SectionHeading';
 import { equipe } from '../../data/content';
+import { FundoGrade } from '../ui/background-snippets';
 
 /**
  * Corpo clinico — cada especialidade com quem e especialista.
@@ -12,7 +13,8 @@ import { equipe } from '../../data/content';
  */
 export function Equipe() {
   return (
-    <section id="equipe" className="bg-white py-20 sm:py-24 lg:py-28">
+    <section id="equipe" className="relative isolate py-20 sm:py-24 lg:py-28">
+      <FundoGrade />
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
         <SectionHeading tag={equipe.tag} titulo={equipe.h2} subtitulo={equipe.sub} />
 
