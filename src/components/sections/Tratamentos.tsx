@@ -4,6 +4,7 @@ import { Reveal } from '../ui/Reveal';
 import { SectionHeading } from '../ui/SectionHeading';
 import { WhatsAppLink } from '../ui/WhatsAppLink';
 import { tratamentos } from '../../data/content';
+import { FundoGrade } from '../ui/background-snippets';
 
 type Item = (typeof tratamentos)['medios'][number] | (typeof tratamentos)['grade'][number];
 
@@ -72,7 +73,8 @@ export function Tratamentos() {
   const { destaque } = tratamentos;
 
   return (
-    <section id="tratamentos" className="bg-cream py-20 sm:py-24 lg:py-28">
+    <section id="tratamentos" className="relative isolate py-20 sm:py-24 lg:py-28">
+      <FundoGrade />
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
         <SectionHeading tag={tratamentos.tag} titulo={tratamentos.h2} subtitulo={tratamentos.sub} />
 

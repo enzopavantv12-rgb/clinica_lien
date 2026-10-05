@@ -445,3 +445,42 @@
     display: none;
   }
 }
+
+@layer components {
+  /*
+   * Movimento do fundo "grade + brilho" (background-snippets.tsx).
+   * Lento e discreto — dinamismo sem perder a calma de um consultorio.
+   * Grade: desliza exatamente uma celula (6rem x 4rem) por ciclo, entao o
+   * loop nao tem emenda. Brilho: oscila pouco em posicao, escala e opacidade.
+   */
+  @keyframes fundo-grade-deriva {
+    to {
+      transform: translate3d(6rem, 4rem, 0);
+    }
+  }
+  @keyframes fundo-grade-respira {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+      opacity: 0.85;
+    }
+    100% {
+      transform: translate3d(-3%, -2%, 0) scale(1.04);
+      opacity: 1;
+    }
+  }
+  .fundo-grade-trama {
+    animation: fundo-grade-deriva 60s linear infinite;
+    will-change: transform;
+  }
+  .fundo-grade-brilho {
+    transform-origin: 100% 55%;
+    animation: fundo-grade-respira 14s ease-in-out infinite alternate;
+    will-change: transform, opacity;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fundo-grade-trama,
+    .fundo-grade-brilho {
+      animation: none !important;
+    }
+  }
+}

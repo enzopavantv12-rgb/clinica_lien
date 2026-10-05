@@ -22,7 +22,6 @@ import { Simbolo } from '@/components/ui/BrandGraphics';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { trackFaqFeedback } from '@/lib/tracking';
 import { faq } from '@/data/content';
-import { FundoGrade } from '@/components/ui/background-snippets';
 
 const ICONES: Record<string, LucideIcon> = { ClipboardList, HeartHandshake, Stethoscope, CalendarClock };
 
@@ -73,8 +72,7 @@ export function Faq() {
   const temaInicial = faq.temas[0].valor;
 
   return (
-    <section id="duvidas" className="relative isolate py-20 sm:py-24 lg:py-28">
-      <FundoGrade />
+    <section id="duvidas" className="bg-white py-20 sm:py-24 lg:py-28">
       <div className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-5 sm:px-8">
         <header className="flex flex-col items-start gap-3">
           <p className="text-tag sm:text-tag-lg font-semibold uppercase tracking-[0.18em] text-teal">{faq.tag}</p>

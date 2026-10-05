@@ -8,6 +8,7 @@ import { Simbolo } from "@/components/ui/BrandGraphics";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { depoimentos } from "@/data/content";
 import { AntesDepois } from "./AntesDepois";
+import { FundoGrade } from "@/components/ui/background-snippets";
 
 /**
  * Colunas de depoimentos (testimonials-columns-1), logo abaixo da faixa de
@@ -44,7 +45,8 @@ export const Testimonials = () => {
   const { nota, total: totalGoogle, url } = depoimentos.google;
 
   return (
-    <section id="depoimentos" className="lien-depoimentos bg-background py-20 relative">
+    <section id="depoimentos" className="lien-depoimentos relative isolate py-20">
+      <FundoGrade />
       <div className="container z-10 mx-auto px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeading } from '../ui/SectionHeading';
 import { SHOW_RESULTS, resultados } from '../../data/content';
-import { FundoGrade } from '../ui/background-snippets';
 
 type Caso = (typeof resultados.casos)[number];
 
@@ -73,8 +72,7 @@ export function Resultados() {
   if (!SHOW_RESULTS || resultados.casos.length === 0) return null;
 
   return (
-    <section id="resultados" className="relative isolate py-20 sm:py-24 lg:py-28">
-      <FundoGrade />
+    <section id="resultados" className="bg-white py-20 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
         <SectionHeading tag={resultados.tag} titulo={resultados.h2} />
         <ul className="mt-14 grid gap-10 md:grid-cols-2">
