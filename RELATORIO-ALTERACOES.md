@@ -269,3 +269,13 @@ Hero → **faixa de números** → **Depoimentos** → Sobre → Método Lien �
 - **Apoio** (novo, abaixo do subtexto, em destaque): "Se você tem medo de dentista, talvez ainda não tenha conhecido a Lien."
 - O H1 ficou mais longo (79 caracteres, contra 52), então o tamanho máximo no desktop caiu de 60 para 52 px. Assim ele fica em 4 a 5 linhas e a hero dentro do teto de 920 px.
 - Contraste AA remedido sobre a foto, de 1024 a 1920 px: o menor valor é 4,55:1.
+
+### Seção Sedação no modelo "secao-sedacao" (out/2026)
+- **Layout:** faixa de largura total com a foto "Implante dentário com precisão" (`assets/fotos/seções /`) ao fundo e um card Liquid Glass escuro à esquerda, com ícone, título em 2 linhas, parágrafo e dois botões. O arquivo original não foi renomeado; uma cópia entrou no pipeline como `sedacao-implante` (960, 1440 e 1672 px, AVIF/WebP).
+- **Cores da Lien no lugar do verde da referência:** tinta do vidro e véu em ink; destaque do título e ícone em ciano `#68C0D4`; botão "Agendar consulta" em magenta com texto branco; "Falar pelo WhatsApp" translúcido com borda branca.
+- **Vidro:** seis camadas em `.vidro` (`globals.css`), com um único `backdrop-filter` na seção, nunca animado, e brilho que segue o mouse (só mouse, e desligado com movimento reduzido). Fallbacks: navegador sem desfoque, "reduzir transparência" e "mais contraste" deixam o card escuro e sólido.
+- **Título:** uma frase por linha a partir de 1024 px. O H2 de 44 px não cabe no card da referência (a 2ª frase mede 634 px na Poppins), então o card vai a `clamp(540px, 46vw, 640px)` e a fonte acompanha: 24 px em 1024, cerca de 27 px em 1280 e 30 px de 1440 para cima.
+- **Contraste**, medido no canvas (foto + véu + desfoque + tinta 0,55) no pior ponto: parágrafo de 6,1 a 6,7:1; título branco 7:1; título ciano 3,5:1 (texto grande, mínimo 3:1); botões acima de 4,5:1.
+- **Celular:** a foto fica presa no topo (440 px) e se funde no fundo ink. O card fica ancorado embaixo, a partir de 260 px, sem esconder o rosto. Botões empilhados em largura total, com 48 px de altura.
+- **Texto:** parágrafo do modelo. O anterior ainda não tinha sido validado com a Dra. Natália e o Dr. Alexsander e continua no llms.txt, junto com os 3 itens.
+- **Medição:** novo CTA `data-cta="sedacao-agendar"`, com a mensagem de agendamento; o `sedacao` continua no botão do WhatsApp.

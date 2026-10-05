@@ -484,3 +484,134 @@
     }
   }
 }
+
+@layer components {
+  /*
+   * Secao Sedacao — card "Liquid Glass" escuro sobre a foto (modelo
+   * "secao-sedacao", out/2026). Seis camadas: desfoque, vibracao, tinta,
+   * reflexo, aro especular (::before) e profundidade (sombras). O brilho que
+   * segue o mouse fica no ::after (--luz-x/--luz-y, Sedacao.tsx).
+   * Tinta em ink (26 20 32) no lugar do verde da referencia. Um unico
+   * backdrop-filter na secao, nunca animado; sem border e sem overflow.
+   */
+  .vidro {
+    --vidro-raio: 32px;
+    --vidro-desfoque: 28px;
+    --vidro-tinta: 26 20 32;
+    --vidro-opacidade: 0.55;
+    position: relative;
+    border-radius: var(--vidro-raio);
+    background:
+      linear-gradient(135deg, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0.05) 36%, rgb(255 255 255 / 0.02)),
+      rgb(var(--vidro-tinta) / var(--vidro-opacidade));
+    -webkit-backdrop-filter: blur(var(--vidro-desfoque)) saturate(165%) brightness(0.94);
+    backdrop-filter: blur(var(--vidro-desfoque)) saturate(165%) brightness(0.94);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.34),
+      inset 0 -1px 0 rgb(255 255 255 / 0.08),
+      inset 0 0 28px rgb(255 255 255 / 0.05),
+      0 28px 64px -16px rgb(0 0 0 / 0.5),
+      0 6px 16px rgb(0 0 0 / 0.18);
+  }
+  .vidro::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      140deg,
+      rgb(255 255 255 / 0.62),
+      rgb(255 255 255 / 0.14) 28%,
+      rgb(255 255 255 / 0.04) 55%,
+      rgb(255 255 255 / 0.3)
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+    pointer-events: none;
+  }
+  .vidro::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      420px circle at var(--luz-x, 18%) var(--luz-y, 0px),
+      rgb(255 255 255 / 0.14),
+      transparent 60%
+    );
+    pointer-events: none;
+  }
+  .vidro > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Veu de contraste sobre a foto: mais forte a esquerda (atras do card). */
+  .vidro-veu {
+    background: linear-gradient(
+      90deg,
+      rgb(26 20 32 / 0.6),
+      rgb(26 20 32 / 0.3) 45%,
+      rgb(26 20 32 / 0) 75%
+    );
+  }
+
+  /* Botao secundario: "vidro" so com fundo translucido e borda. */
+  .vidro-botao-secundario {
+    background: rgb(255 255 255 / 0.06);
+    border: 1px solid rgb(255 255 255 / 0.45);
+  }
+  .vidro-botao-secundario:hover {
+    background: rgb(255 255 255 / 0.14);
+    border-color: rgb(255 255 255 / 0.7);
+  }
+
+  @media (max-width: 767px) {
+    .vidro {
+      --vidro-raio: 24px;
+      --vidro-desfoque: 20px;
+    }
+    .vidro-veu {
+      background: linear-gradient(
+        180deg,
+        rgb(26 20 32 / 0) 30%,
+        rgb(26 20 32 / 0.6) 72%,
+        rgb(26 20 32)
+      );
+    }
+  }
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .vidro {
+      background: rgb(var(--vidro-tinta) / 0.86);
+    }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .vidro {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: rgb(var(--vidro-tinta) / 0.92);
+    }
+  }
+  @media (prefers-contrast: more) {
+    .vidro {
+      background: rgb(var(--vidro-tinta) / 0.96);
+    }
+    .vidro::before {
+      background: rgb(255 255 255 / 0.7);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vidro::after {
+      background: radial-gradient(420px circle at 18% 0px, rgb(255 255 255 / 0.14), transparent 60%);
+    }
+  }
+}

@@ -114,6 +114,7 @@ export const whatsappMensagens = {
   'tratamento-clareamento': `${OLA} gostaria de conversar sobre clareamento dental.`,
 
   sedacao: `${OLA} gostaria de entender como funciona a sedação para implantes e cirurgias.`,
+  'sedacao-agendar': `${OLA} gostaria de agendar uma consulta para conversar sobre a sedação.`,
 
   sobre: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
   rodape: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
@@ -504,14 +505,28 @@ export const tratamentos = {
 export const sedacao = {
   tag: 'Para quem tem medo',
   h2: 'Implantes e cirurgias com sedação.',
+  /** Titulo do modelo "secao-sedacao" (out/2026): uma frase por linha. */
+  tituloLinhas: ['Para quem tem medo', 'Implantes e cirurgias com sedação.'],
+  // Texto do modelo. O anterior ("conduzida por profissional habilitado e com
+  // monitoramento...") ainda nao tinha sido validado com a Dra. Natalia e o
+  // Dr. Alexsander; segue no llms.txt via `itens`.
   texto:
-    'Para quem sente medo ou ansiedade, existe a opção de realizar implantes e cirurgias com sedação, conduzida por profissional habilitado e com monitoramento durante todo o procedimento. Você vive essa etapa com muito mais tranquilidade.',
+    'Se o medo de dentista faz você adiar o tratamento, a sedação pode ser o caminho. Cada etapa é planejada com calma e acompanhada de perto, para que você passe por implantes e cirurgias com mais tranquilidade.',
   itens: [
     'Indicação definida na consulta',
     'Equipe habilitada e monitoramento contínuo',
     'Acompanhamento no pós-operatório',
   ],
-  cta: 'Quero entender como funciona a sedação',
+  ctaAgendar: 'Agendar consulta',
+  cta: 'Falar pelo WhatsApp',
+  /** Variantes de `npm run images` (assets/fotos-originais/sedacao-implante.png,
+   *  copia de "assets/fotos/seções /Implante dentário com precisão.png"). */
+  foto: {
+    base: 'sedacao-implante',
+    largura: 1672,
+    altura: 941,
+    alt: 'Paciente de olhos fechados, relaxada na cadeira, enquanto a dentista trabalha com a peça de mão e o sugador',
+  },
 } as const;
 
 export const experiencia = {

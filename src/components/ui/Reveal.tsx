@@ -15,6 +15,8 @@ export function Reveal({
   y = 18,
   duracao = 0.55,
   escala,
+  onPointerMove,
+  onPointerLeave,
 }: {
   children: React.ReactNode;
   delay?: number;
@@ -26,18 +28,26 @@ export function Reveal({
   duracao?: number;
   /** Escala inicial (ex.: 1.04 para a imagem assentar ao entrar). */
   escala?: number;
+  onPointerMove?: (e: React.PointerEvent<HTMLElement>) => void;
+  onPointerLeave?: (e: React.PointerEvent<HTMLElement>) => void;
 }) {
   const reduzir = useReducedMotion();
   const Componente = motion[as];
 
   if (reduzir) {
     const Estatico = as;
-    return <Estatico className={className}>{children}</Estatico>;
+    return (
+      <Estatico className={className} onPointerMove={onPointerMove} onPointerLeave={onPointerLeave}>
+        {children}
+      </Estatico>
+    );
   }
 
   return (
     <Componente
       className={className}
+      onPointerMove={onPointerMove}
+      onPointerLeave={onPointerLeave}
       initial={{ opacity: 0, y, ...(escala ? { scale: escala } : {}) }}
       whileInView={{ opacity: 1, y: 0, ...(escala ? { scale: 1 } : {}) }}
       viewport={{ once: true, margin: '-64px' }}
