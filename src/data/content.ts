@@ -705,45 +705,60 @@ export const depoimentos = {
   pausar: 'Pausar depoimentos',
   retomar: 'Retomar depoimentos',
   /**
-   * Antes e depois (assets/Depoimentos/), abaixo do titulo. Pares confirmados
-   * pela clinica; autorizacao escrita dos pacientes e fotos sem edicao do
-   * resultado confirmadas (Resolucao CFO 196/2019). Ficaram de fora dois pares
-   * nao confirmados e duas fotos sem par.
+   * Antes e depois (assets/Depoimentos/), abaixo do titulo. Os 9 pares foram
+   * indicados pela clinica; autorizacao escrita dos pacientes e fotos sem
+   * edicao do resultado confirmadas (Resolucao CFO 196/2019). Cada par e
+   * alinhado por scripts/alinhar-antes-depois.mjs antes do `npm run images`.
    */
   antesDepois: {
     rotulos: ['Antes', 'Depois'] as [string, string],
     instrucao: 'Arraste para comparar',
     casos: [
-    {
-      id: '1',
-      antes: { src: '/img/antes-depois-1-antes.webp', alt: 'Paciente sorrindo antes do tratamento na Lien' },
-      depois: { src: '/img/antes-depois-1-depois.webp', alt: 'A mesma paciente sorrindo depois do tratamento na Lien' },
-    },
-    {
-      id: '2',
-      antes: { src: '/img/antes-depois-2-antes.webp', alt: 'Paciente sorrindo antes do tratamento na Lien' },
-      depois: { src: '/img/antes-depois-2-depois.webp', alt: 'O mesmo paciente sorrindo depois do tratamento na Lien' },
-    },
-    {
-      id: '3',
-      antes: { src: '/img/antes-depois-3-antes.webp', alt: 'Sorriso com dentes ausentes e desgastados antes da reabilitação oral' },
-      depois: { src: '/img/antes-depois-3-depois.webp', alt: 'O mesmo sorriso depois da reabilitação oral na Lien' },
-    },
-    {
-      id: '4',
-      antes: { src: '/img/antes-depois-4-antes.webp', alt: 'Vista lateral dos dentes desalinhados antes do tratamento' },
-      depois: { src: '/img/antes-depois-4-depois.webp', alt: 'A mesma vista lateral, com os dentes alinhados depois do tratamento' },
-    },
-    {
-      id: '5',
-      antes: { src: '/img/antes-depois-5-antes.webp', alt: 'Vista frontal dos dentes com espaços antes do tratamento' },
-      depois: { src: '/img/antes-depois-5-depois.webp', alt: 'A mesma vista frontal depois do tratamento na Lien' },
-    },
-    {
-      id: '6',
-      antes: { src: '/img/antes-depois-6-antes.webp', alt: 'Paciente com marcações faciais de planejamento antes do tratamento' },
-      depois: { src: '/img/antes-depois-6-depois.webp', alt: 'A mesma paciente depois do tratamento na Lien' },
-    },
+      {
+        id: '1',
+        antes: { src: '/img/antes-depois-1-antes.webp', alt: 'Paciente sorrindo antes do tratamento na Lien' },
+        depois: { src: '/img/antes-depois-1-depois.webp', alt: 'A mesma paciente sorrindo depois do tratamento na Lien' },
+      },
+      {
+        id: '2',
+        antes: { src: '/img/antes-depois-2-antes.webp', alt: 'Paciente sorrindo antes do tratamento na Lien' },
+        depois: { src: '/img/antes-depois-2-depois.webp', alt: 'O mesmo paciente sorrindo depois do tratamento na Lien' },
+      },
+      {
+        id: '3',
+        antes: { src: '/img/antes-depois-3-antes.webp', alt: 'Sorriso com dentes ausentes e desgastados antes da reabilitação oral' },
+        depois: { src: '/img/antes-depois-3-depois.webp', alt: 'O mesmo sorriso depois da reabilitação oral na Lien' },
+      },
+      {
+        id: '4',
+        antes: { src: '/img/antes-depois-4-antes.webp', alt: 'Vista lateral dos dentes desalinhados antes do tratamento' },
+        depois: { src: '/img/antes-depois-4-depois.webp', alt: 'A mesma vista lateral, com os dentes alinhados depois do tratamento' },
+      },
+      {
+        id: '5',
+        antes: { src: '/img/antes-depois-5-antes.webp', alt: 'Vista frontal dos dentes com espaços antes do tratamento' },
+        depois: { src: '/img/antes-depois-5-depois.webp', alt: 'A mesma vista frontal depois do tratamento na Lien' },
+      },
+      {
+        id: '6',
+        antes: { src: '/img/antes-depois-6-antes.webp', alt: 'Paciente com marcações faciais de planejamento antes do tratamento' },
+        depois: { src: '/img/antes-depois-6-depois.webp', alt: 'A mesma paciente depois do tratamento na Lien' },
+      },
+      {
+        id: '7',
+        antes: { src: '/img/antes-depois-7-antes.webp', alt: 'Registro clínico do arco superior com dentes ausentes, antes do tratamento' },
+        depois: { src: '/img/antes-depois-7-depois.webp', alt: 'O sorriso reabilitado depois do tratamento na Lien' },
+      },
+      {
+        id: '8',
+        antes: { src: '/img/antes-depois-8-antes.webp', alt: 'Paciente sorrindo, com falhas nos dentes, antes do tratamento' },
+        depois: { src: '/img/antes-depois-8-depois.webp', alt: 'O mesmo paciente sorrindo depois do tratamento na Lien' },
+      },
+      {
+        id: '9',
+        antes: { src: '/img/antes-depois-9-antes.webp', alt: 'Paciente de frente antes do tratamento' },
+        depois: { src: '/img/antes-depois-9-depois.webp', alt: 'A mesma paciente depois do tratamento na Lien' },
+      },
     ],
   },
 } as const;
