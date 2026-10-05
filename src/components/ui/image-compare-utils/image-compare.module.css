@@ -1,0 +1,125 @@
+/*
+ * Visual do ImageCompare (o prompt importa este arquivo sem traze-lo).
+ * Cores da Lien: alca branca com setas em magenta, divisor branco, rotulos
+ * em capsula branca translucida com texto ink.
+ */
+
+.root {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  border-radius: var(--radius-panel);
+  background: var(--surface-muted);
+  cursor: ew-resize;
+  /* O dedo ainda rola a pagina na vertical; o arrasto lateral e do divisor. */
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.root[data-orientation='vertical'] {
+  cursor: ns-resize;
+  touch-action: pan-x;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+}
+.layer :is(img, picture, video) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.chip {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background: rgb(255 255 255 / 0.88);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 1px 3px rgb(26 20 32 / 0.08);
+  color: #1a1420;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: var(--leading-body);
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.chip[data-place='end'] {
+  left: auto;
+  right: 12px;
+}
+.chip[data-place='bottom'] {
+  top: auto;
+  bottom: 12px;
+}
+
+/* O pivo ocupa o quadro inteiro: transladar em % move o ponto (0,0) para o
+   divisor, e os filhos ancorados nesse ponto o seguem. */
+.pivot {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.rotor,
+.handleSlot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+}
+.line {
+  position: absolute;
+  left: -1px;
+  top: -200vmax;
+  width: 2px;
+  height: 400vmax;
+  background: #fff;
+  box-shadow: 0 0 6px rgb(26 20 32 / 0.25);
+}
+
+.handle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  translate: -50% -50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-raised);
+  color: #9c1781;
+  cursor: grab;
+  pointer-events: auto;
+  outline: none;
+  transition: box-shadow var(--duration-fast) var(--ease-standard);
+}
+.root[data-dragging] .handle {
+  cursor: grabbing;
+}
+.handle:focus-visible:not([data-quiet]) {
+  outline: 2px solid #9c1781;
+  outline-offset: 3px;
+}
+
+.chevrons {
+  display: flex;
+  align-items: center;
+}
+.chevron {
+  display: flex;
+  margin: 0 -2px;
+}

@@ -7,6 +7,7 @@ import { testimonials } from "@/content/testimonials";
 import { Simbolo } from "@/components/ui/BrandGraphics";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { depoimentos } from "@/data/content";
+import { AntesDepois } from "./AntesDepois";
 
 /**
  * Colunas de depoimentos (testimonials-columns-1), logo abaixo da faixa de
@@ -66,6 +67,9 @@ export const Testimonials = () => {
             Nota {nota} no Google, com {totalGoogle} avaliações de pacientes reais.
           </p>
         </motion.div>
+
+        {/* Antes e depois, logo abaixo do titulo. */}
+        <AntesDepois />
 
         {total > 0 && (
           <>

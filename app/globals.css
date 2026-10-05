@@ -76,6 +76,21 @@
     --accent-foreground: 26 20 32;
     --input: 225 225 225; /* brandgray */
     --ring: 156 23 129;
+
+    /* ImageCompare (antes e depois). Do prompt, menos --background,
+       --foreground e --border, que ja existem acima no formato RGB do tema. */
+    --surface-muted: #faf8f6;
+    --surface-raised: #ffffff;
+    --border-strong: #e1e1e1;
+    --shadow-raised: 0 6px 18px rgb(26 20 32 / 0.1), 0 1px 3px rgb(26 20 32 / 0.06);
+    --space-3: 0.75rem;
+    --radius-panel: 1.625rem;
+    --radius-pill: 9999px;
+    --text-xs: 0.75rem;
+    --leading-body: 1.4;
+    --tracking-body: -0.01em;
+    --duration-fast: 160ms;
+    --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
     --card: 255 255 255;
     --card-foreground: 26 20 32;
     --muted-foreground: 90 82 96; /* ink-muted */
