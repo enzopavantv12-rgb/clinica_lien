@@ -119,6 +119,7 @@ export const whatsappMensagens = {
   rodape: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
   depoimentos: `${OLA} gostaria de agendar uma consulta.`,
   duvidas: `${OLA} tenho uma dúvida sobre o atendimento. Podem me ajudar?`,
+  experiencia: `${OLA} gostaria de agendar uma consulta.`,
 } as const;
 
 export type OrigemWhatsApp = keyof typeof whatsappMensagens;
@@ -514,6 +515,40 @@ export const sedacao = {
 } as const;
 
 export const experiencia = {
+  /**
+   * O que a secao mostra (modelo "secao-consultorio", out/2026): texto curto
+   * + carrossel de fotos. tag/h2/sub/diferenciais abaixo seguem no llms.txt.
+   * Fotos = assets/fotos/consultorio/ na ordem dos nomes; variantes ja geradas
+   * por `npm run images` (slots reaproveitados das outras secoes).
+   */
+  consultorio: {
+    tag: 'Consultório',
+    tituloDestaque: 'Um espaço pensado',
+    tituloResto: 'para receber você bem.',
+    texto:
+      'Ambiente confortável, organizado e preparado para tornar cada consulta mais tranquila, do primeiro atendimento ao acompanhamento do tratamento.',
+    cta: 'Agendar consulta',
+    fotos: [
+      {
+        src: '/img/experiencia-consultorio.webp',
+        alt: 'Consultório da Lien com a cadeira odontológica e a vista da cidade pela janela',
+        posicao: '50% 62%',
+      },
+      {
+        src: '/img/metodo-consulta.webp',
+        alt: 'Sala de consulta da Lien, com mesa branca, cadeiras e estante decorada',
+        posicao: '50% 60%',
+      },
+      {
+        src: '/img/sobre-recepcao.webp',
+        alt: 'Recepção da Lien, com poltronas, plantas e o logo da clínica na parede',
+        posicao: '50% 45%',
+      },
+    ],
+    anterior: 'Foto anterior',
+    proxima: 'Próxima foto',
+    regiao: 'Fotos do consultório',
+  },
   tag: 'Experiência Lien',
   h2: 'Um consultório pensado para você relaxar, não para intimidar.',
   sub: 'Cada detalhe foi escolhido para que ir ao dentista deixe de ser um peso.',
