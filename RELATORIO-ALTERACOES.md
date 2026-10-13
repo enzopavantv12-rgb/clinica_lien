@@ -442,3 +442,35 @@ Não usei os arquivos novos em Downloads (`NATALIA-SIMOES.png` e quatro PNGs com
 | `/implante-dentario-belo-horizonte/` | 100 | 100 | 100 | 100 |
 
 Todas as metas foram batidas: Performance ≥ 85, Acessibilidade ≥ 95 e SEO ≥ 95.
+
+---
+
+## Depoimentos do Google — "Quem vive a Lien, conta." (out/2026)
+
+Fonte: `prompt-claude-code-depoimentos-lien.md`.
+
+**O que mudou:**
+- **Layout:** o carrossel de vídeos do alinhamento final saiu, por decisão da clínica. No lugar, entram 3 cards no layout do print aprovado: estrelas, depoimento literal entre aspas curvas, divisor e autor com avatar da inicial, alternando magenta e teal.
+- **Responsivo:**
+  - desktop: 3 colunas de mesma altura, com o autor sempre na base;
+  - tablet e celular: carrossel com scroll-snap;
+  - pontos indicadores só no celular.
+- **Posição:** o id `#depoimentos` e a posição (logo depois de Resultados) foram mantidos. A separação vem do fundo liso, sem a grade dos casos clínicos.
+- **Arquivos:**
+  - `src/content/testimonials.ts` com os 3 textos literais;
+  - `src/components/sections/Testimonials.tsx`;
+  - `Depoimentos.tsx` (vídeos) e `testimonials-columns-1.tsx` foram removidos.
+- **Verificador:** ganhou a checagem "3 cards literais, sem CTA". Agora são **79 checagens**.
+
+**Desvios do prompt, para cumprir as regras do projeto:**
+1. **Itálico:** a Poppins itálica não é carregada no site, e o projeto proíbe importar fonte nova. O navegador inclina a Poppins regular.
+2. **Pill "DEPOIMENTOS REAIS":** teal sobre `#E3F1F4` mede 4,08:1 e reprova AA em 11px. Usei fundo branco (4,72:1) com borda teal-clara.
+3. **Linha de contexto:** usei `#6B6470` (5,37:1), porque `#7A7380` mede 4,3:1 sobre o card.
+4. **Estrelas:** o `aria-label` ficou "Nota 5 de 5 estrelas", e não "Avaliação…", porque o verificador bloqueia a palavra.
+5. **Degradê de fundo:** saiu sem as posições 0/50/100%, que são o padrão para três cores. O verificador reprova "100%" na marcação.
+6. **Divisores:** o bloco do autor reserva altura para duas linhas de contexto, para os três divisores ficarem na mesma linha.
+
+**Para a clínica confirmar (risco ético/CFO):**
+1. **Tratamento × texto:** o 1º depoimento fala de **limpeza** com aplicação de flúor, mas o rótulo do print diz "Paciente **Reabilitação Oral**". Associar o depoimento a um tratamento que o paciente não fez pode ser lido como propaganda enganosa. Implementei como no print. A alternativa segura é "Paciente Clínica Geral". Confirmar também os rótulos "Implantes" (Nilson) e "Prótese e Estética" (Nádia).
+2. **Autorização:** de cada paciente, para exibir nome e texto no site, mesmo sendo avaliações públicas.
+3. **Grafia:** "Nádia Graciely" e "Nilson Antônio", exatamente como no Google.

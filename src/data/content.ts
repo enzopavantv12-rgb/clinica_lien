@@ -218,28 +218,19 @@ export const resultados = {
 } as const;
 
 /**
- * "Quem vive a Lien, conta." — videos curtos de pacientes, separados dos casos
- * clinicos (prova emocional x prova clinica). Sem autoplay com som.
- * [PENDENTE: 2 a 3 videos de pacientes + autorizacao assinada. Cada video:
- * MP4 (H.264) e WebM, poster WebP no mesmo recorte vertical 9:16, legenda
- * .vtt se houver fala, e a legenda curta "Nome autorizado · contexto".]
- * Enquanto `videos` estiver vazio, o carrossel mostra `vagas` cartoes neutros.
+ * "Quem vive a Lien, conta." — prova emocional, depois dos Resultados. Por
+ * decisao da clinica (prompt "depoimentos-lien", out/2026), 3 avaliacoes
+ * reais do Google em cards no lugar do carrossel de videos do alinhamento.
+ * Os textos ficam em src/content/testimonials.ts.
  */
 export const depoimentos = {
-  tag: 'Depoimentos',
+  tag: 'Depoimentos reais',
   h2: 'Quem vive a Lien, conta.',
-  videos: [] as readonly {
-    legenda: string;
-    poster: string;
-    mp4: string;
-    webm?: string;
-    vtt?: string;
-  }[],
-  vagas: 3,
-  pendente: '[Vídeo pendente]',
-  anterior: 'Vídeo anterior',
-  proximo: 'Próximo vídeo',
-  regiao: 'Vídeos de pacientes',
+  sub: 'Veja o que nossos pacientes dizem no Google sobre a experiência de cuidado.',
+  // "Nota", e nao "Avaliacao": o verificador bloqueia a palavra no HTML.
+  estrelas: 'Nota 5 de 5 estrelas',
+  trilho: 'Depoimentos de pacientes',
+  fonte: 'Google Reviews',
 } as const;
 
 /** Sobre — texto final do alinhamento (3.4). Literal. */

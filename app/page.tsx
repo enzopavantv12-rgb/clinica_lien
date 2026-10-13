@@ -2,7 +2,7 @@ import { Header } from '@/components/sections/Header';
 import { Hero, MEDIA_EMPILHADO, MEDIA_FUNDO } from '@/components/sections/Hero';
 import { TrustMarquee } from '@/components/sections/TrustMarquee';
 import { Resultados } from '@/components/sections/Resultados';
-import { Depoimentos } from '@/components/sections/Depoimentos';
+import { Testimonials } from '@/components/sections/Testimonials';
 import { Sobre } from '@/components/sections/Sobre';
 import { MetodoLien } from '@/components/sections/MetodoLien';
 import { Cardapio } from '@/components/sections/Cardapio';
@@ -58,7 +58,7 @@ export default function Home() {
         <Hero />
         <TrustMarquee />
         <Resultados />
-        <Depoimentos />
+        <Testimonials />
         <Sobre />
         <MetodoLien />
         <Cardapio />

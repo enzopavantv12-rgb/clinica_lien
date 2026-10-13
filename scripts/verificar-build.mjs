@@ -77,6 +77,14 @@ checar(
 const legendasCfo = contar(secao('resultados'), /Imagem publicada com autorização do paciente\./g);
 checar('resultados: 4 a 6 casos, cada um com legenda de autorizacao', legendasCfo >= 4 && legendasCfo <= 6, `achou ${legendasCfo}`);
 checar('resultados: aviso de individualidade', secao('resultados').includes('Os resultados variam de pessoa para pessoa'));
+// Depoimentos do Google (prompt "depoimentos-lien"): 3 cards literais, sem CTA.
+checar(
+  'depoimentos: 3 cards literais, sem CTA',
+  contar(secao('depoimentos'), /<blockquote/g) === 3 &&
+    !secao('depoimentos').includes('wa.me') &&
+    ['Alessandra Lopes', 'Nilson Antônio', 'Nádia Graciely'].every((n) => secao('depoimentos').includes(n)) &&
+    secao('depoimentos').includes('cuidadosa com todos os detalhes , explicações'),
+);
 checar('hero: prova social do Google no lugar do 2o botao', secao('inicio').includes('5,0 no Google · 57 avaliações'));
 checar('faixa unica de prova rapida (sem a 2a faixa teal)', !marcacao.includes('bg-[#047E99]'));
 const linksTratamentosHome = [...secao('tratamentos').matchAll(/href="\/tratamentos\/#([a-z-]+)"/g)].map((m) => m[1]);
