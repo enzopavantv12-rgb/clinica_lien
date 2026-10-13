@@ -89,7 +89,8 @@ export const whatsappMensagens = {
   flutuante: `${OLA} gostaria de agendar uma consulta.`,
   rodape: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
   comecar: `${OLA} não sei por onde começar. Gostaria de agendar uma consulta.`,
-  sedacao: `${OLA} gostaria de agendar uma consulta para conversar sobre a sedação.`,
+  // Mensagem do print aprovado (prompt "sedacao-lien", out/2026).
+  sedacao: 'Olá! Gostaria de conversar sobre as opções de sedação da Lien.',
   duvidas: `${OLA} gostaria de agendar uma consulta.`,
 } as const;
 
@@ -607,23 +608,41 @@ export const cardapio = {
 } as const;
 
 /**
- * Sedacao — so sedacao (3.8). Sem promessa de sono completo.
- * [PENDENTE: foto real para substituir a generica — o arquivo "Implante
- * dentario com precisao" saiu por ser imagem generica. Original em
- * assets/fotos-originais/sedacao-atendimento.jpg -> `npm run images`, e
- * trocar `pendente` para false.]
+ * Sedacao — layout e copy LITERAIS do print aprovado (prompt "sedacao-lien",
+ * out/2026), por decisao da clinica; substitui o titulo, o texto e o CTA do
+ * Alinhamento Final nesta secao. So sedacao, sem foto. As quebras de linha do
+ * print (`linhas`) so valem no desktop.
+ * [PENDENTE: revisao etica/CRO de "relaxamento absoluto", "total seguranca",
+ * "profundo relaxamento", "pre-consulta" e "ideal para..." — tabela no
+ * RELATORIO-ALTERACOES.md. O texto NAO foi alterado.]
  */
 export const sedacao = {
-  tag: 'Sedação',
-  h2: 'Mais conforto e segurança para quem sente medo ou ansiedade durante o tratamento.',
-  modalidades: ['Sedação consciente com medicação oral', 'Sedação intravenosa acompanhada por anestesista'],
+  tag: 'Acolhimento avançado',
+  h2: 'Mais tranquilidade quando você precisa.',
+  h2Linhas: ['Mais tranquilidade', 'quando você precisa.'],
   texto:
-    'Para pacientes com medo intenso, ansiedade ou dificuldade de enfrentar determinados procedimentos, a Lien oferece duas possibilidades de sedação, definidas em conjunto após a consulta e a análise de segurança. A modalidade adequada depende do procedimento, do histórico de saúde e das preferências do paciente.',
-  cta: CTA_PRINCIPAL,
-  foto: {
-    src: '/img/sedacao-atendimento.webp',
-    alt: 'Atendimento com sedação na Lien Reabilitação Oral',
-    pendente: true,
+    'O medo de dentista e a ansiedade não devem ser barreiras para a sua saúde e qualidade de vida. Na Lien, oferecemos protocolos seguros de controle da dor e relaxamento absoluto para que você realize seus tratamentos com serenidade.',
+  modalidades: [
+    {
+      icone: 'pilula',
+      linhas: ['Sedação', 'Consciente Oral'],
+      texto:
+        'Medicação pré-consulta administrada com total segurança para induzir um estado de profundo relaxamento e bem-estar.',
+    },
+    {
+      icone: 'anestesista',
+      linhas: ['Sedação Intravenosa', 'com Anestesista'],
+      texto:
+        'Acompanhamento de médico anestesista durante todo o procedimento, ideal para cirurgias complexas e pacientes altamente ansiosos.',
+    },
+  ],
+  conversa: {
+    linhas: ['Converse com', 'nossa equipe'],
+    textoLinhas: ['Descubra qual protocolo de sedação', 'é ideal para o seu perfil e tranquilidade.'],
+    cta: 'Quero conversar sobre isso',
+    // Complemento so para leitor de tela: o nome acessivel continua
+    // comecando pelo texto visivel (WCAG 2.5.3, "label in name").
+    ctaLeitor: ' com a equipe da Lien pelo WhatsApp sobre sedação',
   },
 } as const;
 

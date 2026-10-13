@@ -120,9 +120,15 @@ checar(
   `${linksWhats.filter(([tag]) => !/\sdata-page=/.test(tag)).length} sem data-page`,
 );
 // Um CTA por momento de decisao, sempre "Agende sua consulta" (alinhamento
-// final, secao 1). Fora da regra: o flutuante (so icone) e o contato do rodape.
+// final, secao 1). Fora da regra: o flutuante (so icone), o contato do rodape
+// e a Sedacao, que usa "Quero conversar sobre isso" por decisao da clinica
+// (print aprovado, out/2026) — conferida a parte, logo abaixo.
 const ctasPrincipais = [...marcacao.matchAll(/<a\b[^>]*href="https:\/\/wa\.me\/[^"]*"[^>]*data-cta="([a-z-]+)"[^>]*>([\s\S]*?)<\/a>/g)]
-  .filter(([, origem]) => !['flutuante', 'rodape'].includes(origem));
+  .filter(([, origem]) => !['flutuante', 'rodape', 'sedacao'].includes(origem));
+checar(
+  'sedacao: CTA do print ("Quero conversar sobre isso") e sem foto',
+  secao('sedacao').includes('Quero conversar sobre isso') && !secao('sedacao').includes('<img'),
+);
 checar(
   'todo CTA principal da home diz "Agende sua consulta"',
   ctasPrincipais.length > 0 && ctasPrincipais.every(([, , texto]) => texto.includes('Agende sua consulta')),

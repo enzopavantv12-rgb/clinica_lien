@@ -562,3 +562,43 @@ Fonte: `prompt-claude-code-tratamentos-lien.md`. O layout segue o print; a estru
    - os degradês saíram sem as posições "100%", para passar no verificador.
 6. **Ícones:** o projeto não tinha os ícones do print. Desenhei 10 SVGs duotone em `IconesTratamento.tsx`, seguindo a descrição do prompt; vale a clínica olhar.
 7. **Arquivos removidos:** `Icon.tsx` (ícones lucide antigos dos tratamentos) e `AbrirPorAncora.tsx`, cuja função foi para a grade.
+
+---
+
+## Sedação no layout e na copy do print (out/2026)
+
+Fonte: `prompt-claude-code-sedacao-lien.md`. Por decisão da clínica, o layout e a copy são **iguais aos do print**. Isso substitui, nesta seção, o título, o texto e o CTA do Alinhamento Final.
+
+**O que mudou:**
+- **Fundo e foto:** degradê magenta, sem foto. A foto pendente e o placeholder saíram.
+- **Coluna esquerda:**
+  - tag "ACOLHIMENTO AVANÇADO";
+  - H2 "Mais tranquilidade / quando você precisa.";
+  - parágrafo literal;
+  - 2 cards de vidro (Sedação Consciente Oral / Sedação Intravenosa com Anestesista), com ícones rosa preenchidos.
+- **Card lateral branco** "Converse com nossa equipe":
+  - ícone de equipe com dente;
+  - botão "Quero conversar sobre isso", com `data-cta="sedacao"`;
+  - mensagem: "Olá! Gostaria de conversar sobre as opções de sedação da Lien.".
+- **Quebras de linha:** as do print valem só no desktop.
+- **Verificador:** a regra "todo CTA principal diz Agende sua consulta" ganhou exceção para a Sedação, e entrou uma checagem do CTA do print e da ausência de foto. Agora são **80 checagens**.
+
+**Desvios técnicos:**
+- O H2 pede Poppins 800, peso que não é carregado; o navegador usa o 900.
+- No botão, o `aria-label` do prompt ("Conversar com a equipe da Lien pelo WhatsApp sobre sedação") não contém o texto visível e quebraria a WCAG 2.5.3 (label in name). O nome acessível ficou "Quero conversar sobre isso com a equipe da Lien pelo WhatsApp sobre sedação (abre o WhatsApp)".
+- O botão usa padding de 16px, e não 22px, para caber numa linha no card de 306px.
+- `rel="noopener noreferrer"`, o padrão do site.
+- **Contraste**, medido nos três pontos do degradê: parágrafo 7,9:1 ou mais; texto dos cards (92%) 5,8:1 ou mais; tag (85%) 4,6:1 ou mais.
+
+**Para a revisão ética/CRO** (item 23 do Alinhamento Final). O texto **não foi alterado**:
+
+| Trecho do print | Atenção | Alternativa sugerida (só se a clínica aprovar) |
+|---|---|---|
+| "relaxamento absoluto" | Promessa absoluta; o nível de relaxamento varia de pessoa para pessoa | "mais conforto e relaxamento" |
+| "com total segurança" | Afirmação absoluta sobre segurança | "com protocolos de segurança" |
+| "induzir um estado de profundo relaxamento" | Pode ser lido como promessa de efeito garantido; o alinhamento pede não prometer o nível de consciência | "para promover um estado de relaxamento" |
+| "Medicação **pré-consulta**" | A medicação é tomada antes do **procedimento**, não da consulta | "Medicação administrada antes do procedimento" |
+| "ideal para cirurgias complexas e pacientes altamente ansiosos" | A indicação é individual e definida após a consulta e a análise de segurança | "indicada após consulta e análise de segurança" |
+| "protocolos seguros de controle da dor" | Junto de "relaxamento absoluto", pode soar como promessa de ausência de dor | — |
+| Título "Mais tranquilidade quando você precisa." | O Alinhamento aprovou outro título ("Mais conforto e segurança para quem sente medo ou ansiedade durante o tratamento.") | — (decisão do cliente: manter o print) |
+| CTA "Quero conversar sobre isso" (WhatsApp) | O Alinhamento padronizou o CTA como "Agende sua consulta" | — (decisão do cliente: manter o print) |
