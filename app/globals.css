@@ -451,3 +451,25 @@
     }
   }
 }
+
+@layer components {
+  /* Carrossel de Resultados: 1,15 card no celular (87%), 2 no tablet, 3 no
+     desktop (gaps de 16/16/24px), e fade de 48px nas bordas no desktop. */
+  .resultados-slide {
+    flex: 0 0 87%;
+  }
+  @media (min-width: 640px) {
+    .resultados-slide {
+      flex: 0 0 calc((100% - 16px) / 2);
+    }
+  }
+  @media (min-width: 1024px) {
+    .resultados-slide {
+      flex: 0 0 calc((100% - 48px) / 3);
+    }
+    .resultados-viewport {
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 48px, #000 calc(100% - 48px), transparent);
+      mask-image: linear-gradient(90deg, transparent 0, #000 48px, #000 calc(100% - 48px), transparent);
+    }
+  }
+}

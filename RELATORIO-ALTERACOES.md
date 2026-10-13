@@ -642,3 +642,52 @@ Fonte: `prompt-claude-code-experiencia-lien.md`. Por decisão da clínica, layou
    - o cabeçalho "Experiência Lien" no lugar de "A experiência começa antes do tratamento.";
    - os nomes dos capítulos;
    - a ausência da faixa de diferenciais.
+
+---
+
+## Resultados em carrossel horizontal (out/2026)
+
+Fonte: `prompt-claude-code-resultados-carrossel-lien.md`.
+
+**Diagnóstico do efeito de antes e depois** (Fase 1):
+- O comparador é próprio, `src/components/ui/image-compare.tsx`, sem biblioteca. É um slider arrastável feito com Pointer Events (`pointerdown`, `pointermove`, `pointerup` e `pointercancel`), com `setPointerCapture` na raiz do card.
+- **Mouse:** arrasta na hora.
+- **Toque:** espera 6px de movimento. Se o gesto for mais vertical que horizontal, libera a rolagem da página (a raiz tem `touch-action: pan-y`).
+- **Toque rápido na foto:** leva a divisória até o ponto tocado.
+- **Alça:** `role="slider"`, com setas, Home/End e PageUp/Down; o duplo clique nela volta a divisória para 50%.
+- Não há hover nem animação automática. As molas são do `motion`.
+- Não havia biblioteca de carrossel no projeto. Entrou o **Embla Carousel 8** (`embla-carousel-react` + `embla-carousel-autoplay`), como o prompt recomenda.
+- São 6 casos, o que permite loop: o mínimo é 4.
+
+**O que mudou:**
+- **Trilho:** uma linha só, com 3 cards inteiros no desktop (24px entre eles), 2 no tablet e 1,15 no celular (16px entre eles).
+- **Bordas:** fade de 48px nas laterais, só no desktop. A largura dos slides e a máscara ficaram em `globals.css`, porque o verificador reprova "100%" na marcação.
+- **Movimento:** autoplay de 1 card a cada 4,5s, em loop. Pausa no hover, no foco, durante a comparação, com a seção fora da tela, com a aba oculta e pelo botão de pausa (WCAG 2.2.2). Retoma 3s depois que o último motivo de pausa sai; o botão de pausa só o próprio usuário desfaz.
+- **Controles:** setas de 44px (ocultas no celular), pontos que viram uma pílula magenta e o botão pausar/retomar.
+- **Movimento reduzido:** sem autoplay e com troca instantânea.
+- **O card não foi alterado.** Ganhou só um `<div data-compare-area>` em volta do comparador, porque o componente não aceita atributos extras; as fotos já tinham `draggable={false}`.
+- **Regras contra conflito de arraste:**
+  - um arraste que começa no comparador é ignorado pelo Embla (`watchDrag`) e pausa o autoplay;
+  - as setas do teclado só movem o carrossel quando o foco não está na alça;
+  - o Embla move apenas o trilho, sem `scale`, `rotate` nem `filter` nos slides.
+- **Aviso legal:** continua visível abaixo do carrossel, e a legenda de autorização segue em cada caso.
+
+**Testes realizados** (Chrome headless, porque o painel do app fica oculto e congela as animações):
+- **Desktop, mouse:**
+  - o autoplay avançou do caso 1 para o 2 em cerca de 5s;
+  - o hover pausou por 6s, e o carrossel retomou depois de sair;
+  - as setas foram de 3 para 4 e voltaram para 3; o ponto 4 levou ao caso 4;
+  - o botão de pausa segurou o carrossel por 9s;
+  - arrastar o comparador de um card visível moveu a divisória de 50% para 87% sem mover o carrossel;
+  - arrastar na legenda moveu o carrossel (4 para 5);
+  - as setas do teclado na alça não moveram o carrossel, e nos controles foram de 5 para 6.
+- **Celular (375px, toque):**
+  - arrastar no comparador moveu a divisória de 50% para 95% e não mexeu no carrossel;
+  - o swipe na legenda passou do caso 1 para o 2;
+  - um arrasto vertical sobre o comparador rolou a página (de 1570 para 1846px);
+  - o loop passou do caso 6 para o 1;
+  - o comparador continuou funcionando depois do loop: o arrasto foi de 80% para 13%, e o toque rápido na foto, de 50% para 80%;
+  - sem setas e sem rolagem horizontal.
+- **Ainda não testado:** iOS Safari e Chrome Android em aparelho real. O teste foi no Chrome com emulação de toque.
+
+**Pendente:** a revisão ética/CRO dos casos, que segue como estava no Alinhamento Final.
