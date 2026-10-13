@@ -432,3 +432,13 @@ Não usei os arquivos novos em Downloads (`NATALIA-SIMOES.png` e quatro PNGs com
   - as páginas internas;
   - os 14 artigos;
   - o sitemap completo.
+
+**Lighthouse mobile (site publicado, 12/out/2026, Lighthouse 12):**
+
+| Página | Performance | Acessibilidade | Boas práticas | SEO |
+|---|---|---|---|---|
+| `/` | 87 | 96 | 100 | 100 |
+| `/tratamentos/` | 96 | 96 | 100 | 100 |
+| `/implante-dentario-belo-horizonte/` | 100 | 100 | 100 | 100 |
+
+Todas as metas foram batidas: Performance ≥ 85, Acessibilidade ≥ 95 e SEO ≥ 95.
