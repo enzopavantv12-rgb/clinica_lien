@@ -4,10 +4,9 @@
  * corrigir pontuacao nem gramatica do paciente.
  *
  * [PENDENTE: a clinica confirmar (1) a autorizacao de cada paciente para
- * exibir nome e texto no site; (2) o tratamento real de cada um — o 1o texto
- * fala de limpeza, mas o rotulo aprovado no print e "Reabilitacao Oral"
- * (alternativa segura: "Clinica Geral"); (3) a grafia "Nadia Graciely" e
- * "Nilson Antonio" como no Google.]
+ * exibir nome e texto no site; (2) o tratamento real do 2o e do 3o
+ * ("Implantes" e "Protese e Estetica"); (3) a grafia "Nadia Graciely" e
+ * "Nilson Antonio" como no Google. O 1o ja foi trocado para "Clinica Geral".]
  */
 export type Testimonial = {
   text: string;
@@ -19,7 +18,8 @@ export const testimonials: Testimonial[] = [
   {
     text: "Realizei a limpeza com a Dra. Natália Simões, que imaginei ser um procedimento simples, mas acabou sendo uma verdadeira experiência. Fui um pouco tensa, achando que sentiria dor, e me surpreendi com uma massagem facial relaxante durante a aplicação do flúor. Nunca mais vou reclamar de fazer limpeza! Foi surpreendente e fiquei extremamente satisfeita.",
     name: "Alessandra Lopes",
-    context: "Reabilitação Oral",
+    // Era "Reabilitação Oral" no print; trocado a pedido (o texto fala de limpeza).
+    context: "Clínica Geral",
   },
   {
     text: "Se existe uma clínica para quem tem medo de dentista, é a Lien, nunca me senti tão confortável e relaxado sentado na cadeira do dentista, sensacional!",

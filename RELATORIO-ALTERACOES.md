@@ -471,6 +471,6 @@ Fonte: `prompt-claude-code-depoimentos-lien.md`.
 6. **Divisores:** o bloco do autor reserva altura para duas linhas de contexto, para os três divisores ficarem na mesma linha.
 
 **Para a clínica confirmar (risco ético/CFO):**
-1. **Tratamento × texto:** o 1º depoimento fala de **limpeza** com aplicação de flúor, mas o rótulo do print diz "Paciente **Reabilitação Oral**". Associar o depoimento a um tratamento que o paciente não fez pode ser lido como propaganda enganosa. Implementei como no print. A alternativa segura é "Paciente Clínica Geral". Confirmar também os rótulos "Implantes" (Nilson) e "Prótese e Estética" (Nádia).
+1. **Tratamento × texto:** o 1º depoimento (limpeza com aplicação de flúor) foi rotulado como "Paciente **Clínica Geral**", a pedido, no lugar do "Reabilitação Oral" do print. Faltam confirmar os rótulos "Implantes" (Nilson) e "Prótese e Estética" (Nádia).
 2. **Autorização:** de cada paciente, para exibir nome e texto no site, mesmo sendo avaliações públicas.
 3. **Grafia:** "Nádia Graciely" e "Nilson Antônio", exatamente como no Google.
