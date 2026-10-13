@@ -517,3 +517,48 @@ Fonte: `prompt-claude-code-sobre-metodo-lien.md`. O layout segue os prints 1 e 2
 4. **Vídeo e fotos:** o Sobre já não tinha vídeo desde o alinhamento, e o Método já não tinha foto.
 5. **Itálico** ("vínculo", quote e fechamento): a Poppins itálica não é carregada; o navegador inclina a regular.
 6. **Contraste:** os cards do "Por onde começar" ficaram com fundo branco a 90%, e não `#F9FAFB` a 90%. O link teal de 12px fica em cerca de 4,7:1, contra 4,45:1 no fundo pedido. A tag magenta mede 6,09:1, a tag teal sobre branco 4,72:1 e o ink-muted sobre os cards cerca de 7:1.
+
+---
+
+## Tratamentos no visual do print (out/2026)
+
+Fonte: `prompt-claude-code-tratamentos-lien.md`. O layout segue o print; a estrutura e os textos seguem o Alinhamento Final 2026.
+
+**Card do print** (`src/components/ui/TratamentoCard.tsx`):
+- Branco, raio 20px, sombra suave e borda quase invisível.
+- Ícone duotone num quadrado tintado, título com 17px e descrição com 13px.
+- Botão "Saiba mais" pastel, de largura total, sempre na base.
+- Cores alternadas pela posição: par em magenta, ímpar em teal, com ícone e botão juntos.
+- Ícone, título, texto e botão começam na mesma altura em todos os cards; no print alguns estavam desalinhados.
+
+**Home (`#tratamentos`):**
+- Só os 3 destaques, com a frase aprovada.
+- "Ver todos os tratamentos" com contorno magenta, como botão secundário.
+- Nenhum WhatsApp nos cards e sem o arco decorativo.
+- Cabeçalho mantido: TRATAMENTOS / "Cada tratamento começa pelo seu planejamento." / o subtítulo atual. Não usei os textos do print, "Excelência odontológica" e "tecnologia de ponta".
+
+**`/tratamentos/`** (`GradeTratamentos.tsx`):
+- **Cabeçalho:** breadcrumb Início › Tratamentos e H1 "Tratamentos e especialidades".
+- **Grade:** os 10 cards em 3, 2 ou 1 coluna, conforme a largura.
+- **"Saiba mais":**
+  - expande o card na linha inteira, com transição de altura de 350ms, e o botão vira "Fechar";
+  - abre um card por vez, com `aria-expanded` e `aria-controls`;
+  - o conteúdo literal do Anexo I fica em duas colunas: à esquerda, ícone, título (H2), descrição e "Indicado para"; à direita, O que é, Benefício, Serviços e Conteúdos relacionados; no rodapé, a nota em itálico e um único "Agende sua consulta" (`data-cta="tratamento-<slug>"`).
+- **Âncoras:** `/tratamentos/#slug` abre o card e rola até ele, 120px abaixo do topo. Abrir e fechar atualiza a URL com `replaceState`.
+- **SEO:** o conteúdo fechado continua no HTML estático, com `inert` para sair da ordem de tabulação.
+- **Arco grande:** em azul-claro, ocupa o vazio da última linha só com 3 colunas e desenha o traço ao entrar na tela.
+
+**Pontos de atenção:**
+1. **Home com 3 cards:** o print mostra 10, mas o Alinhamento manda 3 na home e 10 na página interna. Para ter os 10 na home, basta trocar `destaques` pela lista completa.
+2. **Textos do cabeçalho do print:** não usados, pelo motivo acima.
+3. **Textos curtos dos 7 tratamentos restantes:** vêm do print, porque o alinhamento só define os 3 da home. **A clínica precisa confirmar.**
+4. **Correções:**
+   - "osdentes" → "os dentes";
+   - títulos só com a primeira letra maiúscula;
+   - alinhamento interno dos cards.
+5. **Desvios do prompt, pelas regras do projeto:**
+   - a tag teal fica sobre branco com borda: sobre `#E3F1F4` ela mede 4,08:1 e reprova AA;
+   - as descrições usam peso 400, e não 300: a Poppins Light em 13px fica fina demais;
+   - os degradês saíram sem as posições "100%", para passar no verificador.
+6. **Ícones:** o projeto não tinha os ícones do print. Desenhei 10 SVGs duotone em `IconesTratamento.tsx`, seguindo a descrição do prompt; vale a clínica olhar.
+7. **Arquivos removidos:** `Icon.tsx` (ícones lucide antigos dos tratamentos) e `AbrirPorAncora.tsx`, cuja função foi para a grade.

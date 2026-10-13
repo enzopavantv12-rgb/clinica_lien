@@ -129,3 +129,31 @@ export function ArcoSorriso({ className = '', cor = '#037E99' }: { className?: s
     </svg>
   );
 }
+
+/**
+ * Arco grande do sorriso em azul-claro — decoracao da grade de /tratamentos/
+ * (preenche o espaco vazio da ultima linha). Desenha o traco ao aparecer
+ * (.arco-desenha, globals.css), sem animacao com movimento reduzido.
+ */
+export function ArcoGrande({ className = '' }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 380 120"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+      style={{ filter: 'drop-shadow(0 18px 30px rgba(104,192,212,.25))' }}
+    >
+      <path
+        className="arco-desenha"
+        pathLength={1}
+        d="M20 22 Q190 196 360 22"
+        stroke="#68C0D4"
+        strokeOpacity={0.85}
+        strokeWidth={22}
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}

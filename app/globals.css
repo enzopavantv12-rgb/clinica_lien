@@ -408,3 +408,28 @@
     }
   }
 }
+
+@layer components {
+  /* Arco grande de /tratamentos/: desenha o traco uma vez (1,2s) quando
+     entra na tela (.is-visivel, posto por GradeTratamentos). */
+  .arco-desenha {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  .is-visivel .arco-desenha {
+    animation: arco-desenha 1.2s ease-out forwards;
+  }
+  @keyframes arco-desenha {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .arco-desenha {
+      stroke-dashoffset: 0;
+    }
+    .is-visivel .arco-desenha {
+      animation: none;
+    }
+  }
+}

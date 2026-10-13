@@ -321,7 +321,11 @@ type Tratamento = {
   numero: string;
   nome: string;
   icone: string;
-  /** Frase do card curto. Nos 3 da home, a frase aprovada para a home (3.7). */
+  /**
+   * Frase do card curto. Nos 3 da home, a frase aprovada (alinhamento 3.7);
+   * nos outros 7, o texto curto do print de Tratamentos (out/2026, com
+   * "osdentes" corrigido). [PENDENTE: a clinica confirmar os 7.]
+   */
   resumo: string;
   oQueE: string;
   beneficio: string;
@@ -342,6 +346,7 @@ export const tratamentos = {
   sub: 'Conheça as especialidades da Lien. O melhor caminho para você é definido na consulta.',
   saibaMais: 'Saiba mais',
   fechar: 'Fechar',
+  inicio: 'Início',
   verTodos: 'Ver todos os tratamentos',
   cta: CTA_PRINCIPAL,
   pagina: {
@@ -434,7 +439,7 @@ export const tratamentos = {
       numero: '04',
       nome: 'Periodontia',
       icone: 'ShieldCheck',
-      resumo: 'É a área responsável pela saúde da gengiva e dos tecidos que sustentam os dentes e os implantes.',
+      resumo: 'Cuidado com a gengiva e os tecidos que sustentam os dentes, prevenindo e tratando inflamações e perda de suporte.',
       oQueE: 'É a área responsável pela saúde da gengiva e dos tecidos que sustentam os dentes e os implantes.',
       beneficio:
         'Ajuda a controlar inflamações, sangramento e perda de suporte, criando uma base saudável para manter dentes, implantes e reabilitações.',
@@ -448,8 +453,7 @@ export const tratamentos = {
       numero: '05',
       nome: 'Harmonização orofacial',
       icone: 'Sparkles',
-      resumo:
-        'Conjunto de procedimentos que atuam nos tecidos da face para suavizar sinais do envelhecimento, melhorar proporções e valorizar características individuais.',
+      resumo: 'Procedimentos planejados para valorizar os traços do rosto e do sorriso, preservando naturalidade e equilíbrio.',
       oQueE:
         'Conjunto de procedimentos que atuam nos tecidos da face para suavizar sinais do envelhecimento, melhorar proporções e valorizar características individuais.',
       beneficio:
@@ -470,8 +474,7 @@ export const tratamentos = {
       numero: '06',
       nome: 'DTM e dor orofacial',
       icone: 'Activity',
-      resumo:
-        'É o cuidado de sintomas que podem envolver a mandíbula, os músculos da mastigação e as articulações, como dor, estalos, tensão ou limitação de movimento.',
+      resumo: 'Tratamento para dores, estalos, bruxismo, travamentos e desconfortos na mandíbula e na região da face.',
       oQueE:
         'É o cuidado de sintomas que podem envolver a mandíbula, os músculos da mastigação e as articulações, como dor, estalos, tensão ou limitação de movimento.',
       beneficio:
@@ -491,8 +494,7 @@ export const tratamentos = {
       numero: '07',
       nome: 'Cirurgia e Traumatologia Bucomaxilofacial',
       icone: 'Bone',
-      resumo:
-        'Especialidade cirúrgica que diagnostica e trata alterações dos dentes, ossos e estruturas da face e da boca.',
+      resumo: 'Cirurgias e tratamentos especializados para sisos, dentes inclusos, alterações ósseas e casos mais complexos.',
       oQueE:
         'Especialidade cirúrgica que diagnostica e trata alterações dos dentes, ossos e estruturas da face e da boca.',
       beneficio:
@@ -512,7 +514,7 @@ export const tratamentos = {
       numero: '08',
       nome: 'Ortodontia',
       icone: 'Ruler',
-      resumo: 'Área responsável pelo posicionamento dos dentes e pelo desenvolvimento e equilíbrio da mordida.',
+      resumo: 'Alinhamento dos dentes e correção da mordida com soluções planejadas para cada fase e necessidade.',
       oQueE: 'Área responsável pelo posicionamento dos dentes e pelo desenvolvimento e equilíbrio da mordida.',
       beneficio:
         'Busca melhorar função, organização dos dentes e estética do sorriso, com planejamento adequado à idade e à necessidade de cada paciente.',
@@ -526,7 +528,7 @@ export const tratamentos = {
       numero: '09',
       nome: 'Endodontia',
       icone: 'Stethoscope',
-      resumo: 'A endodontia trata a parte interna do dente quando a polpa sofre inflamação, infecção ou lesão.',
+      resumo: 'Tratamento de canal para aliviar a dor, controlar infecções e preservar dentes que ainda podem ser mantidos.',
       oQueE: 'A endodontia trata a parte interna do dente quando a polpa sofre inflamação, infecção ou lesão.',
       beneficio:
         'Ajuda a controlar dor e infecção e pode permitir a preservação do dente, evitando sua remoção quando há indicação para mantê-lo.',
@@ -545,8 +547,7 @@ export const tratamentos = {
       numero: '10',
       nome: 'Clínica geral',
       icone: 'Smile',
-      resumo:
-        'Reúne cuidados preventivos e restauradores que ajudam a acompanhar a saúde bucal e tratar alterações em fases iniciais.',
+      resumo: 'Prevenção, diagnóstico e cuidados essenciais para manter sua saúde bucal em dia.',
       oQueE:
         'Reúne cuidados preventivos e restauradores que ajudam a acompanhar a saúde bucal e tratar alterações em fases iniciais.',
       beneficio:
