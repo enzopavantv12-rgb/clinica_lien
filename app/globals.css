@@ -433,3 +433,21 @@
     }
   }
 }
+
+@layer components {
+  /* Texto do capitulo da Experiencia ao trocar de aba: fade + 8px (350ms). */
+  .anima-sobe {
+    animation: anima-sobe 0.35s ease-out both;
+  }
+  @keyframes anima-sobe {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .anima-sobe {
+      animation: none;
+    }
+  }
+}

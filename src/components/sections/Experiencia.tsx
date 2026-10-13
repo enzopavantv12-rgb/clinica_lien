@@ -1,78 +1,50 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { Play } from 'lucide-react';
-import { Carrossel } from '../ui/Carrossel';
-import { SectionHeading } from '../ui/SectionHeading';
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { PadraoOndas } from '../ui/BrandGraphics';
 import { Reveal } from '../ui/Reveal';
 import { experiencia } from '../../data/content';
 
-type Capitulo = (typeof experiencia.capitulos)[number];
+const { capitulos } = experiencia;
 
-const foco =
-  'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta';
-
-/**
- * Video de um capitulo. Sem som automatico: so toca por acao do usuario,
- * com os controles nativos. Video vertical (a recepcao, 4:5) fica inteiro no
- * quadro, sobre o proprio poster desfocado — sem cortar o logo da parede.
- */
-function VideoCapitulo({ capitulo, carregar }: { capitulo: Capitulo; carregar: boolean }) {
-  const { video } = capitulo;
-  if (!video) {
-    return (
-      <div
-        role="img"
-        aria-label={`${capitulo.titulo}: vídeo ainda não publicado`}
-        className="flex h-full w-full flex-col items-center justify-center gap-3 border border-dashed border-ink/20 bg-cream"
-      >
-        <span className="flex size-14 items-center justify-center rounded-full bg-white text-ink-muted shadow-soft">
-          <Play size={22} strokeWidth={1.75} aria-hidden="true" />
-        </span>
-        <p className="text-legend font-semibold uppercase tracking-[0.14em] text-ink-muted">{experiencia.pendente}</p>
-      </div>
-    );
-  }
+/** Poster neutro enquanto o video nao chega: escuro, com o arco do sorriso em rosa a 20%. */
+function PosterPendente() {
   return (
-    <div className="relative h-full w-full overflow-hidden bg-ink">
-      {video.vertical && (
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 scale-110 bg-cover bg-center opacity-60 blur-2xl"
-          style={{ backgroundImage: `url(${video.poster})` }}
-        />
-      )}
-      <video
-        controls
-        playsInline
-        preload={carregar ? 'metadata' : 'none'}
-        poster={video.poster}
-        aria-label={`${capitulo.titulo}: ${video.descricao}`}
-        className={`relative h-full w-full ${video.vertical ? 'object-contain' : 'object-cover'}`}
-      >
-        <source src={video.webm} type="video/webm" />
-        <source src={video.mp4} type="video/mp4" />
-      </video>
+    <div aria-hidden="true" className="absolute inset-0 grid place-items-center bg-[#14141A]">
+      <svg viewBox="0 0 380 120" fill="none" className="w-[46%] max-w-[420px] opacity-20">
+        <path d="M20 22 Q190 196 360 22" stroke="#F0B6F2" strokeWidth={22} strokeLinecap="round" />
+      </svg>
     </div>
   );
 }
 
 /**
- * Experiencia Lien — jornada do paciente em 3 capitulos (alinhamento final,
- * 3.9), predominantemente audiovisual.
+ * Experiencia Lien — print aprovado (prompt "experiencia-lien", out/2026),
+ * layout e copy do print por decisao da clinica: cabecalho centralizado e um
+ * player escuro largo (1260px) com o texto do capitulo sobreposto e a barra
+ * de 3 abas na base.
  *
- * - Tablet e desktop: player grande + 3 abas (capitulos) abaixo; clicar numa
- *   aba troca o video. Abas no padrao WAI-ARIA (setas, Home/End).
- * - Celular: carrossel com os 3 videos.
- * - Sob cada video, so o titulo. Diferenciais numa linha discreta no fim.
- * - Lazy: nenhum video baixa metadados antes de a secao chegar perto da tela.
+ * - Nada toca sozinho com som: o play reinicia o video com som e controles
+ *   nativos; ao pausar ou terminar, o texto volta. Ao terminar, seleciona o
+ *   capitulo seguinte sem tocar. Sem preview mudo (so o poster).
+ * - Lazy: os metadados so carregam quando a secao chega a 200px da tela.
+ * - Capitulo sem video: poster neutro e o texto, sem botao de play.
+ * - Abas ARIA (setas, Home/End); o player e o tabpanel. A partir de 640px a
+ *   barra fica sobreposta; abaixo disso, pills escuras abaixo do player.
+ * - Numeros dos capitulos em branco, e nao no rosa do print: o manual veda o
+ *   rosa-claro como cor de texto (decisao do usuario). O rosa fica na barra
+ *   de progresso e na borda da pill ativa.
+ * - Tag teal sobre branco com borda: sobre #E3F1F4 o teal reprova AA.
  */
 export function Experiencia() {
   const secaoRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const abasRef = useRef<(HTMLButtonElement | null)[]>([]);
   const [ativo, setAtivo] = useState(0);
+  const [tocando, setTocando] = useState(false);
+  const [progresso, setProgresso] = useState(0);
   const [perto, setPerto] = useState(false);
-  const { capitulos } = experiencia;
+  const c = capitulos[ativo];
 
   useEffect(() => {
     const secao = secaoRef.current;
@@ -84,13 +56,29 @@ export function Experiencia() {
           observador.disconnect();
         }
       },
-      { rootMargin: '400px 0px' },
+      { rootMargin: '200px' },
     );
     observador.observe(secao);
     return () => observador.disconnect();
   }, []);
 
-  const aoTeclarAba = (e: React.KeyboardEvent, i: number) => {
+  // Trocar de capitulo: para o video, zera o progresso e volta ao "pronto para play".
+  useEffect(() => {
+    setTocando(false);
+    setProgresso(0);
+    videoRef.current?.load();
+  }, [ativo]);
+
+  const tocar = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = false;
+    v.currentTime = 0;
+    void v.play();
+    setTocando(true);
+  };
+
+  const aoTeclar = (e: KeyboardEvent, i: number, prefixo: string) => {
     const ultimo = capitulos.length - 1;
     const destino =
       e.key === 'ArrowRight' ? (i === ultimo ? 0 : i + 1)
@@ -101,88 +89,178 @@ export function Experiencia() {
     if (destino === null) return;
     e.preventDefault();
     setAtivo(destino);
-    abasRef.current[destino]?.focus();
+    abasRef.current[destino + (prefixo === 'm' ? capitulos.length : 0)]?.focus();
   };
 
-  const atual = capitulos[ativo];
+  const foco = 'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#F0B6F2]';
 
   return (
-    <section ref={secaoRef} id="experiencia" className="overflow-x-clip bg-white py-20 sm:py-24 lg:py-28">
-      <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
-        <SectionHeading tag={experiencia.tag} titulo={experiencia.h2} subtitulo={experiencia.texto} />
+    <section
+      ref={secaoRef}
+      id="experiencia"
+      aria-labelledby="exp-title"
+      className="relative isolate overflow-hidden bg-white py-[72px] lg:py-[104px]"
+    >
+      <PadraoOndas className="pointer-events-none absolute inset-0 -z-10 h-full w-full" cor="#9C1781" opacidade={0.05} />
 
-        {/* Tablet e desktop: player + abas */}
-        <Reveal className="mt-14 hidden md:block">
+      <Reveal y={16} duracao={0.6} className="mx-auto max-w-[760px] px-6 text-center">
+        <span className="inline-block rounded-full border border-[#DCEBEF] bg-white px-4 py-[7px] text-xs font-semibold uppercase leading-none tracking-[.14em] text-teal">
+          {experiencia.tag}
+        </span>
+        <h2 id="exp-title" className="mt-[14px] text-[clamp(30px,3.2vw,42px)] font-bold leading-[1.15] text-ink">
+          {experiencia.h2}
+        </h2>
+        <p className="mt-[18px] text-[clamp(16px,1.4vw,19px)] font-light leading-[1.65] text-ink-muted">
+          {experiencia.subLinhas[0]} <br className="hidden md:inline" />
+          {experiencia.subLinhas[1]}
+        </p>
+      </Reveal>
+
+      <Reveal y={16} duracao={0.6} delay={0.1} className="mx-auto mt-16 max-w-[1260px] px-6">
+        <div
+          id="exp-panel"
+          role="tabpanel"
+          aria-labelledby={`exp-tab-${ativo}`}
+          className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/[.08] bg-[#0F1116] shadow-[0_30px_70px_-30px_rgba(26,20,32,.45)] sm:aspect-video lg:aspect-[16/7.6] lg:rounded-[18px]"
+        >
+          {c.video ? (
+            <video
+              ref={videoRef}
+              className="absolute inset-0 h-full w-full object-cover"
+              poster={c.video.poster}
+              playsInline
+              preload={perto ? 'metadata' : 'none'}
+              controls={tocando}
+              onPause={() => setTocando(false)}
+              onEnded={() => {
+                setTocando(false);
+                setAtivo((a) => (a + 1) % capitulos.length);
+              }}
+              onTimeUpdate={(e) => {
+                const v = e.currentTarget;
+                setProgresso(v.duration ? v.currentTime / v.duration : 0);
+              }}
+            >
+              <source src={c.video.webm} type="video/webm" />
+              <source src={c.video.mp4} type="video/mp4" />
+              {c.video.vtt && <track kind="captions" src={c.video.vtt} srcLang="pt-BR" label="Português" default />}
+            </video>
+          ) : (
+            <PosterPendente />
+          )}
+
+          {/* Overlay de leitura: escurece a esquerda e a base. */}
           <div
-            role="tabpanel"
-            id="experiencia-painel"
-            aria-labelledby={`experiencia-aba-${ativo}`}
-            className="aspect-video overflow-hidden rounded-[32px] shadow-lift"
-          >
-            {/* `key`: trocar de capitulo desmonta o video anterior (para de tocar). */}
-            <VideoCapitulo key={atual.numero} capitulo={atual} carregar={perto} />
-          </div>
+            aria-hidden="true"
+            className={`pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(10,12,16,.72),rgba(10,12,16,.35)_45%,rgba(10,12,16,0)_70%),linear-gradient(0deg,rgba(10,12,16,.75),rgba(10,12,16,0)_40%)] transition-opacity duration-300 ${
+              tocando ? 'opacity-0' : 'opacity-100'
+            }`}
+          />
 
-          <div role="tablist" aria-label={experiencia.regiao} className="mt-5 grid grid-cols-3 gap-4">
-            {capitulos.map((c, i) => {
-              const selecionado = i === ativo;
+          {!tocando && (
+            <>
+              {c.video && (
+                <button
+                  type="button"
+                  onClick={tocar}
+                  aria-label={`${experiencia.reproduzir}: ${c.titulo}`}
+                  className="absolute left-1/2 top-1/2 grid h-[58px] w-[58px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-white/[.14] backdrop-blur-md transition hover:scale-[1.06] hover:bg-white/[.24] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F0B6F2] motion-reduce:transition-none"
+                >
+                  <svg aria-hidden="true" viewBox="0 0 16 16" className="ml-0.5 h-4 w-4 fill-white">
+                    <path d="M4 2.5v11l9-5.5z" />
+                  </svg>
+                </button>
+              )}
+
+              <div
+                key={ativo}
+                className="anima-sobe absolute bottom-6 left-5 right-5 max-w-[520px] sm:bottom-[100px] sm:left-7 lg:bottom-[112px] lg:left-11"
+              >
+                <span className="text-[13px] font-bold tracking-[.04em] text-white">{c.numero}</span>
+                <h3 className="mt-2.5 text-[22px] font-bold leading-[1.2] text-white sm:text-[24px] lg:text-[clamp(22px,2.2vw,30px)]">
+                  {c.titulo}
+                </h3>
+                <p className="mt-[18px] text-[13px] font-medium leading-[1.65] text-white/[.92] sm:text-[13.5px] lg:text-[14.5px]">
+                  {c.linhas[0]} <br className="hidden sm:inline" />
+                  {c.linhas[1]}
+                </p>
+              </div>
+            </>
+          )}
+
+          {/* Barra de abas sobreposta (a partir de 640px). */}
+          <div
+            role="tablist"
+            aria-label={experiencia.abas}
+            className="absolute bottom-4 left-4 right-4 hidden grid-cols-3 overflow-hidden rounded-xl border border-white/10 bg-[rgba(14,18,24,.72)] backdrop-blur-[10px] sm:grid"
+          >
+            {capitulos.map((t, i) => {
+              const sel = i === ativo;
               return (
                 <button
-                  key={c.numero}
+                  key={t.numero}
                   ref={(el) => {
                     abasRef.current[i] = el;
                   }}
+                  id={`exp-tab-${i}`}
                   type="button"
                   role="tab"
-                  id={`experiencia-aba-${i}`}
-                  aria-selected={selecionado}
-                  aria-controls="experiencia-painel"
-                  tabIndex={selecionado ? 0 : -1}
+                  aria-selected={sel}
+                  aria-controls="exp-panel"
+                  tabIndex={sel ? 0 : -1}
                   onClick={() => setAtivo(i)}
-                  onKeyDown={(e) => aoTeclarAba(e, i)}
-                  className={`flex min-h-[72px] items-center gap-4 rounded-2xl border px-5 py-4 text-left transition-colors duration-200 ${
-                    selecionado
-                      ? 'border-magenta bg-magenta text-white'
-                      : 'border-brandgray bg-white text-ink hover:border-magenta/50'
-                  } ${foco}`}
+                  onKeyDown={(e) => aoTeclar(e, i, 'd')}
+                  className={`relative flex min-h-[66px] items-center gap-2.5 px-[18px] text-left transition-colors ${
+                    i > 0 ? 'border-l border-white/[.12]' : ''
+                  } ${sel ? 'bg-white/[.06]' : 'hover:bg-white/[.05]'} ${foco}`}
                 >
-                  <span className={`text-[1.5rem] font-black leading-none ${selecionado ? 'text-white' : 'text-magenta'}`}>
-                    {c.numero}
-                  </span>
-                  <span className="text-[0.9375rem] font-semibold leading-snug lg:text-base">{c.titulo}</span>
+                  <span className="text-[13px] font-bold text-white">{t.numero}</span>
+                  <span className={`text-[14.5px] font-semibold ${sel ? 'text-white' : 'text-white/80'}`}>{t.aba}</span>
+                  {sel && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute bottom-0 left-0 h-0.5 bg-[#F0B6F2] transition-[width] duration-200"
+                      style={{ width: `${progresso * 100}%` }}
+                    />
+                  )}
                 </button>
               );
             })}
           </div>
-        </Reveal>
-
-        {/* Celular: carrossel com os 3 videos */}
-        <div className="mt-12 md:hidden">
-          <Carrossel
-            rotulo={experiencia.regiao}
-            rotuloSlide="Vídeo"
-            anterior={experiencia.anterior}
-            proximo={experiencia.proximo}
-            classeSlide="w-[82vw] max-w-[340px]"
-            classeTrilho="-mr-5 rounded-l-3xl"
-            slides={capitulos.map((c) => (
-              <figure key={c.numero}>
-                <div className="aspect-[4/5] overflow-hidden rounded-3xl">
-                  <VideoCapitulo capitulo={c} carregar={false} />
-                </div>
-                <figcaption className="mt-3 flex items-baseline gap-2.5 text-[0.9375rem] font-semibold text-ink">
-                  <span className="font-black text-magenta">{c.numero}</span>
-                  {c.titulo}
-                </figcaption>
-              </figure>
-            ))}
-          />
         </div>
 
-        <p className="mx-auto mt-12 max-w-[68ch] text-center text-legend sm:text-legend-lg text-ink-muted">
-          {experiencia.diferenciais}
-        </p>
-      </div>
+        {/* Celular: abas como pills abaixo do player. */}
+        <div
+          role="tablist"
+          aria-label={experiencia.abas}
+          className="mt-3 flex snap-x gap-2 overflow-x-auto pb-1 [scrollbar-width:none] sm:hidden [&::-webkit-scrollbar]:hidden"
+        >
+          {capitulos.map((t, i) => {
+            const sel = i === ativo;
+            return (
+              <button
+                key={t.numero}
+                ref={(el) => {
+                  abasRef.current[i + capitulos.length] = el;
+                }}
+                type="button"
+                role="tab"
+                aria-selected={sel}
+                aria-controls="exp-panel"
+                tabIndex={sel ? 0 : -1}
+                onClick={() => setAtivo(i)}
+                onKeyDown={(e) => aoTeclar(e, i, 'm')}
+                className={`min-h-11 shrink-0 snap-start rounded-full border bg-[#14181F] px-4 py-2.5 text-[13px] font-semibold ${
+                  sel ? 'border-[#F0B6F2] text-white' : 'border-transparent text-white/80'
+                } focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta`}
+              >
+                <span className="mr-1.5 font-bold text-white">{t.numero}</span>
+                {t.aba}
+              </button>
+            );
+          })}
+        </div>
+      </Reveal>
     </section>
   );
 }

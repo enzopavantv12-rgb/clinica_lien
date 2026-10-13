@@ -647,51 +647,54 @@ export const sedacao = {
 } as const;
 
 /**
- * Experiencia Lien — jornada do paciente em 3 videos (3.9). Sob cada video,
- * so o titulo. [PENDENTE: os 3 videos — escaneamento com a Dra. Natalia;
- * detalhes (fones, massagem, aromaterapia, cafeteria, ambiente); conversa a
- * mesa, kit e abraco. MP4 + WebM + poster WebP em public/videos/.]
- * O capitulo 2 usa, por ora, o video institucional da recepcao (vertical,
- * sem audio) que antes ficava no Sobre (conflito C3).
+ * Experiencia Lien — layout e copy do print aprovado (prompt
+ * "experiencia-lien", out/2026), por decisao da clinica; substitui o
+ * cabecalho, os capitulos e a faixa de diferenciais do Alinhamento Final.
+ * Player grande com texto sobreposto e barra de 3 abas.
+ *
+ * Videos (MP4 H.264 + WebM 1080p + poster WebP em public/videos/): enquanto
+ * `video` for null, o capitulo mostra o poster neutro e o texto, sem play.
+ * [PENDENTE: VIDEO_SCANNER — Dra. Natalia fazendo o escaneamento intraoral
+ * (video proprio da Lien; o do print e material promocional da Medit);
+ * VIDEO_CONFORTO — fones, massagem, aromaterapia, cafeteria, ambiente;
+ * VIDEO_ACOMPANHAMENTO — conversa a mesa, entrega do kit e abraco.]
+ * [PENDENTE: a clinica validar os textos dos capitulos 02 e 03 (SUGESTAO do
+ * prompt) e "ultraprecisa" no 01 (revisao CRO).]
  */
+type Video = { mp4: string; webm: string; poster: string; vtt?: string };
+
 export const experiencia = {
-  tag: 'Experiência Lien',
-  h2: 'A experiência começa antes do tratamento.',
-  texto:
-    'Na Lien, tecnologia, conforto e acompanhamento fazem parte da mesma experiência de cuidado - da primeira conversa ao pós-tratamento.',
+  tag: 'Jornada & inovação',
+  h2: 'Experiência Lien',
+  subLinhas: [
+    'Na Lien, tecnologia, conforto e acompanhamento trabalham juntos',
+    'para tornar cada etapa mais clara, tranquila e previsível.',
+  ],
   capitulos: [
     {
       numero: '01',
-      titulo: 'Tecnologia que aproxima',
-      video: null,
+      aba: 'Scanner intraoral',
+      titulo: 'Scanner intraoral',
+      linhas: ['Adeus aos moldes tradicionais desconfortáveis.', 'Captura digital rápida e ultraprecisa da sua arcada.'],
+      video: null as Video | null, // VIDEO_SCANNER
     },
     {
       numero: '02',
-      titulo: 'Cuidado em cada detalhe',
-      video: {
-        webm: '/videos/sobre-lien.webm',
-        mp4: '/videos/sobre-lien.mp4',
-        poster: '/videos/sobre-lien-poster.webp',
-        vertical: true,
-        descricao: 'Recepção da Lien, com o logo da clínica na parede',
-      },
+      aba: 'Recursos de conforto',
+      titulo: 'Recursos de conforto',
+      linhas: ['Fones com isolamento de ruído, massagem e aromaterapia.', 'Cada detalhe pensado para você relaxar.'],
+      video: null as Video | null, // VIDEO_CONFORTO
     },
     {
       numero: '03',
-      titulo: 'Cuidado que continua',
-      video: null,
+      aba: 'Orientação e acompanhamento',
+      titulo: 'Orientação e acompanhamento',
+      linhas: ['Conversa à mesa, kit personalizado e acompanhamento pós-procedimento.', 'O cuidado continua depois da cadeira.'],
+      video: null as Video | null, // VIDEO_ACOMPANHAMENTO
     },
-  ] as readonly {
-    numero: string;
-    titulo: string;
-    video: null | { webm: string; mp4: string; poster: string; vertical: boolean; descricao: string };
-  }[],
-  pendente: '[Vídeo pendente]',
-  regiao: 'Vídeos da experiência Lien',
-  anterior: 'Vídeo anterior',
-  proximo: 'Próximo vídeo',
-  diferenciais:
-    'Scanner intraoral · Fones com isolamento de ruído · Massagem · Aromaterapia · Cafeteria · Kit personalizado · Acompanhamento pós-procedimento.',
+  ],
+  abas: 'Capítulos da Experiência Lien',
+  reproduzir: 'Reproduzir vídeo',
 } as const;
 
 type Membro = {

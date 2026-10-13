@@ -602,3 +602,43 @@ Fonte: `prompt-claude-code-sedacao-lien.md`. Por decisão da clínica, o layout 
 | "protocolos seguros de controle da dor" | Junto de "relaxamento absoluto", pode soar como promessa de ausência de dor | — |
 | Título "Mais tranquilidade quando você precisa." | O Alinhamento aprovou outro título ("Mais conforto e segurança para quem sente medo ou ansiedade durante o tratamento.") | — (decisão do cliente: manter o print) |
 | CTA "Quero conversar sobre isso" (WhatsApp) | O Alinhamento padronizou o CTA como "Agende sua consulta" | — (decisão do cliente: manter o print) |
+
+---
+
+## Experiência Lien no layout e na copy do print (out/2026)
+
+Fonte: `prompt-claude-code-experiencia-lien.md`. Por decisão da clínica, layout e copy são os do print. Isso substitui, nesta seção, o cabeçalho, os capítulos e a faixa de diferenciais do Alinhamento Final.
+
+**O que mudou:**
+- **Cabeçalho:** "JORNADA & INOVAÇÃO" / "Experiência Lien" / subtítulo literal, sobre o fundo branco com as ondas da marca a 5%.
+- **Player:** escuro e largo (até 1260px), com proporção 16/7.6 no desktop, 16/9 no tablet e 4/5 no celular.
+  - O texto do capítulo fica sobreposto no canto inferior esquerdo, sobre o degradê de leitura.
+  - O botão de play translúcido fica no centro.
+  - A barra de 3 abas fica na base; a aba ativa mostra a barra de progresso rosa.
+- **Abas no celular:** viram pills escuras abaixo do player.
+- **Comportamento:**
+  - Nada toca sozinho com som. O play reinicia o vídeo com som e controles; ao pausar ou terminar, o texto volta.
+  - Ao terminar um vídeo, o capítulo seguinte é selecionado sem tocar.
+  - Os vídeos carregam sob demanda, só quando a seção chega a 200px da tela.
+  - Capítulo sem vídeo mostra um poster neutro, escuro com o arco em rosa a 20%, e o texto, sem botão de play.
+  - Abas ARIA com setas, Home e End.
+- **Teste do play:** foi feito com um vídeo temporário, depois removido. Toca com som, a barra de progresso avança, o texto some e volta ao pausar.
+- **Removidos:** a faixa de diferenciais e o carrossel do celular (`Carrossel.tsx`, que ficou sem uso). O vídeo institucional da recepção também saiu de `public/videos/`, porque é vertical e não serve ao player largo; o original continua em `assets/vídeos/`.
+
+**Desvios, pelas regras do projeto:**
+- **Números dos capítulos** ("01", "02", "03"): em **branco**, e não no rosa-claro do print, porque o manual veda o rosa-claro como cor de texto (decisão do usuário). O rosa ficou só na barra de progresso e na borda da pill ativa.
+- **Tag teal:** fica sobre branco com borda. Sobre `#E3F1F4` o teal reprova AA.
+
+**Pontos de atenção:**
+1. **Vídeos pendentes:** os três capítulos estão sem vídeo e mostram o poster neutro.
+   - O print usa material promocional da **Medit** ("MEDIT iE"), que o Alinhamento trata só como referência de interação. Usar vídeo de outra empresa pode exigir autorização da fabricante, por isso não entrou.
+   - O vídeo do capítulo 01 deve ser **da Lien**, com a Dra. Natália fazendo o escaneamento.
+   - Cada vídeo precisa de MP4 (H.264) + WebM 1080p + poster WebP, e de `.vtt` se houver fala. Os caminhos ficam em `experiencia.capitulos[n].video`, no `content.ts`.
+2. **Textos dos capítulos 02 e 03:** são **sugestão** do prompt. A clínica precisa validar:
+   - 02 "Recursos de conforto": "Fones com isolamento de ruído, massagem e aromaterapia. / Cada detalhe pensado para você relaxar.";
+   - 03 "Orientação e acompanhamento": "Conversa à mesa, kit personalizado e acompanhamento pós-procedimento. / O cuidado continua depois da cadeira.".
+3. **"ultraprecisa"** (capítulo 01): superlativo técnico. A revisão CRO pode pedir "com alta precisão". Foi implementado como no print.
+4. **Diferenças em relação ao Alinhamento Final,** por decisão do cliente:
+   - o cabeçalho "Experiência Lien" no lugar de "A experiência começa antes do tratamento.";
+   - os nomes dos capítulos;
+   - a ausência da faixa de diferenciais.
