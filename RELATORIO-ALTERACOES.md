@@ -279,3 +279,156 @@ Hero → **faixa de números** → **Depoimentos** → Sobre → Método Lien �
 - **Celular:** a foto fica presa no topo (440 px) e se funde no fundo ink. O card fica ancorado embaixo, a partir de 260 px, sem esconder o rosto. Botões empilhados em largura total, com 48 px de altura.
 - **Texto:** parágrafo do modelo. O anterior ainda não tinha sido validado com a Dra. Natália e o Dr. Alexsander e continua no llms.txt, junto com os 3 itens.
 - **Medição:** novo CTA `data-cta="sedacao-agendar"`, com a mensagem de agendamento; o `sedacao` continua no botão do WhatsApp.
+
+---
+
+## Alinhamento final do site (out/2026)
+
+Fonte: `prompt-claude-code-alinhamento-final-lien-2026.md`, gerado a partir do PDF "Lien — Alinhamento Final do Site". Onde houve conflito, o PDF prevaleceu sobre as instruções anteriores. A copy aprovada foi publicada literalmente.
+
+### 1. Mapa de seções e páginas
+
+**Home, de → para:**
+
+| Antes | Depois |
+|---|---|
+| Hero (já com um CTA e a nota do Google) | Hero, sem mudança (não reabrir) |
+| Faixa dupla magenta + teal | **Faixa única magenta** |
+| Depoimentos (colunas do Google) + 9 antes e depois | **#resultados** "Resultados que contam histórias." (6 casos) + **#depoimentos** "Quem vive a Lien, conta." (carrossel de vídeos) |
+| Sobre (3 parágrafos, vídeo em arco, CTA) | **#sobre**: texto final, foto grande e quote único |
+| Método (linha do tempo GSAP com foto) | **#metodo** "Cuidado que começa antes do tratamento." em 4 colunas, sem foto |
+| #para-voce (8 cards, cada um com WhatsApp) | **#comecar**: o card inteiro é link para /tratamentos/#…; um único CTA abaixo |
+| Tratamentos (12 cards, cada um com WhatsApp) | **#tratamentos**: 3 cards + "Ver todos os tratamentos" |
+| Sedação (card de vidro + foto genérica) | **#sedacao**: título novo, 2 modalidades, texto, 1 CTA; foto pendente |
+| Experiência (carrossel do consultório) | **#experiencia**: player + 3 capítulos; faixa de diferenciais |
+| Estrutura | Removida (a tecnologia vira o capítulo 1 da Experiência) |
+| Equipe | **#equipe**: headline nova e os 6 textos finais |
+| — | **#conteudos**: 3 artigos + "Ver todos os conteúdos" |
+| Dúvidas (12, em abas, "Esta resposta ajudou?") | **#duvidas**: 6 perguntas, accordion fechado, 1 CTA |
+| CTA final "Conversar com a equipe Lien" | **#agendar**: texto novo e "Agende sua consulta" |
+
+**Páginas novas:** `/tratamentos/` (10 especialidades), `/conteudos/` (biblioteca) e os 14 artigos, nas URLs exatas do PDF.
+
+**Menu:** Início · Método Lien · Tratamentos (página) · Experiência · Equipe · Conteúdos (página) · Dúvidas · [Agende sua consulta]. Entre 1024 e 1279px, os links ficam menores e o botão perde o ícone, para caber na cápsula.
+
+### 2. Arquivos
+
+- **Criados:**
+  - páginas: `app/tratamentos/page.tsx`, `app/conteudos/page.tsx`, `app/[artigo]/page.tsx`;
+  - conteúdo: `content/artigos/*.md` (14 arquivos) e `src/lib/artigos.ts`;
+  - seções e componentes: `src/components/sections/{Depoimentos,ConteudosHome}.tsx` e `src/components/ui/{Carrossel,AbrirPorAncora,FiltroCategorias}.tsx`.
+- **Reescritos:** Resultados, Sobre, MetodoLien, Cardapio, Tratamentos, Sedacao, Experiencia, Equipe, Faq, TrustMarquee e `content.ts` (a partir da linha das mensagens de WhatsApp). Também mudaram `schema.ts`, `llms.ts`, `sitemap.xml`, `layout.tsx` (meta do Search Console), Header e o verificador.
+- **Removidos:**
+  - seções e componentes: AntesDepois (virou Resultados), Testimonials, Estrutura, Timeline, VideoArco, timeline-animation e `ui/{button,card,tabs}`;
+  - imagens: a foto genérica da sedação e suas variantes;
+  - CSS: o do vidro, da linha do tempo, da moldura em arco e das colunas de depoimentos.
+- **Mantidos sem uso:** `testimonials-columns-1.tsx` e `src/content/testimonials.ts`, como autoriza o conflito C2. O pacote `gsap` continua no `package.json`, mas sem uso; remover exige `npm uninstall`.
+- **Paginas por rota:** `/`, `/tratamentos/`, `/conteudos/`, `/<14 slugs>/`, `/privacidade/`.
+
+### 3. "Por onde você quer começar?" → tratamentos
+
+| Card | Destino |
+|---|---|
+| Quero comer com segurança | /tratamentos/#implantodontia-digital |
+| Perdi um ou mais dentes | /tratamentos/#implantodontia-digital |
+| Minha prótese incomoda | /tratamentos/#facetas-e-proteses |
+| Quero melhorar meu sorriso | /tratamentos/#facetas-e-proteses |
+| Tenho vários problemas ao mesmo tempo | /tratamentos/#reabilitacao-oral-completa |
+| Sinto dor ou estalos na mandíbula | /tratamentos/#dtm-e-dor-orofacial |
+| Minha gengiva sangra | /tratamentos/#periodontia |
+| Tenho medo de dentista | /#sedacao |
+
+### 4. Faixa única
+
+- Cor: **magenta** (`#9C1782`), a do esqueleto.
+- Itens mantidos, sem número novo: 5,0 no Google · 57 avaliações · 6 especialistas · Planejamento digital · Escâner intraoral · Atendimento particular · Cruzeiro, BH.
+- Velocidade reduzida; com movimento reduzido, a faixa fica parada.
+
+### 5. Categorias dos 14 artigos (sugestão — validar com a clínica)
+
+| Categoria | Artigos |
+|---|---|
+| Implantes e Reabilitação | 01, 02, 03, 04, 05, 06, 09 |
+| Estética do sorriso | 07, 08 |
+| DTM e dor | 10 |
+| Gengiva e Periodontia | 11, 12, 13 |
+| Prevenção e saúde bucal | 14 |
+
+Artigos relacionados: entram primeiro os do mesmo tratamento, depois os da mesma categoria. O 14 é o único da categoria e recebe dois de gengiva.
+
+### 6. Ocorrências de "avaliação"
+
+- **Home, tratamentos e FAQ:** nenhuma dirigida ao paciente. Ficaram só as "57 avaliações" do Google, que são permitidas.
+- **Artigos:** não foram alterados (texto aprovado). Ocorrências dirigidas ao paciente, para a clínica decidir:
+  - **Artigo 10, título e meta-descrição** (atenção especial): "…quando procurar uma avaliação de DTM ou reabilitação?" / "Entenda quando procurar avaliação de DTM…". Sugestão: trocar por "consulta".
+  - **"Na consulta, avaliamos…"** (ação da clínica, não convite) no "Próximo passo" dos artigos 01, 03, 07 e 14.
+  - **Artigo 05, título:** "Perda óssea dentária: o que avaliar antes do implante" — sentido técnico.
+- **Uso técnico nos artigos, que fica como está:** "avaliação individual" (03 e 13), "Como é feita a avaliação?" (10), "sua avaliação considera extensão…" (12), "reavaliada" (12), "precisam ser avaliadas" (01 e 05), "O que deve ser avaliado antes?" (07) e "desejam avaliar uma solução fixa" (03).
+- **Também mantidos literais e para ciência:**
+  - o título do artigo 12 contém "sem dor" ("…por que ela pode avançar sem dor"). Não é promessa, mas o verificador só o aceita nesse título;
+  - o artigo 02 usa "a melhor solução" e "a melhor opção", em sentido não promocional.
+
+### 7. Pontos para a revisão ética/CRO (item 23)
+
+1. **Antes e depois:**
+   - Os 6 casos publicados são 2, 1, 8, 3, 5 e 4, escolhidos pelo enquadramento consistente.
+   - Ficaram de fora o 6 e o 9 (harmonização facial) e o 7 (antes com afastador, depois sem).
+   - Cada caso tem legenda de autorização, e há o aviso de individualidade dos resultados.
+   - Falta confirmar a seleção e a Resolução CFO 196/2019.
+2. **Sedação:**
+   - O texto não promete sono completo. As modalidades são "Sedação consciente com medicação oral" e "Sedação intravenosa acompanhada por anestesista".
+   - O FAQ 2 cita "sedação oral ou intravenosa com anestesista".
+   - Validar com a Dra. Natália e o Dr. Alexander.
+3. **Credenciais (conflito C8):**
+   - O card da Dra. Natália diz "Reabilitação Oral | Implantodontia, Prótese e Periodontia". A credencial oficial é *Aperfeiçoamento* em Periodontia.
+   - "Especialista" aparece nos cards das Dras. Maria Emília, Isabela, Luiza e Gabriela.
+   - A autoria dos artigos usa a credencial oficial.
+   - O schema (Person) passou a usar a credencial oficial.
+4. **Alegações:** "Cirurgia guiada… sem abertura extensa da gengiva" usa a redação segura do PDF. Na periodontia e no GLP-1, os artigos falam em associação, não em causalidade.
+5. **Grafia "Alexander" × "Alexsander":** segui o PDF ("Alexander"). O jaleco diz "Alexsander"; confirmar.
+
+### 8. Pendências de material
+
+| Material | Onde | Estado no site |
+|---|---|---|
+| 2 a 3 vídeos de pacientes + autorizações | #depoimentos | 3 cartões "[Vídeo pendente]" (`depoimentos.videos` em content.ts) |
+| 3 vídeos da Experiência (escaneamento; detalhes; conversa/kit/abraço) | #experiencia | Capítulos 1 e 3 com "[Vídeo pendente]"; o capítulo 2 usa o vídeo institucional da recepção (C3) |
+| Foto real da Sedação | #sedacao | "[Foto pendente]" (`assets/fotos-originais/sedacao-atendimento.jpg`) |
+| Foto real grande da clínica | #sobre | Usa a recepção (`sobre-recepcao`) |
+| Ensaio padronizado dos 6 profissionais | #equipe | Fotos reais atuais, recortadas no mesmo quadrado |
+| CRO da Dra. Luiza Henriques | #equipe | Linha omitida |
+| Horários (confirmar) | rodapé | Os atuais: seg/ter/qui/sex, 8h às 18h; qua, 9h às 20h |
+| Código do Search Console | `seo.googleVerification` | A meta tag só sai quando o código existir |
+| IDs de GA4/GTM | — | Os eventos `click_whatsapp` já vão para o dataLayer com `origem` e `pagina` |
+| Link do perfil no Google e atualização do nº de avaliações | `google` em content.ts | A nota aparece sem link |
+| og-image 1200×630 | `seo.ogImage` | Ainda sem arquivo |
+
+Não usei os arquivos novos em Downloads (`NATALIA-SIMOES.png` e quatro PNGs com nome UUID), porque o prompt não os cita. Se forem fotos da equipe ou da sedação, entram no próximo passo.
+
+### 9. Lighthouse e dados estruturados
+
+- **Dados estruturados:**
+  - home: Dentist/LocalBusiness/MedicalBusiness, com os 10 tratamentos como MedicalProcedure com URL; FAQPage com as 6 perguntas; Person;
+  - artigos: Article (autor = Person da Dra. Natália; publisher = a clínica) + BreadcrumbList;
+  - /tratamentos/ e /conteudos/: BreadcrumbList;
+  - o JSON de todos os blocos é validado pelo verificador.
+- **Lighthouse mobile:** resultado no fim deste bloco.
+
+### 10. Conferência textual
+
+- Os 14 artigos foram extraídos do prompt por script, sem digitação.
+- Dois parágrafos que o PDF partiu na troca de página foram unidos: artigo 04 ("A equipe então organiza as etapas") e artigo 08 ("conforme a estrutura remanescente").
+- O verificador compara, em cada uma das 14 URLs, o `<title>`, a meta-descrição e o H1 com o frontmatter.
+- A copy da home, dos tratamentos e do FAQ foi colada literalmente em `content.ts`. O hífen " - " dos textos aprovados foi mantido.
+- **Verificador:** passou de 60 para **78 checagens**. As novas cobrem:
+  - a ordem nova;
+  - 4 a 6 casos com legenda;
+  - a faixa única;
+  - os 3 tratamentos e os 3 conteúdos;
+  - "Agende sua consulta" em todo CTA principal;
+  - `data-page`;
+  - um CTA por seção de decisão;
+  - 6 perguntas fechadas;
+  - as páginas internas;
+  - os 14 artigos;
+  - o sitemap completo.
