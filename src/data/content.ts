@@ -233,47 +233,82 @@ export const depoimentos = {
   fonte: 'Google Reviews',
 } as const;
 
-/** Sobre — texto final do alinhamento (3.4). Literal. */
+/**
+ * Sobre — layout do Print 1 (prompt "sobre-metodo-lien", out/2026) com o
+ * texto final do Alinhamento (3.4), literal. Negrito em "Lien" (abertura) e
+ * "Dra. Natalia Simoes" (1o paragrafo de apoio): trechos {texto, forte}.
+ */
 export const sobre = {
-  tag: 'Clínica Lien Reabilitação Oral',
+  tag: 'Nossa essência',
   h2: 'Lien quer dizer vínculo.',
-  // "vinculo" em destaque, como no esqueleto. O ponto final sai em teal.
-  tituloLinhas: ['Lien quer dizer', 'vínculo'],
-  paragrafos: [
-    'Lien, em francês, significa laço, ligação, vínculo. Foi esse o nome escolhido porque acreditamos que a odontologia não deve ser apenas uma sequência de procedimentos: deve ser uma relação construída com confiança, escuta e cuidado.',
-    'Depois de cerca de oito anos atendendo em diferentes clínicas, a Dra. Natália Simões percebeu que algumas queixas se repetiam: medo de dentista, atendimentos apressados, pouca clareza sobre o tratamento e a sensação de não ser realmente ouvido.',
-    'Em 2024, ela decidiu criar uma clínica com identidade própria e uma forma diferente de cuidar: tempo para escutar, profundidade para diagnosticar, liberdade para planejar cada caso e atenção à experiência do paciente em todas as etapas.',
-    'Assim nasceu a Lien - unindo excelência clínica, tecnologia e um cuidado que começa antes do procedimento. Aqui, cada tratamento é pensado para a necessidade real de quem confia a própria saúde aos nossos cuidados.',
+  tituloPartes: ['Lien quer dizer ', 'vínculo', '.'],
+  abertura: [
+    { texto: 'Lien', forte: true },
+    {
+      texto:
+        ', em francês, significa laço, ligação, vínculo. Foi esse o nome escolhido porque acreditamos que a odontologia não deve ser apenas uma sequência de procedimentos: deve ser uma relação construída com confiança, escuta e cuidado.',
+    },
   ],
+  apoio: [
+    [
+      { texto: 'Depois de cerca de oito anos atendendo em diferentes clínicas, a ' },
+      { texto: 'Dra. Natália Simões', forte: true },
+      {
+        texto:
+          ' percebeu que algumas queixas se repetiam: medo de dentista, atendimentos apressados, pouca clareza sobre o tratamento e a sensação de não ser realmente ouvido.',
+      },
+    ],
+    [
+      {
+        texto:
+          'Em 2024, ela decidiu criar uma clínica com identidade própria e uma forma diferente de cuidar: tempo para escutar, profundidade para diagnosticar, liberdade para planejar cada caso e atenção à experiência do paciente em todas as etapas.',
+      },
+    ],
+    [
+      {
+        texto:
+          'Assim nasceu a Lien - unindo excelência clínica, tecnologia e um cuidado que começa antes do procedimento. Aqui, cada tratamento é pensado para a necessidade real de quem confia a própria saúde aos nossos cuidados.',
+      },
+    ],
+  ] as readonly (readonly { texto: string; forte?: boolean }[])[],
   quote: 'Mais do que tratar dentes, queremos construir relações de confiança que façam sentido ao longo do tempo.',
-  // [PENDENTE: fotografia real grande da clinica. Ate la, a recepcao
-  // (assets/fotos/consultorio/consultorio lien 3.png -> sobre-recepcao).]
+  /**
+   * Mini-destaques do print, mantidos por decisao da clinica, sem caixas.
+   * O print traz "100%" no 1o: a palavra e vocabulario proibido no projeto,
+   * entao o titulo ficou "Personalizado" (decisao do usuario, out/2026).
+   */
+  destaques: [
+    { icone: 'ClipboardList', cor: 'magenta', titulo: 'Personalizado', legenda: 'para cada caso' },
+    { icone: 'MapPin', cor: 'teal', titulo: 'Cruzeiro, BH', legenda: 'Localização privilegiada' },
+  ],
+  // Foto do print: consultorio com a cadeira e a vista de BH
+  // (assets/fotos/consultorio/consultorio lien 1.png -> experiencia-consultorio).
   imagem: {
-    src: '/img/sobre-recepcao.webp',
-    alt: 'Recepção da Lien Reabilitação Oral, com poltronas, plantas e o logo da clínica na parede',
+    src: '/img/experiencia-consultorio.webp',
+    alt: 'Consultório da Lien Reabilitação Oral, com cadeira odontológica e vista para Belo Horizonte',
   },
 } as const;
 
-/** Metodo Lien — o "verdadeiro Metodo" em quatro etapas (3.5). Literal. */
+/** Metodo Lien — layout do Print 2 com o texto do Alinhamento (3.5). Literal. */
 export const metodo = {
-  tag: 'Método Lien',
+  tag: 'Previsibilidade & Segurança',
   h2: 'Cuidado que começa antes do tratamento.',
   intro:
     'Na Lien, cada caso é conduzido com escuta, diagnóstico, planejamento e acompanhamento. O tratamento não começa pelo procedimento - começa por entender você.',
   etapas: [
-    { numero: '01', titulo: 'Escuta', texto: 'Entendemos sua história, necessidades, receios e objetivos.' },
+    { numero: '1', titulo: 'Escuta', texto: 'Entendemos sua história, necessidades, receios e objetivos.' },
     {
-      numero: '02',
+      numero: '2',
       titulo: 'Diagnóstico',
       texto: 'Exame clínico e recursos digitais quando indicados para compreender o caso por completo.',
     },
     {
-      numero: '03',
+      numero: '3',
       titulo: 'Planejamento',
       texto: 'Definimos caminhos, etapas e prioridades com clareza e previsibilidade.',
     },
     {
-      numero: '04',
+      numero: '4',
       titulo: 'Acompanhamento',
       texto: 'O cuidado continua durante e depois do tratamento, com foco em adaptação, conforto e manutenção.',
     },
@@ -549,27 +584,24 @@ export const mensagemArtigo = (titulo: string) =>
   `${OLA} li o conteúdo "${titulo}" e gostaria de agendar uma consulta.`;
 
 /**
- * "Por onde voce quer comecar?" — navegacao por queixa, separada do Metodo.
- * Card inteiro e link para o tratamento mais proximo; nenhum WhatsApp nos
- * cards; um unico CTA abaixo (3.6). Textos dos cards mantidos.
+ * "Por onde voce quer comecar?" — caixa do Print 2, logo abaixo do Metodo
+ * (prompt "sobre-metodo-lien", out/2026): 4 cards com os titulos do print, o
+ * card inteiro e o link "Entenda esse cuidado ->", nenhum WhatsApp nos cards
+ * e um unico CTA abaixo (exigencia do alinhamento).
  */
 export const cardapio = {
-  tag: 'Para você',
+  tag: 'Orientação personalizada',
   h2: 'Por onde você quer começar?',
-  sub: 'Conte o que está sentindo. A gente mostra o caminho — e o planejamento começa na consulta.',
+  sub: 'Selecione a sua principal necessidade para entendermos como podemos ajudar:',
   link: 'Entenda esse cuidado',
   pergunta: 'Não sabe por onde começar?',
   cta: CTA_PRINCIPAL,
   // `icone`: arquivo em /public/icones/<nome>.svg (originais em assets/icones/).
   itens: [
-    { texto: 'Quero comer com segurança', leva: 'Implantodontia digital', href: '/tratamentos/#implantodontia-digital', icone: 'mao-dente' },
-    { texto: 'Perdi um ou mais dentes', leva: 'Implantodontia digital', href: '/tratamentos/#implantodontia-digital', icone: 'implante' },
-    { texto: 'Minha prótese incomoda', leva: 'Facetas e próteses dentárias', href: '/tratamentos/#facetas-e-proteses', icone: 'instrumentos' },
-    { texto: 'Quero melhorar meu sorriso', leva: 'Facetas e próteses dentárias', href: '/tratamentos/#facetas-e-proteses', icone: 'dente-brilho' },
-    { texto: 'Tenho vários problemas ao mesmo tempo', leva: 'Reabilitação oral completa', href: '/tratamentos/#reabilitacao-oral-completa', icone: 'caries-dentarias' },
-    { texto: 'Sinto dor ou estalos na mandíbula', leva: 'DTM e dor orofacial', href: '/tratamentos/#dtm-e-dor-orofacial', icone: 'dente-localizacao' },
-    { texto: 'Minha gengiva sangra', leva: 'Periodontia', href: '/tratamentos/#periodontia', icone: 'cuidado-dental' },
-    { texto: 'Tenho medo de dentista', leva: 'Sedação', href: '/#sedacao', icone: 'cadeira-de-dentista' },
+    { texto: 'Minha prótese incomoda ou está antiga', href: '/tratamentos/#facetas-e-proteses', icone: 'instrumentos' },
+    { texto: 'Sinto dor ou estalos na mandíbula (DTM)', href: '/tratamentos/#dtm-e-dor-orofacial', icone: 'dente-localizacao' },
+    { texto: 'Quero melhorar meu sorriso (Estética)', href: '/tratamentos/#facetas-e-proteses', icone: 'dente-brilho' },
+    { texto: 'Tenho medo ou ansiedade de dentista', href: '/#sedacao', icone: 'cadeira-de-dentista' },
   ],
 } as const;
 

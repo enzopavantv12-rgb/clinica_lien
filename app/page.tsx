@@ -5,7 +5,6 @@ import { Resultados } from '@/components/sections/Resultados';
 import { Testimonials } from '@/components/sections/Testimonials';
 import { Sobre } from '@/components/sections/Sobre';
 import { MetodoLien } from '@/components/sections/MetodoLien';
-import { Cardapio } from '@/components/sections/Cardapio';
 import { Tratamentos } from '@/components/sections/Tratamentos';
 import { Sedacao } from '@/components/sections/Sedacao';
 import { Experiencia } from '@/components/sections/Experiencia';
@@ -60,8 +59,8 @@ export default function Home() {
         <Resultados />
         <Testimonials />
         <Sobre />
+        {/* Metodo + "Por onde voce quer comecar?" (#comecar) no mesmo fundo. */}
         <MetodoLien />
-        <Cardapio />
         <Tratamentos />
         <Sedacao />
         <Experiencia />

@@ -1,45 +1,8 @@
 import { ArrowRight } from 'lucide-react';
+import { Etiqueta } from '../ui/Etiqueta';
 import { Reveal } from '../ui/Reveal';
-import { SectionHeading } from '../ui/SectionHeading';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
 import { cardapio } from '../../data/content';
-
-type Item = (typeof cardapio.itens)[number];
-type Estilo = 'creme' | 'teal' | 'magenta';
-
-/**
- * "Por onde voce quer comecar?" — navegacao por queixa (alinhamento final,
- * 3.6), separada do Metodo. Mosaico de 3 colunas (cards grandes nas pontas,
- * compactos no meio) com as cores do manual:
- * - creme: texto ink; o link em magenta (teal sobre creme mede 4,46:1);
- * - teal e magenta: texto branco.
- *
- * O card inteiro e o link "Entenda esse cuidado ->" para o tratamento mais
- * proximo em /tratamentos/; nenhum WhatsApp nos cards. Um unico CTA abaixo.
- */
-const estilos: Record<Estilo, { card: string; leva: string; link: string; icone: string; foco: string }> = {
-  creme: {
-    card: 'bg-cream text-ink hover:border-magenta/40',
-    leva: 'text-ink-muted',
-    link: 'text-magenta',
-    icone: 'bg-white text-teal',
-    foco: 'focus-visible:outline-magenta',
-  },
-  teal: {
-    card: 'bg-teal text-white',
-    leva: 'text-white/90',
-    link: 'text-white',
-    icone: 'bg-white/15 text-white',
-    foco: 'focus-visible:outline-teal',
-  },
-  magenta: {
-    card: 'bg-magenta text-white',
-    leva: 'text-white/90',
-    link: 'text-white',
-    icone: 'bg-white/15 text-white',
-    foco: 'focus-visible:outline-magenta',
-  },
-};
 
 /** Icone SVG da clinica como mascara CSS: a cor vem do `currentColor`. */
 function IconeCard({ nome }: { nome: string }) {
@@ -47,7 +10,7 @@ function IconeCard({ nome }: { nome: string }) {
   return (
     <span
       aria-hidden="true"
-      className="block size-8 bg-current lg:size-9"
+      className="block size-11 bg-current"
       style={{
         WebkitMaskImage: url,
         maskImage: url,
@@ -55,113 +18,66 @@ function IconeCard({ nome }: { nome: string }) {
         maskSize: 'contain',
         WebkitMaskRepeat: 'no-repeat',
         maskRepeat: 'no-repeat',
-        WebkitMaskPosition: 'center',
-        maskPosition: 'center',
+        WebkitMaskPosition: 'left top',
+        maskPosition: 'left top',
       }}
     />
   );
 }
 
-/** Grade sutil dos cards grandes, com mascara radial. */
-function Grade() {
-  return (
-    <div
-      aria-hidden="true"
-      className="absolute inset-0 bg-[linear-gradient(to_right,rgba(26,20,32,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(26,20,32,0.06)_1px,transparent_1px)] bg-[size:50px_56px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"
-    />
-  );
-}
-
-function Card({
-  item,
-  estilo,
-  ordem,
-  grande = false,
-  className = '',
-}: {
-  item: Item;
-  estilo: Estilo;
-  ordem: number;
-  grande?: boolean;
-  className?: string;
-}) {
-  const e = estilos[estilo];
-  return (
-    <Reveal as="li" delay={ordem * 0.05} className={`flex min-w-0 ${className}`}>
-      <a
-        href={item.href}
-        className={`group relative flex w-full flex-col justify-between overflow-hidden rounded-3xl border border-brandgray p-6 transition-[transform,box-shadow,border-color] duration-300 ease-brand motion-safe:hover:-translate-y-1 hover:shadow-lift focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 sm:p-7 ${e.card} ${e.foco}`}
-      >
-        {grande && <Grade />}
-        <div className="relative mt-auto">
-          <h3
-            className={`font-semibold leading-snug ${grande ? 'text-h3 sm:text-h3-lg lg:text-[1.625rem]' : 'text-h3 sm:text-h3-lg'}`}
-          >
-            &ldquo;{item.texto}&rdquo;
-          </h3>
-          <div className="flex items-end justify-between gap-4 pt-5">
-            <div className="min-w-0">
-              <p className={`text-legend sm:text-legend-lg ${e.leva}`}>{item.leva}</p>
-              <span
-                className={`mt-3 inline-flex items-center gap-1.5 text-[0.9375rem] font-medium underline-offset-4 group-hover:underline ${e.link}`}
-              >
-                {cardapio.link}
-                <ArrowRight
-                  size={15}
-                  strokeWidth={2}
-                  aria-hidden="true"
-                  className="transition-transform duration-300 motion-safe:group-hover:translate-x-0.5"
-                />
-              </span>
-            </div>
-            <span
-              aria-hidden="true"
-              className={`flex size-12 shrink-0 items-center justify-center rounded-2xl lg:size-14 ${e.icone}`}
-            >
-              <IconeCard nome={item.icone} />
-            </span>
-          </div>
-        </div>
-      </a>
-    </Reveal>
-  );
-}
-
+/**
+ * "Por onde voce quer comecar?" — caixa do Print 2, dentro do fundo de ondas
+ * do Metodo (renderizada por MetodoLien), como <section> propria (#comecar,
+ * com H2). Degrade rosado -> azul-acinzentado, 4 cards em que o card inteiro
+ * e o link "Entenda esse cuidado ->" e um unico CTA abaixo.
+ *
+ * Card a 90% de branco (e nao de #F9FAFB, como no prompt): o link teal de
+ * 12px precisa de fundo quase branco para passar AA (4,7:1).
+ */
 export function Cardapio() {
-  const [comer, dentes, protese, sorriso, completo, mandibula, gengiva, medo] = cardapio.itens;
-  // Celular: empilha; tablet: cada coluna vira linha; desktop: 3 colunas.
-  const coluna = 'flex flex-col gap-3 md:flex-row lg:flex-col';
-  const colunaMeio = 'grid gap-3 md:grid-cols-2 lg:flex lg:flex-col';
-
   return (
-    <section id="comecar" className="relative overflow-x-clip bg-white py-20 sm:py-24 lg:py-28">
-      <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
-        <SectionHeading tag={cardapio.tag} titulo={cardapio.h2} subtitulo={cardapio.sub} />
+    <section id="comecar" aria-labelledby="comecar-title" className="mx-auto mt-24 max-w-[1160px] px-6">
+      <div className="rounded-[28px] border border-[#E6DDE8] bg-[linear-gradient(135deg,#FBF3FA,#F4F6F9_55%,#EEF4F6)] px-5 py-10 shadow-[inset_0_1px_0_rgba(255,255,255,.8)] sm:px-10 sm:py-14">
+        <Reveal y={16} duracao={0.6} className="flex flex-col items-center text-center">
+          <Etiqueta cor="teal">{cardapio.tag}</Etiqueta>
+          <h2 id="comecar-title" className="mt-3 text-[clamp(24px,2.4vw,30px)] font-bold text-ink">
+            {cardapio.h2}
+          </h2>
+          <p className="mt-2.5 text-sm text-ink-muted">{cardapio.sub}</p>
+        </Reveal>
 
-        <div className="mt-12 flex w-full flex-col gap-3 lg:grid lg:grid-cols-3">
-          <ul className={coluna}>
-            <Card item={comer} estilo="creme" grande ordem={0} className="md:flex-[6] lg:flex-[7]" />
-            <Card item={dentes} estilo="teal" ordem={1} className="md:flex-[4] lg:flex-[3]" />
-          </ul>
-          <ul className={colunaMeio}>
-            <Card item={protese} estilo="magenta" ordem={2} className="lg:flex-[1_0_auto]" />
-            <Card item={sorriso} estilo="magenta" ordem={3} className="lg:flex-[1_0_auto]" />
-            <Card item={completo} estilo="magenta" ordem={4} className="lg:flex-[1_0_auto]" />
-            <Card item={medo} estilo="magenta" ordem={5} className="lg:flex-[1_0_auto]" />
-          </ul>
-          <ul className={coluna}>
-            <Card item={mandibula} estilo="teal" ordem={6} className="md:flex-[4] lg:flex-[3]" />
-            <Card item={gengiva} estilo="creme" grande ordem={7} className="md:flex-[6] lg:flex-[7]" />
-          </ul>
-        </div>
+        <ul className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+          {cardapio.itens.map((item, i) => (
+            <Reveal as="li" key={item.texto} y={16} duracao={0.6} delay={i * 0.09} className="flex">
+              <a
+                href={item.href}
+                className="group flex w-full flex-col rounded-2xl border border-brandgray/70 bg-white/90 px-6 pb-6 pt-[22px] shadow-[0_10px_24px_-16px_rgba(26,20,32,.12)] transition-[transform,border-color] duration-[250ms] ease-out hover:-translate-y-[3px] hover:border-magenta/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-magenta motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              >
+                <span className="text-magenta">
+                  <IconeCard nome={item.icone} />
+                </span>
+                <span className="mt-[18px] text-[15px] leading-[1.45] text-ink">{item.texto}</span>
+                <span className="mt-auto inline-flex items-center gap-1 pt-3 text-xs font-medium text-teal">
+                  {cardapio.link}
+                  <ArrowRight
+                    size={13}
+                    strokeWidth={2}
+                    aria-hidden="true"
+                    className="transition-transform duration-[250ms] motion-safe:group-hover:translate-x-0.5"
+                  />
+                </span>
+              </a>
+            </Reveal>
+          ))}
+        </ul>
 
-        <Reveal>
-          <div className="mt-14 flex flex-col items-center gap-5 text-center">
-            <p className="text-h3 sm:text-h3-lg font-semibold text-ink">{cardapio.pergunta}</p>
+        <Reveal y={16} duracao={0.6}>
+          <div className="mt-9 flex flex-col items-center justify-center gap-4 text-center sm:flex-row">
+            <p className="text-[15px] text-ink">{cardapio.pergunta}</p>
             <WhatsAppButton
               origem="comecar"
               variante="capsula"
-              tamanho="capsula"
+              tamanho="capsulaMenu"
               className="w-full shadow-[0_10px_30px_-10px_rgba(156,23,129,0.55)] sm:w-auto"
             >
               {cardapio.cta}

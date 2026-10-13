@@ -474,3 +474,46 @@ Fonte: `prompt-claude-code-depoimentos-lien.md`.
 1. **Tratamento × texto:** o 1º depoimento (limpeza com aplicação de flúor) foi rotulado como "Paciente **Clínica Geral**", a pedido, no lugar do "Reabilitação Oral" do print. Faltam confirmar os rótulos "Implantes" (Nilson) e "Prótese e Estética" (Nádia).
 2. **Autorização:** de cada paciente, para exibir nome e texto no site, mesmo sendo avaliações públicas.
 3. **Grafia:** "Nádia Graciely" e "Nilson Antônio", exatamente como no Google.
+
+---
+
+## Sobre, Método e "Por onde você quer começar?" no layout dos prints (out/2026)
+
+Fonte: `prompt-claude-code-sobre-metodo-lien.md`. O layout segue os prints 1 e 2; o texto é o do Alinhamento Final 2026, literal.
+
+**`#sobre` — Print 1:**
+- Duas colunas: texto com 52% e foto com 48%. Abaixo de 1024px, uma coluna, com a foto depois do texto.
+- Tag "NOSSA ESSÊNCIA" e H2 com "vínculo" em magenta itálico.
+- Texto: abertura em ink, com "Lien" em negrito; três parágrafos de apoio em ink-muted, peso 300, com "Dra. Natália Simões" em 500.
+- Quote com borda teal, uma exigência do alinhamento que o print não mostra.
+- Dois destaques só com ícone e texto, sem caixas.
+- Foto: o consultório com a cadeira e a vista de BH (`experiencia-consultorio`, a "consultorio lien 1.png"), em 16:10. A recepção saiu.
+
+**`#metodo` — Print 2:**
+- Fundo branco com a padronagem oficial de ondas em magenta a 5%.
+- Tag "PREVISIBILIDADE & SEGURANÇA" e o H2 e a intro aprovados, no lugar de "O Método Lien em 4 Etapas" e do subtítulo do print.
+- Quatro cards neutros com selo numérico alternando magenta e teal, com os textos aprovados. Saem os do print, que tinham "tratamento.." e o card 3 cortado.
+- Fechamento "Sem pressa. Sem excesso. Com clareza em cada etapa." com o arco teal, também exigência do alinhamento.
+
+**`#comecar` — caixa do Print 2:**
+- Fica 96px abaixo do Método, no mesmo fundo de ondas, e continua sendo `<section>` própria, com H2, para a âncora, a ordem do verificador e a separação que o alinhamento exige.
+- Tag teal "ORIENTAÇÃO PERSONALIZADA" e degradê do rosado para o azul-acinzentado.
+- Quatro cards com os títulos do print. O card inteiro é o link "Entenda esse cuidado →":
+
+| Card | Destino |
+|---|---|
+| Minha prótese incomoda ou está antiga | /tratamentos/#facetas-e-proteses |
+| Sinto dor ou estalos na mandíbula (DTM) | /tratamentos/#dtm-e-dor-orofacial |
+| Quero melhorar meu sorriso (Estética) | /tratamentos/#facetas-e-proteses |
+| Tenho medo ou ansiedade de dentista | /#sedacao |
+
+- Os 8 cards anteriores saíram, porque o print traz 4.
+- Um único CTA, "Não sabe por onde começar? [Agende sua consulta]", com `data-cta="comecar"`. Nenhum WhatsApp nos cards.
+
+**Pontos de atenção:**
+1. **"100%":** o print traz "100% · Personalizado para cada caso". Como "100%" é vocabulário proibido no projeto e o verificador bloqueia, o destaque saiu como **"Personalizado · para cada caso"**, por decisão do usuário. O "Cruzeiro, BH · Localização privilegiada" foi mantido. Os dois ficaram por decisão da clínica, apesar de o alinhamento pedir para evitar boxes no Sobre; por isso não têm caixa.
+2. **Copy:** os textos do print foram trocados pela versão aprovada no Alinhamento Final. Se a clínica preferir o texto do print, a troca é só no `content.ts`.
+3. **Exigências do alinhamento acrescentadas,** que não aparecem nos prints: o quote no Sobre, o fechamento do Método e o CTA único do "Por onde começar".
+4. **Vídeo e fotos:** o Sobre já não tinha vídeo desde o alinhamento, e o Método já não tinha foto.
+5. **Itálico** ("vínculo", quote e fechamento): a Poppins itálica não é carregada; o navegador inclina a regular.
+6. **Contraste:** os cards do "Por onde começar" ficaram com fundo branco a 90%, e não `#F9FAFB` a 90%. O link teal de 12px fica em cerca de 4,7:1, contra 4,45:1 no fundo pedido. A tag magenta mede 6,09:1, a tag teal sobre branco 4,72:1 e o ink-muted sobre os cards cerca de 7:1.
