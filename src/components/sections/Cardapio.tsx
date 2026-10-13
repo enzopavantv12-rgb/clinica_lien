@@ -1,68 +1,47 @@
-'use client';
-
-import { useRef } from 'react';
-import { ArrowDown } from 'lucide-react';
-import { MotionConfig, type Variants } from 'motion/react';
-import { Simbolo } from '../ui/BrandGraphics';
-import { TimelineContent } from '../ui/timeline-animation';
-import { WhatsAppLink } from '../ui/WhatsAppLink';
+import { ArrowRight } from 'lucide-react';
+import { Reveal } from '../ui/Reveal';
+import { SectionHeading } from '../ui/SectionHeading';
+import { WhatsAppButton } from '../ui/WhatsAppButton';
 import { cardapio } from '../../data/content';
 
 type Item = (typeof cardapio.itens)[number];
 type Estilo = 'creme' | 'teal' | 'magenta';
 
 /**
- * "Por onde voce quer comecar?" — o cardapio de necessidades, no layout em
- * mosaico do componente "testimonial" (21st.dev): 3 colunas, cards grandes com
- * grade nas pontas e cards compactos no meio, revelados em sequencia.
+ * "Por onde voce quer comecar?" — navegacao por queixa (alinhamento final,
+ * 3.6), separada do Metodo. Mosaico de 3 colunas (cards grandes nas pontas,
+ * compactos no meio) com as cores do manual:
+ * - creme: texto ink; o link em magenta (teal sobre creme mede 4,46:1);
+ * - teal e magenta: texto branco.
  *
- * Cores do template trocadas pelas do manual da Lien:
- * - claro com grade (bg-primaryColor) -> cream, texto ink;
- * - azul (bg-blue-600)                -> teal, texto branco;
- * - preto (#111111)                   -> magenta, texto branco.
- * Branco so sobre magenta/teal, como preve o manual. No card cream o link de
- * WhatsApp vai em magenta: teal sobre cream mede 4,46:1 e reprova AA.
- *
- * No lugar das fotos de logo do template, um icone odontologico por card
- * (public/icones/, enviados pela clinica). Cada card mantem as duas saidas: a conversa no WhatsApp
- * com a mensagem daquela dor e o link para o tratamento.
+ * O card inteiro e o link "Entenda esse cuidado ->" para o tratamento mais
+ * proximo em /tratamentos/; nenhum WhatsApp nos cards. Um unico CTA abaixo.
  */
-const revealVariants: Variants = {
-  visible: (i: number) => ({
-    y: 0,
-    opacity: 1,
-    filter: 'blur(0px)',
-    transition: { delay: i * 0.2, duration: 0.5 },
-  }),
-  hidden: { filter: 'blur(10px)', y: -20, opacity: 0 },
-};
-
-const estilos: Record<Estilo, { card: string; leva: string; link: string; icone: string }> = {
+const estilos: Record<Estilo, { card: string; leva: string; link: string; icone: string; foco: string }> = {
   creme: {
-    card: 'bg-cream text-ink',
+    card: 'bg-cream text-ink hover:border-magenta/40',
     leva: 'text-ink-muted',
-    link: 'text-ink-muted hover:text-ink focus-visible:outline-magenta',
+    link: 'text-magenta',
     icone: 'bg-white text-teal',
+    foco: 'focus-visible:outline-magenta',
   },
   teal: {
     card: 'bg-teal text-white',
     leva: 'text-white/90',
-    link: 'text-white/90 hover:text-white focus-visible:outline-white',
+    link: 'text-white',
     icone: 'bg-white/15 text-white',
+    foco: 'focus-visible:outline-teal',
   },
   magenta: {
     card: 'bg-magenta text-white',
     leva: 'text-white/90',
-    link: 'text-white/90 hover:text-white focus-visible:outline-white',
+    link: 'text-white',
     icone: 'bg-white/15 text-white',
+    foco: 'focus-visible:outline-magenta',
   },
 };
 
-/**
- * Icone SVG do cardapio como mascara CSS: o arquivo da a forma e a cor vem do
- * `currentColor` do card (branco no magenta/teal, teal no cream). Os arquivos
- * sao monocromaticos, entao a mascara usa so o canal alfa.
- */
+/** Icone SVG da clinica como mascara CSS: a cor vem do `currentColor`. */
 function IconeCard({ nome }: { nome: string }) {
   const url = `url(/icones/${nome}.svg)`;
   return (
@@ -83,7 +62,7 @@ function IconeCard({ nome }: { nome: string }) {
   );
 }
 
-/** Grade sutil dos cards grandes, com mascara radial (do template). */
+/** Grade sutil dos cards grandes, com mascara radial. */
 function Grade() {
   return (
     <div
@@ -97,132 +76,99 @@ function Card({
   item,
   estilo,
   ordem,
-  timelineRef,
   grande = false,
   className = '',
 }: {
   item: Item;
   estilo: Estilo;
   ordem: number;
-  timelineRef: React.RefObject<HTMLElement | null>;
   grande?: boolean;
   className?: string;
 }) {
   const e = estilos[estilo];
   return (
-    <TimelineContent
-      as="li"
-      animationNum={ordem}
-      customVariants={revealVariants}
-      timelineRef={timelineRef}
-      className={`relative flex min-w-0 flex-col justify-between overflow-hidden rounded-3xl border border-brandgray p-6 sm:p-7 ${e.card} ${className}`}
-    >
-      {grande && <Grade />}
-      <article className="relative mt-auto">
-        <h3 className={`font-semibold leading-snug ${grande ? 'text-h3 sm:text-h3-lg lg:text-[1.625rem]' : 'text-h3 sm:text-h3-lg'}`}>
-          &ldquo;{item.texto}&rdquo;
-        </h3>
-        <div className="flex items-end justify-between gap-4 pt-5">
-          <div className="min-w-0">
-            <p className={`text-legend sm:text-legend-lg ${e.leva}`}>{item.leva}</p>
-            <div className="mt-4 flex flex-col gap-2.5">
-              <WhatsAppLink
-                origem={item.origem}
-                contexto={item.texto}
-                claro={estilo !== 'creme'}
-                className={estilo === 'creme' ? '!text-magenta hover:!text-ink' : ''}
-              >
-                {cardapio.cta}
-              </WhatsAppLink>
-              <a
-                href={item.ancora}
-                className={`inline-flex items-center gap-1.5 self-start rounded text-legend sm:text-legend-lg font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 ${e.link}`}
-              >
-                {cardapio.verTratamento}
-                <span className="sr-only">: {item.leva}</span>
-                <ArrowDown size={14} strokeWidth={2} aria-hidden="true" />
-              </a>
-            </div>
-          </div>
-          <span
-            aria-hidden="true"
-            className={`flex size-12 shrink-0 items-center justify-center rounded-2xl lg:size-14 ${e.icone}`}
+    <Reveal as="li" delay={ordem * 0.05} className={`flex min-w-0 ${className}`}>
+      <a
+        href={item.href}
+        className={`group relative flex w-full flex-col justify-between overflow-hidden rounded-3xl border border-brandgray p-6 transition-[transform,box-shadow,border-color] duration-300 ease-brand motion-safe:hover:-translate-y-1 hover:shadow-lift focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 sm:p-7 ${e.card} ${e.foco}`}
+      >
+        {grande && <Grade />}
+        <div className="relative mt-auto">
+          <h3
+            className={`font-semibold leading-snug ${grande ? 'text-h3 sm:text-h3-lg lg:text-[1.625rem]' : 'text-h3 sm:text-h3-lg'}`}
           >
-            <IconeCard nome={item.icone} />
-          </span>
+            &ldquo;{item.texto}&rdquo;
+          </h3>
+          <div className="flex items-end justify-between gap-4 pt-5">
+            <div className="min-w-0">
+              <p className={`text-legend sm:text-legend-lg ${e.leva}`}>{item.leva}</p>
+              <span
+                className={`mt-3 inline-flex items-center gap-1.5 text-[0.9375rem] font-medium underline-offset-4 group-hover:underline ${e.link}`}
+              >
+                {cardapio.link}
+                <ArrowRight
+                  size={15}
+                  strokeWidth={2}
+                  aria-hidden="true"
+                  className="transition-transform duration-300 motion-safe:group-hover:translate-x-0.5"
+                />
+              </span>
+            </div>
+            <span
+              aria-hidden="true"
+              className={`flex size-12 shrink-0 items-center justify-center rounded-2xl lg:size-14 ${e.icone}`}
+            >
+              <IconeCard nome={item.icone} />
+            </span>
+          </div>
         </div>
-      </article>
-    </TimelineContent>
+      </a>
+    </Reveal>
   );
 }
 
 export function Cardapio() {
-  const ref = useRef<HTMLElement>(null);
   const [comer, dentes, protese, sorriso, completo, mandibula, gengiva, medo] = cardapio.itens;
-  // Colunas no celular e tablet: empilham; no tablet cada coluna vira linha.
+  // Celular: empilha; tablet: cada coluna vira linha; desktop: 3 colunas.
   const coluna = 'flex flex-col gap-3 md:flex-row lg:flex-col';
-  // A coluna do meio tem 4 cards: no tablet vira grade 2x2 (em linha, cada
-  // card ficaria com ~175px).
   const colunaMeio = 'grid gap-3 md:grid-cols-2 lg:flex lg:flex-col';
 
   return (
-    <MotionConfig reducedMotion="user">
-      <section id="para-voce" ref={ref} className="relative overflow-x-clip bg-white py-20 sm:py-24 lg:py-28">
-        <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
-          <div className="mx-auto flex max-w-screen-md flex-col items-center text-center">
-            <TimelineContent
-              as="p"
-              animationNum={0}
-              customVariants={revealVariants}
-              timelineRef={ref}
-              className="text-tag sm:text-tag-lg font-semibold uppercase tracking-[0.18em] text-teal"
-            >
-              {cardapio.tag}
-            </TimelineContent>
-            <TimelineContent
-              as="h2"
-              animationNum={1}
-              customVariants={revealVariants}
-              timelineRef={ref}
-              className="mt-3 text-h2 sm:text-h2-lg font-bold text-ink"
-            >
-              {cardapio.h2}
-            </TimelineContent>
-            <Simbolo variante="rgb" className="mt-4 block h-auto w-14" />
-            <TimelineContent
-              as="p"
-              animationNum={2}
-              customVariants={revealVariants}
-              timelineRef={ref}
-              className="mt-5 max-w-prose text-sub sm:text-sub-lg text-ink-muted"
-            >
-              {cardapio.sub}
-            </TimelineContent>
-          </div>
+    <section id="comecar" className="relative overflow-x-clip bg-white py-20 sm:py-24 lg:py-28">
+      <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
+        <SectionHeading tag={cardapio.tag} titulo={cardapio.h2} subtitulo={cardapio.sub} />
 
-          <div className="mt-12 flex w-full flex-col gap-3 pb-6 lg:grid lg:grid-cols-3">
-            <ul className={coluna}>
-              <Card item={comer} estilo="creme" grande ordem={2} timelineRef={ref} className="md:flex-[6] lg:flex-[7]" />
-              <Card item={dentes} estilo="teal" ordem={3} timelineRef={ref} className="md:flex-[4] lg:flex-[3]" />
-            </ul>
-            <ul className={colunaMeio}>
-              <Card item={protese} estilo="magenta" ordem={4} timelineRef={ref} className="lg:flex-[1_0_auto]" />
-              <Card item={sorriso} estilo="magenta" ordem={5} timelineRef={ref} className="lg:flex-[1_0_auto]" />
-              <Card item={completo} estilo="magenta" ordem={6} timelineRef={ref} className="lg:flex-[1_0_auto]" />
-              <Card item={medo} estilo="magenta" ordem={7} timelineRef={ref} className="lg:flex-[1_0_auto]" />
-            </ul>
-            <ul className={coluna}>
-              <Card item={mandibula} estilo="teal" ordem={8} timelineRef={ref} className="md:flex-[4] lg:flex-[3]" />
-              <Card item={gengiva} estilo="creme" grande ordem={9} timelineRef={ref} className="md:flex-[6] lg:flex-[7]" />
-            </ul>
-          </div>
+        <div className="mt-12 flex w-full flex-col gap-3 lg:grid lg:grid-cols-3">
+          <ul className={coluna}>
+            <Card item={comer} estilo="creme" grande ordem={0} className="md:flex-[6] lg:flex-[7]" />
+            <Card item={dentes} estilo="teal" ordem={1} className="md:flex-[4] lg:flex-[3]" />
+          </ul>
+          <ul className={colunaMeio}>
+            <Card item={protese} estilo="magenta" ordem={2} className="lg:flex-[1_0_auto]" />
+            <Card item={sorriso} estilo="magenta" ordem={3} className="lg:flex-[1_0_auto]" />
+            <Card item={completo} estilo="magenta" ordem={4} className="lg:flex-[1_0_auto]" />
+            <Card item={medo} estilo="magenta" ordem={5} className="lg:flex-[1_0_auto]" />
+          </ul>
+          <ul className={coluna}>
+            <Card item={mandibula} estilo="teal" ordem={6} className="md:flex-[4] lg:flex-[3]" />
+            <Card item={gengiva} estilo="creme" grande ordem={7} className="md:flex-[6] lg:flex-[7]" />
+          </ul>
         </div>
 
-        {/* Linha de base com os dois "pregos" nas pontas (do template). */}
-        <div aria-hidden="true" className="absolute bottom-4 left-[5%] z-[2] h-16 w-[90%] border-b-2 border-brandgray md:left-0 md:w-full">
-          <div className="relative mx-auto h-full w-full max-w-[1200px] before:absolute before:-bottom-2 before:-left-2 before:h-4 before:w-4 before:border before:border-brandgray before:bg-white before:shadow-sm after:absolute after:-bottom-2 after:-right-2 after:h-4 after:w-4 after:border after:border-brandgray after:bg-white after:shadow-sm" />
-        </div>
-      </section>
-    </MotionConfig>
+        <Reveal>
+          <div className="mt-14 flex flex-col items-center gap-5 text-center">
+            <p className="text-h3 sm:text-h3-lg font-semibold text-ink">{cardapio.pergunta}</p>
+            <WhatsAppButton
+              origem="comecar"
+              variante="capsula"
+              tamanho="capsula"
+              className="w-full shadow-[0_10px_30px_-10px_rgba(156,23,129,0.55)] sm:w-auto"
+            >
+              {cardapio.cta}
+            </WhatsAppButton>
+          </div>
+        </Reveal>
+      </div>
+    </section>
   );
 }

@@ -22,8 +22,11 @@ const idClinica = `${site.url}/#clinica`;
 
 const natalia = equipe.membros[0];
 
-/** Cargo da Dra. Natalia no schema — mais formal que o do card. */
-const cargoNatalia = 'Cirurgiã-Dentista — Implantodontia, Prótese e Periodontia';
+/**
+ * Cargo da Dra. Natalia no schema: a credencial oficial (alinhamento final,
+ * secao 6) — Aperfeicoamento, e nao Especialista, em Periodontia.
+ */
+const cargoNatalia = 'Especialista em Implantodontia e Prótese Dentária; Aperfeiçoamento em Periodontia';
 
 const logo = `${site.url}/marca/logo-rgb.png`;
 
@@ -36,12 +39,11 @@ const endereco = {
   addressCountry: 'BR',
 };
 
-const servicos = [
-  tratamentos.destaque,
-  ...tratamentos.medios,
-  ...tratamentos.grade,
-  ...tratamentos.compactos,
-].map((t) => ({ '@type': 'MedicalProcedure', name: t.nome }));
+const servicos = tratamentos.lista.map((t) => ({
+  '@type': 'MedicalProcedure',
+  name: t.nome,
+  url: `${site.url}/tratamentos/#${t.slug}`,
+}));
 
 export const schemaDentist = {
   '@context': 'https://schema.org',
@@ -104,7 +106,7 @@ export const schemaPerson = {
   name: site.responsavelTecnica,
   honorificPrefix: 'Dra.',
   jobTitle: cargoNatalia,
-  description: `Fundadora e responsável técnica da ${site.nome}, em Belo Horizonte. ${natalia.bio}`,
+  description: `Fundadora e responsável técnica da ${site.nome}, em Belo Horizonte. ${natalia.frase}`,
   identifier: {
     '@type': 'PropertyValue',
     propertyID: 'CRO-MG',
@@ -120,3 +122,36 @@ export const schemaPerson = {
   knowsAbout: ['Implantodontia', 'Reabilitação Oral', 'Prótese Dentária', 'Periodontia'],
   sameAs: [site.instagram.url],
 };
+
+/** BreadcrumbList de uma pagina interna (Inicio > ... > pagina atual). */
+export const schemaBreadcrumb = (itens: { nome: string; url: string }[]) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: itens.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.nome,
+    item: item.url,
+  })),
+});
+
+/** Article de um conteudo em saude bucal (autor = a Dra. Natalia, Person). */
+export const schemaArtigo = (a: {
+  titulo: string;
+  descricao: string;
+  url: string;
+  data: string;
+  palavraChave: string;
+}) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: a.titulo,
+  description: a.descricao,
+  datePublished: a.data,
+  dateModified: a.data,
+  inLanguage: 'pt-BR',
+  keywords: a.palavraChave,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': a.url },
+  author: { '@type': 'Person', '@id': `${site.url}/#natalia-simoes`, name: site.responsavelTecnica, jobTitle: cargoNatalia },
+  publisher: { '@type': ['Dentist', 'LocalBusiness', 'MedicalBusiness'], '@id': idClinica, name: site.nome, logo },
+});

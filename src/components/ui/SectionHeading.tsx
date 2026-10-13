@@ -22,8 +22,9 @@ export function SectionHeading({
   comCurva?: boolean;
 }) {
   const corTitulo = claro ? 'text-white' : 'text-ink';
-  const corSub = claro ? 'text-white/85' : 'text-ink-muted';
-  const corTag = claro ? 'text-white/75' : 'text-teal';
+  const corSub = claro ? 'text-white' : 'text-ink-muted';
+  // Sobre teal/magenta, branco cheio: a 75–85% o texto pequeno cai abaixo de 4,5:1.
+  const corTag = claro ? 'text-white' : 'text-teal';
   const alinhamento = centralizado ? 'text-center mx-auto items-center' : 'text-left items-start';
 
   return (

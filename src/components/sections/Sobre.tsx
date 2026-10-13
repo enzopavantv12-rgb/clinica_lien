@@ -1,48 +1,24 @@
 import { BrandImage } from '../ui/BrandImage';
+import { ArcoSorriso } from '../ui/BrandGraphics';
 import { Reveal } from '../ui/Reveal';
-import { VideoArco } from '../ui/VideoArco';
-import { WhatsAppButton } from '../ui/WhatsAppButton';
-import { sobre, type Trecho } from '../../data/content';
-
-/** Paragrafo com `lien` em italico e os destaques em semibold magenta. */
-function Paragrafo({ trechos }: { trechos: readonly Trecho[] }) {
-  return (
-    <p className="text-base leading-[1.7] text-ink lg:text-lg">
-      {trechos.map((t, i) =>
-        typeof t === 'string' ? (
-          t
-        ) : t.estilo === 'italico' ? (
-          <em key={i}>{t.texto}</em>
-        ) : (
-          <strong key={i} className="font-semibold text-magenta">
-            {t.texto}
-          </strong>
-        ),
-      )}
-    </p>
-  );
-}
+import { sobre } from '../../data/content';
 
 /**
- * Sobre a Lien — layout editorial (set/2026, doc "ajustes-site-clinica-lien").
+ * "Lien quer dizer vinculo." — historia da marca (alinhamento final, 3.4).
  *
- * Texto a esquerda; a direita, composicao em tres camadas:
- *   1. foto da recepcao, cantos assimetricos, degradê teal na base;
- *   2. contorno em degradê com a forma da moldura, deslocado para cima e a direita;
- *   3. video em loop ("efeito GIF") numa moldura com topo em arco (VideoArco).
+ * Editorial e emocional, nao "startup": texto final literal a esquerda, uma
+ * fotografia grande da clinica a direita e um unico destaque — o quote, com o
+ * arco teal do sorriso. Sem mini-cards de dados nem video (conflito C3: o
+ * video da recepcao foi para o capitulo 2 da Experiencia).
  *
- * Tipografia toda em Poppins: titulo Bold com tracking -0.02em (Poppins
- * Bold grande fica espacada demais sem isso), paragrafos Regular 16/18px.
- *
- * Grid: 1 coluna abaixo de 1024px (texto primeiro), 6/6 no desktop.
+ * Grid: 1 coluna abaixo de 1024px (texto primeiro), 7/5 no desktop.
  */
 export function Sobre() {
   return (
-    <section id="sobre" className="relative bg-cream">
+    <section id="sobre" className="relative bg-white">
       <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-24 lg:px-12 lg:py-32">
-        <div className="grid grid-cols-1 items-center gap-14 lg:min-h-[720px] lg:grid-cols-12 lg:gap-16">
-          {/* Coluna de texto */}
-          <div className="lg:col-span-6">
+        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-7">
             <Reveal y={24} duracao={0.6}>
               <p className="text-[0.75rem] font-medium uppercase leading-[1.4] tracking-[0.08em] text-ink-muted underline decoration-1 underline-offset-[6px] sm:text-[0.875rem]">
                 {sobre.tag}
@@ -50,84 +26,46 @@ export function Sobre() {
             </Reveal>
 
             <Reveal y={24} duracao={0.6} delay={0.08}>
-              <h2 className="mt-8 text-[2.75rem] font-bold leading-[1.05] tracking-[-0.02em] text-magenta sm:text-[3.5rem] lg:text-[4.5rem]">
+              <h2 className="mt-8 text-[2.75rem] font-bold leading-[1.05] tracking-[-0.02em] text-ink sm:text-[3.5rem] lg:text-[4.25rem]">
                 {sobre.tituloLinhas[0]} <br className="hidden lg:block" />
-                {sobre.tituloLinhas[1]}
+                <span className="text-magenta">{sobre.tituloLinhas[1]}</span>
                 <span className="text-teal">.</span>
               </h2>
             </Reveal>
 
             <Reveal y={24} duracao={0.6} delay={0.16}>
-              <div className="mt-12 flex max-w-[560px] flex-col gap-6">
-                {sobre.paragrafos.map((p, i) => (
-                  <Paragrafo key={i} trechos={p} />
+              <div className="mt-10 flex max-w-[600px] flex-col gap-5">
+                {sobre.paragrafos.map((p) => (
+                  <p key={p.slice(0, 24)} className="text-base leading-[1.75] text-ink lg:text-[1.0625rem]">
+                    {p}
+                  </p>
                 ))}
               </div>
             </Reveal>
-
-            <Reveal y={24} duracao={0.6} delay={0.24}>
-              <WhatsAppButton
-                origem="sobre"
-                variante="pilula"
-                tamanho="pilula"
-                className="mt-14 w-full sm:w-auto"
-              >
-                {sobre.cta}
-              </WhatsAppButton>
-            </Reveal>
           </div>
 
-          {/* Composicao visual: foto de fundo + video em moldura de arco.
-              Desktop: foto a direita (62%), moldura sobreposta a esquerda,
-              saltando 32px para fora da foto. Mobile: faixa 4:3 e a moldura
-              centralizada logo abaixo, a 80% da largura. */}
-          <div className="mx-auto w-full max-w-[640px] lg:col-span-6 lg:max-w-none">
-            <div className="relative lg:aspect-[1/0.95]">
-              {/* Camada 1 — foto de fundo (recepcao) */}
-              <Reveal
-                y={0}
-                duracao={0.6}
-                escala={1.04}
-                className="relative aspect-[4/3] overflow-hidden rounded-[28px] lg:absolute lg:right-0 lg:top-0 lg:aspect-auto lg:h-full lg:w-[62%] lg:rounded-[24px_120px_40px_160px]"
-              >
+          <div className="mx-auto w-full max-w-[520px] lg:col-span-5 lg:max-w-none">
+            <Reveal y={0} duracao={0.6} escala={1.04} className="relative">
+              <div className="overflow-hidden rounded-[28px] lg:rounded-[24px_120px_40px_160px]">
                 <BrandImage
                   dados={sobre.imagem}
                   width={941}
                   height={1672}
-                  proporcao="h-full"
+                  proporcao="aspect-[4/5]"
                   className="!rounded-none object-[50%_45%]"
-                  sizes="(max-width: 1024px) 90vw, 380px"
+                  sizes="(max-width: 1024px) 90vw, 480px"
                 />
-                <div
-                  aria-hidden="true"
-                  className="lien-fundo-degrade pointer-events-none absolute inset-0"
-                />
-              </Reveal>
+              </div>
+            </Reveal>
 
-              {/* Camada 2 — contorno em degradê com o formato da moldura, atras dela */}
-              <Reveal
-                y={0}
-                duracao={0.6}
-                delay={0.15}
-                className="lien-outline lien-arco absolute hidden aspect-[380/480] w-[58%] max-w-[380px] lg:bottom-[-16px] lg:left-[16px] lg:block"
-              >
-                <span aria-hidden="true" />
-              </Reveal>
-
-              {/* Camada 3 — video em loop (efeito GIF) */}
-              <Reveal
-                y={16}
-                duracao={0.6}
-                delay={0.15}
-                className="relative z-10 mx-auto -mt-16 w-[80%] max-w-[380px] lg:absolute lg:bottom-[-32px] lg:left-0 lg:mx-0 lg:mt-0 lg:w-[58%]"
-              >
-                <VideoArco
-                  video={sobre.video}
-                  rotuloPausar={sobre.rotuloPausar}
-                  rotuloReproduzir={sobre.rotuloReproduzir}
-                />
-              </Reveal>
-            </div>
+            <Reveal y={16} duracao={0.6} delay={0.15}>
+              <figure className="relative z-10 mx-4 -mt-16 rounded-3xl bg-cream p-7 shadow-lift sm:mx-8 sm:p-8 lg:-ml-16 lg:mr-8">
+                <ArcoSorriso className="h-auto w-16" />
+                <blockquote className="mt-4 text-[1.1875rem] font-medium leading-[1.45] text-ink sm:text-[1.3125rem]">
+                  &ldquo;{sobre.quote}&rdquo;
+                </blockquote>
+              </figure>
+            </Reveal>
           </div>
         </div>
       </div>

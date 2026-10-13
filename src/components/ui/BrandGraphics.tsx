@@ -117,3 +117,15 @@ export function DivisorCurvo({
     </svg>
   );
 }
+
+/**
+ * O arco do sorriso (a curva do `e` da Lien) em traco teal — acento das
+ * citacoes e do "Proximo passo" dos artigos. Decorativo.
+ */
+export function ArcoSorriso({ className = '', cor = '#037E99' }: { className?: string; cor?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 120 34" fill="none" aria-hidden="true" focusable="false">
+      <path d="M4 4 Q60 56 116 4" stroke={cor} strokeWidth="6" strokeLinecap="round" />
+    </svg>
+  );
+}

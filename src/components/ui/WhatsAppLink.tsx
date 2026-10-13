@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { whatsappUrlPor } from '../../lib/whatsapp';
 import { trackWhatsAppClick } from '../../lib/tracking';
@@ -27,13 +28,15 @@ export function WhatsAppLink({
   claro?: boolean;
   className?: string;
 }) {
+  const pagina = usePathname() ?? '/';
   return (
     <a
       href={whatsappUrlPor(origem)}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() => trackWhatsAppClick(origem)}
+      onClick={() => trackWhatsAppClick(origem, pagina)}
       data-cta={origem}
+      data-page={pagina}
       className={`group/link inline-flex items-center gap-2 self-start rounded-xl text-[0.9375rem] font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 ${
         claro
           ? // Hover sublinhado, nao em magenta-light: o manual veda magenta-light como texto.

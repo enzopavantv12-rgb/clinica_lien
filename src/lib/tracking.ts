@@ -12,23 +12,21 @@ declare global {
   }
 }
 
-export const trackWhatsAppClick = (origem: string) => {
+/**
+ * Clique em CTA de agendamento (WhatsApp). `origem` = secao (data-cta) e
+ * `pagina` = rota (data-page): medem conversao por secao e por pagina,
+ * inclusive mobile x desktop (o GA4 ja separa por dispositivo).
+ */
+export const trackWhatsAppClick = (origem: string, pagina?: string) => {
   try {
     if (typeof window === 'undefined') return;
     window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({ event: 'click_whatsapp', origem });
+    window.dataLayer.push({
+      event: 'click_whatsapp',
+      origem,
+      pagina: pagina ?? window.location.pathname,
+    });
   } catch {
     // Silencio proposital: rastreamento nunca deve quebrar a conversao.
-  }
-};
-
-/** Feedback "Esta resposta ajudou?" do FAQ. Mesma regra: falha silenciosa. */
-export const trackFaqFeedback = (pergunta: string, ajudou: boolean) => {
-  try {
-    if (typeof window === 'undefined') return;
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({ event: 'faq_feedback', pergunta, ajudou });
-  } catch {
-    // Silencio proposital.
   }
 };

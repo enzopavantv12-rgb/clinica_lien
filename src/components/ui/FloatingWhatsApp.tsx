@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { whatsappUrlPor } from '../../lib/whatsapp';
 import { trackWhatsAppClick } from '../../lib/tracking';
@@ -17,6 +18,7 @@ const LIMITE_SEM_HERO = 600;
  */
 export function FloatingWhatsApp() {
   const [visivel, setVisivel] = useState(false);
+  const pagina = usePathname() ?? '/';
 
   useEffect(() => {
     const aoRolar = () => {
@@ -38,8 +40,9 @@ export function FloatingWhatsApp() {
       href={whatsappUrlPor('flutuante')}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() => trackWhatsAppClick('flutuante')}
+      onClick={() => trackWhatsAppClick('flutuante', pagina)}
       data-cta="flutuante"
+      data-page={pagina}
       aria-label="Agende sua consulta pelo WhatsApp"
       aria-hidden={!visivel}
       tabIndex={visivel ? 0 : -1}

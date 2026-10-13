@@ -1,6 +1,7 @@
 import {
   Activity,
   Armchair,
+  Bone,
   ClipboardList,
   Coffee,
   Droplets,
@@ -33,6 +34,7 @@ import {
 const icones: Record<string, LucideIcon> = {
   Activity,
   Armchair,
+  Bone,
   ClipboardList,
   Coffee,
   Droplets,

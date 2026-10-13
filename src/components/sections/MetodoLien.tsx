@@ -1,52 +1,39 @@
-import { BrandImage } from '../ui/BrandImage';
-import { PadraoOndas, Simbolo } from '../ui/BrandGraphics';
-import { Timeline } from '../ui/Timeline';
+import { Reveal } from '../ui/Reveal';
+import { SectionHeading } from '../ui/SectionHeading';
+import { FundoGrade } from '../ui/background-snippets';
 import { metodo } from '../../data/content';
 
 /**
- * Metodo Lien em 4 etapas, como linha do tempo horizontal com scroll: a secao
- * fixa na tela e as etapas passam da direita para a esquerda (Timeline.tsx).
- *
- * O painel de abertura carrega o titulo da secao em branco sobre magenta —
- * combinacao prevista no manual — com a padronagem oficial a 10% e a foto da
- * sala de consulta (cantos de 32px, simbolo da marca atras, deslocado 16px).
- * Proibido "avaliacao" e "orcamento" em qualquer etapa (briefing, 5.5).
+ * Metodo Lien — o "verdadeiro Metodo" em quatro etapas (alinhamento final,
+ * 3.5): aprovado e enxuto. 4 colunas no desktop, 2x2 no tablet, empilhado no
+ * celular; numeros em destaque, sem icones. Sem foto (conflito C4) e sem a
+ * linha do tempo com scroll preso, que pesava a rolagem.
  */
 export function MetodoLien() {
   return (
-    <Timeline
-      id="metodo"
-      etapas={metodo.etapas}
-      painel={
-        <>
-          <PadraoOndas className="pointer-events-none absolute inset-0" cor="#FFFFFF" opacidade={0.1} />
-          <div className="relative flex h-full flex-col">
-            <p
-              className="text-tag sm:text-tag-lg font-semibold uppercase text-white"
-              style={{ letterSpacing: '0.18em' }}
-            >
-              {metodo.tag}
-            </p>
-            <h2 className="mt-5 text-h2 sm:text-h2-lg font-bold text-white">{metodo.h2}</h2>
-            <p className="mt-5 text-sub sm:text-sub-lg text-white/90">{metodo.sub}</p>
-            {/* Foto ocupa o espaco que sobra no painel (a altura do trilho e fixa). */}
-            <div className="relative mt-6 min-h-[140px] flex-1">
-              <Simbolo
-                variante="cyano"
-                className="absolute -bottom-4 -right-4 block h-auto w-28 sm:w-36"
-              />
-              <BrandImage
-                dados={metodo.imagem}
-                width={941}
-                height={1672}
-                proporcao="absolute inset-0 h-full"
-                className="!rounded-[32px] object-[50%_60%]"
-                sizes="(max-width: 768px) 80vw, 420px"
-              />
-            </div>
-          </div>
-        </>
-      }
-    />
+    <section id="metodo" className="relative isolate py-20 sm:py-24 lg:py-28">
+      <FundoGrade />
+      <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
+        <SectionHeading tag={metodo.tag} titulo={metodo.h2} subtitulo={metodo.intro} />
+
+        <ol className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {metodo.etapas.map((etapa, i) => (
+            <Reveal as="li" key={etapa.numero} delay={i * 0.06}>
+              <article className="flex h-full flex-col rounded-3xl border border-brandgray bg-white p-7 shadow-soft">
+                <span className="text-[3rem] font-black leading-none tracking-[-0.02em] text-magenta">
+                  {etapa.numero}
+                </span>
+                <h3 className="mt-6 text-h3 sm:text-h3-lg font-semibold text-ink">{etapa.titulo}</h3>
+                <p className="mt-3 text-body sm:text-body-lg text-ink-muted">{etapa.texto}</p>
+              </article>
+            </Reveal>
+          ))}
+        </ol>
+
+        <Reveal delay={0.1}>
+          <p className="mt-12 text-center text-h3 sm:text-h3-lg font-semibold text-magenta">{metodo.fechamento}</p>
+        </Reveal>
+      </div>
+    </section>
   );
 }

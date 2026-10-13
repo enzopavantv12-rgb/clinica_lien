@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { whatsappUrlPor } from '../../lib/whatsapp';
 import { trackWhatsAppClick } from '../../lib/tracking';
@@ -30,8 +31,8 @@ const tamanhos = {
 
 /**
  * CTA de conversao. Todo clique dispara `click_whatsapp` no dataLayer com a
- * `origem` da secao, e a mesma origem vai no HTML como `data-cta`, para medir
- * qual secao converte.
+ * `origem` da secao e a `pagina`; as duas vao no HTML como `data-cta` e
+ * `data-page`, para medir qual secao e qual pagina convertem.
  *
  * Acessibilidade: o texto visivel continua sendo o nome acessivel, com um
  * sufixo so para leitor de tela. Um `aria-label` diferente do texto visivel
@@ -45,6 +46,7 @@ export function WhatsAppButton({
   tamanho = 'lg',
   className = '',
   comIcone = true,
+  mensagem,
 }: {
   origem: OrigemWhatsApp;
   children: React.ReactNode;
@@ -52,14 +54,18 @@ export function WhatsAppButton({
   tamanho?: keyof typeof tamanhos;
   className?: string;
   comIcone?: boolean;
+  /** Substitui a mensagem da origem (ex.: CTA final de um artigo). */
+  mensagem?: string;
 }) {
+  const pagina = usePathname() ?? '/';
   return (
     <a
-      href={whatsappUrlPor(origem)}
+      href={whatsappUrlPor(origem, mensagem)}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() => trackWhatsAppClick(origem)}
+      onClick={() => trackWhatsAppClick(origem, pagina)}
       data-cta={origem}
+      data-page={pagina}
       className={`inline-flex items-center justify-center gap-2.5 ${variante === 'pilula' || variante === 'capsula' ? 'rounded-full' : 'rounded-2xl'} font-medium transition-all duration-300 ease-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 motion-safe:hover:-translate-y-0.5 ${variantes[variante]} ${tamanhos[tamanho]} ${className}`}
     >
       {comIcone && <WhatsAppIcon size={20} />}

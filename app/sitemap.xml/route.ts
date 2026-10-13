@@ -1,4 +1,5 @@
 import { site } from '@/data/content';
+import { todosArtigos } from '@/lib/artigos';
 
 /**
  * sitemap.xml, gerado no build: dominio de `site.url` e `lastmod` = data do
@@ -7,18 +8,16 @@ import { site } from '@/data/content';
  * URLs sempre com barra final: next.config.ts usa trailingSlash: true, e a
  * URL sem barra responde 301.
  *
- * FASE 2 — acrescentar aqui conforme as paginas forem publicadas:
- *   /implantes-dentarios-belo-horizonte/  0.9
- *   /reabilitacao-oral-belo-horizonte/    0.8
- *   /protese-dentaria-belo-horizonte/     0.8
- *   /periodontia-belo-horizonte/          0.7
- *   /lentes-de-contato-dental-bh/         0.7
- *   /disfuncao-atm-belo-horizonte/        0.7
+ * Paginas: home, /tratamentos/, /conteudos/, os 14 artigos (URLs do PDF, na
+ * raiz) e a privacidade.
  */
 export const dynamic = 'force-static';
 
 const paginas = [
   { caminho: '/', frequencia: 'weekly', prioridade: '1.0' },
+  { caminho: '/tratamentos/', frequencia: 'monthly', prioridade: '0.9' },
+  { caminho: '/conteudos/', frequencia: 'weekly', prioridade: '0.8' },
+  ...todosArtigos().map((a) => ({ caminho: `/${a.slug}/`, frequencia: 'monthly', prioridade: '0.7' })),
   { caminho: '/privacidade/', frequencia: 'yearly', prioridade: '0.3' },
 ];
 

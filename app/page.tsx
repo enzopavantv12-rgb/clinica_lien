@@ -1,16 +1,16 @@
 import { Header } from '@/components/sections/Header';
 import { Hero, MEDIA_EMPILHADO, MEDIA_FUNDO } from '@/components/sections/Hero';
 import { TrustMarquee } from '@/components/sections/TrustMarquee';
-import { Testimonials } from '@/components/sections/Testimonials';
-import { Cardapio } from '@/components/sections/Cardapio';
+import { Resultados } from '@/components/sections/Resultados';
+import { Depoimentos } from '@/components/sections/Depoimentos';
 import { Sobre } from '@/components/sections/Sobre';
 import { MetodoLien } from '@/components/sections/MetodoLien';
+import { Cardapio } from '@/components/sections/Cardapio';
 import { Tratamentos } from '@/components/sections/Tratamentos';
 import { Sedacao } from '@/components/sections/Sedacao';
 import { Experiencia } from '@/components/sections/Experiencia';
-import { Estrutura } from '@/components/sections/Estrutura';
 import { Equipe } from '@/components/sections/Equipe';
-import { Resultados } from '@/components/sections/Resultados';
+import { ConteudosHome } from '@/components/sections/ConteudosHome';
 import { Faq } from '@/components/sections/Faq';
 import { CtaFinal } from '@/components/sections/CtaFinal';
 import { Footer } from '@/components/sections/Footer';
@@ -21,11 +21,11 @@ import { hero } from '@/data/content';
 import { preload } from 'react-dom';
 
 /**
- * Ordem das secoes: prompt "numeros, depoimentos e midia" (set/2026). Prova
- * social logo apos o hero (faixa de numeros + depoimentos), depois o manifesto
- * (Sobre), o Metodo e o cardapio de situacoes levando aos tratamentos. O
- * verificar-build.mjs confere esta ordem — atualize os dois juntos.
- * `Resultados` so renderiza com SHOW_RESULTS ligado.
+ * Ordem final da home (alinhamento final 2026, secao 3): hero, faixa unica,
+ * prova clinica (Resultados) e prova emocional (Depoimentos), historia da
+ * marca, Metodo, navegacao por queixa, 3 tratamentos, Sedacao, Experiencia,
+ * Equipe, 3 conteudos, Duvidas e CTA final. O verificar-build.mjs confere
+ * esta ordem — atualize os dois juntos.
  */
 export default function Home() {
   // Preload da foto da hero (o LCP). Um por composicao, com `media`, para o
@@ -57,16 +57,16 @@ export default function Home() {
       <main>
         <Hero />
         <TrustMarquee />
-        <Testimonials />
+        <Resultados />
+        <Depoimentos />
         <Sobre />
         <MetodoLien />
         <Cardapio />
         <Tratamentos />
         <Sedacao />
         <Experiencia />
-        <Estrutura />
         <Equipe />
-        <Resultados />
+        <ConteudosHome />
         <Faq />
         <CtaFinal />
       </main>

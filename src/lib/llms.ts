@@ -1,7 +1,6 @@
 import {
   cardapio,
   equipe,
-  estrutura,
   experiencia,
   faq,
   metodo,
@@ -9,25 +8,17 @@ import {
   seo,
   site,
   sobre,
-  textoPlano,
   tratamentos,
 } from '../data/content';
+import { todosArtigos } from './artigos';
 
 /**
  * llms.txt e llms-full.txt — contexto para agentes de IA.
  *
- * Gerados do content.ts a cada build (app/llms.txt/route.ts e
- * app/llms-full.txt/route.ts), em vez de escritos a mao: a versao manual
- * anterior tinha divergido do site (horario, Instagram, vocabulario proibido
- * e um depoimento sem origem). Agora os dois arquivos nao tem como divergir.
+ * Gerados do content.ts e de content/artigos/ a cada build
+ * (app/llms.txt/route.ts e app/llms-full.txt/route.ts), em vez de escritos a
+ * mao: assim nao divergem do site.
  */
-
-const todosTratamentos = [
-  tratamentos.destaque,
-  ...tratamentos.medios,
-  ...tratamentos.grade,
-  ...tratamentos.compactos,
-];
 
 const horarios = site.horarios.map((h) => `${h.dias}, das ${h.horas}`).join('; ');
 
@@ -51,6 +42,13 @@ const observacao = [
   'Este conteúdo é informativo e institucional. Não constitui orientação clínica nem diagnóstico. A indicação de qualquer tratamento depende de consulta presencial com cirurgião-dentista habilitado.',
 ].join('\n');
 
+const paginas = () => [
+  '## Páginas',
+  `- [Tratamentos e especialidades](${site.url}/tratamentos/)`,
+  `- [Conteúdos em Saúde Bucal](${site.url}/conteudos/)`,
+  ...todosArtigos().map((a) => `- [${a.title}](${site.url}/${a.slug}/): ${a.metaDescription}`),
+];
+
 export function llmsResumo() {
   return [
     `# ${site.nome}`,
@@ -60,15 +58,15 @@ export function llmsResumo() {
     identificacao(),
     '',
     '## Tratamentos',
-    ...todosTratamentos.map((t) => `- ${t.nome}: ${t.oQueE}`),
+    ...tratamentos.lista.map((t) => `- ${t.nome}: ${t.resumo}`),
     '',
-    '## Diferencial',
-    `${textoPlano(sobre.paragrafos[2])} ${experiencia.sub}`,
+    `## ${metodo.h2}`,
+    metodo.intro,
     '',
     '## Como agendar',
     `Pelo WhatsApp ${site.telefoneExibicao}. ${faq.itens[0].resposta}`,
     '',
-    '## Detalhamento',
+    ...paginas(),
     `- [Conteúdo completo](${site.url}/llms-full.txt)`,
     '',
     observacao,
@@ -77,11 +75,13 @@ export function llmsResumo() {
 }
 
 export function llmsCompleto() {
-  const secaoTratamentos = todosTratamentos.flatMap((t) => [
-    `### ${t.nome}${'apelido' in t && t.apelido ? ` (${t.apelido})` : ''}`,
+  const secaoTratamentos = tratamentos.lista.flatMap((t) => [
+    `### ${t.nome}`,
     `${tratamentos.rotulos.oQueE}: ${t.oQueE}`,
-    ...('beneficio' in t && t.beneficio ? [`${tratamentos.rotulos.beneficio}: ${t.beneficio}`] : []),
-    ...('indicado' in t && t.indicado ? [`${tratamentos.rotulos.indicado}: ${t.indicado}`] : []),
+    `${tratamentos.rotulos.beneficio}: ${t.beneficio}`,
+    `${tratamentos.rotulos.indicado}: ${t.indicado}`,
+    `${tratamentos.rotulos.servicos}: ${t.servicos.join('; ')}.`,
+    t.nota,
     '',
   ]);
 
@@ -93,36 +93,41 @@ export function llmsCompleto() {
     identificacao(),
     '',
     `## ${sobre.h2}`,
-    ...sobre.paragrafos.map(textoPlano),
-    `${sobre.missao.titulo}: ${sobre.missao.texto}`,
-    `${sobre.filosofia.titulo}: ${sobre.filosofia.texto}`,
+    ...sobre.paragrafos,
+    `"${sobre.quote}"`,
+    '',
+    `## ${metodo.tag}: ${metodo.h2}`,
+    metodo.intro,
+    ...metodo.etapas.flatMap((e) => [`### ${e.numero}. ${e.titulo}`, e.texto, '']),
+    metodo.fechamento,
     '',
     `## ${cardapio.h2}`,
     ...cardapio.itens.map((i) => `- "${i.texto}" → ${i.leva}`),
     '',
-    `## ${metodo.tag}: ${metodo.h2}`,
-    ...metodo.etapas.flatMap((e) => [`### ${e.numero}. ${e.titulo}`, e.texto, '']),
-    `## ${tratamentos.tag}`,
+    `## ${tratamentos.pagina.h1}`,
     '',
     ...secaoTratamentos,
     `## ${sedacao.h2}`,
+    ...sedacao.modalidades.map((m) => `- ${m}`),
     sedacao.texto,
-    ...sedacao.itens.map((i) => `- ${i}`),
     '',
     `## ${experiencia.tag}: ${experiencia.h2}`,
-    ...experiencia.diferenciais.map((d) => `- ${d.titulo}: ${d.texto}`),
-    '',
-    `## ${estrutura.h2}`,
-    ...estrutura.itens.map((i) => `- ${i.titulo}: ${i.texto}`),
+    experiencia.texto,
+    experiencia.diferenciais,
     '',
     `## ${equipe.h2}`,
+    equipe.sub,
     ...equipe.membros.flatMap((m) => [
-      `### ${m.nome}${'cargo' in m && m.cargo ? ` — ${m.cargo}` : ''}`,
-      ...([m.especialidade, m.cro, m.bio] as (string | null)[]).filter((x): x is string => Boolean(x)),
+      `### ${m.nome}`,
+      m.especialidade,
+      m.frase,
+      ...(m.cro ? [m.cro] : []),
       '',
     ]),
     `## ${faq.h2}`,
     ...faq.itens.flatMap((i) => [`### ${i.pergunta}`, i.resposta, '']),
+    ...paginas(),
+    '',
     '## Como agendar',
     `Pelo WhatsApp ${site.telefoneExibicao}, ou pelo e-mail ${site.email}.`,
     '',

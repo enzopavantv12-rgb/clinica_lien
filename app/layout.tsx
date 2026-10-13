@@ -48,6 +48,8 @@ export const metadata: Metadata = {
     description: seo.description,
     images: [seo.ogImage],
   },
+  // Search Console: a meta tag so sai quando o codigo existir em content.ts.
+  ...(seo.googleVerification ? { verification: { google: seo.googleVerification } } : {}),
 };
 
 export const viewport = {

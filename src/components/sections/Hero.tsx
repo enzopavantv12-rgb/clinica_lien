@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react';
 import { Star } from 'lucide-react';
 import { Simbolo } from '../ui/BrandGraphics';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
-import { depoimentos, hero } from '../../data/content';
+import { google, hero } from '../../data/content';
 
 const { imagem } = hero;
 const srcset = (ext: string) => imagem.larguras.map((l) => `${imagem.base}-${l}.${ext} ${l}w`).join(', ');
@@ -60,7 +60,7 @@ function HeroFoto() {
  * Um unico CTA, como pede o briefing: a conversao e uma so (WhatsApp).
  */
 export function Hero() {
-  const { nota, total, url } = depoimentos.google;
+  const { nota, total, url } = google;
   const provaSocial = (
     <>
       <Star size={15} fill="currentColor" stroke="currentColor" aria-hidden="true" className="text-magenta" />

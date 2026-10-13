@@ -1,12 +1,16 @@
 'use client';
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Logo } from '../ui/Logo';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
 import { header, navegacao, site } from '../../data/content';
 
-/** '/#sobre' -> 'sobre' */
-const idDaSecao = (href: string) => href.split('#')[1] ?? '';
+/**
+ * Chave de cada item do menu: o id da secao para ancoras da home
+ * ('/#metodo' -> 'metodo') e a propria rota para paginas ('/tratamentos/').
+ */
+const chave = (href: string) => (href.includes('#') ? href.split('#')[1] : href);
 
 const focoVisivel =
   'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-magenta';
@@ -22,10 +26,16 @@ const focoVisivel =
  *   cresce a partir dela. Foco no primeiro link ao abrir, Esc e clique fora
  *   fecham, scroll do body travado enquanto aberto.
  */
-export function Header() {
+export function Header({ paginaAtiva }: { paginaAtiva?: string } = {}) {
+  const pathname = usePathname() ?? '/';
+  const naHome = pathname === '/';
+  // Fora da home, o item ativo e a pagina (ou a secao-mae, ex.: um artigo
+  // marca "Conteudos"). Na home, a secao que cruza o meio da tela.
+  const ativoDaPagina =
+    paginaAtiva ?? navegacao.find((i) => !i.href.includes('#') && pathname.startsWith(i.href))?.href ?? null;
   const [aberto, setAberto] = useState(false);
   const [rolou, setRolou] = useState(false);
-  const [ativo, setAtivo] = useState<string | null>(null);
+  const [ativo, setAtivo] = useState<string | null>(naHome ? null : ativoDaPagina);
   const [indicador, setIndicador] = useState<{ x: number; largura: number } | null>(null);
 
   const listaRef = useRef<HTMLUListElement>(null);
@@ -53,29 +63,28 @@ export function Header() {
 
   // Secao ativa: a que cruza a faixa central da tela.
   useEffect(() => {
-    const secoes = navegacao
-      .map((item) => document.getElementById(idDaSecao(item.href)))
-      .filter((el): el is HTMLElement => el !== null);
+    if (!naHome) return;
+    // Observa TODAS as secoes da home: numa secao fora do menu (ex.: Sedacao)
+    // nenhum item fica ativo, em vez de o ultimo continuar aceso.
+    const noMenu = new Set(navegacao.filter((i) => i.href.includes('#')).map((i) => chave(i.href)));
+    // Secoes-vitrine das paginas internas acendem o item da pagina.
+    const vitrine: Record<string, string> = { tratamentos: '/tratamentos/', conteudos: '/conteudos/' };
+    const secoes = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
     if (secoes.length === 0) return;
 
     const observador = new IntersectionObserver(
       (entradas) => {
-        for (const e of entradas) if (e.isIntersecting) setAtivo(e.target.id);
+        for (const e of entradas) {
+          if (!e.isIntersecting) continue;
+          const id = e.target.id;
+          setAtivo(noMenu.has(id) ? id : (vitrine[id] ?? null));
+        }
       },
       { rootMargin: '-45% 0px -50% 0px' },
     );
     secoes.forEach((s) => observador.observe(s));
-
-    // Acima da primeira secao (na hero), nenhum link fica ativo.
-    const noTopo = () => {
-      if (window.scrollY < secoes[0].offsetTop - window.innerHeight / 2) setAtivo(null);
-    };
-    window.addEventListener('scroll', noTopo, { passive: true });
-    return () => {
-      observador.disconnect();
-      window.removeEventListener('scroll', noTopo);
-    };
-  }, []);
+    return () => observador.disconnect();
+  }, [naHome]);
 
   // Posiciona a "gota" sob o link ativo; remede quando a capsula muda de
   // largura (ao compactar) ou a janela e redimensionada.
@@ -134,7 +143,7 @@ export function Header() {
       <nav
         ref={navRef}
         aria-label="Menu principal"
-        className={`glass-nav pointer-events-auto flex items-center gap-6 lg:gap-4 xl:gap-6 pl-3 pr-2 lg:pl-5 lg:pr-2.5 ${rolou ? 'is-scrolled' : ''}`}
+        className={`glass-nav pointer-events-auto flex items-center gap-6 lg:gap-2 xl:gap-6 pl-3 pr-2 lg:pl-5 lg:pr-2.5 ${rolou ? 'is-scrolled' : ''}`}
       >
         <a
           href="/#inicio"
@@ -159,7 +168,7 @@ export function Header() {
             }}
           />
           {navegacao.map((item) => {
-            const id = idDaSecao(item.href);
+            const id = chave(item.href);
             const atual = ativo === id;
             return (
               // Sem `relative` no <li>: o offsetLeft do link precisa ser
@@ -168,8 +177,8 @@ export function Header() {
                 <a
                   href={item.href}
                   data-secao={id}
-                  aria-current={atual ? 'true' : undefined}
-                  className={`inline-flex h-11 items-center whitespace-nowrap rounded-full px-3.5 text-[0.9375rem] font-medium transition-colors hover:text-magenta lg:px-3 xl:px-4 ${
+                  aria-current={atual ? (item.href.includes('#') ? 'true' : 'page') : undefined}
+                  className={`inline-flex h-11 items-center whitespace-nowrap rounded-full px-3.5 text-[0.9375rem] font-medium transition-colors hover:text-magenta lg:px-2 lg:text-[0.875rem] xl:px-3.5 xl:text-[0.9375rem] ${
                     atual ? 'text-ink' : 'text-ink/85'
                   } ${focoVisivel}`}
                 >
@@ -184,7 +193,9 @@ export function Header() {
           origem="menu"
           variante="capsula"
           tamanho="capsulaMenu"
-          className="ml-auto hidden shrink-0 whitespace-nowrap shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] lg:ml-0 lg:inline-flex"
+          // 7 itens no menu (alinhamento final): entre 1024 e 1279px o icone
+          // sai e o botao encolhe, para a capsula nao estourar.
+          className="ml-auto hidden shrink-0 whitespace-nowrap shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] lg:ml-0 lg:inline-flex lg:px-4 lg:[&>svg]:hidden xl:px-[22px] xl:[&>svg]:block"
         >
           {header.cta}
         </WhatsAppButton>
@@ -226,7 +237,7 @@ export function Header() {
                 <a
                   href={item.href}
                   onClick={() => setAberto(false)}
-                  aria-current={ativo === idDaSecao(item.href) ? 'true' : undefined}
+                  aria-current={ativo === chave(item.href) ? (item.href.includes('#') ? 'true' : 'page') : undefined}
                   className={`flex h-14 items-center rounded-2xl px-4 text-xl font-medium text-ink transition-colors hover:bg-white/50 hover:text-magenta ${focoVisivel}`}
                 >
                   {item.label}

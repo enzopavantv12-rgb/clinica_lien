@@ -1,28 +1,20 @@
 /**
- * FONTE UNICA de todo o texto do site.
+ * FONTE UNICA de todo o texto do site (os 14 artigos ficam em content/artigos/).
  *
- * Copy reescrita a partir do briefing oficial preenchido pela clinica
- * (Wolfness Company, set/2026). Marcacoes usadas neste arquivo:
+ * Alinhamento final (2026): a copy aprovada pela clinica e LITERAL — nao
+ * reescrever, resumir nem "melhorar". Fonte: prompt
+ * "alinhamento-final-lien-2026" (PDF "Lien — Alinhamento Final do Site").
  *
- *   [PENDENTE: ...]  informacao que o briefing nao traz. Nada foi inventado:
- *                    o campo fica vazio (null) ou o texto contorna a lacuna.
- *   [SUGESTAO: ...]  o PDF do briefing cortou a resposta; o texto publicado e
- *                    uma proposta de complemento. Validar com a Dra. Natalia.
+ *   [PENDENTE: ...]  material que ainda nao chegou. Nada foi inventado: o
+ *                    campo fica vazio (null) ou aparece um placeholder neutro.
  *
- * A lista completa das duas esta em RELATORIO-ALTERACOES.md.
+ * A lista completa esta em RELATORIO-ALTERACOES.md.
  *
- * Vocabulario do briefing (secao 2): nunca "avaliacao" no sentido de consulta,
- * nem "orcamento", preco, promocao, desconto, "garantido", "indolor" ou
- * superlativo vazio. O verificador (npm run verificar) reprova o build se algum
- * aparecer no HTML publicado. "Avaliacoes" do Google e o unico uso permitido.
+ * Vocabulario: nunca "avaliacao" no sentido de consulta, nem "orcamento",
+ * preco, promocao, desconto, "garantido", "indolor" ou superlativo vazio. O
+ * verificador (npm run verificar) reprova o build se algum aparecer.
+ * "Avaliacoes" do Google e o uso tecnico nos artigos aprovados sao as excecoes.
  */
-
-/**
- * Mostra a secao de antes e depois. So ligar quando os arquivos existirem E o
- * enquadramento na Resolucao CFO 196/2019 estiver confirmado.
- * [PENDENTE: receber os casos autorizados]
- */
-export const SHOW_RESULTS: boolean = false;
 
 export const site = {
   nome: 'Lien Reabilitação Oral',
@@ -75,6 +67,8 @@ export const seo = {
   ogImage: `${site.url}/og-image.jpg`,
   ogImageAlt: 'Lien Reabilitação Oral — implantes e reabilitação oral no Cruzeiro, Belo Horizonte',
   themeColor: '#9C1781',
+  // [PENDENTE: codigo de verificacao do Google Search Console]
+  googleVerification: null as string | null,
 } as const;
 
 // Abertura comum a todas as mensagens.
@@ -82,72 +76,55 @@ const OLA = 'Olá! Conheci a Lien pelo site e';
 
 /**
  * Mensagens de WhatsApp por origem. A chave viaja no dataLayer como `origem` e
- * no HTML como `data-cta`, para medir qual secao converte.
- * [SUGESTAO: as mensagens especificas completam os trechos do briefing, que
- * so trazia o final de cada uma]
+ * no HTML como `data-cta` (com a rota em `data-page`), para medir qual secao e
+ * qual pagina convertem. Todo botao principal do site diz "Agende sua
+ * consulta" (alinhamento final, 2026); a mensagem pre-preenchida acompanha.
+ * Origens `tratamento-<slug>` e `artigo-<slug>` sao montadas por
+ * `mensagemWhatsApp` (abaixo).
  */
 export const whatsappMensagens = {
-  // [SUGESTAO: o original foi cortado depois de "Podem me"]
   hero: `${OLA} gostaria de agendar uma consulta.`,
-  menu: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
-  final: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
-  flutuante: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
-
-  'cardapio-comer': `${OLA} gostaria de conversar sobre implantes e prótese.`,
-  'cardapio-dentes': `${OLA} gostaria de conversar sobre implantes e prótese.`,
-  'cardapio-protese': `${OLA} minha prótese está desconfortável. Podem me ajudar?`,
-  'cardapio-sorriso': `${OLA} gostaria de melhorar meu sorriso.`,
-  'cardapio-completo': `${OLA} gostaria de um planejamento completo.`,
-  'cardapio-mandibula': `${OLA} sinto dor na mandíbula. Podem me ajudar?`,
-  'cardapio-gengiva': `${OLA} minha gengiva sangra. Podem me ajudar?`,
-  'cardapio-medo': `${OLA} tenho medo de dentista. Gostaria de entender como funciona o atendimento.`,
-
-  'tratamento-implante': `${OLA} gostaria de conversar sobre implantodontia digital.`,
-  'tratamento-reabilitacao': `${OLA} gostaria de conversar sobre reabilitação oral.`,
-  'tratamento-protese': `${OLA} gostaria de conversar sobre prótese dentária.`,
-  'tratamento-periodontia': `${OLA} gostaria de conversar sobre periodontia.`,
-  'tratamento-harmonizacao': `${OLA} gostaria de conversar sobre harmonização orofacial.`,
-  'tratamento-lentes': `${OLA} gostaria de conversar sobre lentes de contato dental e facetas.`,
-  'tratamento-dtm': `${OLA} gostaria de conversar sobre DTM e dor orofacial.`,
-  'tratamento-endodontia': `${OLA} gostaria de conversar sobre tratamento de canal.`,
-  'tratamento-ortodontia': `${OLA} gostaria de conversar sobre ortodontia.`,
-  'tratamento-clareamento': `${OLA} gostaria de conversar sobre clareamento dental.`,
-
-  sedacao: `${OLA} gostaria de entender como funciona a sedação para implantes e cirurgias.`,
-  'sedacao-agendar': `${OLA} gostaria de agendar uma consulta para conversar sobre a sedação.`,
-
-  sobre: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
+  menu: `${OLA} gostaria de agendar uma consulta.`,
+  final: `${OLA} gostaria de agendar uma consulta.`,
+  flutuante: `${OLA} gostaria de agendar uma consulta.`,
   rodape: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
-  depoimentos: `${OLA} gostaria de agendar uma consulta.`,
-  duvidas: `${OLA} tenho uma dúvida sobre o atendimento. Podem me ajudar?`,
-  experiencia: `${OLA} gostaria de agendar uma consulta.`,
+  comecar: `${OLA} não sei por onde começar. Gostaria de agendar uma consulta.`,
+  sedacao: `${OLA} gostaria de agendar uma consulta para conversar sobre a sedação.`,
+  duvidas: `${OLA} gostaria de agendar uma consulta.`,
 } as const;
 
-export type OrigemWhatsApp = keyof typeof whatsappMensagens;
+export type OrigemWhatsApp =
+  | keyof typeof whatsappMensagens
+  | `tratamento-${string}`
+  | `artigo-${string}`;
 
-/** Ancoras do menu. Com `/` na frente: funcionam tambem a partir de /privacidade/. */
+/** Ancoras e paginas do menu. Ancoras com `/` na frente: funcionam de qualquer pagina. */
 export const navegacao = [
-  { label: 'Sobre', href: '/#sobre' },
+  { label: 'Início', href: '/#inicio' },
   { label: 'Método Lien', href: '/#metodo' },
-  { label: 'Tratamentos', href: '/#tratamentos' },
+  { label: 'Tratamentos', href: '/tratamentos/' },
   { label: 'Experiência', href: '/#experiencia' },
   { label: 'Equipe', href: '/#equipe' },
+  { label: 'Conteúdos', href: '/conteudos/' },
   { label: 'Dúvidas', href: '/#duvidas' },
 ] as const;
 
+/** Texto do CTA principal em todo o site (alinhamento final, secao 1). */
+export const CTA_PRINCIPAL = 'Agende sua consulta';
+
 export const header = {
-  cta: 'Agende sua consulta',
+  cta: CTA_PRINCIPAL,
 } as const;
 
 export const hero = {
   tag: 'Reabilitação oral · Belo Horizonte',
   // Copy sugerida pela Dra. Natalia Simoes (set/2026). O trecho final do H1
-  // sai em magenta.
+  // sai em magenta. Hero aprovada no alinhamento final: nao reabrir.
   h1: 'Reabilitação oral com excelência clínica, tecnologia e cuidado em cada detalhe.',
   h1Partes: ['Reabilitação oral com excelência clínica, tecnologia e ', 'cuidado em cada detalhe.'],
   sub: 'Planejamento personalizado e uma experiência pensada para quem valoriza segurança, conforto e previsibilidade em cada etapa.',
   apoio: 'Se você tem medo de dentista, talvez ainda não tenha conhecido a Lien.',
-  cta: 'Agende sua consulta',
+  cta: CTA_PRINCIPAL,
   microcopy: 'Atendimento particular · Cruzeiro, BH',
   /**
    * Foto da hero. Variantes geradas por `npm run hero` (scripts/optimize-hero.mjs)
@@ -163,768 +140,716 @@ export const hero = {
   },
 } as const;
 
-/** Barra de confianca: quatro itens reais, sem numero inflado. */
-export const confianca = {
-  itens: [
-    // `numero` sai no tamanho de impacto (44 -> 64px, peso 900); `complemento`,
-    // menor, ao lado. Juntos no tamanho grande, "6 especialistas" nao cabe na
-    // coluna.
-    // [PENDENTE: atualizar o numero de avaliacoes antes de publicar]
-    { numero: '5,0', complemento: '★', texto: 'Nota no Google · 57 avaliações' },
-    { numero: '6', complemento: 'especialistas', texto: 'Cada tratamento conduzido pelo profissional da área' },
-    { numero: null, complemento: 'Planejamento digital', texto: 'Escâner intraoral e visualização em 3D' },
-    { numero: null, complemento: 'Cruzeiro, BH', texto: 'Edifício Asteca, Av. do Contorno' },
-  ],
-  /**
-   * Opcionais do briefing, desligados. NUNCA publicar "3 reabilitacoes
-   * realizadas": o numero baixo enfraquece a autoridade.
-   * [PENDENTE: decidir se "+200 pacientes" entra]
-   */
-  opcionais: [
-    { numero: '+200', complemento: null, texto: 'Pacientes atendidos' },
-    { numero: '5', complemento: 'anos', texto: 'De atuação da Dra. Natália na especialidade' },
-  ],
-  mostrarOpcionais: false,
+/** Prova social do Google (hero e faixa). */
+export const google = {
+  nota: '5,0',
+  // [PENDENTE: atualizar o numero de avaliacoes antes de publicar e o link do
+  // perfil no Google Empresa]
+  total: 57,
+  url: null as string | null,
 } as const;
 
-/** "Cardapio de necessidades": o paciente escolhe pela dor, nas palavras dele. */
-export const cardapio = {
-  // `icone`: arquivo em /public/icones/<nome>.svg (originais em assets/icones/).
-  tag: 'Para você',
-  h2: 'Por onde você quer começar?',
-  sub: 'Conte o que está sentindo. A gente mostra o caminho — e o planejamento começa na consulta.',
-  cta: 'Conversar pelo WhatsApp',
-  verTratamento: 'Conhecer o tratamento',
-  itens: [
-    { texto: 'Quero comer com segurança', leva: 'Implantodontia digital e prótese', ancora: '#tratamento-implante', origem: 'cardapio-comer', icone: 'mao-dente' },
-    { texto: 'Perdi um ou mais dentes', leva: 'Implantodontia digital', ancora: '#tratamento-implante', origem: 'cardapio-dentes', icone: 'implante' },
-    { texto: 'Minha prótese incomoda', leva: 'Prótese e reabilitação oral', ancora: '#tratamento-protese', origem: 'cardapio-protese', icone: 'instrumentos' },
-    { texto: 'Quero melhorar meu sorriso', leva: 'Lentes de contato dental, facetas e clareamento', ancora: '#tratamento-lentes', origem: 'cardapio-sorriso', icone: 'dente-brilho' },
-    { texto: 'Tenho vários problemas ao mesmo tempo', leva: 'Reabilitação oral completa', ancora: '#tratamento-reabilitacao', origem: 'cardapio-completo', icone: 'caries-dentarias' },
-    { texto: 'Sinto dor ou estalos na mandíbula', leva: 'DTM e dor orofacial', ancora: '#tratamento-dtm', origem: 'cardapio-mandibula', icone: 'dente-localizacao' },
-    { texto: 'Minha gengiva sangra', leva: 'Periodontia', ancora: '#tratamento-periodontia', origem: 'cardapio-gengiva', icone: 'cuidado-dental' },
-    { texto: 'Tenho medo de dentista', leva: 'Experiência Lien e sedação', ancora: '#sedacao', origem: 'cardapio-medo', icone: 'cadeira-de-dentista' },
+/**
+ * Faixa unica de prova rapida, logo abaixo do hero (alinhamento final, 3.2).
+ * Itens reais ja publicados antes; nenhum numero novo.
+ */
+export const faixa = {
+  rotulo: 'A Lien em números',
+  texto:
+    '5,0 no Google  ✦  57 avaliações  ✦  6 especialistas  ✦  Planejamento digital  ✦  Escâner intraoral  ✦  Atendimento particular  ✦  Cruzeiro · Belo Horizonte  ✦',
+  leitura: [
+    'Nota 5,0 no Google, com 57 avaliações',
+    '6 especialistas',
+    'Planejamento digital com escâner intraoral',
+    'Atendimento particular no Cruzeiro, Belo Horizonte',
   ],
-} as const satisfies {
-  itens: readonly { origem: OrigemWhatsApp; ancora: string; texto: string; leva: string; icone: string }[];
-  [k: string]: unknown;
-};
+} as const;
 
 /**
- * Trecho de texto com estilo: `italico` para termo estrangeiro, `destaque`
- * para os pontos de ancoragem (semibold em magenta). O llms.txt usa o texto
- * plano via `textoPlano`.
+ * Antes e depois — Resolucao CFO 196/2019. Pares de assets/Depoimentos/,
+ * indicados pela clinica, com autorizacao escrita dos pacientes e fotos sem
+ * edicao do resultado. O alinhamento final pede 4 a 6 casos com o mesmo
+ * enquadramento: entraram os 6 de recorte mais consistente (rosto sorrindo,
+ * close do sorriso e intraorais). Os pares 6 e 9 (harmonizacao) e 7 (antes com
+ * afastador, depois sem) ficaram de fora. [PENDENTE: validar a selecao e a
+ * revisao etica/CRO antes de publicar]
  */
-export type Trecho = string | { texto: string; estilo: 'italico' | 'destaque' };
+export const resultados = {
+  tag: 'Resultados',
+  h2: 'Resultados que contam histórias.',
+  apoio: 'Cada tratamento parte de uma necessidade diferente e de um planejamento individual.',
+  autorizacao: 'Imagem publicada com autorização do paciente.',
+  variacao: 'Os resultados variam de pessoa para pessoa e dependem de diagnóstico individual.',
+  rotulos: ['Antes', 'Depois'] as [string, string],
+  rotuloComparar: 'Comparar antes e depois',
+  instrucao: 'Arraste para comparar',
+  casos: [
+    {
+      id: '2',
+      antes: { src: '/img/antes-depois-2-antes.webp', alt: 'Paciente sorrindo antes do tratamento na Lien' },
+      depois: { src: '/img/antes-depois-2-depois.webp', alt: 'O mesmo paciente sorrindo depois do tratamento na Lien' },
+    },
+    {
+      id: '1',
+      antes: { src: '/img/antes-depois-1-antes.webp', alt: 'Paciente sorrindo antes do tratamento na Lien' },
+      depois: { src: '/img/antes-depois-1-depois.webp', alt: 'A mesma paciente sorrindo depois do tratamento na Lien' },
+    },
+    {
+      id: '8',
+      antes: { src: '/img/antes-depois-8-antes.webp', alt: 'Paciente sorrindo, com falhas nos dentes, antes do tratamento' },
+      depois: { src: '/img/antes-depois-8-depois.webp', alt: 'O mesmo paciente sorrindo depois do tratamento na Lien' },
+    },
+    {
+      id: '3',
+      antes: { src: '/img/antes-depois-3-antes.webp', alt: 'Sorriso com dentes ausentes e desgastados antes da reabilitação oral' },
+      depois: { src: '/img/antes-depois-3-depois.webp', alt: 'O mesmo sorriso depois da reabilitação oral na Lien' },
+    },
+    {
+      id: '5',
+      antes: { src: '/img/antes-depois-5-antes.webp', alt: 'Vista frontal dos dentes com espaços antes do tratamento' },
+      depois: { src: '/img/antes-depois-5-depois.webp', alt: 'A mesma vista frontal depois do tratamento na Lien' },
+    },
+    {
+      id: '4',
+      antes: { src: '/img/antes-depois-4-antes.webp', alt: 'Vista lateral dos dentes desalinhados antes do tratamento' },
+      depois: { src: '/img/antes-depois-4-depois.webp', alt: 'A mesma vista lateral, com os dentes alinhados depois do tratamento' },
+    },
+  ],
+} as const;
 
-export const textoPlano = (trechos: readonly Trecho[]) =>
-  trechos.map((t) => (typeof t === 'string' ? t : t.texto)).join('');
+/**
+ * "Quem vive a Lien, conta." — videos curtos de pacientes, separados dos casos
+ * clinicos (prova emocional x prova clinica). Sem autoplay com som.
+ * [PENDENTE: 2 a 3 videos de pacientes + autorizacao assinada. Cada video:
+ * MP4 (H.264) e WebM, poster WebP no mesmo recorte vertical 9:16, legenda
+ * .vtt se houver fala, e a legenda curta "Nome autorizado · contexto".]
+ * Enquanto `videos` estiver vazio, o carrossel mostra `vagas` cartoes neutros.
+ */
+export const depoimentos = {
+  tag: 'Depoimentos',
+  h2: 'Quem vive a Lien, conta.',
+  videos: [] as readonly {
+    legenda: string;
+    poster: string;
+    mp4: string;
+    webm?: string;
+    vtt?: string;
+  }[],
+  vagas: 3,
+  pendente: '[Vídeo pendente]',
+  anterior: 'Vídeo anterior',
+  proximo: 'Próximo vídeo',
+  regiao: 'Vídeos de pacientes',
+} as const;
 
+/** Sobre — texto final do alinhamento (3.4). Literal. */
 export const sobre = {
   tag: 'Clínica Lien Reabilitação Oral',
   h2: 'Lien quer dizer vínculo.',
-  // Mesmo titulo em duas linhas: quebra forcada no desktop, natural no mobile.
-  // O ponto final entra a parte, em teal (assinatura visual).
+  // "vinculo" em destaque, como no esqueleto. O ponto final sai em teal.
   tituloLinhas: ['Lien quer dizer', 'vínculo'],
   paragrafos: [
-    [
-      'Em francês, ',
-      { texto: 'lien', estilo: 'italico' },
-      ' significa laço, ligação, confiança. Foi esse o nome que escolhemos porque é isso que acreditamos que a odontologia deve ser: ',
-      { texto: 'uma relação.', estilo: 'destaque' },
-    ],
-    // [SUGESTAO: o original foi cortado em "em ter um espaço que eu possa…";
-    // completar com a Dra. Natalia]
-    [
-      'A Lien nasceu em 2024 do sonho da Dra. Natália Simões de ter um espaço onde cada paciente fosse atendido com tempo, escuta e cuidado de verdade.',
-    ],
-    [
-      'Aqui, consulta não tem pressa. Cada tratamento é planejado para a sua necessidade real: ',
-      { texto: 'nem mais, nem menos.', estilo: 'destaque' },
-    ],
-  ] as Trecho[][],
-  cta: 'Agende sua consulta',
-  // Missao, filosofia e fechamento sairam da secao no layout editorial
-  // (set/2026). Continuam aqui porque o llms.txt ainda os publica.
-  missao: {
-    titulo: 'Missão',
-    // [SUGESTAO: complemento "tecnica, tecnologia e acolhimento em cada etapa"]
-    texto: 'Oferecer uma odontologia de excelência, humanizada e individualizada, unindo técnica, tecnologia e acolhimento em cada etapa do tratamento.',
-  },
-  filosofia: {
-    titulo: 'Filosofia',
-    // [SUGESTAO: complemento "afeto"]
-    texto: 'Cuidar de cada paciente de forma individualizada, com escuta, planejamento, excelência técnica e afeto.',
-  },
-  fechamento:
-    'Na Lien, você não recebe apenas um tratamento. Você vive uma experiência de cuidado — e ganha uma equipe que caminha com você.',
-  // Foto de fundo: assets/fotos/consultorio/consultorio lien 3.png (recepcao),
-  // copiada para assets/fotos-originais/sobre-recepcao.png -> `npm run images`.
+    'Lien, em francês, significa laço, ligação, vínculo. Foi esse o nome escolhido porque acreditamos que a odontologia não deve ser apenas uma sequência de procedimentos: deve ser uma relação construída com confiança, escuta e cuidado.',
+    'Depois de cerca de oito anos atendendo em diferentes clínicas, a Dra. Natália Simões percebeu que algumas queixas se repetiam: medo de dentista, atendimentos apressados, pouca clareza sobre o tratamento e a sensação de não ser realmente ouvido.',
+    'Em 2024, ela decidiu criar uma clínica com identidade própria e uma forma diferente de cuidar: tempo para escutar, profundidade para diagnosticar, liberdade para planejar cada caso e atenção à experiência do paciente em todas as etapas.',
+    'Assim nasceu a Lien - unindo excelência clínica, tecnologia e um cuidado que começa antes do procedimento. Aqui, cada tratamento é pensado para a necessidade real de quem confia a própria saúde aos nossos cuidados.',
+  ],
+  quote: 'Mais do que tratar dentes, queremos construir relações de confiança que façam sentido ao longo do tempo.',
+  // [PENDENTE: fotografia real grande da clinica. Ate la, a recepcao
+  // (assets/fotos/consultorio/consultorio lien 3.png -> sobre-recepcao).]
   imagem: {
     src: '/img/sobre-recepcao.webp',
-    alt: 'Consultório da Lien Reabilitação Oral: recepção com poltronas e o logo da clínica',
+    alt: 'Recepção da Lien Reabilitação Oral, com poltronas, plantas e o logo da clínica na parede',
   },
-  // [PENDENTE: video do consultorio, 6 a 12 s em loop, sem audio, 720-1080px
-  // de largura, MP4 (H.264) e WebM (VP9) ate 3 MB, mais o poster (1o quadro)
-  // em WebP, em public/videos/. Enquanto for null, a moldura mostra o
-  // placeholder cream com o arco teal.]
-  // Video institucional (assets/vídeos/vídeo lien institucional .mp4, 7,4 s):
-  // recortado em 4:5 (a proporcao da moldura), 720x900, sem audio.
-  video: {
-    webm: '/videos/sobre-lien.webm',
-    mp4: '/videos/sobre-lien.mp4',
-    poster: '/videos/sobre-lien-poster.webp',
-  } as null | { webm: string; mp4: string; poster: string },
-  rotuloPausar: 'Pausar vídeo',
-  rotuloReproduzir: 'Reproduzir vídeo',
-};
+} as const;
 
+/** Metodo Lien — o "verdadeiro Metodo" em quatro etapas (3.5). Literal. */
 export const metodo = {
   tag: 'Método Lien',
-  // Foto do painel de abertura: assets/fotos/consultorio/consultorio lien 2.png,
-  // copiada para assets/fotos-originais/metodo-consulta.png -> `npm run images`.
-  imagem: {
-    src: '/img/metodo-consulta.webp',
-    alt: 'Sala de consulta da Lien Reabilitação Oral, com mesa e cadeiras brancas, onde começa o planejamento de cada tratamento',
-  },
-  h2: 'Um caminho claro, do primeiro encontro ao cuidado contínuo.',
-  sub: 'Você sabe o que vai acontecer antes de acontecer.',
+  h2: 'Cuidado que começa antes do tratamento.',
+  intro:
+    'Na Lien, cada caso é conduzido com escuta, diagnóstico, planejamento e acompanhamento. O tratamento não começa pelo procedimento - começa por entender você.',
   etapas: [
-    {
-      numero: '01',
-      titulo: 'Consulta e diagnóstico profundo',
-      // [SUGESTAO: o briefing contrasta com "avaliacao rapida" e "orcamento",
-      // mas os dois termos sao proibidos na copy publica (secao 2 e checklist
-      // da secao 9). Reescrito mantendo o contraste sem as palavras.]
-      // [PENDENTE: duracao media da consulta]
-      texto:
-        'Começamos com uma consulta completa — muito diferente de um atendimento corrido. É um momento de escuta: conversamos sobre sua história, seus incômodos e seus objetivos, e investigamos sua saúde bucal com calma.',
-    },
+    { numero: '01', titulo: 'Escuta', texto: 'Entendemos sua história, necessidades, receios e objetivos.' },
     {
       numero: '02',
-      titulo: 'Planejamento digital',
-      texto:
-        'Com o escâner intraoral, você vê a sua boca em 3D: dentes mal posicionados, desgastes e o que precisa de atenção. Assim, você entende o plano e o aprova antes de qualquer procedimento começar.',
+      titulo: 'Diagnóstico',
+      texto: 'Exame clínico e recursos digitais quando indicados para compreender o caso por completo.',
     },
     {
       numero: '03',
-      titulo: 'Execução especializada',
-      // [SUGESTAO: o original foi cortado em "todas as consultas iniciais sao…"; confirmar]
-      texto:
-        'Cada etapa é conduzida pelo especialista da área: implante com quem é de implante, canal com quem é de canal, dor na mandíbula com quem é de DTM. A consulta inicial é conduzida pela Dra. Natália, que coordena todo o seu caso.',
+      titulo: 'Planejamento',
+      texto: 'Definimos caminhos, etapas e prioridades com clareza e previsibilidade.',
     },
     {
       numero: '04',
-      titulo: 'Acompanhamento contínuo',
-      // [PENDENTE: periodicidade — a clinica ainda vai desenvolver esta etapa]
-      texto:
-        'O cuidado não termina na entrega do sorriso. Você recebe mensagens de acompanhamento depois das consultas e dos procedimentos, e retornos programados para manter sua saúde em dia.',
+      titulo: 'Acompanhamento',
+      texto: 'O cuidado continua durante e depois do tratamento, com foco em adaptação, conforto e manutenção.',
     },
   ],
+  fechamento: 'Sem pressa. Sem excesso. Com clareza em cada etapa.',
 } as const;
 
 type Tratamento = {
-  id: string;
-  origem: OrigemWhatsApp;
+  slug: string;
+  numero: string;
   nome: string;
-  apelido?: string;
   icone: string;
+  /** Frase do card curto. Nos 3 da home, a frase aprovada para a home (3.7). */
+  resumo: string;
   oQueE: string;
-  beneficio?: string;
-  indicado?: string;
-  nota?: string;
-  profissional?: string;
-  selos?: readonly { texto: string; href?: string }[];
+  beneficio: string;
+  indicado: string;
+  servicos: readonly string[];
+  nota: string;
+  /** Aparece na rolagem principal da home. */
+  home?: boolean;
 };
 
 /**
- * Ordem = prioridade comercial do briefing. O implante e o card de destaque
- * (largura total); reabilitacao e protese, os medios; o resto, a grade.
+ * Tratamentos — Anexo I do alinhamento final, literal. 3 na home, 10 na
+ * pagina /tratamentos/. O `slug` e a ancora (/tratamentos/#<slug>).
  */
 export const tratamentos = {
   tag: 'Tratamentos',
   h2: 'Cada tratamento começa pelo seu planejamento.',
   sub: 'Conheça as especialidades da Lien. O melhor caminho para você é definido na consulta.',
-  cta: 'Quero conversar sobre isso',
   saibaMais: 'Saiba mais',
-  rotulos: { oQueE: 'O que é', beneficio: 'Benefício', indicado: 'Para quem é indicado' },
-  destaque: {
-    id: 'tratamento-implante',
-    origem: 'tratamento-implante',
-    nome: 'Implantodontia digital',
-    apelido: 'Implantes dentários',
-    icone: 'MonitorSmartphone',
-    // [SUGESTAO: complemento do texto truncado]
-    oQueE:
-      'A implantodontia digital permite substituir um ou mais dentes perdidos por meio de implantes dentários, com um planejamento feito em ambiente digital antes do procedimento.',
-    beneficio:
-      'Recuperar a segurança para sorrir, falar e mastigar, com um tratamento planejado para o seu caso.',
-    // [SUGESTAO: complemento "naturalidade"]
-    indicado:
-      'Quem perdeu um ou mais dentes, usa prótese móvel ou dentadura e deseja mais estabilidade, conforto e naturalidade.',
-    selos: [
-      { texto: 'Escâner intraoral' },
-      { texto: 'Agregados plaquetários' },
-      { texto: 'Opção com sedação', href: '#sedacao' },
-    ],
+  fechar: 'Fechar',
+  verTodos: 'Ver todos os tratamentos',
+  cta: CTA_PRINCIPAL,
+  pagina: {
+    h1: 'Tratamentos e especialidades',
+    title: 'Tratamentos e especialidades em Belo Horizonte | Lien',
+    description:
+      'Implantodontia digital, reabilitação oral, facetas e próteses, periodontia, harmonização orofacial, DTM, cirurgia, ortodontia, endodontia e clínica geral na Lien, no Cruzeiro, em Belo Horizonte.',
   },
-  medios: [
+  rotulos: {
+    oQueE: 'O que é',
+    beneficio: 'Benefício',
+    indicado: 'Indicado para',
+    servicos: 'Principais tratamentos e serviços',
+    relacionados: 'Conteúdos relacionados',
+  },
+  lista: [
     {
-      id: 'tratamento-reabilitacao',
-      origem: 'tratamento-reabilitacao',
+      slug: 'implantodontia-digital',
+      numero: '01',
+      nome: 'Implantodontia digital',
+      icone: 'MonitorSmartphone',
+      home: true,
+      resumo: 'Reposição de dentes perdidos com planejamento digital para mais precisão e previsibilidade.',
+      oQueE:
+        'A implantodontia digital combina exames e planejamento 3D para definir, antes da cirurgia, a posição dos implantes e a melhor estratégia para substituir um ou mais dentes perdidos.',
+      beneficio:
+        'Mais precisão no planejamento, maior previsibilidade do tratamento e uma cirurgia pensada de forma individualizada para buscar função, segurança e naturalidade.',
+      indicado:
+        'Para quem perdeu um ou mais dentes, utiliza próteses removíveis ou precisa reconstruir áreas com ausência dentária.',
+      servicos: [
+        'Implantes dentários',
+        'Planejamento digital 3D',
+        'Cirurgia guiada com abordagem minimamente invasiva e, quando indicada, sem abertura extensa da gengiva',
+        'Prótese protocolo',
+        'Levantamento de seio maxilar',
+        'Sedação consciente com medicação oral',
+        'Sedação intravenosa acompanhada por anestesista',
+      ],
+      nota: 'Cirurgia guiada, enxertos e sedação são definidos após a consulta, conforme anatomia, histórico de saúde e necessidade de cada caso.',
+    },
+    {
+      slug: 'reabilitacao-oral-completa',
+      numero: '02',
       nome: 'Reabilitação oral completa',
       icone: 'Layers',
+      home: true,
+      resumo:
+        'Planejamento integrado para recuperar função, conforto e estética quando vários problemas precisam ser tratados juntos.',
       oQueE:
-        'Um tratamento planejado para recuperar a saúde, a função e a estética do sorriso quando existem diferentes problemas ao mesmo tempo.',
+        'É o planejamento integrado de diferentes tratamentos quando dentes, gengiva, mordida, próteses ou estética precisam ser considerados em conjunto.',
       beneficio:
-        'Recuperar a capacidade de mastigar e sorrir com segurança, por meio de um planejamento integrado.',
-      // [SUGESTAO: complemento "ou dificuldade para mastigar"]
+        'Organiza prioridades e etapas para que cada procedimento faça parte de um mesmo plano, evitando decisões isoladas e buscando equilíbrio entre saúde, função e estética.',
       indicado:
-        'Quem tem dentes ausentes, desgastados, quebrados ou comprometidos, próteses antigas ou desconfortáveis, ou dificuldade para mastigar.',
+        'Para quem sente que há muitas coisas para resolver, possui vários dentes comprometidos, próteses antigas, perdas dentárias, desgastes ou necessidades em mais de uma especialidade.',
+      servicos: [
+        'Diagnóstico e planejamento integrado',
+        'Integração entre especialidades quando necessário',
+        'Escaneamento e documentação digital quando indicados',
+        'Planejamento por etapas e acompanhamento ao longo do tratamento',
+      ],
+      nota: 'O plano é individual. Nem todo caso precisa de muitos procedimentos; a proposta é tratar apenas o que realmente faz sentido para a necessidade do paciente.',
     },
     {
-      id: 'tratamento-protese',
-      origem: 'tratamento-protese',
-      nome: 'Prótese dentária',
-      apelido: 'Fixa e removível',
-      icone: 'Smile',
-      // [SUGESTAO: complemento do texto truncado]
+      slug: 'facetas-e-proteses',
+      numero: '03',
+      nome: 'Facetas e próteses dentárias',
+      icone: 'Gem',
+      home: true,
+      resumo:
+        'Soluções para transformar a estética do sorriso e reconstruir dentes comprometidos, unindo naturalidade, função e planejamento individualizado.',
       oQueE:
-        'Próteses devolvem forma, aparência e função a dentes danificados ou substituem dentes perdidos. Conforme a necessidade, podem ser fixas, removíveis ou sobre implantes.',
-      // [SUGESTAO: complemento "bem adaptada"]
+        'Esta área reúne tratamentos estéticos e reabilitadores para modificar forma, cor e proporção dos dentes ou reconstruir e substituir estruturas comprometidas. O planejamento define se o caso pede facetas, laminados cerâmicos, coroas, próteses ou uma combinação de recursos.',
       beneficio:
-        'Recuperar o conforto e a segurança para mastigar, falar e sorrir, com uma prótese personalizada e bem adaptada.',
-      // [SUGESTAO: complemento "desgastados"]
+        'Permite melhorar a estética do sorriso e recuperar função e segurança ao mastigar, sempre buscando naturalidade e preservação da estrutura dentária quando possível.',
       indicado:
-        'Quem perdeu um ou mais dentes, tem dentes quebrados ou muito desgastados, ou usa uma prótese que incomoda.',
+        'Para quem deseja melhorar forma, proporção ou cor dos dentes, corrigir pequenas fraturas e desgastes, ou precisa reconstruir/substituir dentes comprometidos ou ausentes.',
+      servicos: [
+        'Facetas em resina composta',
+        'Laminados cerâmicos / lentes de contato dental',
+        'Planejamento estético do sorriso',
+        'Coroas',
+        'Prótese protocolo',
+        'Pinos intrarradiculares',
+        'Integração com clareamento ou ortodontia quando indicado',
+      ],
+      nota: 'A escolha do material e da técnica depende da estrutura dentária, gengiva, mordida e objetivos do paciente. Em facetas, "sem desgaste" não é uma regra para todos os casos.',
     },
-  ],
-  grade: [
     {
-      id: 'tratamento-periodontia',
-      origem: 'tratamento-periodontia',
+      slug: 'periodontia',
+      numero: '04',
       nome: 'Periodontia',
-      apelido: 'Saúde da gengiva e prevenção',
       icone: 'ShieldCheck',
-      oQueE:
-        'Área da odontologia responsável pela prevenção e pelo tratamento de problemas que afetam a gengiva e os tecidos que sustentam os dentes.',
-      // [SUGESTAO: complemento "saude e seguranca a longo prazo"]
+      resumo: 'É a área responsável pela saúde da gengiva e dos tecidos que sustentam os dentes e os implantes.',
+      oQueE: 'É a área responsável pela saúde da gengiva e dos tecidos que sustentam os dentes e os implantes.',
       beneficio:
-        'Controlar inflamações e preservar a sustentação dos dentes, proporcionando mais saúde e segurança a longo prazo.',
-      // [SUGESTAO: complemento "ou dentes com mobilidade"]
+        'Ajuda a controlar inflamações, sangramento e perda de suporte, criando uma base saudável para manter dentes, implantes e reabilitações.',
       indicado:
-        'Quem tem sangramento gengival, gengiva inchada ou retraída, mau hálito persistente, sensibilidade ou dentes com mobilidade.',
+        'Para quem apresenta sangramento gengival, retração, mau hálito persistente, mobilidade, perda óssea ou alterações ao redor de implantes.',
+      servicos: ['Gengivite', 'Periodontite', 'Perda óssea', 'Doenças peri-implantares', 'Gengivoplastia', 'Enxertos gengivais'],
+      nota: 'Sangramento recorrente não deve ser considerado normal. O tratamento depende do diagnóstico periodontal e do risco individual.',
     },
     {
-      id: 'tratamento-harmonizacao',
-      origem: 'tratamento-harmonizacao',
+      slug: 'harmonizacao-orofacial',
+      numero: '05',
       nome: 'Harmonização orofacial',
       icone: 'Sparkles',
-      // [SUGESTAO: complemento do texto truncado]
+      resumo:
+        'Conjunto de procedimentos que atuam nos tecidos da face para suavizar sinais do envelhecimento, melhorar proporções e valorizar características individuais.',
       oQueE:
-        'Procedimentos que buscam equilibrar os traços do rosto e valorizar sua relação com o sorriso. Conforme as necessidades de cada paciente, o planejamento define a abordagem mais adequada.',
-      // [SUGESTAO: o briefing nao traz beneficio; derivado do tom pedido para a
-      // area — "natural e equilibrado", Dra. Isabela Guieiro]
-      // [PENDENTE: indicacoes da harmonizacao]
+        'Conjunto de procedimentos que atuam nos tecidos da face para suavizar sinais do envelhecimento, melhorar proporções e valorizar características individuais.',
       beneficio:
-        'Uma abordagem que busca naturalidade e equilíbrio, respeitando a individualidade do seu rosto.',
-    },
-    {
-      id: 'tratamento-lentes',
-      origem: 'tratamento-lentes',
-      nome: 'Lentes de contato dental e facetas',
-      icone: 'Gem',
-      // [SUGESTAO: complemento "tamanho e o alinhamento aparente dos dentes"]
-      oQueE:
-        'Facetas em resina e laminados cerâmicos são tratamentos personalizados para melhorar a forma, a cor, o tamanho e o alinhamento aparente dos dentes.',
-      // [SUGESTAO: complemento "incomodam voce"]
-      beneficio:
-        'Harmonizar o sorriso de maneira personalizada e natural, corrigindo características que incomodam você.',
-      // [PENDENTE: texto truncado no briefing — confirmar complemento]
+        'Promove resultados graduais e personalizados, com foco em equilíbrio, naturalidade e preservação da identidade facial.',
       indicado:
-        'Dentes manchados, desgastados, fraturados, pequenos, com formatos desarmônicos ou com espaços entre eles.',
-      // A clinica nao quer parecer que indica tratamento so por estetica.
-      nota: 'A indicação é sempre definida no planejamento, a partir da saúde dos seus dentes.',
+        'Para quem deseja cuidar do envelhecimento facial, tratar linhas de expressão, perda de volume, flacidez ou melhorar contornos de forma planejada.',
+      servicos: [
+        'Toxina botulínica (Botox)',
+        'Preenchimento com ácido hialurônico',
+        'Bioestimuladores de colágeno',
+        'HIPRO - ultrassom micro e macrofocado',
+        'Gerenciamento do envelhecimento',
+      ],
+      nota: 'A indicação e a combinação dos procedimentos são individualizadas, com foco em naturalidade.',
     },
     {
-      id: 'tratamento-dtm',
-      origem: 'tratamento-dtm',
+      slug: 'dtm-e-dor-orofacial',
+      numero: '06',
       nome: 'DTM e dor orofacial',
-      apelido: 'Disfunção da ATM',
       icone: 'Activity',
-      // [SUGESTAO: complemento "as articulacoes que ligam a mandibula ao cranio"]
+      resumo:
+        'É o cuidado de sintomas que podem envolver a mandíbula, os músculos da mastigação e as articulações, como dor, estalos, tensão ou limitação de movimento.',
       oQueE:
-        'A disfunção temporomandibular (DTM) envolve alterações nos músculos da mastigação e nas articulações temporomandibulares — as articulações que ligam a mandíbula ao crânio.',
+        'É o cuidado de sintomas que podem envolver a mandíbula, os músculos da mastigação e as articulações, como dor, estalos, tensão ou limitação de movimento.',
       beneficio:
-        'Reduzir a dor e recuperar o conforto para mastigar, falar, bocejar e movimentar a mandíbula.',
-      // [SUGESTAO: complemento "ou travamentos"]
+        'Ajuda a aliviar dor e desconforto e a recuperar mais conforto para mastigar, falar e movimentar a mandíbula.',
       indicado:
-        'Quem sente dor ou cansaço na mandíbula, estalos acompanhados de desconforto ou limitação, dificuldade para abrir a boca ou travamentos.',
-      profissional: 'Dra. Gabriela Ribeiro',
+        'Para quem sente dor na mandíbula ou no rosto, estalos, travamentos, tensão muscular, dificuldade para abrir a boca ou sintomas relacionados à função mandibular.',
+      servicos: [
+        'Viscossuplementação da ATM, quando indicada',
+        'Placa oclusal (placa de bruxismo)',
+        'Tratamento de dor, estalos e limitações de movimento da mandíbula',
+        'Sono e apneia - manejo odontológico quando indicado, com integração médica quando necessária',
+      ],
+      nota: 'DTM pode ter diferentes causas. O tratamento é definido após diagnóstico individual.',
     },
-  ],
-  compactos: [
     {
-      id: 'tratamento-endodontia',
-      origem: 'tratamento-endodontia',
-      nome: 'Endodontia',
-      apelido: 'Tratamento de canal',
-      icone: 'Stethoscope',
+      slug: 'cirurgia-bucomaxilofacial',
+      numero: '07',
+      nome: 'Cirurgia e Traumatologia Bucomaxilofacial',
+      icone: 'Bone',
+      resumo:
+        'Especialidade cirúrgica que diagnostica e trata alterações dos dentes, ossos e estruturas da face e da boca.',
       oQueE:
-        'Trata a parte interna do dente para eliminar a dor, tratar infecções e preservar o dente natural.',
+        'Especialidade cirúrgica que diagnostica e trata alterações dos dentes, ossos e estruturas da face e da boca.',
+      beneficio:
+        'Permite conduzir casos cirúrgicos complexos com planejamento especializado, segurança e integração com outras áreas quando necessário.',
+      indicado:
+        'Para quem precisa remover sisos ou dentes inclusos, investigar lesões bucais ou tratar alterações ósseas e deformidades dos maxilares.',
+      servicos: [
+        'Cirurgia ortognática',
+        'Exodontia de sisos e dentes inclusos',
+        'Biópsia de lesões bucais',
+        'Remoção de cistos, tumores e lesões benignas da cavidade oral',
+      ],
+      nota: 'A indicação cirúrgica depende do diagnóstico, exames e complexidade do caso.',
     },
     {
-      id: 'tratamento-ortodontia',
-      origem: 'tratamento-ortodontia',
+      slug: 'ortodontia',
+      numero: '08',
       nome: 'Ortodontia',
       icone: 'Ruler',
-      oQueE: 'Alinhamento dos dentes e da mordida, planejado para a sua fase de vida.',
+      resumo: 'Área responsável pelo posicionamento dos dentes e pelo desenvolvimento e equilíbrio da mordida.',
+      oQueE: 'Área responsável pelo posicionamento dos dentes e pelo desenvolvimento e equilíbrio da mordida.',
+      beneficio:
+        'Busca melhorar função, organização dos dentes e estética do sorriso, com planejamento adequado à idade e à necessidade de cada paciente.',
+      indicado:
+        'Para crianças, adolescentes e adultos com dentes desalinhados, espaços, apinhamento ou alterações de mordida.',
+      servicos: ['Aparelhos ortopédicos', 'Alinhadores transparentes', 'Aparelho fixo', 'Contenções ortodônticas'],
+      nota: 'O tipo de aparelho é escolhido após diagnóstico ortodôntico e planejamento individual.',
     },
     {
-      id: 'tratamento-clareamento',
-      origem: 'tratamento-clareamento',
-      nome: 'Clareamento dental',
-      icone: 'Sun',
-      oQueE: 'Clareamento conduzido e acompanhado por profissional, com segurança para seus dentes.',
+      slug: 'endodontia',
+      numero: '09',
+      nome: 'Endodontia',
+      icone: 'Stethoscope',
+      resumo: 'A endodontia trata a parte interna do dente quando a polpa sofre inflamação, infecção ou lesão.',
+      oQueE: 'A endodontia trata a parte interna do dente quando a polpa sofre inflamação, infecção ou lesão.',
+      beneficio:
+        'Ajuda a controlar dor e infecção e pode permitir a preservação do dente, evitando sua remoção quando há indicação para mantê-lo.',
+      indicado:
+        'Para quem apresenta dor intensa ou persistente, sensibilidade prolongada, infecção, abscesso ou dentes com comprometimento interno identificado em consulta.',
+      servicos: [
+        'Tratamento de canal',
+        'Retratamento endodôntico quando indicado',
+        'Controle de infecções de origem endodôntica',
+        'Planejamento restaurador após o tratamento de canal',
+      ],
+      nota: 'A necessidade de tratamento de canal é definida após exame clínico e, quando necessário, exames de imagem.',
+    },
+    {
+      slug: 'clinica-geral',
+      numero: '10',
+      nome: 'Clínica geral',
+      icone: 'Smile',
+      resumo:
+        'Reúne cuidados preventivos e restauradores que ajudam a acompanhar a saúde bucal e tratar alterações em fases iniciais.',
+      oQueE:
+        'Reúne cuidados preventivos e restauradores que ajudam a acompanhar a saúde bucal e tratar alterações em fases iniciais.',
+      beneficio:
+        'Favorece prevenção, diagnóstico precoce e manutenção da saúde dos dentes e gengiva ao longo do tempo.',
+      indicado:
+        'Para consultas de rotina, prevenção, limpeza, pequenas restaurações, clareamento ou acompanhamento periódico.',
+      servicos: [
+        'Prevenção em saúde bucal',
+        'Profilaxia (limpeza)',
+        'Restaurações',
+        'Clareamento',
+        'Check-up odontológico digital',
+      ],
+      nota: 'A frequência das consultas e dos cuidados preventivos é definida conforme o risco e as necessidades de cada paciente.',
     },
   ],
-} as const satisfies {
-  destaque: Tratamento;
-  medios: readonly Tratamento[];
-  grade: readonly Tratamento[];
-  compactos: readonly Tratamento[];
-  [k: string]: unknown;
-};
+} as const satisfies { lista: readonly Tratamento[]; [k: string]: unknown };
+
+export type SlugTratamento = (typeof tratamentos.lista)[number]['slug'];
+
+export const tratamentoPorSlug = (slug: string) => tratamentos.lista.find((t) => t.slug === slug);
+
+/** Mensagem de WhatsApp de uma origem, incluindo `tratamento-<slug>`. */
+export function mensagemWhatsApp(origem: OrigemWhatsApp): string {
+  if (origem in whatsappMensagens) return whatsappMensagens[origem as keyof typeof whatsappMensagens];
+  if (origem.startsWith('tratamento-')) {
+    const t = tratamentoPorSlug(origem.slice('tratamento-'.length));
+    if (t) return `${OLA} gostaria de agendar uma consulta sobre ${t.nome.toLowerCase()}.`;
+  }
+  return whatsappMensagens.hero;
+}
+
+/** Mensagem do CTA final de um artigo (montada no servidor, com o titulo). */
+export const mensagemArtigo = (titulo: string) =>
+  `${OLA} li o conteúdo "${titulo}" e gostaria de agendar uma consulta.`;
 
 /**
- * Sedacao — pedido explicito da clinica.
- * [PENDENTE: validar com a Dra. Natalia e com o Dr. Alexander Pedrosa o tipo de
- * sedacao (consciente/venosa), quem aplica e se e correto dizer "voce dorme".
- * Ate la, NAO usar "voce dorme durante todo o procedimento" nem "sem dor".]
+ * "Por onde voce quer comecar?" — navegacao por queixa, separada do Metodo.
+ * Card inteiro e link para o tratamento mais proximo; nenhum WhatsApp nos
+ * cards; um unico CTA abaixo (3.6). Textos dos cards mantidos.
+ */
+export const cardapio = {
+  tag: 'Para você',
+  h2: 'Por onde você quer começar?',
+  sub: 'Conte o que está sentindo. A gente mostra o caminho — e o planejamento começa na consulta.',
+  link: 'Entenda esse cuidado',
+  pergunta: 'Não sabe por onde começar?',
+  cta: CTA_PRINCIPAL,
+  // `icone`: arquivo em /public/icones/<nome>.svg (originais em assets/icones/).
+  itens: [
+    { texto: 'Quero comer com segurança', leva: 'Implantodontia digital', href: '/tratamentos/#implantodontia-digital', icone: 'mao-dente' },
+    { texto: 'Perdi um ou mais dentes', leva: 'Implantodontia digital', href: '/tratamentos/#implantodontia-digital', icone: 'implante' },
+    { texto: 'Minha prótese incomoda', leva: 'Facetas e próteses dentárias', href: '/tratamentos/#facetas-e-proteses', icone: 'instrumentos' },
+    { texto: 'Quero melhorar meu sorriso', leva: 'Facetas e próteses dentárias', href: '/tratamentos/#facetas-e-proteses', icone: 'dente-brilho' },
+    { texto: 'Tenho vários problemas ao mesmo tempo', leva: 'Reabilitação oral completa', href: '/tratamentos/#reabilitacao-oral-completa', icone: 'caries-dentarias' },
+    { texto: 'Sinto dor ou estalos na mandíbula', leva: 'DTM e dor orofacial', href: '/tratamentos/#dtm-e-dor-orofacial', icone: 'dente-localizacao' },
+    { texto: 'Minha gengiva sangra', leva: 'Periodontia', href: '/tratamentos/#periodontia', icone: 'cuidado-dental' },
+    { texto: 'Tenho medo de dentista', leva: 'Sedação', href: '/#sedacao', icone: 'cadeira-de-dentista' },
+  ],
+} as const;
+
+/**
+ * Sedacao — so sedacao (3.8). Sem promessa de sono completo.
+ * [PENDENTE: foto real para substituir a generica — o arquivo "Implante
+ * dentario com precisao" saiu por ser imagem generica. Original em
+ * assets/fotos-originais/sedacao-atendimento.jpg -> `npm run images`, e
+ * trocar `pendente` para false.]
  */
 export const sedacao = {
-  tag: 'Para quem tem medo',
-  h2: 'Implantes e cirurgias com sedação.',
-  /** Titulo do modelo "secao-sedacao" (out/2026): uma frase por linha. */
-  tituloLinhas: ['Para quem tem medo', 'Implantes e cirurgias com sedação.'],
-  // Texto do modelo. O anterior ("conduzida por profissional habilitado e com
-  // monitoramento...") ainda nao tinha sido validado com a Dra. Natalia e o
-  // Dr. Alexsander; segue no llms.txt via `itens`.
+  tag: 'Sedação',
+  h2: 'Mais conforto e segurança para quem sente medo ou ansiedade durante o tratamento.',
+  modalidades: ['Sedação consciente com medicação oral', 'Sedação intravenosa acompanhada por anestesista'],
   texto:
-    'Se o medo de dentista faz você adiar o tratamento, a sedação pode ser o caminho. Cada etapa é planejada com calma e acompanhada de perto, para que você passe por implantes e cirurgias com mais tranquilidade.',
-  itens: [
-    'Indicação definida na consulta',
-    'Equipe habilitada e monitoramento contínuo',
-    'Acompanhamento no pós-operatório',
-  ],
-  ctaAgendar: 'Agendar consulta',
-  cta: 'Falar pelo WhatsApp',
-  /** Variantes de `npm run images` (assets/fotos-originais/sedacao-implante.png,
-   *  copia de "assets/fotos/seções /Implante dentário com precisão.png"). */
+    'Para pacientes com medo intenso, ansiedade ou dificuldade de enfrentar determinados procedimentos, a Lien oferece duas possibilidades de sedação, definidas em conjunto após a consulta e a análise de segurança. A modalidade adequada depende do procedimento, do histórico de saúde e das preferências do paciente.',
+  cta: CTA_PRINCIPAL,
   foto: {
-    base: 'sedacao-implante',
-    largura: 1672,
-    altura: 941,
-    alt: 'Paciente de olhos fechados, relaxada na cadeira, enquanto a dentista trabalha com a peça de mão e o sugador',
+    src: '/img/sedacao-atendimento.webp',
+    alt: 'Atendimento com sedação na Lien Reabilitação Oral',
+    pendente: true,
   },
 } as const;
 
+/**
+ * Experiencia Lien — jornada do paciente em 3 videos (3.9). Sob cada video,
+ * so o titulo. [PENDENTE: os 3 videos — escaneamento com a Dra. Natalia;
+ * detalhes (fones, massagem, aromaterapia, cafeteria, ambiente); conversa a
+ * mesa, kit e abraco. MP4 + WebM + poster WebP em public/videos/.]
+ * O capitulo 2 usa, por ora, o video institucional da recepcao (vertical,
+ * sem audio) que antes ficava no Sobre (conflito C3).
+ */
 export const experiencia = {
-  /**
-   * O que a secao mostra (modelo "secao-consultorio", out/2026): texto curto
-   * + carrossel de fotos. tag/h2/sub/diferenciais abaixo seguem no llms.txt.
-   * Fotos = assets/fotos/consultorio/ na ordem dos nomes; variantes ja geradas
-   * por `npm run images` (slots reaproveitados das outras secoes).
-   */
-  consultorio: {
-    tag: 'Consultório',
-    tituloDestaque: 'Um espaço pensado',
-    tituloResto: 'para receber você bem.',
-    texto:
-      'Ambiente confortável, organizado e preparado para tornar cada consulta mais tranquila, do primeiro atendimento ao acompanhamento do tratamento.',
-    cta: 'Agendar consulta',
-    fotos: [
-      {
-        src: '/img/experiencia-consultorio.webp',
-        alt: 'Consultório da Lien com a cadeira odontológica e a vista da cidade pela janela',
-        posicao: '50% 62%',
-      },
-      {
-        src: '/img/metodo-consulta.webp',
-        alt: 'Sala de consulta da Lien, com mesa branca, cadeiras e estante decorada',
-        posicao: '50% 60%',
-      },
-      {
-        src: '/img/sobre-recepcao.webp',
-        alt: 'Recepção da Lien, com poltronas, plantas e o logo da clínica na parede',
-        posicao: '50% 45%',
-      },
-    ],
-    anterior: 'Foto anterior',
-    proxima: 'Próxima foto',
-    regiao: 'Fotos do consultório',
-  },
   tag: 'Experiência Lien',
-  h2: 'Um consultório pensado para você relaxar, não para intimidar.',
-  sub: 'Cada detalhe foi escolhido para que ir ao dentista deixe de ser um peso.',
-  diferenciais: [
-    { icone: 'Coffee', titulo: 'Recepção acolhedora', texto: 'Café, chá e acolhimento — porque ninguém deveria esperar com ansiedade.' },
-    { icone: 'ClipboardList', titulo: 'Cardápio de experiência', texto: 'Ao confirmar sua consulta, você recebe um cardápio para escolher como quer ser recebido.' },
-    { icone: 'Leaf', titulo: 'Aromaterapia', texto: 'Aromas escolhidos para criar um ambiente calmo desde a entrada.' },
-    { icone: 'Armchair', titulo: 'Cadeira de massagem e massagem facial', texto: 'Para o corpo relaxar antes e durante o atendimento.' },
-    { icone: 'Headphones', titulo: 'Fones com isolamento de ruído', texto: 'Para bloquear o barulho dos equipamentos e você se desligar.' },
-    { icone: 'MessageCircle', titulo: 'Comunicação constante', texto: 'Você sabe o que vai acontecer antes de acontecer.' },
-    { icone: 'Gift', titulo: 'Kit pós-operatório', texto: 'O cuidado não termina quando você sai da cadeira.' },
-    { icone: 'Hourglass', titulo: 'Consulta sem pressa', texto: 'Tempo dedicado a você, com atenção exclusiva.' },
-  ],
-  // Foto: assets/fotos/consultorio/consultorio lien 1.png, copiada para
-  // assets/fotos-originais/experiencia-consultorio.png -> `npm run images`.
-  imagem: {
-    src: '/img/experiencia-consultorio.webp',
-    alt: 'Consultório da Lien Reabilitação Oral em Belo Horizonte: cadeira odontológica em ambiente claro, com vista para a cidade',
-  },
-} as const;
-
-/** Estrutura e tecnologia. Absorve a antiga secao "Ambientes" (as 3 fotos). */
-export const estrutura = {
-  tag: 'Estrutura',
-  h2: 'Tecnologia a serviço do seu planejamento.',
-  itens: [
-    { icone: 'ScanLine', titulo: 'Escâner intraoral', texto: 'Substitui a moldagem tradicional e permite visualizar sua boca em 3D.' },
-    // [PENDENTE: validar a redacao tecnica com a Dra. Natalia]
-    { icone: 'Droplets', titulo: 'Agregados plaquetários', texto: 'Recurso utilizado em cirurgias para favorecer a cicatrização.' },
-    { icone: 'ShieldCheck', titulo: 'Biossegurança', texto: 'Protocolos rigorosos de esterilização em todas as etapas.' },
-    // Sem estacionamento nem acessibilidade: nao marcados no briefing.
-    // [PENDENTE: confirmar se ha]
-    { icone: 'MapPin', titulo: 'Localização', texto: 'Edifício Asteca, Av. do Contorno, 5351 — Cruzeiro. Fácil acesso para quem mora ou trabalha na região Centro-Sul.' },
-  ],
-  fotos: [
+  h2: 'A experiência começa antes do tratamento.',
+  texto:
+    'Na Lien, tecnologia, conforto e acompanhamento fazem parte da mesma experiência de cuidado - da primeira conversa ao pós-tratamento.',
+  capitulos: [
     {
-      titulo: 'Recepção',
-      imagem: {
-        src: '/img/ambiente-recepcao.webp',
-        alt: 'Recepção da clínica Lien Reabilitação Oral no Cruzeiro, Belo Horizonte, com ambiente acolhedor',
-        pendente: true,
+      numero: '01',
+      titulo: 'Tecnologia que aproxima',
+      video: null,
+    },
+    {
+      numero: '02',
+      titulo: 'Cuidado em cada detalhe',
+      video: {
+        webm: '/videos/sobre-lien.webm',
+        mp4: '/videos/sobre-lien.mp4',
+        poster: '/videos/sobre-lien-poster.webp',
+        vertical: true,
+        descricao: 'Recepção da Lien, com o logo da clínica na parede',
       },
     },
     {
-      titulo: 'Sala de atendimento',
-      imagem: {
-        src: '/img/ambiente-atendimento.webp',
-        alt: 'Sala de atendimento odontológico da clínica Lien em Belo Horizonte',
-        pendente: true,
-      },
+      numero: '03',
+      titulo: 'Cuidado que continua',
+      video: null,
     },
-    {
-      titulo: 'Kit de boas-vindas',
-      imagem: {
-        src: '/img/ambiente-kit-boas-vindas.webp',
-        alt: 'Kit de boas-vindas entregue aos pacientes da clínica Lien Reabilitação Oral em Belo Horizonte',
-        pendente: true,
-      },
-    },
-  ],
+  ] as readonly {
+    numero: string;
+    titulo: string;
+    video: null | { webm: string; mp4: string; poster: string; vertical: boolean; descricao: string };
+  }[],
+  pendente: '[Vídeo pendente]',
+  regiao: 'Vídeos da experiência Lien',
+  anterior: 'Vídeo anterior',
+  proximo: 'Próximo vídeo',
+  diferenciais:
+    'Scanner intraoral · Fones com isolamento de ruído · Massagem · Aromaterapia · Cafeteria · Kit personalizado · Acompanhamento pós-procedimento.',
 } as const;
 
 type Membro = {
   nome: string;
-  cargo?: string;
-  especialidade: string | null;
+  especialidade: string;
+  frase: string;
   cro: string | null;
-  bio: string | null;
   foto: { src: string; alt: string; pendente?: boolean };
 };
 
 /**
- * PROIBIDO avatar com iniciais: sem foto, aparece o bloco neutro de foto
- * pendente. Campos null viram um aviso discreto, nunca texto inventado.
- * [PENDENTE: sobrenomes e grafia completa das Dras. Maria Emilia e demais]
+ * Equipe — headline, texto e os 6 profissionais do alinhamento final (3.10),
+ * literais, nesta ordem. Foto grande + nome + especialidade + 1 frase.
+ * [PENDENTE: ensaio fotografico padronizado da equipe. As fotos atuais sao
+ * reais, recortadas no mesmo quadrado por scripts/recortar-equipe.mjs.]
+ * [PENDENTE: revisao etica/CRO da linha de especialidade da Dra. Natalia
+ * ("Periodontia" — a credencial oficial e Aperfeicoamento) e do termo
+ * "Especialista" nos demais cards (conflito C8).]
  */
 export const equipe = {
   tag: 'Equipe',
-  h2: 'Cada especialidade com quem é especialista.',
-  sub: 'Uma equipe de especialistas que trabalha de forma integrada, unindo tecnologia, excelência técnica e cuidado humanizado em todas as etapas do tratamento.',
-  semBio: 'Mais informações em breve.',
+  h2: 'Diferentes especialidades. Um só planejamento.',
+  sub: 'Uma equipe multidisciplinar que trabalha de forma integrada para que cada etapa do tratamento seja conduzida com conhecimento, segurança e continuidade.',
   membros: [
     {
       nome: 'Dra. Natália Simões',
-      cargo: 'Fundadora e CEO',
-      especialidade: 'Implantodontia · Prótese · Periodontia · Habilitação em agregados plaquetários',
+      especialidade: 'Reabilitação Oral | Implantodontia, Prótese e Periodontia',
+      frase:
+        'Fundadora e diretora clínica da Lien. Atua em reabilitações orais, implantes, próteses e cuidados periodontais, conduzindo o planejamento de forma integrada do início ao fim.',
       cro: 'CRO-MG 49.821',
-      // [SUGESTAO: complemento "primeiro encontro ate o cuidado continuo"]
-      bio: 'Conduz cada caso de forma integrada, acompanhando o paciente desde o primeiro encontro até o cuidado contínuo.',
       foto: {
         src: '/img/equipe-natalia-simoes.webp',
-        alt: 'Dra. Natália Simões, fundadora da Lien e especialista em implantodontia e reabilitação oral em Belo Horizonte',
+        alt: 'Dra. Natália Simões, fundadora e diretora clínica da Lien Reabilitação Oral em Belo Horizonte',
       },
     },
     {
-      nome: 'Dra. Maria Emília',
-      especialidade: 'Endodontia (tratamento de canal)',
+      nome: 'Dra. Maria Emília Murta',
+      especialidade: 'Endodontia',
+      frase:
+        'Especialista em tratamento de canal, com atuação voltada ao controle da dor, tratamento de infecções e preservação de dentes naturais.',
       cro: 'CRO-MG 36.401',
-      // [SUGESTAO: complemento "precisao e cuidado"]
-      bio: 'Seu trabalho é essencial para eliminar dor, tratar infecções e preservar dentes naturais com precisão e cuidado.',
       foto: {
         src: '/img/equipe-maria-emilia.webp',
-        alt: 'Dra. Maria Emília, especialista em endodontia na clínica Lien em Belo Horizonte',
+        alt: 'Dra. Maria Emília Murta, endodontista da Lien em Belo Horizonte',
       },
     },
     {
       nome: 'Dra. Isabela Guieiro',
-      especialidade: 'Harmonização orofacial e ortodontia',
+      especialidade: 'Harmonização Orofacial',
+      frase:
+        'Especialista em Harmonização Orofacial e Ortodontia, com foco em resultados naturais, equilíbrio facial e integração entre estética e função.',
       cro: 'CRO-MG 42.820',
-      bio: 'Especialista em harmonização orofacial, com foco em resultados naturais e equilibrados. Respeita a individualidade de cada paciente, com leveza, precisão e senso estético.',
       foto: {
         src: '/img/equipe-isabela-guieiro.webp',
-        alt: 'Dra. Isabela Guieiro, especialista em harmonização orofacial e ortodontia na clínica Lien em Belo Horizonte',
+        alt: 'Dra. Isabela Guieiro, de harmonização orofacial e ortodontia, da Lien em Belo Horizonte',
       },
     },
     {
       nome: 'Dr. Alexander Pedrosa',
-      especialidade: 'Cirurgia e traumatologia bucomaxilofacial · Mestre e doutor',
+      especialidade: 'Cirurgia e Traumatologia Bucomaxilofacial',
+      frase:
+        'Cirurgião bucomaxilofacial, mestre e doutor, com experiência em cirurgias complexas, reconstrução facial e procedimentos de maior complexidade.',
       cro: 'CRO-MG 26.562',
-      bio: 'Cirurgião bucomaxilofacial, mestre e doutor na área, com ampla experiência em casos complexos, reconstrução facial e procedimentos cirúrgicos avançados.',
       foto: {
         src: '/img/equipe-alexander-pedrosa.webp',
-        alt: 'Dr. Alexander Pedrosa, cirurgião bucomaxilofacial da clínica Lien em Belo Horizonte',
-      },
-    },
-    {
-      nome: 'Dra. Gabriela Ribeiro',
-      especialidade: 'Dor orofacial e DTM',
-      cro: 'CRO-MG 65.103',
-      // [PENDENTE: bio]
-      bio: null,
-      foto: {
-        src: '/img/equipe-gabriela-ribeiro.webp',
-        alt: 'Dra. Gabriela Ribeiro, especialista em dor orofacial e DTM na clínica Lien em Belo Horizonte',
+        alt: 'Dr. Alexander Pedrosa, cirurgião bucomaxilofacial da Lien em Belo Horizonte',
       },
     },
     {
       nome: 'Dra. Luiza Henriques',
-      // [PENDENTE: especialidade, CRO e bio]
-      especialidade: null,
+      especialidade: 'Prótese Dentária | Dentística e Estética',
+      frase:
+        'Especialista em Prótese Dentária pela USP, com atuação em reabilitação oral e odontologia estética e restauradora, integrando função, naturalidade e planejamento digital.',
+      // [PENDENTE: CRO da Dra. Luiza]
       cro: null,
-      bio: null,
       foto: {
         src: '/img/equipe-luiza-henriques.webp',
-        alt: 'Dra. Luiza Henriques, da equipe da clínica Lien em Belo Horizonte',
+        alt: 'Dra. Luiza Henriques, de prótese dentária e dentística, da Lien em Belo Horizonte',
+      },
+    },
+    {
+      nome: 'Dra. Gabriela Ribeiro',
+      especialidade: 'DTM e Dor Orofacial | Sono',
+      frase:
+        'Especialista em DTM e Dor Orofacial com ênfase em sono, com atuação baseada em evidências para investigar a origem da dor, recuperar função e melhorar a qualidade de vida.',
+      cro: 'CRO-MG 65.103',
+      foto: {
+        src: '/img/equipe-gabriela-ribeiro.webp',
+        alt: 'Dra. Gabriela Ribeiro, de DTM e dor orofacial, da Lien em Belo Horizonte',
       },
     },
   ],
 } as const satisfies { membros: readonly Membro[]; [k: string]: unknown };
 
 /**
- * Antes e depois — Resolucao CFO 196/2019. Cada caso so entra com autorizacao
- * documentada. A secao inteira depende de SHOW_RESULTS.
- * [PENDENTE: receber os arquivos (reabilitacao e facetas) e confirmar o enquadramento]
+ * Conteudos em Saude Bucal. Na home, so os 3 destaques (3.11), com o texto
+ * literal do alinhamento; a biblioteca completa e /conteudos/, lida de
+ * content/artigos/*.md (src/lib/artigos.ts).
  */
-export const resultados = {
-  tag: 'Resultados',
-  h2: 'Histórias de sorrisos planejados com cuidado.',
-  autorizacao: 'Imagem publicada com autorização do paciente.',
-  variacao: 'Os resultados variam de pessoa para pessoa e dependem de diagnóstico individual.',
-  rotuloAntes: 'Antes',
-  rotuloDepois: 'Depois',
-  rotuloComparar: 'Comparar antes e depois',
-  casos: [] as readonly {
-    tratamento: string;
-    antes: { src: string; alt: string };
-    depois: { src: string; alt: string };
-  }[],
-} as const;
-
-/**
- * Nunca inventar depoimento. O unico que existia ("Maria C.") veio do prompt
- * original sem origem registrada e saiu ate ser confirmado.
- * [PENDENTE: textos, nome, tratamento e autorizacao dos depoimentos]
- * Criterio: priorizar os que citam implante, reabilitacao, protese ou mastigacao.
- */
-export const depoimentos = {
-  tag: 'Depoimentos',
-  h2: 'Quem vive a Lien, conta.',
-  google: {
-    nota: '5,0',
-    // [PENDENTE: atualizar antes de publicar; e o link do perfil no Google]
-    total: 57,
-    url: null as string | null,
+export const conteudos = {
+  tag: 'Conteúdos',
+  h2: 'Conteúdos em Saúde Bucal',
+  lerConteudo: 'Ler conteúdo',
+  verTodos: 'Ver todos os conteúdos',
+  destaques: [
+    {
+      rotulo: 'Implante dentário',
+      titulo: 'Quando é indicado - e quando pode exigir preparo antes',
+      descricao:
+        'Entenda em quais situações o implante pode ser uma opção e por que alguns casos precisam de etapas prévias de planejamento.',
+      href: '/implante-dentario-belo-horizonte/',
+    },
+    {
+      rotulo: 'Reabilitação oral completa',
+      titulo: 'Quando ela pode ser necessária?',
+      descricao:
+        'Veja quando diferentes problemas precisam ser tratados de forma integrada para recuperar função, saúde e estética.',
+      href: '/reabilitacao-oral-belo-horizonte/',
+    },
+    {
+      rotulo: 'Gengiva que sangra',
+      titulo: 'Quando é sinal de alerta?',
+      descricao:
+        'Saiba por que o sangramento recorrente não deve ser considerado normal e quando é importante investigar a saúde da gengiva.',
+      href: '/sangramento-gengiva-belo-horizonte/',
+    },
+  ],
+  pagina: {
+    h1: 'Conteúdos em Saúde Bucal',
+    title: 'Conteúdos em Saúde Bucal | Lien Reabilitação Oral',
+    description:
+      'Conteúdos sobre implantes, reabilitação oral, gengiva, estética do sorriso, DTM e prevenção, escritos pela equipe da Lien, em Belo Horizonte.',
+    todas: 'Todas',
+    filtro: 'Filtrar por categoria',
   },
-  // Os textos ficam em src/content/testimonials.ts (so avaliacoes reais).
-  verTodas: 'Ver todas as avaliações no Google',
-  cta: 'Agende sua consulta',
-  pausar: 'Pausar depoimentos',
-  retomar: 'Retomar depoimentos',
-  /**
-   * Antes e depois (assets/Depoimentos/), abaixo do titulo. Os 9 pares foram
-   * indicados pela clinica; autorizacao escrita dos pacientes e fotos sem
-   * edicao do resultado confirmadas (Resolucao CFO 196/2019). Cada par e
-   * alinhado por scripts/alinhar-antes-depois.mjs antes do `npm run images`.
-   */
-  antesDepois: {
-    rotulos: ['Antes', 'Depois'] as [string, string],
-    instrucao: 'Arraste para comparar',
-    casos: [
-      {
-        id: '1',
-        antes: { src: '/img/antes-depois-1-antes.webp', alt: 'Paciente sorrindo antes do tratamento na Lien' },
-        depois: { src: '/img/antes-depois-1-depois.webp', alt: 'A mesma paciente sorrindo depois do tratamento na Lien' },
-      },
-      {
-        id: '2',
-        antes: { src: '/img/antes-depois-2-antes.webp', alt: 'Paciente sorrindo antes do tratamento na Lien' },
-        depois: { src: '/img/antes-depois-2-depois.webp', alt: 'O mesmo paciente sorrindo depois do tratamento na Lien' },
-      },
-      {
-        id: '3',
-        antes: { src: '/img/antes-depois-3-antes.webp', alt: 'Sorriso com dentes ausentes e desgastados antes da reabilitação oral' },
-        depois: { src: '/img/antes-depois-3-depois.webp', alt: 'O mesmo sorriso depois da reabilitação oral na Lien' },
-      },
-      {
-        id: '4',
-        antes: { src: '/img/antes-depois-4-antes.webp', alt: 'Vista lateral dos dentes desalinhados antes do tratamento' },
-        depois: { src: '/img/antes-depois-4-depois.webp', alt: 'A mesma vista lateral, com os dentes alinhados depois do tratamento' },
-      },
-      {
-        id: '5',
-        antes: { src: '/img/antes-depois-5-antes.webp', alt: 'Vista frontal dos dentes com espaços antes do tratamento' },
-        depois: { src: '/img/antes-depois-5-depois.webp', alt: 'A mesma vista frontal depois do tratamento na Lien' },
-      },
-      {
-        id: '6',
-        antes: { src: '/img/antes-depois-6-antes.webp', alt: 'Paciente com marcações faciais de planejamento antes do tratamento' },
-        depois: { src: '/img/antes-depois-6-depois.webp', alt: 'A mesma paciente depois do tratamento na Lien' },
-      },
-      {
-        id: '7',
-        antes: { src: '/img/antes-depois-7-antes.webp', alt: 'Registro clínico do arco superior com dentes ausentes, antes do tratamento' },
-        depois: { src: '/img/antes-depois-7-depois.webp', alt: 'O sorriso reabilitado depois do tratamento na Lien' },
-      },
-      {
-        id: '8',
-        antes: { src: '/img/antes-depois-8-antes.webp', alt: 'Paciente sorrindo, com falhas nos dentes, antes do tratamento' },
-        depois: { src: '/img/antes-depois-8-depois.webp', alt: 'O mesmo paciente sorrindo depois do tratamento na Lien' },
-      },
-      {
-        id: '9',
-        antes: { src: '/img/antes-depois-9-antes.webp', alt: 'Paciente de frente antes do tratamento' },
-        depois: { src: '/img/antes-depois-9-depois.webp', alt: 'A mesma paciente depois do tratamento na Lien' },
-      },
-    ],
+  // Categorias do PDF. A distribuicao dos 14 artigos e sugestao (5.2).
+  // [PENDENTE: validar a distribuicao com a clinica]
+  categorias: [
+    'Implantes e Reabilitação',
+    'Gengiva e Periodontia',
+    'Estética do sorriso',
+    'DTM e dor',
+    'Prevenção e saúde bucal',
+  ],
+  artigo: {
+    inicio: 'Início',
+    publicado: 'Publicado em',
+    proximoPasso: 'Próximo passo',
+    tratamentoRelacionado: 'Tratamento relacionado',
+    relacionados: 'Leia também',
   },
 } as const;
 
 /**
- * FAQ. O schema FAQPage e gerado deste mesmo objeto (src/data/schema.ts).
- * Respostas curtas; "investimento" so aqui, e sem numero.
+ * FAQ — exatamente as 6 perguntas e respostas aprovadas (3.12). O schema
+ * FAQPage e gerado deste mesmo objeto (src/data/schema.ts). Accordion simples,
+ * tudo fechado, sem CTA nas respostas e um unico CTA no fim da secao.
  */
 export const faq = {
   tag: 'Dúvidas',
   h2: 'Dúvidas frequentes',
-  sub: 'Escolha um tema e abra as perguntas.',
-  // Temas das abas (ordem = ordem das abas). O icone e um nome do lucide-react.
-  temas: [
-    { valor: 'consulta', rotulo: 'Consulta', icone: 'ClipboardList' },
-    { valor: 'conforto', rotulo: 'Conforto', icone: 'HeartHandshake' },
-    { valor: 'tratamentos', rotulo: 'Tratamentos', icone: 'Stethoscope' },
-    { valor: 'atendimento', rotulo: 'Atendimento', icone: 'CalendarClock' },
-  ],
-  ajudou: 'Esta resposta ajudou?',
-  sim: 'Sim',
-  nao: 'Não',
-  obrigado: 'Obrigado pelo retorno.',
-  cta: 'Ainda tem dúvidas? Fale com a equipe',
+  cta: CTA_PRINCIPAL,
   itens: [
     {
-      categoria: 'consulta',
       pergunta: 'Como funciona a primeira consulta na Lien?',
-      // [SUGESTAO: complemento a partir de "o que voce espera do tratamento"]
       resposta:
-        'É um momento de escuta, investigação e diagnóstico. Conversamos sobre suas necessidades, seu histórico de saúde e o que você espera do tratamento. A partir disso, montamos um planejamento individual e explicamos cada etapa com clareza.',
+        'Na Lien, a consulta começa à mesa, com tempo para ouvir você de verdade. Depois, unimos exame clínico, escaneamento, fotografias e exames quando indicados para enxergar sua saúde como um todo. Você não sai apenas com um diagnóstico, sai entendendo o que está acontecendo, o que precisa ser cuidado e qual caminho faz sentido para você.',
     },
     {
-      categoria: 'consulta',
-      pergunta: 'Já sei qual tratamento quero fazer. Ainda preciso passar por uma consulta?',
-      // [SUGESTAO: complemento a partir de "para confirmar"]
+      pergunta: 'Tenho medo de dentista. Como funciona o atendimento?',
       resposta:
-        'Sim. Mesmo quando você já sabe o que deseja, a consulta é indispensável para confirmar se esse é o melhor caminho para a sua saúde e planejar o tratamento com segurança.',
+        'Se você tem medo de dentista, a experiência na Lien é pensada de outro jeito. Antes de qualquer procedimento, entendemos o que te deixa inseguro e adaptamos o atendimento a você. Fones com isolamento de ruído, massagem, aromaterapia, pausas e, quando indicado, sedação oral ou intravenosa com anestesista fazem parte desse cuidado. Aqui, conforto não é detalhe: faz parte do tratamento.',
     },
     {
-      categoria: 'conforto',
-      pergunta: 'Tenho medo de dentista. A Lien está preparada para me atender?',
-      // [SUGESTAO: complemento a partir de "tranquila"]
+      pergunta: 'Preciso saber qual tratamento preciso antes de agendar?',
       resposta:
-        'Sim. A Lien foi criada especialmente para proporcionar uma experiência mais tranquila: recepção acolhedora, aromaterapia, fones com isolamento de ruído, comunicação em cada etapa e, quando indicado, opção de sedação.',
+        'Não. Você não precisa chegar à Lien com uma solução pronta, esse é justamente o papel da consulta. A partir da sua queixa, do exame e dos recursos de diagnóstico, organizamos o que realmente precisa de atenção e mostramos os caminhos possíveis. Aqui, o tratamento começa pelo entendimento, não pela pressa em indicar um procedimento.',
     },
     {
-      categoria: 'conforto',
-      pergunta: 'Com os recursos atuais, o tratamento odontológico ainda dói?',
-      // [SUGESTAO: abertura e fecho] Sem prometer ausencia de dor.
+      pergunta: 'Vocês atendem convênio?',
       resposta:
-        'A odontologia conta hoje com anestesias e tecnologias que tornam os procedimentos muito mais confortáveis. Na Lien, cada etapa é conduzida com cuidado, respeitando o seu tempo e o seu limite.',
+        'A Lien trabalha exclusivamente com atendimento particular porque isso nos permite conduzir cada consulta com tempo, profundidade e liberdade de planejamento. Sem protocolos padronizados ou limitações de cobertura, conseguimos indicar o que realmente faz sentido para cada paciente e acompanhar o tratamento com o cuidado que faz parte da nossa proposta.',
     },
     {
-      categoria: 'tratamentos',
-      pergunta: 'Qual é a diferença entre facetas em resina e laminados cerâmicos?',
-      // [SUGESTAO: abertura e fecho]
+      pergunta: 'Vocês atendem casos mais complexos ou que precisam de várias especialidades?',
       resposta:
-        'As facetas em resina são confeccionadas diretamente sobre os dentes pelo cirurgião-dentista. Os laminados cerâmicos são produzidos em laboratório, a partir de um planejamento digital. A indicação depende do seu caso e é definida na consulta.',
+        'Sim, e essa integração é uma das bases da Lien. Quando um caso envolve diferentes áreas, os profissionais trabalham a partir de um mesmo planejamento, em vez de cada especialidade cuidar de uma parte isoladamente. Para você, isso significa mais continuidade, clareza e um tratamento pensado como um todo.',
     },
     {
-      categoria: 'tratamentos',
-      pergunta: 'Sangramento na gengiva é normal?',
-      // [SUGESTAO: complemento a partir de "tratado"]
+      pergunta: 'Onde fica a clínica?',
       resposta:
-        'Não. O sangramento frequente pode indicar uma inflamação gengival ou uma doença periodontal. Quando não é tratado, pode evoluir e comprometer a sustentação dos dentes. Vale agendar uma consulta.',
-    },
-    {
-      categoria: 'atendimento',
-      pergunta: 'Consigo saber o valor do meu tratamento pelo WhatsApp?',
-      // [SUGESTAO: complemento a partir de "parecidas"] Sem valores, parcelas
-      // ou formas de pagamento.
-      resposta:
-        'Cada tratamento é planejado individualmente, pois pacientes com necessidades aparentemente parecidas podem precisar de soluções bem diferentes. Por isso, o investimento só pode ser apresentado depois da consulta e do planejamento.',
-    },
-    {
-      categoria: 'tratamentos',
-      pergunta: 'Estalos e dores na mandíbula podem ser sinais de DTM?',
-      // [SUGESTAO: abertura e fecho]
-      resposta:
-        'Podem ser. Os sinais mais comuns são dor na mandíbula ou na face, cansaço ao mastigar, travamentos, limitação para abrir a boca e estalos acompanhados de desconforto. A consulta com uma especialista em DTM ajuda a entender a causa.',
-    },
-    {
-      categoria: 'atendimento',
-      pergunta: 'A Lien atende convênios?',
-      resposta: 'A Lien realiza atendimento particular.',
-    },
-    {
-      categoria: 'atendimento',
-      pergunta: 'Onde fica a Lien e qual é o horário?',
-      resposta:
-        'No Edifício Asteca, Av. do Contorno, 5351 — Cruzeiro, Belo Horizonte. Atendemos segunda, terça, quinta e sexta, das 8h às 18h, e quarta, das 9h às 20h.',
-    },
-    {
-      categoria: 'conforto',
-      pergunta: 'Vocês fazem implante com sedação?',
-      // [PENDENTE: validar — ver sedacao]
-      resposta: 'Sim, quando indicado no planejamento.',
-    },
-    {
-      categoria: 'atendimento',
-      pergunta: 'A Lien atende urgências?',
-      resposta: 'Atendemos urgências de pacientes em tratamento na Lien.',
+        'A Lien fica no bairro Cruzeiro, na região Centro-Sul de Belo Horizonte, em uma localização de fácil acesso. O endereço completo, mapa e orientações para chegada ficam disponíveis no rodapé do site e na confirmação do agendamento.',
     },
   ],
 } as const;
 
 export const ctaFinal = {
   h2: 'Seu tratamento começa com uma consulta cuidadosa.',
-  // [SUGESTAO: complemento a partir de "para a sua necessidade real"]
   texto:
-    'Na Lien, cada tratamento começa com escuta, diagnóstico cuidadoso e um planejamento pensado para a sua necessidade real. Converse com a gente e dê o primeiro passo.',
-  cta: 'Conversar com a equipe Lien',
-  // Decisao pendente da clinica: quem responde o WhatsApp e a propria Dra.
-  // Natalia, mas o paciente imagina uma secretaria. Neutro por padrao.
-  // Opcao B: 'Quem responde é a nossa equipe, das 8h às 18h.'
+    'Na primeira consulta, entendemos sua história, suas necessidades e construímos juntos o caminho do tratamento.',
+  cta: CTA_PRINCIPAL,
   suporte: 'Atendimento particular · Cruzeiro, Belo Horizonte',
 } as const;
 
