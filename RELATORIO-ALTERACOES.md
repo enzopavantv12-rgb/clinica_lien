@@ -691,3 +691,18 @@ Fonte: `prompt-claude-code-resultados-carrossel-lien.md`.
 - **Ainda não testado:** iOS Safari e Chrome Android em aparelho real. O teste foi no Chrome com emulação de toque.
 
 **Pendente:** a revisão ética/CRO dos casos, que segue como estava no Alinhamento Final.
+
+---
+
+## Experiência: vídeo do scanner (YouTube) no capítulo 01 (out/2026)
+
+O vídeo enviado pela clínica, o Short https://youtube.com/shorts/W87pzc6c9hs ("Vídeo Scanner"), entrou no capítulo **01 · Scanner intraoral**.
+
+**Como funciona:**
+- **Antes do clique:** aparece o poster vertical, uma cópia local da miniatura do vídeo (`public/img/experiencia-scanner-540.{webp,avif}`, com original em `assets/videos-youtube/`), sobre um fundo desfocado da mesma imagem. Nenhum pedido vai ao YouTube ou ao Google antes do clique, a mesma regra de LGPD do mapa do rodapé. O verificador ganhou essa checagem e agora são **81**.
+- **No clique de play:** entra o embed do `youtube-nocookie.com`, com autoplay, no formato 9:16, centralizado acima da barra de abas, e um botão "Fechar vídeo". Trocar de aba ou fechar remove o player, e o vídeo para.
+- **Sem a API do YouTube:** não há barra de progresso na aba, e o texto não volta sozinho ao pausar. Ele volta quando se fecha o vídeo.
+- **Política de privacidade:** a seção "Com quem compartilhamos" passou a citar que o vídeo do YouTube, como o mapa, só carrega no clique. A política inteira continua pendente de revisão jurídica.
+- **Testado** no Chrome, em 1440px e em 375px com toque: zero requisições ao YouTube antes do clique; o embed fica dentro do player (259×460 no desktop, 211×375 no celular); fechar e trocar de aba removem o player; nenhuma rolagem horizontal.
+
+**Atenção:** o vídeo está publicado no canal pessoal "Enzo Tavares", e o nome aparece no player do YouTube. O ideal é a clínica publicá-lo no próprio canal e trocar o ID em `experiencia.capitulos[0].video.id`, no `content.ts`.

@@ -85,6 +85,11 @@ checar(
     ['Alessandra Lopes', 'Nilson Antônio', 'Nádia Graciely'].every((n) => secao('depoimentos').includes(n)) &&
     secao('depoimentos').includes('cuidadosa com todos os detalhes , explicações'),
 );
+// LGPD: o video do YouTube da Experiencia so carrega no clique (como o mapa).
+checar(
+  'experiencia: sem embed nem imagem do YouTube no HTML (so no clique)',
+  !/<iframe[^>]*youtube|i\.ytimg\.com/.test(secao('experiencia')) && secao('experiencia').includes('/img/experiencia-scanner-540.webp'),
+);
 checar('hero: prova social do Google no lugar do 2o botao', secao('inicio').includes('5,0 no Google · 57 avaliações'));
 checar('faixa unica de prova rapida (sem a 2a faixa teal)', !marcacao.includes('bg-[#047E99]'));
 const linksTratamentosHome = [...secao('tratamentos').matchAll(/href="\/tratamentos\/#([a-z-]+)"/g)].map((m) => m[1]);

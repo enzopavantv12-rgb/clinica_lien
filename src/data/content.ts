@@ -654,14 +654,21 @@ export const sedacao = {
  *
  * Videos (MP4 H.264 + WebM 1080p + poster WebP em public/videos/): enquanto
  * `video` for null, o capitulo mostra o poster neutro e o texto, sem play.
- * [PENDENTE: VIDEO_SCANNER — Dra. Natalia fazendo o escaneamento intraoral
- * (video proprio da Lien; o do print e material promocional da Medit);
- * VIDEO_CONFORTO — fones, massagem, aromaterapia, cafeteria, ambiente;
+ * Capitulo 01: Short do YouTube enviado pela clinica (out/2026).
+ * [PENDENTE: VIDEO_CONFORTO — fones, massagem, aromaterapia, cafeteria, ambiente;
  * VIDEO_ACOMPANHAMENTO — conversa a mesa, entrega do kit e abraco.]
  * [PENDENTE: a clinica validar os textos dos capitulos 02 e 03 (SUGESTAO do
  * prompt) e "ultraprecisa" no 01 (revisao CRO).]
  */
-type Video = { mp4: string; webm: string; poster: string; vtt?: string };
+type Video =
+  | { tipo: 'arquivo'; mp4: string; webm: string; poster: string; vtt?: string }
+  /**
+   * Video do YouTube (Short vertical). So carrega o embed (youtube-nocookie)
+   * no clique, como o mapa do rodape: antes disso nenhum pedido vai ao Google
+   * (LGPD). O poster e uma copia local da miniatura do YouTube (original em
+   * assets/videos-youtube/, convertida a mao para public/img/).
+   */
+  | { tipo: 'youtube'; id: string; titulo: string; poster: string; posterAvif: string; fundo: string };
 
 export const experiencia = {
   tag: 'Jornada & inovação',
@@ -676,7 +683,15 @@ export const experiencia = {
       aba: 'Scanner intraoral',
       titulo: 'Scanner intraoral',
       linhas: ['Adeus aos moldes tradicionais desconfortáveis.', 'Captura digital rápida e ultraprecisa da sua arcada.'],
-      video: null as Video | null, // VIDEO_SCANNER
+      // Short "Video Scanner": https://youtube.com/shorts/W87pzc6c9hs (out/2026).
+      video: {
+        tipo: 'youtube',
+        id: 'W87pzc6c9hs',
+        titulo: 'Dra. Natália Simões no consultório da Lien, no vídeo sobre o scanner intraoral',
+        poster: '/img/experiencia-scanner-540.webp',
+        posterAvif: '/img/experiencia-scanner-540.avif',
+        fundo: '/img/experiencia-scanner-fundo.webp',
+      } as Video | null,
     },
     {
       numero: '02',
@@ -945,7 +960,7 @@ export const privacidade = {
     {
       titulo: 'Com quem compartilhamos',
       paragrafos: [
-        'Não vendemos nem cedemos seus dados. A conversa pelo WhatsApp passa pela plataforma da Meta, sujeita à política de privacidade dela. O mapa do rodapé só é carregado se você clicar para vê-lo; nesse momento, o Google pode coletar dados de navegação conforme a política dele.',
+        'Não vendemos nem cedemos seus dados. A conversa pelo WhatsApp passa pela plataforma da Meta, sujeita à política de privacidade dela. O mapa do rodapé e o vídeo do YouTube da seção Experiência só são carregados se você clicar para vê-los; nesse momento, o Google pode coletar dados de navegação conforme a política dele.',
       ],
     },
     {

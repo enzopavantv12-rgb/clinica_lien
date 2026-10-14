@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { X } from 'lucide-react';
 import { PadraoOndas } from '../ui/BrandGraphics';
 import { Reveal } from '../ui/Reveal';
 import { experiencia } from '../../data/content';
@@ -29,6 +30,11 @@ function PosterPendente() {
  *   capitulo seguinte sem tocar. Sem preview mudo (so o poster).
  * - Lazy: os metadados so carregam quando a secao chega a 200px da tela.
  * - Capitulo sem video: poster neutro e o texto, sem botao de play.
+ * - Capitulo com Short do YouTube (o 01): poster local vertical sobre o fundo
+ *   desfocado; o embed youtube-nocookie so entra no clique (LGPD — antes disso
+ *   nenhum pedido vai ao Google), com autoplay, 9:16 acima da barra de abas,
+ *   e um botao "Fechar video". Sem API do YouTube, nao ha barra de progresso
+ *   nem retorno automatico do texto ao pausar.
  * - Abas ARIA (setas, Home/End); o player e o tabpanel. A partir de 640px a
  *   barra fica sobreposta; abaixo disso, pills escuras abaixo do player.
  * - Numeros dos capitulos em branco, e nao no rosa do print: o manual veda o
@@ -70,6 +76,11 @@ export function Experiencia() {
   }, [ativo]);
 
   const tocar = () => {
+    // YouTube: o embed so entra no DOM agora (clique = consentimento).
+    if (c.video?.tipo === 'youtube') {
+      setTocando(true);
+      return;
+    }
     const v = videoRef.current;
     if (!v) return;
     v.muted = false;
@@ -123,7 +134,42 @@ export function Experiencia() {
           aria-labelledby={`exp-tab-${ativo}`}
           className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/[.08] bg-[#0F1116] shadow-[0_30px_70px_-30px_rgba(26,20,32,.45)] sm:aspect-video lg:aspect-[16/7.6] lg:rounded-[18px]"
         >
-          {c.video ? (
+          {c.video?.tipo === 'youtube' ? (
+            tocando ? (
+              // Short vertical: 9:16 centralizado, acima da barra de abas. O
+              // contêiner define a altura: um iframe absoluto ignora top/bottom.
+              <div className="absolute inset-x-0 bottom-4 top-4 flex justify-center sm:bottom-[98px]">
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${c.video.id}?autoplay=1&rel=0&playsinline=1`}
+                  title={c.video.titulo}
+                  allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                  allowFullScreen
+                  className="aspect-[9/16] h-full w-auto rounded-xl border-0 bg-black"
+                />
+              </div>
+            ) : (
+              <div className="absolute inset-0">
+                {/* Fundo: a propria miniatura, ampliada e desfocada. */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 scale-110 bg-cover bg-center opacity-60 blur-2xl"
+                  style={{ backgroundImage: `url(${c.video.fundo})` }}
+                />
+                <picture>
+                  <source type="image/avif" srcSet={c.video.posterAvif} />
+                  <img
+                    src={c.video.poster}
+                    alt={c.video.titulo}
+                    width={540}
+                    height={960}
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute left-1/2 top-0 h-full w-auto -translate-x-1/2 object-cover"
+                  />
+                </picture>
+              </div>
+            )
+          ) : c.video ? (
             <video
               ref={videoRef}
               className="absolute inset-0 h-full w-full object-cover"
@@ -156,6 +202,17 @@ export function Experiencia() {
               tocando ? 'opacity-0' : 'opacity-100'
             }`}
           />
+
+          {tocando && c.video?.tipo === 'youtube' && (
+            <button
+              type="button"
+              onClick={() => setTocando(false)}
+              aria-label="Fechar vídeo"
+              className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full border border-white/25 bg-white/[.14] text-white backdrop-blur-md transition-colors hover:bg-white/[.24] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F0B6F2]"
+            >
+              <X size={18} strokeWidth={2} aria-hidden="true" />
+            </button>
+          )}
 
           {!tocando && (
             <>
