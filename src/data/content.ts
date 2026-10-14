@@ -85,7 +85,7 @@ const OLA = 'Olá! Conheci a Lien pelo site e';
 export const whatsappMensagens = {
   hero: `${OLA} gostaria de agendar uma consulta.`,
   menu: `${OLA} gostaria de agendar uma consulta.`,
-  final: `${OLA} gostaria de agendar uma consulta.`,
+  'cta-final': `${OLA} gostaria de agendar uma consulta.`,
   flutuante: `${OLA} gostaria de agendar uma consulta.`,
   rodape: `${OLA} gostaria de conversar sobre o atendimento. Podem me ajudar?`,
   comecar: `${OLA} não sei por onde começar. Gostaria de agendar uma consulta.`,
@@ -906,12 +906,21 @@ export const faq = {
   ],
 } as const;
 
+/**
+ * CTA final — copy do print aprovado (prompt "cta-final-lien", out/2026), por
+ * decisao da clinica. O texto do Alinhamento era "Na primeira consulta,
+ * entendemos sua historia, suas necessidades e construimos juntos o caminho
+ * do tratamento." (troca so do paragrafo, se preferirem).
+ * [PENDENTE: revisao CRO de "o sorriso que voce merece".]
+ */
 export const ctaFinal = {
   h2: 'Seu tratamento começa com uma consulta cuidadosa.',
-  texto:
-    'Na primeira consulta, entendemos sua história, suas necessidades e construímos juntos o caminho do tratamento.',
+  h2Partes: ['Seu tratamento começa com', 'uma', 'consulta cuidadosa.'],
+  textoLinhas: [
+    'Dê o primeiro passo rumo ao sorriso que você merece com a excelência e o',
+    'acolhimento da equipe Lien em Belo Horizonte.',
+  ],
   cta: CTA_PRINCIPAL,
-  suporte: 'Atendimento particular · Cruzeiro, Belo Horizonte',
 } as const;
 
 export const rodape = {

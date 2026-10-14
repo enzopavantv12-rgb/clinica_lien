@@ -116,7 +116,7 @@ checar(
   `${linksWhats.filter(([tag]) => !/\sdata-cta=/.test(tag)).length} sem data-cta`,
 );
 const origens = new Set(linksWhats.map(([tag]) => tag.match(/data-cta="([a-z-]+)"/)?.[1]));
-const ORIGENS_OBRIGATORIAS = ['hero', 'menu', 'final', 'flutuante', 'comecar', 'sedacao', 'duvidas'];
+const ORIGENS_OBRIGATORIAS = ['hero', 'menu', 'cta-final', 'flutuante', 'comecar', 'sedacao', 'duvidas'];
 const origensFaltando = ORIGENS_OBRIGATORIAS.filter((o) => !origens.has(o));
 checar('todas as origens de CTA presentes', origensFaltando.length === 0, `faltando: ${origensFaltando.join(', ')}`);
 checar(
@@ -323,11 +323,16 @@ checar(
   refsMarca.length === 0 ? 'nenhuma referencia encontrada' : `faltando: ${faltando.join(', ')}`,
 );
 const header = marcacao.slice(marcacao.indexOf('<header'), marcacao.indexOf('</header>'));
+// O CTA final do print aprovado (out/2026) nao tem logo.
 checar(
-  'logo: colorida no header e no rodape, branca no CTA final',
-  header.includes('/marca/logo-rgb.png') &&
-    rodape.includes('/marca/logo-rgb.png') &&
-    secao('agendar').includes('/marca/logo-branca.png'),
+  'logo colorida no header e no rodape',
+  header.includes('/marca/logo-rgb.png') && rodape.includes('/marca/logo-rgb.png'),
+);
+checar(
+  'CTA final do print: card em degrade e um unico "Agende sua consulta"',
+  secao('agendar').includes('cta-final-card') &&
+    contar(secao('agendar'), /data-cta="cta-final"/g) === 1 &&
+    secao('agendar').includes('consulta cuidadosa.'),
 );
 
 // --- Pagina /tratamentos/ (alinhamento final, secao 4) ---

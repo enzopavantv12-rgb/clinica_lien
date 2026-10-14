@@ -706,3 +706,34 @@ O vídeo enviado pela clínica, o Short https://youtube.com/shorts/W87pzc6c9hs (
 - **Testado** no Chrome, em 1440px e em 375px com toque: zero requisições ao YouTube antes do clique; o embed fica dentro do player (259×460 no desktop, 211×375 no celular); fechar e trocar de aba removem o player; nenhuma rolagem horizontal.
 
 **Atenção:** o vídeo está publicado no canal pessoal "Enzo Tavares", e o nome aparece no player do YouTube. O ideal é a clínica publicá-lo no próprio canal e trocar o ID em `experiencia.capitulos[0].video.id`, no `content.ts`.
+
+---
+
+## CTA final no layout e na copy do print (out/2026)
+
+Fonte: `prompt-claude-code-cta-final-lien.md`. A seção `#agendar` foi **substituída** pelo layout do print, com o id mantido.
+
+**O que mudou:**
+- **Card:** largo, em degradê do magenta ao teal (passando por um roxo-azulado), com raio de 24px, sombra difusa e um brilho sutil no topo. Saíram o fundo magenta com padronagem e a logo branca, que o print não tem.
+- **Título:** "Seu tratamento começa com / uma *consulta cuidadosa.*".
+- **Texto:** o do print, "Dê o primeiro passo rumo ao sorriso que você merece com a excelência e o acolhimento da equipe Lien em Belo Horizonte.".
+- **Botão:** pill branco com o ícone do WhatsApp e "Agende sua consulta" em magenta.
+  - A origem passou a ser `data-cta="cta-final"`, e a mensagem é "Olá! Conheci a Lien pelo site e gostaria de agendar uma consulta.".
+- **Animação:** entrada em sequência. O degradê se move devagar (14s, ida e volta) só a partir de 768px e fica parado com movimento reduzido.
+- **Verificador:**
+  - a origem obrigatória `final` virou `cta-final`;
+  - a exigência da logo branca no CTA final saiu;
+  - entrou uma checagem do card e do CTA único.
+  - Agora são **82 checagens**.
+- **CSS:** o degradê ficou em `.cta-final-card` (`globals.css`), porque o "100%" não pode ir na marcação. Nenhum outro botão dependia dos estilos antigos da seção.
+
+**Desvios, pelas regras do projeto:**
+- **Contraste:** no extremo teal (`#34809A`), o branco mede 4,47:1 e o branco a 92% mede 4,06:1, os dois abaixo do AA. O parágrafo ficou em **branco cheio**, como o prompt prevê, e o degradê só se move a partir de 768px, onde o texto não chega à borda teal (5,2:1 ou mais). No celular, o texto também não alcança o extremo (4,7:1 ou mais).
+- **Nome acessível do botão:** é "Agende sua consulta (abre o WhatsApp)". O `aria-label` do prompt ("Agendar consulta pelo WhatsApp") não contém o texto visível e quebraria a WCAG 2.5.3.
+- **Peso e itálico:** o título pede Poppins 800, que não é carregada; o navegador usa a 900. O itálico de "consulta cuidadosa." é sintético.
+- **Botão no celular:** padding de 24px e 12px entre ícone e texto, para "Agende sua consulta" caber numa linha.
+- `rel="noopener noreferrer"`, o padrão do site.
+
+**Pontos de atenção:**
+1. **Copy diferente do Alinhamento Final:** o parágrafo aprovado era "Na primeira consulta, entendemos sua história, suas necessidades e construímos juntos o caminho do tratamento.". Usei o texto do print, por decisão do cliente. A troca é só em `ctaFinal.textoLinhas`, no `content.ts`.
+2. **"o sorriso que você merece":** tem tom de varejo. Incluir na revisão ética/CRO.
