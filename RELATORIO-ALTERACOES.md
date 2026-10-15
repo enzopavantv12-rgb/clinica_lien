@@ -756,3 +756,20 @@ O vídeo enviado pela clínica, `assets/vídeos/Lien experiência.mp4`, entrou n
 - **Testado** no Chrome em 1440px e em 375px: toca com som e controles, o player fica dentro do painel, o progresso avança, o texto volta ao pausar e não há rolagem horizontal.
 - **Pasta `assets/vídeos/`:** o vídeo institucional antigo ("vídeo lien institucional .mp4") foi removido pela clínica ao trocar os arquivos. A remoção entrou neste commit.
 - **Pendente:** só o vídeo do capítulo 02 (Recursos de conforto).
+
+---
+
+## Experiência: vídeo do capítulo 02 · Recursos de conforto (out/2026)
+
+O vídeo enviado pela clínica, `assets/vídeos/video acolhedor.mp4`, entrou no capítulo **02 · Recursos de conforto**. Com ele, os três capítulos da Experiência têm vídeo.
+
+- **Original:** 47,5s, vertical 720×1280, em HEVC, com áudio e legenda embutida na imagem.
+  - Com **203 MB**, passa do limite do GitHub (100 MB). Por isso **fica fora do git**: está no `.gitignore` e continua só na máquina.
+  - Se precisar dele em outro computador, guarde uma cópia no Drive da clínica.
+- **Arquivos gerados** em `public/videos/`:
+  - `experiencia-conforto.mp4`: H.264 + AAC, 6,5 MB;
+  - `experiencia-conforto.webm`: VP9 + Opus, 6,7 MB;
+  - poster WebP no quadro de 29,5s (a dentista com os fones da paciente, com a palavra "Acolher" na legenda) e um fundo desfocado.
+  - O site só baixa o vídeo no play (`preload="metadata"`, e só quando a seção se aproxima).
+- **Testado** no Chrome em 1440px e 375px: toca com som e controles acima da barra de abas, a barra de progresso avança, o texto volta ao pausar e não há rolagem horizontal.
+- **Para a clínica:** o vídeo fala de "não prometer que nada será sentido" e de respeitar o medo, coerente com as regras de publicidade. O texto de apoio do capítulo 02 ("Fones com isolamento de ruído, massagem e aromaterapia. / Cada detalhe pensado para você relaxar.") continua como sugestão a validar.

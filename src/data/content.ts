@@ -655,8 +655,8 @@ export const sedacao = {
  * Videos (MP4 H.264 + WebM 1080p + poster WebP em public/videos/): enquanto
  * `video` for null, o capitulo mostra o poster neutro e o texto, sem play.
  * Capitulo 01: Short do YouTube enviado pela clinica (out/2026).
- * Capitulo 03: "Lien experiencia.mp4", enviado pela clinica (out/2026).
- * [PENDENTE: VIDEO_CONFORTO — fones, massagem, aromaterapia, cafeteria, ambiente.]
+ * Capitulo 02: "video acolhedor.mp4" e capitulo 03: "Lien experiencia.mp4",
+ * enviados pela clinica (out/2026). Os tres capitulos tem video.
  * [PENDENTE: a clinica validar os textos dos capitulos 02 e 03 (SUGESTAO do
  * prompt) e "ultraprecisa" no 01 (revisao CRO).]
  */
@@ -700,7 +700,19 @@ export const experiencia = {
       aba: 'Recursos de conforto',
       titulo: 'Recursos de conforto',
       linhas: ['Fones com isolamento de ruído, massagem e aromaterapia.', 'Cada detalhe pensado para você relaxar.'],
-      video: null as Video | null, // VIDEO_CONFORTO
+      // "video acolhedor.mp4" (assets/videos/, 47,5 s, 720x1280 HEVC com audio e
+      // legenda embutida; original de 203 MB fora do git, ver .gitignore),
+      // convertido para H.264/AAC (6,5 MB) e VP9/Opus (6,7 MB); poster no quadro
+      // de 29,5 s (fones na paciente, "Acolher").
+      video: {
+        tipo: 'arquivo',
+        mp4: '/videos/experiencia-conforto.mp4',
+        webm: '/videos/experiencia-conforto.webm',
+        poster: '/videos/experiencia-conforto-poster.webp',
+        fundo: '/videos/experiencia-conforto-fundo.webp',
+        vertical: true,
+        descricao: 'A dentista da Lien explica o atendimento e coloca fones com isolamento de ruído na paciente',
+      } as Video | null,
     },
     {
       numero: '03',

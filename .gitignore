@@ -50,3 +50,7 @@ Thumbs.db
 
 # --- Workspace do subagent-driven-development (scratch) ---
 .superpowers/
+
+# Originais de video acima de 100 MB (limite do GitHub): ficam so na maquina.
+# A versao convertida para o site vai em public/videos/.
+assets/vídeos/video acolhedor.mp4
