@@ -655,13 +655,15 @@ export const sedacao = {
  * Videos (MP4 H.264 + WebM 1080p + poster WebP em public/videos/): enquanto
  * `video` for null, o capitulo mostra o poster neutro e o texto, sem play.
  * Capitulo 01: Short do YouTube enviado pela clinica (out/2026).
- * [PENDENTE: VIDEO_CONFORTO — fones, massagem, aromaterapia, cafeteria, ambiente;
- * VIDEO_ACOMPANHAMENTO — conversa a mesa, entrega do kit e abraco.]
+ * Capitulo 03: "Lien experiencia.mp4", enviado pela clinica (out/2026).
+ * [PENDENTE: VIDEO_CONFORTO — fones, massagem, aromaterapia, cafeteria, ambiente.]
  * [PENDENTE: a clinica validar os textos dos capitulos 02 e 03 (SUGESTAO do
  * prompt) e "ultraprecisa" no 01 (revisao CRO).]
  */
 type Video =
-  | { tipo: 'arquivo'; mp4: string; webm: string; poster: string; vtt?: string }
+  /** Arquivo proprio em public/videos/. `vertical` (9:16): centralizado sobre
+   *  o `fundo` desfocado, como o Short do capitulo 01. */
+  | { tipo: 'arquivo'; mp4: string; webm: string; poster: string; vtt?: string; vertical?: boolean; fundo?: string; descricao: string }
   /**
    * Video do YouTube (Short vertical). So carrega o embed (youtube-nocookie)
    * no clique, como o mapa do rodape: antes disso nenhum pedido vai ao Google
@@ -705,7 +707,18 @@ export const experiencia = {
       aba: 'Orientação e acompanhamento',
       titulo: 'Orientação e acompanhamento',
       linhas: ['Conversa à mesa, kit personalizado e acompanhamento pós-procedimento.', 'O cuidado continua depois da cadeira.'],
-      video: null as Video | null, // VIDEO_ACOMPANHAMENTO
+      // "Lien experiencia.mp4" (assets/videos/, 7,4 s, 1080x1920 HEVC com audio),
+      // convertido para 720x1280 H.264/AAC (1,6 MB) e VP9/Opus (1,2 MB); poster
+      // no quadro de 6,5 s (entrega do kit).
+      video: {
+        tipo: 'arquivo',
+        mp4: '/videos/experiencia-acompanhamento.mp4',
+        webm: '/videos/experiencia-acompanhamento.webm',
+        poster: '/videos/experiencia-acompanhamento-poster.webp',
+        fundo: '/videos/experiencia-acompanhamento-fundo.webp',
+        vertical: true,
+        descricao: 'Recepção, consulta e entrega do kit da Lien a uma paciente',
+      } as Video | null,
     },
   ],
   abas: 'Capítulos da Experiência Lien',

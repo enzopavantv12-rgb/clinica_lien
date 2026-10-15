@@ -170,27 +170,51 @@ export function Experiencia() {
               </div>
             )
           ) : c.video ? (
-            <video
-              ref={videoRef}
-              className="absolute inset-0 h-full w-full object-cover"
-              poster={c.video.poster}
-              playsInline
-              preload={perto ? 'metadata' : 'none'}
-              controls={tocando}
-              onPause={() => setTocando(false)}
-              onEnded={() => {
-                setTocando(false);
-                setAtivo((a) => (a + 1) % capitulos.length);
-              }}
-              onTimeUpdate={(e) => {
-                const v = e.currentTarget;
-                setProgresso(v.duration ? v.currentTime / v.duration : 0);
-              }}
-            >
-              <source src={c.video.webm} type="video/webm" />
-              <source src={c.video.mp4} type="video/mp4" />
-              {c.video.vtt && <track kind="captions" src={c.video.vtt} srcLang="pt-BR" label="Português" default />}
-            </video>
+            <div className="absolute inset-0">
+              {c.video.vertical && c.video.fundo && (
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 scale-110 bg-cover bg-center opacity-60 blur-2xl"
+                  style={{ backgroundImage: `url(${c.video.fundo})` }}
+                />
+              )}
+              {/* Vertical: 9:16 centralizado; tocando, sobe para acima da barra
+                  de abas (sm+) para os controles nativos ficarem visiveis. */}
+              <div
+                className={
+                  c.video.vertical
+                    ? `absolute inset-x-0 flex justify-center ${tocando ? 'bottom-4 top-4 sm:bottom-[98px]' : 'inset-y-0'}`
+                    : 'absolute inset-0'
+                }
+              >
+                <video
+                  ref={videoRef}
+                  className={
+                    c.video.vertical
+                      ? `aspect-[9/16] h-full w-auto object-cover ${tocando ? 'rounded-xl' : ''}`
+                      : 'h-full w-full object-cover'
+                  }
+                  poster={c.video.poster}
+                  playsInline
+                  preload={perto ? 'metadata' : 'none'}
+                  controls={tocando}
+                  aria-label={`${c.titulo}: ${c.video.descricao}`}
+                  onPause={() => setTocando(false)}
+                  onEnded={() => {
+                    setTocando(false);
+                    setAtivo((a) => (a + 1) % capitulos.length);
+                  }}
+                  onTimeUpdate={(e) => {
+                    const v = e.currentTarget;
+                    setProgresso(v.duration ? v.currentTime / v.duration : 0);
+                  }}
+                >
+                  <source src={c.video.webm} type="video/webm" />
+                  <source src={c.video.mp4} type="video/mp4" />
+                  {c.video.vtt && <track kind="captions" src={c.video.vtt} srcLang="pt-BR" label="Português" default />}
+                </video>
+              </div>
+            </div>
           ) : (
             <PosterPendente />
           )}

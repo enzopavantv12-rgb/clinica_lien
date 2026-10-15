@@ -737,3 +737,22 @@ Fonte: `prompt-claude-code-cta-final-lien.md`. A seção `#agendar` foi **substi
 **Pontos de atenção:**
 1. **Copy diferente do Alinhamento Final:** o parágrafo aprovado era "Na primeira consulta, entendemos sua história, suas necessidades e construímos juntos o caminho do tratamento.". Usei o texto do print, por decisão do cliente. A troca é só em `ctaFinal.textoLinhas`, no `content.ts`.
 2. **"o sorriso que você merece":** tem tom de varejo. Incluir na revisão ética/CRO.
+
+---
+
+## Experiência: vídeo do capítulo 03 · Orientação e acompanhamento (out/2026)
+
+O vídeo enviado pela clínica, `assets/vídeos/Lien experiência.mp4`, entrou no capítulo **03 · Orientação e acompanhamento**.
+
+- **Original:** 7,4s, vertical 1080×1920, em HEVC (que o Chrome e o Firefox não tocam) e com áudio.
+- **Arquivos gerados** em `public/videos/`, com ffmpeg rodado fora do projeto:
+  - `experiencia-acompanhamento.mp4`: H.264 + AAC, 720×1280, 1,6 MB;
+  - `experiencia-acompanhamento.webm`: VP9 + Opus, 1,2 MB;
+  - poster WebP no quadro de 6,5s (a entrega do kit Lien) e um fundo desfocado.
+- **Player:** ganhou o modo vertical para arquivos próprios.
+  - Parado: o vídeo fica centralizado em 9:16 sobre o fundo desfocado.
+  - Tocando: sobe para acima da barra de abas, para os controles nativos ficarem visíveis.
+  - A barra de progresso rosa da aba acompanha o tempo, e o texto volta ao pausar.
+- **Testado** no Chrome em 1440px e em 375px: toca com som e controles, o player fica dentro do painel, o progresso avança, o texto volta ao pausar e não há rolagem horizontal.
+- **Pasta `assets/vídeos/`:** o vídeo institucional antigo ("vídeo lien institucional .mp4") foi removido pela clínica ao trocar os arquivos. A remoção entrou neste commit.
+- **Pendente:** só o vídeo do capítulo 02 (Recursos de conforto).
