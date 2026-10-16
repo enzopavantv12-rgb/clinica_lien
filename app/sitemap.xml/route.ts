@@ -5,7 +5,7 @@ import { todosArtigos } from '@/lib/artigos';
  * sitemap.xml, gerado no build: dominio de `site.url` e `lastmod` = data do
  * build. Substitui o arquivo estatico e o script que atualizava o lastmod.
  *
- * URLs sempre com barra final: next.config.ts usa trailingSlash: true, e a
+ * URLs sempre com barra final: next.config.mjs usa trailingSlash: true, e a
  * URL sem barra responde 301.
  *
  * Paginas: home, /tratamentos/, /conteudos/, os 14 artigos (URLs do PDF, na

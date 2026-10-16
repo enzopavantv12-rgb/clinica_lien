@@ -39,7 +39,7 @@ npm run verificar  # roda as assertions do build
 ## Estrutura
 
 ```
-next.config.ts                  output: 'export' + trailingSlash: true
+next.config.mjs                 output: 'export' + trailingSlash: true
 tailwind.config.ts              design system (paleta e escala do manual)
 app/
   layout.tsx                    shell HTML, Metadata API, favicon, preload
