@@ -6,7 +6,6 @@ import Autoplay from 'embla-carousel-autoplay';
 import { ChevronLeft, ChevronRight, MoveHorizontal, Pause, Play } from 'lucide-react';
 import ImageCompare from '@/components/ui/image-compare';
 import { SectionHeading } from '@/components/ui/SectionHeading';
-import { FundoGrade } from '@/components/ui/background-snippets';
 import larguras from '@/data/imagens.json';
 import { resultados } from '@/data/content';
 
@@ -201,8 +200,7 @@ export function Resultados() {
   };
 
   return (
-    <section id="resultados" className="relative isolate py-20 sm:py-24 lg:py-28">
-      <FundoGrade />
+    <section id="resultados" className="bg-white py-20 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
         <SectionHeading tag={resultados.tag} titulo={resultados.h2} subtitulo={resultados.apoio} />
 

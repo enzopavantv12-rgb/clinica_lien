@@ -773,3 +773,11 @@ O vídeo enviado pela clínica, `assets/vídeos/video acolhedor.mp4`, entrou no 
   - O site só baixa o vídeo no play (`preload="metadata"`, e só quando a seção se aproxima).
 - **Testado** no Chrome em 1440px e 375px: toca com som e controles acima da barra de abas, a barra de progresso avança, o texto volta ao pausar e não há rolagem horizontal.
 - **Para a clínica:** o vídeo fala de "não prometer que nada será sentido" e de respeitar o medo, coerente com as regras de publicidade. O texto de apoio do capítulo 02 ("Fones com isolamento de ruído, massagem e aromaterapia. / Cada detalhe pensado para você relaxar.") continua como sugestão a validar.
+
+---
+
+## Fundo quadriculado removido (out/2026)
+
+A pedido, saiu o fundo "grade + brilho rosa" (`FundoGrade`) das duas seções que ainda o usavam, **Resultados** e **Equipe**. As duas agora têm fundo branco liso. O componente `background-snippets.tsx` e o CSS de animação dele (`.fundo-grade-*`) foram apagados, porque ficaram sem uso. O padrão de ondas da marca no Método e na Experiência não foi alterado.
+
+**Atenção:** o Alinhamento pedia separar visualmente a prova clínica (Resultados) da prova emocional (Depoimentos). Antes, a grade fazia essa separação. Agora a separação fica pelo respiro entre as seções e pelo degradê quase branco dos Depoimentos.

@@ -2,7 +2,6 @@ import { BrandImage } from '../ui/BrandImage';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeading } from '../ui/SectionHeading';
 import { equipe } from '../../data/content';
-import { FundoGrade } from '../ui/background-snippets';
 
 /**
  * Equipe (alinhamento final, 3.10): foto grande + nome + especialidade +
@@ -14,8 +13,7 @@ import { FundoGrade } from '../ui/background-snippets';
  */
 export function Equipe() {
   return (
-    <section id="equipe" className="relative isolate py-20 sm:py-24 lg:py-28">
-      <FundoGrade />
+    <section id="equipe" className="bg-white py-20 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
         <SectionHeading tag={equipe.tag} titulo={equipe.h2} subtitulo={equipe.sub} />
 
