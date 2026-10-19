@@ -31,6 +31,7 @@
     "tailwind-merge": "^2.6.1"
   },
   "devDependencies": {
+    "@next/swc-wasm-nodejs": "^15.5.28",
     "@types/node": "26.5.0",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
