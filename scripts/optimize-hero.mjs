@@ -1,9 +1,10 @@
 /**
  * Variantes da imagem da hero (Dra. Natalia com o arco ao fundo).
  *
- * Entrada:  assets/hero/Banner-lien-Firefly-Upscaler-escala-2x.png  (3840x2160, 16:9)
- *           — fica em assets/, fora do deploy: o original tem 10 MB.
- * Saida:    public/img/hero-lien-{2000,1440,1024}.{avif,webp}   desktop/tablet
+ * Entrada:  assets/hero/Banner Natália.png  (1672x941, 16:9; out/2026)
+ *           — fica em assets/, fora do deploy.
+ * Saida:    public/img/hero-lien-{1672,1440,1024}.{avif,webp}   desktop/tablet
+ *           (1672 = largura do original: nao ampliar)
  *           public/img/hero-lien-mobile-900.{avif,webp}          recorte 900x1200 (3:4)
  * Uso:      npm run hero
  *
@@ -15,7 +16,7 @@ import { mkdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import sharp from 'sharp';
 
-const ORIGINAL = 'assets/hero/Banner-lien-Firefly-Upscaler-escala-2x.png';
+const ORIGINAL = 'assets/hero/Banner Natália.png';
 const SAIDA = 'public/img';
 const CENTRO_ROSTO_X = 0.71;
 
@@ -34,7 +35,7 @@ async function gravar(pipeline, nome) {
 const original = sharp(ORIGINAL);
 const { width, height } = await original.metadata();
 
-for (const largura of [2000, 1440, 1024]) {
+for (const largura of [1672, 1440, 1024]) {
   await gravar(original.clone().resize({ width: largura }), `hero-lien-${largura}`);
 }
 

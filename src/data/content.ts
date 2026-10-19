@@ -133,10 +133,11 @@ export const hero = {
    */
   imagem: {
     base: '/img/hero-lien',
-    larguras: [1024, 1440, 2000],
+    // Foto "Banner Natalia" (assets/hero/, 1672x941; out/2026).
+    larguras: [1024, 1440, 1672],
     mobile: '/img/hero-lien-mobile-900',
-    width: 2000,
-    height: 1125,
+    width: 1672,
+    height: 941,
     alt: 'Dra. Natália Simões, fundadora da Lien Reabilitação Oral, sorrindo em ambiente claro e acolhedor',
   },
 } as const;

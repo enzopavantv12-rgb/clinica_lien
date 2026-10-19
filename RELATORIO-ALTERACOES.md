@@ -781,3 +781,15 @@ O vídeo enviado pela clínica, `assets/vídeos/video acolhedor.mp4`, entrou no 
 A pedido, saiu o fundo "grade + brilho rosa" (`FundoGrade`) das duas seções que ainda o usavam, **Resultados** e **Equipe**. As duas agora têm fundo branco liso. O componente `background-snippets.tsx` e o CSS de animação dele (`.fundo-grade-*`) foram apagados, porque ficaram sem uso. O padrão de ondas da marca no Método e na Experiência não foi alterado.
 
 **Atenção:** o Alinhamento pedia separar visualmente a prova clínica (Resultados) da prova emocional (Depoimentos). Antes, a grade fazia essa separação. Agora a separação fica pelo respiro entre as seções e pelo degradê quase branco dos Depoimentos.
+
+---
+
+## Hero: foto nova (out/2026)
+
+A foto do banner foi trocada pela enviada pela clínica, `assets/hero/Banner Natália.png` (1672×941, 16:9).
+
+- **Script:** o `scripts/optimize-hero.mjs` aponta para a foto nova. As larguras geradas passaram a 1024, 1440 e **1672** (no lugar de 2000), porque o original é menor que a foto anterior e não deve ser ampliado. As variantes `hero-lien-2000.*` foram removidas.
+- **Celular:** o recorte vertical 3:4 continua centrado em 71% da largura e enquadra bem o rosto e os ombros. Como a foto nova tem 941px de altura, esse recorte é ampliado cerca de 1,3× para 900×1200. Fica um pouco menos nítido que antes, mas sem perda visível.
+- **Conteúdo:** `hero.imagem` no `content.ts` ganhou as dimensões novas (1672×941), e o preload do LCP segue as larguras novas.
+- **Conferido** em 1440px, 1920px e 375px: o texto continua sobre a área clara e legível, a doutora fica no terço direito e o navegador carrega a variante certa em cada largura (1440, 1672 e mobile-900).
+- **Original antigo:** `assets/hero/Banner-lien-Firefly-Upscaler-escala-2x.png` continua na pasta, sem uso.
