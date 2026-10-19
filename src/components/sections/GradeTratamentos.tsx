@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { ArcoGrande } from '../ui/BrandGraphics';
+import { Simbolo } from '../ui/BrandGraphics';
 import { Reveal } from '../ui/Reveal';
 import { MOLDURA, TopoTratamento, VARIANTES, classeBotao, variantePor } from '../ui/TratamentoCard';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
@@ -72,7 +72,7 @@ export function GradeTratamentos({ leituras }: { leituras: Record<string, Leitur
     return () => window.removeEventListener('hashchange', aoMudar);
   }, [lista, rolarAte]);
 
-  // O arco desenha o traco quando entra na tela.
+  // O simbolo se revela quando entra na tela.
   useEffect(() => {
     const arco = arcoRef.current;
     if (!arco) return;
@@ -200,9 +200,9 @@ export function GradeTratamentos({ leituras }: { leituras: Record<string, Leitur
         );
       })}
 
-      {/* Arco decorativo no vazio da ultima linha (so com 3 colunas). */}
-      <li ref={arcoRef} aria-hidden="true" className="pointer-events-none hidden items-center justify-center lg:col-span-2 lg:flex">
-        <ArcoGrande className="h-auto w-[380px]" />
+      {/* Simbolo oficial no vazio da ultima linha (so com 3 colunas). */}
+      <li ref={arcoRef} aria-hidden="true" className="pointer-events-none hidden items-center justify-center drop-shadow-[0_18px_30px_rgba(104,192,212,.25)] lg:col-span-2 lg:flex">
+        <Simbolo variante="cyano" className="simbolo-entra h-auto w-[340px]" />
       </li>
     </ul>
   );

@@ -52,7 +52,7 @@ export function SectionHeading({
         <Reveal delay={0.12}>
           {/* Simbolo oficial, sem distorcer: so a largura e fixada. O
               alinhamento vem do flex-col do wrapper, como nos demais itens. */}
-          <Simbolo variante={claro ? 'cyano' : 'rgb'} className="mt-4 block h-auto w-14" />
+          <Simbolo variante={claro ? 'cyano' : 'rgb'} className="mt-5 block h-auto w-24" />
         </Reveal>
       )}
       {subtitulo && (

@@ -793,3 +793,23 @@ A foto do banner foi trocada pela enviada pela clínica, `assets/hero/Banner Nat
 - **Conteúdo:** `hero.imagem` no `content.ts` ganhou as dimensões novas (1672×941), e o preload do LCP segue as larguras novas.
 - **Conferido** em 1440px, 1920px e 375px: o texto continua sobre a área clara e legível, a doutora fica no terço direito e o navegador carrega a variante certa em cada largura (1440, 1672 e mobile-900).
 - **Original antigo:** `assets/hero/Banner-lien-Firefly-Upscaler-escala-2x.png` continua na pasta, sem uso.
+
+---
+
+## Sorriso da marca: maior e sempre o símbolo oficial (out/2026)
+
+Pedido da clínica: deixar o sorriso maior, trocar onde ele aparecia só como uma linha e deixar a textura da seção "Previsibilidade & Segurança" mais delicada e com menos zoom.
+
+- **Tamanho:** o símbolo oficial (assets/Pastas/LIEN_simbolo_*.png) ficou maior.
+  - Títulos de seção e /conteudos/: de 56px para 96px.
+  - Hero: de 72px para 104px (120px no desktop).
+- **Linhas trocadas pelo símbolo oficial:**
+  - Fechamento do Método: rgb, 96px.
+  - "Próximo passo" dos artigos: rgb, 96px.
+  - Destaque da grade de /tratamentos/: cyano, 340px, aparece da esquerda para a direita (sem animação com movimento reduzido).
+  - Poster de espera do vídeo da Experiência: cyano a 25%.
+  - Os componentes `ArcoSorriso` e `ArcoGrande`, que desenhavam o sorriso em SVG, foram removidos.
+- **Textura (Método e Experiência):**
+  - O `npm run marca` passou a gerar `public/marca/padronagem-ladrilho.webp`. É um período exato do desenho oficial (1787×907px no original), que repete sem emenda.
+  - O fundo usa esse ladrilho com 200px de largura. Antes, o arquivo inteiro era esticado com `cover`, e o zoom crescia junto com a altura da seção.
+  - A opacidade caiu de 5% para 3,5%.

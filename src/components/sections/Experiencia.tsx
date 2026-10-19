@@ -2,19 +2,17 @@
 
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { X } from 'lucide-react';
-import { PadraoOndas } from '../ui/BrandGraphics';
+import { PadraoOndas, Simbolo } from '../ui/BrandGraphics';
 import { Reveal } from '../ui/Reveal';
 import { experiencia } from '../../data/content';
 
 const { capitulos } = experiencia;
 
-/** Poster neutro enquanto o video nao chega: escuro, com o arco do sorriso em rosa a 20%. */
+/** Poster neutro enquanto o video nao chega: escuro, com o simbolo oficial (ciano) a 25%. */
 function PosterPendente() {
   return (
     <div aria-hidden="true" className="absolute inset-0 grid place-items-center bg-[#14141A]">
-      <svg viewBox="0 0 380 120" fill="none" className="w-[46%] max-w-[420px] opacity-20">
-        <path d="M20 22 Q190 196 360 22" stroke="#F0B6F2" strokeWidth={22} strokeLinecap="round" />
-      </svg>
+      <Simbolo variante="cyano" className="h-auto w-[46%] max-w-[420px] opacity-25" />
     </div>
   );
 }
@@ -112,7 +110,7 @@ export function Experiencia() {
       aria-labelledby="exp-title"
       className="relative isolate overflow-hidden bg-white py-[72px] lg:py-[104px]"
     >
-      <PadraoOndas className="pointer-events-none absolute inset-0 -z-10 h-full w-full" cor="#9C1781" opacidade={0.05} />
+      <PadraoOndas className="pointer-events-none absolute inset-0 -z-10 h-full w-full" cor="#9C1781" opacidade={0.035} ladrilho={200} />
 
       <Reveal y={16} duracao={0.6} className="mx-auto max-w-[760px] px-6 text-center">
         <span className="inline-block rounded-full border border-[#DCEBEF] bg-white px-4 py-[7px] text-xs font-semibold uppercase leading-none tracking-[.14em] text-teal">

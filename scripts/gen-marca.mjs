@@ -51,6 +51,20 @@ for (const [original, saida, largura] of MARCAS) {
   console.log(`  ok  ${'padronagem.webp'.padEnd(22)} ${info.width}x${info.height}  ${(info.size / 1024).toFixed(1)}KB`);
 }
 
+// Ladrilho da padronagem: um periodo exato do desenho (1787x907px no
+// original, medido por autocorrelacao do canal alfa), recortado do miolo do
+// arquivo. Repete sem emenda, entao a textura pode ser exibida pequena (sem o
+// "zoom" do arquivo inteiro esticado com cover em secoes altas). Sai a 480px:
+// 2x da maior exibicao (240px).
+{
+  const info = await sharp(join(ENTRADA, 'LIEN_padronagem.png'))
+    .extract({ left: 1787 * 2, top: 907 * 2, width: 1787, height: 907 })
+    .resize({ width: 480, height: 244, fit: 'fill' })
+    .webp({ quality: 60, alphaQuality: 80 })
+    .toFile(join(SAIDA, 'padronagem-ladrilho.webp'));
+  console.log(`  ok  ${'padronagem-ladrilho.webp'.padEnd(22)} ${info.width}x${info.height}  ${(info.size / 1024).toFixed(1)}KB`);
+}
+
 // Favicons: simbolo negativo (branco) sobre o magenta da marca.
 // O apple-icon sai sem cantos arredondados: o iOS arredonda sozinho e pinta
 // de preto qualquer area transparente.

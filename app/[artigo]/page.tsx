@@ -4,7 +4,7 @@ import { ArrowRight, ChevronRight } from 'lucide-react';
 import { Header } from '@/components/sections/Header';
 import { Footer } from '@/components/sections/Footer';
 import { FloatingWhatsApp } from '@/components/ui/FloatingWhatsApp';
-import { ArcoSorriso } from '@/components/ui/BrandGraphics';
+import { Simbolo } from '@/components/ui/BrandGraphics';
 import { JsonLd } from '@/components/ui/JsonLd';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { CTA_PRINCIPAL, conteudos, mensagemArtigo, site, tratamentoPorSlug } from '@/data/content';
@@ -177,7 +177,7 @@ export default async function Artigo({ params }: Props) {
           </div>
 
           <aside aria-labelledby="proximo-passo" className="mt-14 rounded-3xl bg-cream p-7 shadow-soft sm:p-10">
-            <ArcoSorriso className="h-auto w-16" />
+            <Simbolo className="block h-auto w-24" />
             <h2 id="proximo-passo" className="mt-4 text-h3 sm:text-h3-lg font-semibold text-ink">
               {rotulos.proximoPasso}
             </h2>

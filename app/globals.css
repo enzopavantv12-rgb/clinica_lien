@@ -371,25 +371,23 @@
 }
 
 @layer components {
-  /* Arco grande de /tratamentos/: desenha o traco uma vez (1,2s) quando
-     entra na tela (.is-visivel, posto por GradeTratamentos). */
-  .arco-desenha {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
+  /* Simbolo grande de /tratamentos/: revela da esquerda para a direita uma
+     vez (1,2s) quando entra na tela (.is-visivel, posto por GradeTratamentos). */
+  .simbolo-entra {
+    clip-path: inset(0 100% 0 0);
   }
-  .is-visivel .arco-desenha {
-    animation: arco-desenha 1.2s ease-out forwards;
+  .is-visivel .simbolo-entra {
+    animation: simbolo-entra 1.2s ease-out forwards;
   }
-  @keyframes arco-desenha {
+  @keyframes simbolo-entra {
     to {
-      stroke-dashoffset: 0;
+      clip-path: inset(0 0 0 0);
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .arco-desenha {
-      stroke-dashoffset: 0;
-    }
-    .is-visivel .arco-desenha {
+    .simbolo-entra,
+    .is-visivel .simbolo-entra {
+      clip-path: none;
       animation: none;
     }
   }

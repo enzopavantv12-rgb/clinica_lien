@@ -98,7 +98,7 @@ export function Hero() {
 
           {/* Simbolo oficial da Lien (o sorriso), sob o titulo. */}
           <span className="hero-entra mt-4 block" style={ordem(2)}>
-            <Simbolo variante="rgb" carregamento="eager" className="block h-auto w-[72px]" />
+            <Simbolo variante="rgb" carregamento="eager" className="block h-auto w-[104px] hl:w-[120px]" />
           </span>
 
           <p

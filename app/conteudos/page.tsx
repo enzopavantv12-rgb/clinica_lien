@@ -50,7 +50,7 @@ export default function Conteudos() {
           <header className="flex flex-col items-start">
             <p className="text-tag sm:text-tag-lg font-semibold uppercase tracking-[0.18em] text-teal">{conteudos.tag}</p>
             <h1 className="mt-3 text-h2 sm:text-h2-lg font-bold text-ink">{pagina.h1}</h1>
-            <Simbolo variante="rgb" carregamento="eager" className="mt-4 block h-auto w-14" />
+            <Simbolo variante="rgb" carregamento="eager" className="mt-5 block h-auto w-24" />
           </header>
 
           <div className="mt-10">

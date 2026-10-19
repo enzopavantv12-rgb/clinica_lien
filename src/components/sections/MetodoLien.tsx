@@ -1,4 +1,4 @@
-import { ArcoSorriso, PadraoOndas } from '../ui/BrandGraphics';
+import { PadraoOndas, Simbolo } from '../ui/BrandGraphics';
 import { Etiqueta } from '../ui/Etiqueta';
 import { Reveal } from '../ui/Reveal';
 import { Cardapio } from './Cardapio';
@@ -10,7 +10,8 @@ import { metodo } from '../../data/content';
  *
  * As duas sao <section> irmas (ancoras #metodo e #comecar, ordem conferida
  * pelo verificador) sobre o mesmo fundo branco com a padronagem oficial de
- * ondas em magenta a 5%. O "Por onde comecar" e uma caixa propria, 96px
+ * ondas em magenta a 3,5%, em ladrilho de 200px (mais delicada e sem zoom,
+ * pedido da clinica em out/2026). O "Por onde comecar" e uma caixa propria, 96px
  * abaixo: o alinhamento exige a separacao entre Metodo e navegacao por queixa.
  *
  * Etapas: card neutro (o mesmo dos depoimentos), badge numerico alternando
@@ -19,7 +20,7 @@ import { metodo } from '../../data/content';
 export function MetodoLien() {
   return (
     <div className="relative isolate overflow-hidden bg-white py-[72px] lg:py-[112px]">
-      <PadraoOndas className="pointer-events-none absolute inset-0 -z-10 h-full w-full" cor="#9C1781" opacidade={0.05} />
+      <PadraoOndas className="pointer-events-none absolute inset-0 -z-10 h-full w-full" cor="#9C1781" opacidade={0.035} ladrilho={200} />
 
       <section id="metodo" aria-labelledby="metodo-title" className="mx-auto max-w-[1160px] px-6">
         <Reveal y={16} duracao={0.6} className="flex flex-col items-center text-center">
@@ -56,7 +57,7 @@ export function MetodoLien() {
 
         <Reveal y={16} duracao={0.6} className="mt-10 flex flex-col items-center text-center">
           <p className="text-base font-medium italic text-ink">{metodo.fechamento}</p>
-          <ArcoSorriso className="mt-3 h-auto w-14" />
+          <Simbolo className="mt-4 block h-auto w-24" />
         </Reveal>
       </section>
 
