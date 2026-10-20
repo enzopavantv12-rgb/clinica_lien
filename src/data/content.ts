@@ -23,7 +23,6 @@ export const site = {
   // Dominio de producao. E o unico lugar a trocar quando o dominio proprio
   // (lienreabilitacao.com.br, registrado segundo o briefing) for apontado.
   url: 'https://clinica-lien.vercel.app',
-  tagline: 'Odontologia que acolhe. Cuidado que inspira confiança.',
   // [PENDENTE: confirmar se este e o numero unico de atendimento]
   telefoneExibicao: '(31) 98507-0448',
   telefoneE164: '+5531985070448',
@@ -54,7 +53,6 @@ export const site = {
   // Obrigatorio por norma do CFO.
   responsavelTecnica: 'Dra. Natália Ferreira Simões',
   cro: 'CRO-MG 49.821',
-  credito: 'Site por Wolfness Company',
 } as const;
 
 export const seo = {
@@ -1002,15 +1000,29 @@ export const ctaFinal = {
 } as const;
 
 export const rodape = {
-  titulos: { navegacao: 'Navegação', contato: 'Contato', horarios: 'Horários' },
-  comoChegar: 'Como chegar',
-  abrirNoMaps: 'Abrir no Google Maps',
-  tracarRota: 'Traçar rota',
-  conversarWhatsApp: 'Conversar pelo WhatsApp',
-  // O mapa so carrega com clique: o iframe do Google grava cookies, e isso
-  // exigiria consentimento (LGPD). Os botoes de rota nao dependem dele.
-  mostrarMapa: 'Ver mapa interativo',
-  avisoMapa: 'Ao carregar o mapa, o Google pode coletar dados de navegação.',
+  // Print da clinica (out/2026). Contato com os dados reais (decisao do usuario).
+  texto: 'Odontologia que acolhe. Cuidado que inspira confiança. Atendimento particular de alto padrão em Belo Horizonte.',
+  rotuloSecoes: 'Seções do site',
+  rotuloTratamentos: 'Tratamentos',
+  secoes: [
+    { label: 'Sobre a Clínica', href: '/#sobre' },
+    { label: 'Método Lien', href: '/#metodo' },
+    { label: 'Tratamentos', href: '/tratamentos/' },
+    { label: 'Experiência & Tecnologia', href: '/#experiencia' },
+    { label: 'Corpo Clínico', href: '/#equipe' },
+  ],
+  tratamentos: [
+    { label: 'Implantodontia Digital', href: '/tratamentos/#implantodontia-digital' },
+    { label: 'Reabilitação Oral Completa', href: '/tratamentos/#reabilitacao-oral-completa' },
+    { label: 'Lentes de Contato Dental', href: '/facetas-lentes-contato-dental-bh/' },
+    { label: 'DTM e Dor Orofacial', href: '/tratamentos/#dtm-e-dor-orofacial' },
+    { label: 'Sedação Consciente', href: '/#sedacao' },
+  ],
+  endereco: 'Edifício Asteca · Av. do Contorno, 5351 — Cruzeiro, Belo Horizonte/MG',
+  // Um item por linha de site.horarios (mesma ordem).
+  horarios: ['Seg., ter., qui. e sex. das 8h às 18h', 'Qua. das 9h às 20h'],
+  copyright: '© 2026 Lien Reabilitação Oral. Todos os direitos reservados. Belo Horizonte - MG.',
+  assinatura: 'Desenvolvido com excelência clínica e rigor ético.',
   privacidade: 'Política de privacidade',
 } as const;
 

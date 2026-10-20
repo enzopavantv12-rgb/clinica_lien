@@ -961,3 +961,28 @@ Pedido da Dra. Natália, em vídeo: o texto do capítulo não deve sumir no play
 - **Carrossel "Nossa essência":**
   - A 1ª foto (sala com a vista de BH) aparece inteira, na proporção horizontal original (1672×941). As duas verticais seguem em 4:5.
   - A altura do quadro acompanha a foto ativa, com transição suave de 0,5s, sem transição se o visitante reduz animações. Assim não sobra espaço vazio sob a foto horizontal.
+
+---
+
+## Rodapé igual ao print da clínica (out/2026)
+
+O rodapé foi refeito pelo print, em 4 colunas e sobre fundo branco.
+
+- **Marca:** logo, o texto "Odontologia que acolhe… alto padrão em Belo Horizonte." e botões redondos de Instagram e WhatsApp (`data-cta="rodape"`). Sem LinkedIn: a clínica não tem.
+- **Seções:**
+  - Sobre a Clínica (`/#sobre`)
+  - Método Lien (`/#metodo`)
+  - Tratamentos (`/tratamentos/`)
+  - Experiência & Tecnologia (`/#experiencia`)
+  - Corpo Clínico (`/#equipe`)
+- **Tratamentos:**
+  - Implantodontia Digital e Reabilitação Oral Completa: âncoras em `/tratamentos/`.
+  - Lentes de Contato Dental: o artigo `/facetas-lentes-contato-dental-bh/`.
+  - DTM e Dor Orofacial: âncora em `/tratamentos/`.
+  - Sedação Consciente: `/#sedacao`.
+- **Contato:** endereço (abre o Google Maps), telefone, e-mail e horários. Ficaram os dados reais, porque o print tinha placeholders.
+- **Base:**
+  - "© 2026 Lien Reabilitação Oral. Todos os direitos reservados. Belo Horizonte - MG." e "Desenvolvido com excelência clínica e rigor ético.".
+  - Uma linha discreta com razão social, CNPJ, responsável técnica e CRO (exigência do CFO) e o link da Política de privacidade (LGPD).
+- **Removido:** o bloco "Como chegar" com mapa e o componente `MapaSobDemanda`, o crédito "Site por Wolfness Company" e o `site.tagline`.
+- **Atenção:** a resposta da FAQ "Onde a clínica está localizada…" ainda diz que o mapa fica no rodapé. Agora é o endereço que abre o Google Maps. Vale ajustar a frase se a clínica quiser.

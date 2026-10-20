@@ -1,56 +1,42 @@
-import { Clock, ExternalLink, Instagram, Mail, MapPin, Navigation, Phone } from 'lucide-react';
+'use client';
+
+import { usePathname } from 'next/navigation';
+import { Clock, Instagram, Mail, MapPin, Phone } from 'lucide-react';
 import { Logo } from '../ui/Logo';
-import { MapaSobDemanda } from '../ui/MapaSobDemanda';
-import { WhatsAppLink } from '../ui/WhatsAppLink';
-import { navegacao, rodape, site } from '../../data/content';
+import { WhatsAppIcon } from '../ui/WhatsAppIcon';
+import { whatsappUrlPor } from '../../lib/whatsapp';
+import { trackWhatsAppClick } from '../../lib/tracking';
+import { rodape, site } from '../../data/content';
 
-/** Icone do TikTok — lucide-react nao inclui marcas. */
-function TikTokIcon({ size = 20 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-      <path d="M16.6 5.82A4.28 4.28 0 0 0 15.54 3h-3.1v12.4a2.6 2.6 0 1 1-1.86-2.49V9.7a5.7 5.7 0 1 0 4.96 5.65V8.9a7.2 7.2 0 0 0 3.96 1.2V7a4.3 4.3 0 0 1-2.9-1.18Z" />
-    </svg>
-  );
-}
-
-const icone = 'mt-1 shrink-0 text-teal';
 const link =
   'rounded transition-colors hover:text-magenta focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-magenta';
-const titulo = 'text-legend font-semibold uppercase tracking-[0.16em] text-ink';
-const botaoMapa =
-  'inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-[0.9375rem] font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta';
 const botaoRede =
-  'rounded-xl border border-ink/15 p-2.5 text-teal transition-colors hover:border-teal hover:bg-teal/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal';
+  'grid h-11 w-11 place-items-center rounded-full bg-[#8E1F7E] text-white transition-colors hover:bg-magenta focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta';
+const icone = 'mt-[3px] shrink-0 text-[#8E1F7E]';
 
 /**
- * Rodape. Fundo cream com a logo COLORIDA: o manual preve colorido sobre
- * branco/cream e branco so sobre magenta/teal — a combinacao anterior (branco
- * sobre ink) nao esta entre as permitidas.
+ * Rodape — layout do print da clinica (out/2026): marca + redes, duas colunas
+ * de links (secoes e tratamentos) e o contato, com a linha de copyright.
  *
- * Contraste: teal sobre cream mede 4,46:1 e FALHA AA para texto. Aqui teal so
- * aparece em icones (exigencia de 3:1 para elemento grafico); todo texto e ink,
- * ink-muted ou magenta.
- *
- * Bloco "Como chegar" acima da linha legal: endereco, horarios, WhatsApp e
- * botoes de rota a esquerda (5/12), mapa a direita (7/12). O mapa continua
- * carregando so com clique (LGPD) — ver MapaSobDemanda.
- *
- * Linha legal obrigatoria: razao social, CNPJ e responsavel tecnica com CRO.
+ * Por decisao do usuario, mantidos os dados reais de contato (o print tinha
+ * placeholders) e, numa linha discreta, a identificacao exigida pelo CFO
+ * (razao social, CNPJ, responsavel tecnica + CRO) e o link da privacidade
+ * (LGPD). Saiu o bloco "Como chegar" com mapa; o endereco abre o Google Maps.
+ * Sem LinkedIn (a clinica nao tem).
  */
 export function Footer() {
-  const destino = encodeURIComponent(site.enderecoMaps);
-  const abrirNoMaps = `https://www.google.com/maps/search/?api=1&query=${destino}`;
-  const tracarRota = `https://www.google.com/maps/dir/?api=1&destination=${destino}`;
+  const pagina = usePathname() ?? '/';
+  const mapa = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.enderecoMaps)}`;
 
   return (
-    <footer className="border-t border-brandgray bg-cream pt-16 pb-10 text-ink">
+    <footer className="bg-white pt-16 pb-10 text-ink">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.15fr_1fr_1fr_1.25fr] lg:gap-8">
           {/* Marca */}
           <div>
-            <Logo variante="colorida" className="h-16" />
-            <p className="mt-4 max-w-[30ch] text-body text-ink-muted">{site.tagline}</p>
-            <div className="mt-6 flex items-center gap-3">
+            <Logo variante="colorida" className="h-14" />
+            <p className="mt-4 max-w-[32ch] text-[0.9375rem] font-light leading-[1.65] text-ink-muted">{rodape.texto}</p>
+            <div className="mt-7 flex items-center gap-4">
               <a
                 href={site.instagram.url}
                 target="_blank"
@@ -58,29 +44,42 @@ export function Footer() {
                 aria-label={`Instagram da Dra. Natália Simões (${site.instagram.arroba})`}
                 className={botaoRede}
               >
-                <Instagram size={20} strokeWidth={1.75} aria-hidden="true" />
+                <Instagram size={19} strokeWidth={2} aria-hidden="true" />
               </a>
-              {site.tiktok.exibir && (
-                <a
-                  href={site.tiktok.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`TikTok da Lien (${site.tiktok.arroba})`}
-                  className={botaoRede}
-                >
-                  <TikTokIcon size={20} />
-                </a>
-              )}
+              <a
+                href={whatsappUrlPor('rodape')}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick('rodape', pagina)}
+                data-cta="rodape"
+                data-page={pagina}
+                aria-label="WhatsApp da Lien (abre o WhatsApp)"
+                className={botaoRede}
+              >
+                <WhatsAppIcon size={19} />
+              </a>
             </div>
           </div>
 
-          {/* Navegacao */}
-          <nav aria-label="Navegação do rodapé">
-            <h2 className={titulo}>{rodape.titulos.navegacao}</h2>
-            <ul className="mt-5 flex flex-col gap-3">
-              {navegacao.map((item) => (
+          {/* Secoes do site */}
+          <nav aria-label={rodape.rotuloSecoes}>
+            <ul className="flex flex-col gap-3 text-[0.9375rem] font-light text-ink-muted lg:pt-3">
+              {rodape.secoes.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href} className={`text-body text-ink-muted ${link}`}>
+                  <a href={item.href} className={link}>
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Tratamentos */}
+          <nav aria-label={rodape.rotuloTratamentos}>
+            <ul className="flex flex-col gap-3 text-[0.9375rem] font-light text-ink-muted lg:pt-3">
+              {rodape.tratamentos.map((item) => (
+                <li key={item.href + item.label}>
+                  <a href={item.href} className={link}>
                     {item.label}
                   </a>
                 </li>
@@ -89,94 +88,50 @@ export function Footer() {
           </nav>
 
           {/* Contato */}
-          <div>
-            <h2 className={titulo}>{rodape.titulos.contato}</h2>
-            <ul className="mt-5 flex flex-col gap-4 text-body text-ink-muted">
-              <li className="flex items-start gap-3">
-                <Phone size={18} strokeWidth={1.75} aria-hidden="true" className={icone} />
-                <a href={`tel:${site.telefoneE164}`} className={link}>
-                  {site.telefoneExibicao}
-                </a>
-              </li>
-              <li className="flex items-start gap-3">
-                <Mail size={18} strokeWidth={1.75} aria-hidden="true" className={icone} />
-                <a href={`mailto:${site.email}`} className={`break-all ${link}`}>
-                  {site.email}
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Como chegar */}
-        <div className="mt-14 grid gap-8 border-t border-ink/10 pt-12 md:grid-cols-12 md:gap-10">
-          <div className="md:col-span-5">
-            <h2 className="text-h3 sm:text-h3-lg font-semibold text-ink">{rodape.comoChegar}</h2>
-            <ul className="mt-6 flex flex-col gap-4 text-body text-ink-muted">
-              <li className="flex items-start gap-3">
-                <MapPin size={18} strokeWidth={1.75} aria-hidden="true" className={icone} />
-                {/* [PENDENTE: numero da sala e ponto de referencia] */}
-                <span>{site.enderecoCompleto}</span>
-              </li>
-              {site.horarios.map((h) => (
-                <li key={h.dias} className="flex items-start gap-3">
-                  <Clock size={18} strokeWidth={1.75} aria-hidden="true" className={icone} />
-                  <span>
-                    <span className="font-medium text-ink">{h.dias}</span>
-                    <br />
-                    {h.horas}
+          <ul className="flex flex-col gap-4 text-[0.9375rem] font-light text-ink-muted lg:pt-3">
+            <li className="flex items-start gap-3">
+              <MapPin size={17} strokeWidth={2} aria-hidden="true" className={icone} />
+              <a href={mapa} target="_blank" rel="noopener noreferrer" className={link}>
+                {rodape.endereco}
+              </a>
+            </li>
+            <li className="flex items-start gap-3">
+              <Phone size={17} strokeWidth={2} aria-hidden="true" className={icone} />
+              <a href={`tel:${site.telefoneE164}`} className={link}>
+                {site.telefoneExibicao}
+              </a>
+            </li>
+            <li className="flex items-start gap-3">
+              <Mail size={17} strokeWidth={2} aria-hidden="true" className={icone} />
+              <a href={`mailto:${site.email}`} className={`break-all ${link}`}>
+                {site.email}
+              </a>
+            </li>
+            <li className="flex items-start gap-3">
+              <Clock size={17} strokeWidth={2} aria-hidden="true" className={icone} />
+              <span>
+                {site.horarios.map((h, i) => (
+                  <span key={h.dias} className="block">
+                    {rodape.horarios[i]}
                   </span>
-                </li>
-              ))}
-              <li>
-                <WhatsAppLink origem="rodape" contexto={rodape.comoChegar} className="!text-magenta hover:!text-ink">
-                  {rodape.conversarWhatsApp} · {site.telefoneExibicao}
-                </WhatsAppLink>
-              </li>
-            </ul>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <a
-                href={abrirNoMaps}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${botaoMapa} border border-ink/25 text-ink hover:border-ink hover:bg-ink/[0.04]`}
-              >
-                <ExternalLink size={16} strokeWidth={2} aria-hidden="true" />
-                {rodape.abrirNoMaps}
-              </a>
-              <a
-                href={tracarRota}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${botaoMapa} bg-magenta text-white hover:bg-[#87146F]`}
-              >
-                <Navigation size={16} strokeWidth={2} aria-hidden="true" />
-                {rodape.tracarRota}
-              </a>
-            </div>
-          </div>
-
-          <div className="md:col-span-7">
-            <MapaSobDemanda
-              endereco={site.enderecoMaps}
-              rotulo={rodape.mostrarMapa}
-              aviso={rodape.avisoMapa}
-            />
-          </div>
+                ))}
+              </span>
+            </li>
+          </ul>
         </div>
 
-        <div className="mt-14 border-t border-ink/10 pt-7 text-legend text-ink-muted">
-          {/* Linha legal: responsavel tecnica + CRO obrigatorios por norma do CFO. */}
-          <p>
-            {site.razaoSocial} · CNPJ {site.cnpj} · Responsável técnica: {site.responsavelTecnica} ·{' '}
-            {site.cro}
-          </p>
-          <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <a href="/privacidade/" className={`w-fit font-medium text-ink ${link}`}>
+        <div className="mt-14 border-t border-ink/60 pt-6 text-[0.8125rem] text-ink-muted">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <p>{rodape.copyright}</p>
+            <p>{rodape.assinatura}</p>
+          </div>
+          {/* Identificacao obrigatoria pelo CFO + privacidade (LGPD), discretas. */}
+          <p className="mt-3 text-[0.75rem] text-ink-muted/90">
+            {site.razaoSocial} · CNPJ {site.cnpj} · Responsável técnica: {site.responsavelTecnica} · {site.cro} ·{' '}
+            <a href="/privacidade/" className={`underline underline-offset-2 ${link}`}>
               {rodape.privacidade}
             </a>
-            <p>{site.credito}</p>
-          </div>
+          </p>
         </div>
       </div>
     </footer>
