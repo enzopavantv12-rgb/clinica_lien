@@ -169,6 +169,22 @@
       rgba(15, 17, 22, 0.85)
     );
   }
+  /* A partir de 640px o video fica a direita (~63-93% da largura): o degrade
+     escurece para a esquerda, onde fica o texto, abre sobre o video e fecha
+     de leve na borda direita. */
+  @media (min-width: 640px) {
+    .exp-laterais {
+      background: linear-gradient(
+        90deg,
+        rgba(15, 17, 22, 0.9),
+        rgba(15, 17, 22, 0.72) 35%,
+        rgba(15, 17, 22, 0.3) 52%,
+        rgba(15, 17, 22, 0.08) 62%,
+        rgba(15, 17, 22, 0.08) 92%,
+        rgba(15, 17, 22, 0.55)
+      );
+    }
+  }
   .exp-funde {
     -webkit-mask-image: var(--exp-funde);
     mask-image: var(--exp-funde);

@@ -121,6 +121,8 @@ export function Experiencia() {
     abasRef.current[destino + (prefixo === 'm' ? capitulos.length : 0)]?.focus();
   };
 
+  const botaoPlay =
+    'pointer-events-auto grid h-[58px] w-[58px] place-items-center rounded-full border border-white/25 bg-white/[.14] backdrop-blur-md transition hover:scale-[1.06] hover:bg-white/[.24] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F0B6F2] motion-reduce:transition-none';
   const foco = 'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#F0B6F2]';
 
   return (
@@ -185,52 +187,75 @@ export function Experiencia() {
           ) : c.video ? (
             <div className="absolute inset-0">
               {c.video.vertical && c.video.fundo && <FundoVertical src={c.video.fundo} />}
-              {/* Vertical: 9:16 centralizado; tocando, sobe para acima da barra
-                  de abas (sm+) para os controles nativos ficarem visiveis. */}
+              {/* Vertical: 9:16 a direita a partir de 640px (centralizado no
+                  celular), com o texto do capitulo fixo a esquerda (sugestao da
+                  Dra. Natalia, out/2026). Tocando, encolhe para acima da barra de
+                  abas, para os controles nativos ficarem visiveis. */}
               <div
                 className={
                   c.video.vertical
-                    ? `absolute inset-x-0 flex justify-center ${tocando ? 'bottom-4 top-4 sm:bottom-[98px]' : 'inset-y-0'}`
+                    ? `absolute left-1/2 -translate-x-1/2 transition-[top,bottom] duration-300 sm:left-auto sm:right-[7%] sm:translate-x-0 motion-reduce:transition-none ${
+                        tocando ? 'bottom-4 top-4 sm:bottom-[98px]' : 'bottom-0 top-0'
+                      }`
                     : 'absolute inset-0'
                 }
               >
-                <video
-                  ref={videoRef}
-                  className={
-                    c.video.vertical
-                      ? `aspect-[9/16] h-full w-auto object-cover ${tocando ? 'rounded-xl' : 'exp-funde'}`
-                      : 'h-full w-full object-cover'
-                  }
-                  poster={c.video.poster}
-                  playsInline
-                  preload={perto ? 'metadata' : 'none'}
-                  controls={tocando}
-                  aria-label={`${c.titulo}: ${c.video.descricao}`}
-                  onPause={() => setTocando(false)}
-                  onEnded={() => {
-                    setTocando(false);
-                    setAtivo((a) => (a + 1) % capitulos.length);
-                  }}
-                  onTimeUpdate={(e) => {
-                    const v = e.currentTarget;
-                    setProgresso(v.duration ? v.currentTime / v.duration : 0);
-                  }}
-                >
-                  <source src={c.video.webm} type="video/webm" />
-                  <source src={c.video.mp4} type="video/mp4" />
-                  {c.video.vtt && <track kind="captions" src={c.video.vtt} srcLang="pt-BR" label="Português" default />}
-                </video>
+                <div className={c.video.vertical ? 'relative aspect-[9/16] h-full' : 'relative h-full w-full'}>
+                  <video
+                    ref={videoRef}
+                    className={
+                      c.video.vertical
+                        ? `h-full w-full object-cover ${tocando ? 'rounded-xl' : 'exp-funde'}`
+                        : 'h-full w-full object-cover'
+                    }
+                    poster={c.video.poster}
+                    playsInline
+                    preload={perto ? 'metadata' : 'none'}
+                    controls={tocando}
+                    aria-label={`${c.titulo}: ${c.video.descricao}`}
+                    onPause={() => setTocando(false)}
+                    onEnded={() => {
+                      setTocando(false);
+                      setAtivo((a) => (a + 1) % capitulos.length);
+                    }}
+                    onTimeUpdate={(e) => {
+                      const v = e.currentTarget;
+                      setProgresso(v.duration ? v.currentTime / v.duration : 0);
+                    }}
+                  >
+                    <source src={c.video.webm} type="video/webm" />
+                    <source src={c.video.mp4} type="video/mp4" />
+                    {c.video.vtt && <track kind="captions" src={c.video.vtt} srcLang="pt-BR" label="Português" default />}
+                  </video>
+                  {/* Play no centro do proprio video. */}
+                  {!tocando && (
+                    <div className="absolute inset-0 grid place-items-center">
+                      <button
+                        type="button"
+                        onClick={tocar}
+                        aria-label={`${experiencia.reproduzir}: ${c.titulo}`}
+                        className={botaoPlay}
+                      >
+                        <svg aria-hidden="true" viewBox="0 0 16 16" className="ml-0.5 h-4 w-4 fill-white">
+                          <path d="M4 2.5v11l9-5.5z" />
+                        </svg>
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           ) : (
             <PosterPendente />
           )}
 
-          {/* Overlay de leitura: escurece a esquerda e a base. */}
+          {/* Overlay de leitura: escurece a esquerda (onde fica o texto) e a
+              base. A partir de 640px fica tambem com o video tocando, porque o
+              texto continua na tela; no celular some no play. */}
           <div
             aria-hidden="true"
-            className={`pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(10,12,16,.72),rgba(10,12,16,.35)_45%,rgba(10,12,16,0)_70%),linear-gradient(0deg,rgba(10,12,16,.75),rgba(10,12,16,0)_40%)] transition-opacity duration-300 ${
-              tocando ? 'opacity-0' : 'opacity-100'
+            className={`pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(10,12,16,.78),rgba(10,12,16,.5)_38%,rgba(10,12,16,0)_60%),linear-gradient(0deg,rgba(10,12,16,.7),rgba(10,12,16,0)_38%)] transition-opacity duration-300 ${
+              tocando ? 'opacity-0 sm:opacity-100' : 'opacity-100'
             }`}
           />
 
@@ -245,36 +270,39 @@ export function Experiencia() {
             </button>
           )}
 
-          {!tocando && (
-            <>
-              {c.video && (
-                <button
-                  type="button"
-                  onClick={tocar}
-                  aria-label={`${experiencia.reproduzir}: ${c.titulo}`}
-                  className="absolute left-1/2 top-1/2 grid h-[58px] w-[58px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-white/[.14] backdrop-blur-md transition hover:scale-[1.06] hover:bg-white/[.24] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F0B6F2] motion-reduce:transition-none"
-                >
-                  <svg aria-hidden="true" viewBox="0 0 16 16" className="ml-0.5 h-4 w-4 fill-white">
-                    <path d="M4 2.5v11l9-5.5z" />
-                  </svg>
-                </button>
-              )}
-
-              <div
-                key={ativo}
-                className="anima-sobe absolute bottom-6 left-5 right-5 max-w-[520px] sm:bottom-[100px] sm:left-7 lg:bottom-[112px] lg:left-11"
-              >
-                <span className="text-[13px] font-bold tracking-[.04em] text-white">{c.numero}</span>
-                <h3 className="mt-2.5 text-[22px] font-bold leading-[1.2] text-white sm:text-[24px] lg:text-[clamp(22px,2.2vw,30px)]">
-                  {c.titulo}
-                </h3>
-                <p className="mt-[18px] text-[13px] font-medium leading-[1.65] text-white/[.92] sm:text-[13.5px] lg:text-[14.5px]">
-                  {c.linhas[0]} <br className="hidden sm:inline" />
-                  {c.linhas[1]}
-                </p>
-              </div>
-            </>
+          {/* Play centralizado so no Short do YouTube (o arquivo traz o seu). */}
+          {!tocando && c.video?.tipo === 'youtube' && (
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+              <button
+              type="button"
+              onClick={tocar}
+              aria-label={`${experiencia.reproduzir}: ${c.titulo}`}
+              className={botaoPlay}
+                      >
+              <svg aria-hidden="true" viewBox="0 0 16 16" className="ml-0.5 h-4 w-4 fill-white">
+                <path d="M4 2.5v11l9-5.5z" />
+              </svg>
+              </button>
+            </div>
           )}
+
+          {/* Texto do capitulo: fixo a esquerda a partir de 640px, inclusive
+              com o video tocando; no celular, sobre a base e some no play. */}
+          <div
+            key={ativo}
+            className={`anima-sobe pointer-events-none absolute bottom-6 left-5 right-5 max-w-[520px] sm:bottom-[98px] sm:left-8 sm:right-auto sm:top-0 sm:flex sm:w-[50%] sm:max-w-none sm:flex-col sm:justify-center lg:left-12 lg:w-[46%] ${
+              tocando ? 'max-sm:hidden' : ''
+            }`}
+          >
+            <span className="text-[13px] font-bold tracking-[.04em] text-white sm:text-sm">{c.numero}</span>
+            <h3 className="mt-2.5 text-[22px] font-bold leading-[1.15] text-white sm:text-[28px] lg:text-[clamp(30px,3vw,42px)]">
+              {c.titulo}
+            </h3>
+            <p className="mt-[18px] text-[13px] font-medium leading-[1.65] text-white/[.92] sm:text-[15px] lg:text-[17px]">
+              {c.linhas[0]} <br className="hidden sm:inline" />
+              {c.linhas[1]}
+            </p>
+          </div>
 
           {/* Barra de abas sobreposta (a partir de 640px). */}
           <div

@@ -936,3 +936,19 @@ Os textos foram trocados pelos dos prints enviados para cada seção:
 **Para a revisão CRO:**
 - "Especialistas renomados", "perfeita sinergia", "foco absoluto", "total segurança cirúrgica" e os selos "Especialista" / "Mestre & Doutor": a clínica precisa confirmar que os títulos estão registrados no CRO.
 - A Dra. Luiza passou a "Ortodontia & Alinhadores". Antes constava "Prótese Dentária | Dentística e Estética".
+
+---
+
+## Experiência: texto fixo à esquerda e vídeo à direita (sugestão da Dra. Natália, out/2026)
+
+Pedido da Dra. Natália, em vídeo: o texto do capítulo não deve sumir no play; deve ficar à esquerda, ocupando o espaço, com o vídeo do lado e uma transição suave entre os dois.
+
+**A partir de 640px (tablet e desktop):**
+- **Vídeo:** fica à direita (9:16, a 7% da borda), com o play no centro do próprio vídeo.
+- **Texto do capítulo:** fica à esquerda, centralizado na vertical e maior (título até 42px, texto até 17px). Continua na tela durante o play.
+- **Degradê (`.exp-laterais`):** escurece à esquerda, sob o texto, abre sobre o vídeo e fecha de leve na borda direita. As bordas esfumadas do vídeo (`.exp-funde`) fundem vídeo e fundo.
+- **Tocando:** o vídeo encolhe para cima da barra de abas, para os controles aparecerem.
+
+**Celular:** igual a antes. O vídeo fica centralizado, o texto na base, e o texto some no play, por falta de espaço lateral.
+
+**Testado** no Chrome em 1440px e em 375px: os 3 capítulos trocam e tocam com som, sem nenhum erro de requisição.
