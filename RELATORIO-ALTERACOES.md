@@ -986,3 +986,10 @@ O rodapé foi refeito pelo print, em 4 colunas e sobre fundo branco.
   - Uma linha discreta com razão social, CNPJ, responsável técnica e CRO (exigência do CFO) e o link da Política de privacidade (LGPD).
 - **Removido:** o bloco "Como chegar" com mapa e o componente `MapaSobDemanda`, o crédito "Site por Wolfness Company" e o `site.tagline`.
 - **Atenção:** a resposta da FAQ "Onde a clínica está localizada…" ainda diz que o mapa fica no rodapé. Agora é o endereço que abre o Google Maps. Vale ajustar a frase se a clínica quiser.
+
+---
+
+## Instagram da clínica (out/2026)
+
+- **Clínica:** o ícone do rodapé, o `sameAs` do schema da clínica e o `llms.txt` passaram a usar o Instagram da clínica, `@clinica_lien` (https://www.instagram.com/clinica_lien/).
+- **Dra. Natália:** o perfil `@dra.nataliasimoes` ficou só no schema dela (Person), no campo novo `site.instagramDra`.

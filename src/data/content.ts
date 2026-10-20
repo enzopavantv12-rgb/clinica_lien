@@ -46,7 +46,10 @@ export const site = {
     { dias: 'Segunda, terça, quinta e sexta', horas: '8h às 18h' },
     { dias: 'Quarta', horas: '9h às 20h' },
   ],
-  instagram: { url: 'https://www.instagram.com/dra.nataliasimoes', arroba: '@dra.nataliasimoes' },
+  // Instagram da clinica (rodape, schema da clinica e llms.txt). O da Dra.
+  // Natalia fica so no schema dela (Person), em instagramDra.
+  instagram: { url: 'https://www.instagram.com/clinica_lien/', arroba: '@clinica_lien' },
+  instagramDra: { url: 'https://www.instagram.com/dra.nataliasimoes', arroba: '@dra.nataliasimoes' },
   // [PENDENTE: confirmar se TikTok e Facebook aparecem — o briefing listou so o
   // Instagram no rodape]. Desligados ate la; o Facebook nao tem URL no briefing.
   tiktok: { url: 'https://www.tiktok.com/@clinicalien', arroba: '@clinicalien', exibir: false },

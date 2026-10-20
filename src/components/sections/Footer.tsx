@@ -41,7 +41,7 @@ export function Footer() {
                 href={site.instagram.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Instagram da Dra. Natália Simões (${site.instagram.arroba})`}
+                aria-label={`Instagram da Lien (${site.instagram.arroba})`}
                 className={botaoRede}
               >
                 <Instagram size={19} strokeWidth={2} aria-hidden="true" />

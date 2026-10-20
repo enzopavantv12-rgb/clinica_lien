@@ -120,7 +120,7 @@ export const schemaPerson = {
   url: site.url,
   workLocation: { '@type': 'Place', address: endereco },
   knowsAbout: ['Implantodontia', 'Reabilitação Oral', 'Prótese Dentária', 'Periodontia'],
-  sameAs: [site.instagram.url],
+  sameAs: [site.instagramDra.url],
 };
 
 /** BreadcrumbList de uma pagina interna (Inicio > ... > pagina atual). */
