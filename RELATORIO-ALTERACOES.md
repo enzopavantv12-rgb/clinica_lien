@@ -878,3 +878,11 @@ A clínica trocou os vídeos de `assets/vídeos/`. Cada um entrou no capítulo d
 - **Original grande:** o `Scanner feito (1).mp4`, de 88 MB, foi para o `.gitignore`. Fica abaixo do limite de 100 MB do GitHub, mas pesa demais no repositório. Ele continua só na máquina.
 - **Testado** no Chrome em 1440px e 375px: os 3 capítulos trocam e tocam com som e controles, e nenhum arquivo deu erro.
 - **Atenção (LGPD):** entre ~1s e ~8s do vídeo do scanner, a tela do software mostra o **nome do paciente**. O pôster evita esse trecho, mas o vídeo exibe o nome. Confirmar com a clínica se há autorização do paciente; se não houver, o trecho precisa ser reeditado (desfoque do nome).
+
+---
+
+## Equipe: foto nova da Dra. Natália Simões (out/2026)
+
+- **Origem:** a foto enviada pela clínica, `assets/fotos/Equipe/NATALIA-SIMOES (1).png` (3391×5087), entrou no card da Dra. Natália na seção Equipe, no lugar da anterior, que a clínica removeu da pasta.
+- **Recorte:** `scripts/recortar-equipe.mjs` passou a usar topo 0,385, esquerda 0,08 e lado 0,82. Sai um quadrado do alto da cabeça às mãos, o mesmo enquadramento das demais profissionais.
+- **Variantes:** `equipe-natalia-simoes-{320,480,640}.{avif,webp}`, regeradas.
