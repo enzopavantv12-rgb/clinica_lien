@@ -726,14 +726,19 @@ export const experiencia = {
       aba: 'Scanner intraoral',
       titulo: 'Scanner intraoral',
       linhas: ['Adeus aos moldes tradicionais desconfortáveis.', 'Captura digital rápida e ultraprecisa da sua arcada.'],
-      // Short "Video Scanner": https://youtube.com/shorts/W87pzc6c9hs (out/2026).
+      // "Scanner feito (1).mp4" (assets/videos/, 16,7 s, 1080x1920 60 fps H.264
+      // com audio; out/2026, no lugar do Short do YouTube), convertido para
+      // 720x1280 30 fps H.264/AAC (3,2 MB) e VP9/Opus (3,4 MB); poster no quadro
+      // de 13,5 s (a dentista explica o modelo 3D ao paciente — os quadros com a
+      // tela de perto mostram o nome do paciente no software).
       video: {
-        tipo: 'youtube',
-        id: 'W87pzc6c9hs',
-        titulo: 'Dra. Natália Simões no consultório da Lien, no vídeo sobre o scanner intraoral',
-        poster: '/img/experiencia-scanner-540.webp',
-        posterAvif: '/img/experiencia-scanner-540.avif',
-        fundo: '/img/experiencia-scanner-fundo.webp',
+        tipo: 'arquivo',
+        mp4: '/videos/experiencia-scanner.mp4',
+        webm: '/videos/experiencia-scanner.webm',
+        poster: '/videos/experiencia-scanner-poster.webp',
+        fundo: '/videos/experiencia-scanner-fundo.webp',
+        vertical: true,
+        descricao: 'O scanner intraoral captura a arcada e a dentista da Lien mostra o modelo 3D dos dentes ao paciente',
       } as Video | null,
     },
     {
@@ -741,10 +746,10 @@ export const experiencia = {
       aba: 'Recursos de conforto',
       titulo: 'Recursos de conforto',
       linhas: ['Fones com isolamento de ruído, massagem e aromaterapia.', 'Cada detalhe pensado para você relaxar.'],
-      // "video acolhedor.mp4" (assets/videos/, 47,5 s, 720x1280 HEVC com audio e
-      // legenda embutida; original de 203 MB fora do git, ver .gitignore),
-      // convertido para H.264/AAC (6,5 MB) e VP9/Opus (6,7 MB); poster no quadro
-      // de 29,5 s (fones na paciente, "Acolher").
+      // "Lien Experiencia (1).mp4" (assets/videos/, 17,1 s, 1080x1920 H.264 com
+      // audio; out/2026, no lugar do "video acolhedor"), convertido para 720x1280
+      // H.264/AAC (3,6 MB) e VP9/Opus (2,8 MB); poster no quadro de 10,5 s (fones
+      // na paciente).
       video: {
         tipo: 'arquivo',
         mp4: '/videos/experiencia-conforto.mp4',
@@ -752,7 +757,7 @@ export const experiencia = {
         poster: '/videos/experiencia-conforto-poster.webp',
         fundo: '/videos/experiencia-conforto-fundo.webp',
         vertical: true,
-        descricao: 'A dentista da Lien explica o atendimento e coloca fones com isolamento de ruído na paciente',
+        descricao: 'Recepção da Lien e a dentista colocando fones com isolamento de ruído na paciente antes do atendimento',
       } as Video | null,
     },
     {
@@ -760,9 +765,9 @@ export const experiencia = {
       aba: 'Orientação e acompanhamento',
       titulo: 'Orientação e acompanhamento',
       linhas: ['Conversa à mesa, kit personalizado e acompanhamento pós-procedimento.', 'O cuidado continua depois da cadeira.'],
-      // "Lien experiencia.mp4" (assets/videos/, 7,4 s, 1080x1920 HEVC com audio),
-      // convertido para 720x1280 H.264/AAC (1,6 MB) e VP9/Opus (1,2 MB); poster
-      // no quadro de 6,5 s (entrega do kit).
+      // "Acompanhamento.mp4" (assets/videos/, 10,6 s, 1080x1920 H.264 com audio;
+      // out/2026), convertido para 720x1280 H.264/AAC (2,0 MB) e VP9/Opus
+      // (1,6 MB); poster no quadro de 7,5 s (a dentista com o kit da Lien a mesa).
       video: {
         tipo: 'arquivo',
         mp4: '/videos/experiencia-acompanhamento.mp4',
@@ -770,7 +775,7 @@ export const experiencia = {
         poster: '/videos/experiencia-acompanhamento-poster.webp',
         fundo: '/videos/experiencia-acompanhamento-fundo.webp',
         vertical: true,
-        descricao: 'Recepção, consulta e entrega do kit da Lien a uma paciente',
+        descricao: 'Conversa à mesa com a dentista, orientações no tablet e entrega do kit da Lien à paciente',
       } as Video | null,
     },
   ],

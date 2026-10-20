@@ -47,7 +47,8 @@ function FundoVertical({ src }: { src: string }) {
  *   capitulo seguinte sem tocar. Sem preview mudo (so o poster).
  * - Lazy: os metadados so carregam quando a secao chega a 200px da tela.
  * - Capitulo sem video: poster neutro e o texto, sem botao de play.
- * - Capitulo com Short do YouTube (o 01): poster local vertical sobre o fundo
+ * - Capitulo com Short do YouTube (suporte mantido; desde out/2026 os 3
+ *   capitulos usam video proprio): poster local vertical sobre o fundo
  *   desfocado; o embed youtube-nocookie so entra no clique (LGPD — antes disso
  *   nenhum pedido vai ao Google), com autoplay, 9:16 acima da barra de abas,
  *   e um botao "Fechar video". Sem API do YouTube, nao ha barra de progresso

@@ -859,3 +859,22 @@ Troca dos ícones pelos da pasta `assets/ICONES_LIEN_SITE/`, enviada pela clíni
   - Setas sobre a foto, pontos e botão de pausa abaixo, e setas do teclado.
   - Passa sozinho a cada 5 s. Pausa no hover e no foco da região inteira e pelo botão (WCAG 2.2.2). Com movimento reduzido, não há autoplay.
 - **Textos:** os alt e os rótulos ficam em `sobre.fotos` e `sobre.carrossel` (`content.ts`).
+
+---
+
+## Experiência: 3 vídeos novos, um por capítulo (out/2026)
+
+A clínica trocou os vídeos de `assets/vídeos/`. Cada um entrou no capítulo do seu nome:
+
+| Original | Capítulo | Site (`public/videos/`) | Pôster |
+|---|---|---|---|
+| `Scanner feito (1).mp4`, 16,7s, 1080×1920 60fps | **01 · Scanner intraoral** (no lugar do Short do YouTube) | `experiencia-scanner`: mp4 3,2 MB · webm 3,4 MB | 13,5s: a dentista explica o modelo 3D ao paciente |
+| `Lien Experiencia (1).mp4`, 17,1s, 1080×1920 | **02 · Recursos de conforto** (no lugar do "video acolhedor") | `experiencia-conforto`: mp4 3,6 MB · webm 2,8 MB | 10,5s: fones na paciente |
+| `Acompanhamento.mp4`, 10,6s, 1080×1920 | **03 · Orientação e acompanhamento** | `experiencia-acompanhamento`: mp4 2,0 MB · webm 1,6 MB | 7,5s: a dentista com o kit Lien à mesa |
+
+- **Conversão:** 720×1280 a 30fps, H.264/AAC (mp4, `+faststart`) e VP9/Opus (webm). Cada vídeo ganhou também um fundo desfocado para as laterais.
+- **Sem YouTube:** o capítulo 01 deixou de usar o YouTube. A Experiência não faz mais nenhum pedido ao Google. Saíram a miniatura e o fundo do Short (`public/img/experiencia-scanner-*`, `assets/videos-youtube/`). O suporte a YouTube continua no player, sem uso.
+- **Verificador:** a checagem LGPD do YouTube agora confere a ausência de YouTube e o pôster próprio do capítulo 01.
+- **Original grande:** o `Scanner feito (1).mp4`, de 88 MB, foi para o `.gitignore`. Fica abaixo do limite de 100 MB do GitHub, mas pesa demais no repositório. Ele continua só na máquina.
+- **Testado** no Chrome em 1440px e 375px: os 3 capítulos trocam e tocam com som e controles, e nenhum arquivo deu erro.
+- **Atenção (LGPD):** entre ~1s e ~8s do vídeo do scanner, a tela do software mostra o **nome do paciente**. O pôster evita esse trecho, mas o vídeo exibe o nome. Confirmar com a clínica se há autorização do paciente; se não houver, o trecho precisa ser reeditado (desfoque do nome).

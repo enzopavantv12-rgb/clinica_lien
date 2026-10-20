@@ -85,10 +85,11 @@ checar(
     ['Alessandra Lopes', 'Nilson Antônio', 'Nádia Graciely'].every((n) => secao('depoimentos').includes(n)) &&
     secao('depoimentos').includes('cuidadosa com todos os detalhes , explicações'),
 );
-// LGPD: o video do YouTube da Experiencia so carrega no clique (como o mapa).
+// LGPD: nada do YouTube no HTML da Experiencia (o cap. 01 virou video proprio
+// em out/2026; se um Short voltar, o embed so pode entrar no clique).
 checar(
-  'experiencia: sem embed nem imagem do YouTube no HTML (so no clique)',
-  !/<iframe[^>]*youtube|i\.ytimg\.com/.test(secao('experiencia')) && secao('experiencia').includes('/img/experiencia-scanner-540.webp'),
+  'experiencia: sem embed nem imagem do YouTube no HTML; cap. 01 com video proprio',
+  !/<iframe[^>]*youtube|i\.ytimg\.com/.test(secao('experiencia')) && secao('experiencia').includes('/videos/experiencia-scanner-poster.webp'),
 );
 checar('hero: prova social do Google no lugar do 2o botao', secao('inicio').includes('5,0 no Google · 57 avaliações'));
 checar('faixa unica de prova rapida (sem a 2a faixa teal)', !marcacao.includes('bg-[#047E99]'));
