@@ -1,5 +1,15 @@
 {
-  "experiencia-consultorio": [
+  "consultorio-vista": [
+    720,
+    1200,
+    1672
+  ],
+  "consultorio-recepcao": [
+    480,
+    720,
+    960
+  ],
+  "consultorio-atendimento": [
     480,
     720,
     960

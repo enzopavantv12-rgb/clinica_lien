@@ -1,4 +1,4 @@
-import { BrandImage } from '../ui/BrandImage';
+import { CarrosselConsultorio } from './CarrosselConsultorio';
 import { Etiqueta } from '../ui/Etiqueta';
 import { Reveal } from '../ui/Reveal';
 import { sobre } from '../../data/content';
@@ -25,7 +25,8 @@ function Texto({ trechos, forte }: { trechos: readonly Trecho[]; forte: string }
  * "Lien quer dizer vinculo." — layout do Print 1 (prompt "sobre-metodo-lien",
  * out/2026), texto final do Alinhamento 2026 (literal).
  *
- * Texto a esquerda (52%) e uma foto grande do consultorio a direita (48%);
+ * Texto a esquerda (52%) e o carrossel de fotos do consultorio a direita
+ * (48%; CarrosselConsultorio, out/2026);
  * abaixo de 1024px, 1 coluna com a foto depois do texto. O quote (exigencia
  * do alinhamento) entra discreto, com borda teal, antes dos 2 destaques.
  * "vinculo" em italico: a Poppins italica nao e carregada, o navegador
@@ -97,14 +98,7 @@ export function Sobre() {
         </div>
 
         <Reveal y={16} duracao={0.6} delay={0.1}>
-          <BrandImage
-            dados={sobre.imagem}
-            width={941}
-            height={1672}
-            proporcao="aspect-[4/3] lg:aspect-[16/10]"
-            className="!rounded-[24px] object-[50%_62%] shadow-[0_20px_40px_-24px_rgba(26,20,32,.18)] lg:!rounded-[28px]"
-            sizes="(max-width: 1024px) 92vw, 540px"
-          />
+          <CarrosselConsultorio />
         </Reveal>
       </div>
     </section>

@@ -295,11 +295,39 @@ export const sobre = {
     { icone: 'personalizado', titulo: 'Personalizado', legenda: 'para cada caso' },
     { icone: 'localizacao', titulo: 'Cruzeiro, BH', legenda: 'Localização privilegiada' },
   ],
-  // Foto do print: consultorio com a cadeira e a vista de BH
-  // (assets/fotos/consultorio/consultorio lien 1.png -> experiencia-consultorio).
-  imagem: {
-    src: '/img/experiencia-consultorio.webp',
-    alt: 'Consultório da Lien Reabilitação Oral, com cadeira odontológica e vista para Belo Horizonte',
+  // Carrossel de fotos do consultorio (assets/fotos/consultorio/, out/2026;
+  // originais copiados para assets/fotos-originais/consultorio-*.png).
+  // `foco`: object-position no recorte vertical (a 1a foto e horizontal).
+  fotos: [
+    {
+      base: 'consultorio-vista',
+      width: 1672,
+      height: 941,
+      foco: '42% 50%',
+      alt: 'Consultório da Lien Reabilitação Oral, com cadeira odontológica e vista para Belo Horizonte ao pôr do sol',
+    },
+    {
+      base: 'consultorio-recepcao',
+      width: 1024,
+      height: 1536,
+      foco: '50% 50%',
+      alt: 'Recepção da Lien Reabilitação Oral, com poltronas rosadas e o logo da clínica na parede',
+    },
+    {
+      base: 'consultorio-atendimento',
+      width: 1024,
+      height: 1536,
+      foco: '50% 50%',
+      alt: 'Sala de atendimento da Lien, com mesa de conversa e cadeira odontológica ao fundo',
+    },
+  ],
+  carrossel: {
+    rotulo: 'Fotos do consultório',
+    anterior: 'Foto anterior',
+    proxima: 'Próxima foto',
+    irPara: 'Ir para a foto',
+    pausar: 'Pausar passagem automática',
+    retomar: 'Retomar passagem automática',
   },
 } as const;
 

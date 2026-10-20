@@ -845,3 +845,17 @@ Troca dos ícones pelos da pasta `assets/ICONES_LIEN_SITE/`, enviada pela clíni
   - No card "Converse com nossa equipe" entrou o Equipe_v02, que já vem com o círculo rosa-claro.
   - O `Equipe.png` (sem círculo) ficou sem uso.
 - **Verificador:** a checagem "Sedação sem foto" passou a aceitar só os ícones de `/icones-lien/` como imagem.
+
+---
+
+## Sobre ("Lien quer dizer vínculo."): carrossel de fotos do consultório (out/2026)
+
+- **Fotos:** as 3 fotos novas de `assets/fotos/consultorio/` (que substituíram as 3 antigas na pasta) foram copiadas para `assets/fotos-originais/`. Saíram as variantes avif/webp em `public/img/`:
+  - `consultorio-vista` (horizontal, 720/1200/1672);
+  - `consultorio-recepcao` e `consultorio-atendimento` (verticais, 480/720/960).
+  - A foto anterior (`experiencia-consultorio`) foi removida.
+- **Carrossel:** o `CarrosselConsultorio.tsx` usa Embla, igual ao de Resultados.
+  - Uma foto por vez, em loop, recorte 4:5. A horizontal entra com o foco na cadeira e na janela.
+  - Setas sobre a foto, pontos e botão de pausa abaixo, e setas do teclado.
+  - Passa sozinho a cada 5 s. Pausa no hover e no foco da região inteira e pelo botão (WCAG 2.2.2). Com movimento reduzido, não há autoplay.
+- **Textos:** os alt e os rótulos ficam em `sobre.fotos` e `sobre.carrossel` (`content.ts`).
