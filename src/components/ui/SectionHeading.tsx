@@ -13,6 +13,7 @@ export function SectionHeading({
   claro = false,
   centralizado = true,
   comCurva = true,
+  curvaGrande = false,
 }: {
   tag?: string;
   titulo: string;
@@ -20,6 +21,8 @@ export function SectionHeading({
   claro?: boolean;
   centralizado?: boolean;
   comCurva?: boolean;
+  /** Simbolo grande em azul-claro (ciano) com brilho suave — print do FAQ (out/2026). */
+  curvaGrande?: boolean;
 }) {
   const corTitulo = claro ? 'text-white' : 'text-ink';
   const corSub = claro ? 'text-white' : 'text-ink-muted';
@@ -52,7 +55,13 @@ export function SectionHeading({
         <Reveal delay={0.12}>
           {/* Simbolo oficial, sem distorcer: so a largura e fixada. O
               alinhamento vem do flex-col do wrapper, como nos demais itens. */}
-          <Simbolo variante={claro ? 'cyano' : 'rgb'} className="mt-5 block h-auto w-24" />
+          {curvaGrande ? (
+            <span className="mt-6 block drop-shadow-[0_18px_28px_rgba(104,192,212,.28)]">
+              <Simbolo variante="cyano" className="block h-auto w-[150px] sm:w-[190px]" />
+            </span>
+          ) : (
+            <Simbolo variante={claro ? 'cyano' : 'rgb'} className="mt-5 block h-auto w-24" />
+          )}
         </Reveal>
       )}
       {subtitulo && (

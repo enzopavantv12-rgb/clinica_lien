@@ -24,7 +24,7 @@ export function Faq() {
   return (
     <section id="duvidas" className="bg-white py-20 sm:py-24 lg:py-28">
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-10 px-5 sm:px-8">
-        <SectionHeading tag={faq.tag} titulo={faq.h2} />
+        <SectionHeading tag={faq.tag} titulo={faq.h2} curvaGrande />
 
         <Accordion type="single" collapsible className="flex flex-col gap-2">
           {faq.itens.map((item) => (
