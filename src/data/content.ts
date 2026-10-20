@@ -101,7 +101,7 @@ export type OrigemWhatsApp =
 
 /** Ancoras e paginas do menu. Ancoras com `/` na frente: funcionam de qualquer pagina. */
 export const navegacao = [
-  { label: 'Início', href: '/#inicio' },
+  { label: 'Sobre', href: '/#sobre' },
   { label: 'Método Lien', href: '/#metodo' },
   { label: 'Tratamentos', href: '/tratamentos/' },
   { label: 'Experiência', href: '/#experiencia' },
@@ -118,7 +118,6 @@ export const header = {
 } as const;
 
 export const hero = {
-  tag: 'Reabilitação oral · Belo Horizonte',
   // Copy sugerida pela Dra. Natalia Simoes (set/2026). Quebras de linha e
   // destaque em magenta ("excelência clínica,") do print da clinica (out/2026);
   // as quebras valem a partir do layout lado a lado (no celular, texto corrido).
@@ -137,7 +136,8 @@ export const hero = {
     [{ texto: 'talvez ainda não tenha conhecido a Lien.', destaque: true }],
   ],
   cta: CTA_PRINCIPAL,
-  microcopy: 'Atendimento particular · Cruzeiro, BH',
+  // 2o botao do print (out/2026): leva a secao Experiencia, sem WhatsApp.
+  cta2: { linhas: ['Conheça a', 'Experiência Lien'], href: '/#experiencia' },
   /**
    * Foto da hero. Variantes geradas por `npm run hero` (scripts/optimize-hero.mjs)
    * a partir do original em assets/hero/. O recorte mobile e vertical (3:4).

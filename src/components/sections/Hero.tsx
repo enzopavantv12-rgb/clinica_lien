@@ -1,8 +1,7 @@
 import type { CSSProperties } from 'react';
-import { Star } from 'lucide-react';
-import { Simbolo } from '../ui/BrandGraphics';
+import { ArrowRight, CalendarDays } from 'lucide-react';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
-import { google, hero } from '../../data/content';
+import { hero } from '../../data/content';
 
 const { imagem } = hero;
 const srcset = (ext: string) => imagem.larguras.map((l) => `${imagem.base}-${l}.${ext} ${l}w`).join(', ');
@@ -78,19 +77,10 @@ function HeroFoto() {
  * Sem `Reveal`: a entrada e CSS puro (@keyframes). O `Reveal` gravaria
  * `style="opacity:0"` no HTML estatico e atrasaria o LCP ate a hidratacao.
  *
- * Um unico CTA, como pede o briefing: a conversao e uma so (WhatsApp).
+ * Layout do print da clinica (out/2026): sem selo, sem sorriso e sem a nota
+ * do Google; dois botoes — o CTA de WhatsApp e o convite para a Experiencia.
  */
 export function Hero() {
-  const { nota, total, url } = google;
-  const provaSocial = (
-    <>
-      <Star size={15} fill="currentColor" stroke="currentColor" aria-hidden="true" className="text-magenta" />
-      <span>
-        {nota} no Google · {total} avaliações
-      </span>
-    </>
-  );
-
   return (
     <section
       id="inicio"
@@ -98,60 +88,43 @@ export function Hero() {
     >
       <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 pb-10 pt-[104px] sm:px-8 hl:pb-16 hl:pt-[120px] hlg:px-12 paisagem:pb-8 paisagem:pt-[96px]">
         <div className="max-w-[560px] hl:max-w-none">
-          {/* Selo branco translucido: o teal da marca em corpo pequeno so passa
-              AA (4,5:1) sobre branco — sobre o creme e a foto ficava em ~4,3. */}
-          <p
-            className="hero-entra inline-flex rounded-full bg-white/90 px-3 py-1.5 text-[0.75rem] font-medium uppercase tracking-[0.18em] text-teal sm:text-[0.8125rem]"
-            style={ordem(0)}
-          >
-            {hero.tag}
-          </p>
-
           <h1
-            className="hero-entra mt-5 text-[2.125rem] font-bold leading-[1.08] text-ink hl:text-[2.625rem] hlg:text-[clamp(2.5rem,3.4vw,3.25rem)] paisagem:mt-4 paisagem:text-[clamp(1.875rem,3.4vw,3rem)]"
-            style={ordem(1)}
+            className="hero-entra text-[2.125rem] font-bold leading-[1.08] text-ink hl:text-[2.75rem] hlg:text-[clamp(2.75rem,3.9vw,3.5rem)] paisagem:text-[clamp(1.875rem,3.6vw,3.25rem)]"
+            style={ordem(0)}
           >
             <Linhas linhas={hero.h1Linhas} destaque="text-magenta" />
           </h1>
 
-          {/* Simbolo oficial da Lien (o sorriso), sob o titulo. */}
-          <span className="hero-entra mt-4 block" style={ordem(2)}>
-            <Simbolo variante="rgb" carregamento="eager" className="block h-auto w-[104px] hl:w-[120px]" />
-          </span>
-
           <p
-            className="hero-entra mt-6 text-[clamp(1rem,1.4vw,1.1875rem)] leading-[1.55] text-ink-muted paisagem:mt-4"
-            style={ordem(3)}
+            className="hero-entra mt-8 text-[clamp(1rem,1.4vw,1.25rem)] font-light leading-[1.45] text-ink-muted paisagem:mt-5"
+            style={ordem(1)}
           >
             <Linhas linhas={hero.textoLinhas} destaque="font-medium text-ink" />
           </p>
 
-          <div className="hero-entra mt-8 paisagem:mt-6" style={ordem(4)}>
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
-              <WhatsAppButton
-                origem="hero"
-                variante="capsula"
-                tamanho="capsula"
-                className="w-full shadow-[0_10px_30px_-10px_rgba(156,23,129,0.55)] hover:shadow-[0_16px_36px_-12px_rgba(156,23,129,0.6)] sm:w-auto"
-              >
-                {hero.cta}
-              </WhatsAppButton>
-              {url ? (
-                <a
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 self-center rounded text-[0.875rem] font-medium text-ink-muted hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-magenta sm:self-auto"
-                >
-                  {provaSocial}
-                </a>
-              ) : (
-                <p className="inline-flex items-center gap-2 self-center text-[0.875rem] font-medium text-ink-muted sm:self-auto">
-                  {provaSocial}
-                </p>
-              )}
-            </div>
-            <p className="mt-4 text-center text-[0.8125rem] text-ink-muted sm:text-left">{hero.microcopy}</p>
+          {/* Dois botoes, como no print da clinica (out/2026): o CTA de conversao
+              (WhatsApp, com icone de agenda) e o convite para a Experiencia. */}
+          <div className="hero-entra mt-10 flex flex-col gap-4 sm:flex-row sm:items-center paisagem:mt-7" style={ordem(2)}>
+            <WhatsAppButton
+              origem="hero"
+              variante="capsula"
+              tamanho="capsula"
+              comIcone={false}
+              className="w-full !px-8 text-[1.1875rem] shadow-[0_10px_30px_-10px_rgba(156,23,129,0.55)] hover:shadow-[0_16px_36px_-12px_rgba(156,23,129,0.6)] sm:w-auto sm:min-w-[300px] sm:!px-10"
+            >
+              <CalendarDays size={20} strokeWidth={2.2} aria-hidden="true" />
+              {hero.cta}
+            </WhatsAppButton>
+            <a
+              href={hero.cta2.href}
+              className="inline-flex h-14 w-full items-center justify-center gap-4 rounded-full bg-[linear-gradient(90deg,#0B6489,#118DAE)] px-7 text-center text-base font-semibold leading-[1.2] sm:px-8 sm:text-left sm:text-[1.0625rem] text-white shadow-[0_10px_30px_-12px_rgba(3,126,153,0.55)] transition-all duration-300 ease-brand hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal motion-safe:hover:-translate-y-0.5 sm:w-auto"
+            >
+              <span>
+                {hero.cta2.linhas[0]} <br className="hidden sm:inline" />
+                {hero.cta2.linhas[1]}
+              </span>
+              <ArrowRight size={20} strokeWidth={2.2} aria-hidden="true" />
+            </a>
           </div>
         </div>
       </div>

@@ -91,7 +91,8 @@ checar(
   'experiencia: sem embed nem imagem do YouTube no HTML; cap. 01 com video proprio',
   !/<iframe[^>]*youtube|i\.ytimg\.com/.test(secao('experiencia')) && secao('experiencia').includes('/videos/experiencia-scanner-poster.webp'),
 );
-checar('hero: prova social do Google no lugar do 2o botao', secao('inicio').includes('5,0 no Google · 57 avaliações'));
+// Print da clinica (out/2026): 2o botao convida para a Experiencia (ancora, sem WhatsApp).
+checar('hero: 2o botao leva a Experiencia', /<a\b[^>]*href="\/#experiencia"[^>]*>[\s\S]*?Experiência Lien/.test(secao('inicio')));
 checar('faixa unica de prova rapida (sem a 2a faixa teal)', !marcacao.includes('bg-[#047E99]'));
 const linksTratamentosHome = [...secao('tratamentos').matchAll(/href="\/tratamentos\/#([a-z-]+)"/g)].map((m) => m[1]);
 checar(

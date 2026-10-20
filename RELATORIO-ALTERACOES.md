@@ -886,3 +886,15 @@ A clínica trocou os vídeos de `assets/vídeos/`. Cada um entrou no capítulo d
 - **Origem:** a foto enviada pela clínica, `assets/fotos/Equipe/NATALIA-SIMOES (1).png` (3391×5087), entrou no card da Dra. Natália na seção Equipe, no lugar da anterior, que a clínica removeu da pasta.
 - **Recorte:** `scripts/recortar-equipe.mjs` passou a usar topo 0,385, esquerda 0,08 e lado 0,82. Sai um quadrado do alto da cabeça às mãos, o mesmo enquadramento das demais profissionais.
 - **Variantes:** `equipe-natalia-simoes-{320,480,640}.{avif,webp}`, regeradas.
+
+---
+
+## Hero igual ao print da clínica (out/2026)
+
+- **Saíram:** o selo "Reabilitação oral · Belo Horizonte", o sorriso sob o título, a nota do Google (5,0 · 57 avaliações) e a legenda "Atendimento particular · Cruzeiro, BH". Os campos `hero.tag` e `hero.microcopy` também saíram do `content.ts`.
+- **Título:** maior, até 56px no desktop (antes 52px), com as mesmas 4 linhas. O teto de 56px evita que "clínica," encoste no cabelo da doutora a 1440px. O parágrafo passou a peso light.
+- **Dois botões:**
+  - "Agende sua consulta": WhatsApp, `data-cta="hero"`, agora com ícone de agenda no lugar do logo do WhatsApp.
+  - "Conheça a Experiência Lien →": cápsula em degradê teal, âncora para `/#experiencia`, sem WhatsApp.
+- **Menu:** o 1º item passou de "Início" para "Sobre" (`/#sobre`), como no print. O logo continua levando ao início.
+- **Verificador:** a checagem "prova social do Google no lugar do 2º botão" virou "2º botão leva à Experiência".
