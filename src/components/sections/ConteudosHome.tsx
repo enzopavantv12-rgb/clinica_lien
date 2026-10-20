@@ -1,6 +1,5 @@
 import { ArrowRight } from 'lucide-react';
 import { Reveal } from '../ui/Reveal';
-import { SectionHeading } from '../ui/SectionHeading';
 import { conteudos } from '../../data/content';
 
 /**
@@ -13,7 +12,16 @@ export function ConteudosHome() {
   return (
     <section id="conteudos" className="bg-teal py-20 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
-        <SectionHeading tag={conteudos.tag} titulo={conteudos.h2} subtitulo={conteudos.sub} claro />
+        {/* Cabecalho do print (out/2026): tag em pilula, H2 e subtitulo juntos,
+            sem o sorriso. Pilula a 20% de branco (e nao no azul-claro do
+            print): o texto branco sobre o azul-claro ficava abaixo de 3:1. */}
+        <Reveal className="flex flex-col items-center text-center">
+          <span className="inline-block rounded-full bg-white/20 px-[14px] py-[7px] text-[11px] font-semibold uppercase leading-none tracking-[.12em] text-white">
+            {conteudos.tag}
+          </span>
+          <h2 className="mt-3 text-[clamp(30px,3.4vw,44px)] font-bold leading-[1.15] text-white">{conteudos.h2}</h2>
+          <p className="mt-3 max-w-[620px] text-[clamp(16px,1.4vw,19px)] leading-[1.55] text-white">{conteudos.sub}</p>
+        </Reveal>
 
         <ul className="mt-14 grid gap-5 lg:grid-cols-3">
           {conteudos.destaques.map((c, i) => (

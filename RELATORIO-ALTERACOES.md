@@ -1004,3 +1004,14 @@ O cabeçalho da Equipe deixou de usar o `SectionHeading`.
 - **Título:** H2 maior, em 2 linhas: "Diferentes especialidades." / "Um só planejamento.". A quebra vale a partir de 640px.
 - **Subtítulo:** logo abaixo do título.
 - **Sorriso:** o símbolo que ficava sob o título saiu, como no print.
+
+---
+
+## Conteúdos: cabeçalho igual ao print (out/2026)
+
+O cabeçalho deixou de usar o `SectionHeading`.
+
+- **Tag:** "Hub editorial" em pílula.
+- **Título e subtítulo:** H2 e subtítulo juntos, com o subtítulo a 12px do título.
+- **Sorriso:** saiu, como no print.
+- **Cor da pílula:** branco a 20% sobre o teal, em vez do azul-claro do print. Com o texto branco sobre o azul-claro, o contraste ficava abaixo de 3:1.
