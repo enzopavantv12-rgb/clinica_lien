@@ -2,52 +2,21 @@ import { Reveal } from '../ui/Reveal';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
 import { sedacao } from '../../data/content';
 
-/* Icones preenchidos do print: corpo rosa-claro com detalhes em branco a 70%
-   (cards de vidro) e equipe com dente em magenta (card lateral). Decorativos. */
-
-function IconePilula({ className = '' }: { className?: string }) {
+/** Icones oficiais (pasta ACOLHIMENTO-AVANCADO, `npm run icones`). Decorativos. */
+function Icone({ nome, className = '' }: { nome: string; className?: string }) {
   return (
-    <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false" className={className}>
-      <g transform="rotate(-40 18 20)">
-        <rect x="6" y="13" width="26" height="12" rx="6" fill="#F0B6F2" />
-        <path d="M19 13v12" stroke="#fff" strokeOpacity={0.7} strokeWidth={1.6} />
-        <path d="M10.5 17.2c.6-.9 1.6-1.4 2.7-1.4" stroke="#fff" strokeOpacity={0.7} strokeWidth={1.6} strokeLinecap="round" fill="none" />
-      </g>
-      <circle cx="31" cy="30.5" r="5" fill="#F0B6F2" />
-      <path d="M28 30.5h6" stroke="#fff" strokeOpacity={0.7} strokeWidth={1.6} strokeLinecap="round" />
-    </svg>
+    <img
+      src={`/icones-lien/sedacao-${nome}.webp`}
+      width={120}
+      height={120}
+      alt=""
+      aria-hidden="true"
+      loading="lazy"
+      decoding="async"
+      className={`object-contain ${className}`}
+    />
   );
 }
-
-function IconeAnestesista({ className = '' }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false" className={className}>
-      <circle cx="16" cy="12.5" r="7" fill="#F0B6F2" />
-      <path d="M3.5 34c0-7 5.6-12 12.5-12s12.5 5 12.5 12v1.5h-25Z" fill="#F0B6F2" />
-      <circle cx="31" cy="15" r="6.5" fill="#F0B6F2" />
-      <path d="M31 11.6v6.8M27.6 15h6.8" stroke="#fff" strokeOpacity={0.85} strokeWidth={1.8} strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function IconeEquipeDente({ className = '' }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true" focusable="false" className={className}>
-      {/* Dente acima, com dois tracos de brilho. */}
-      <path d="M14 2.2c-1.4 0-2.3 1-2.3 2.4 0 1.5.6 2.4 1 3.8.3 1.3.5 3 1.4 3 .8 0 .8-2 1.9-2s1.1 2 1.9 2c.9 0 1.1-1.7 1.4-3 .4-1.4 1-2.3 1-3.8 0-1.4-.9-2.4-2.3-2.4-.9 0-1.3.4-2 .4s-1.1-.4-2-.4Z" />
-      <path d="M9 3.5 7.6 2.4M23 3.5l1.4-1.1" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" />
-      {/* Tres bustos, o do meio maior. */}
-      <circle cx="16" cy="16.5" r="3.4" />
-      <path d="M9.6 29.5c0-3.9 2.9-6.6 6.4-6.6s6.4 2.7 6.4 6.6Z" />
-      <circle cx="7.2" cy="18.6" r="2.6" opacity={0.75} />
-      <path d="M2.4 29.5c0-3.1 2.1-5.3 4.8-5.3 1.1 0 2.1.3 2.9.9-1 1.2-1.6 2.8-1.6 4.4Z" opacity={0.75} />
-      <circle cx="24.8" cy="18.6" r="2.6" opacity={0.75} />
-      <path d="M29.6 29.5c0-3.1-2.1-5.3-4.8-5.3-1.1 0-2.1.3-2.9.9 1 1.2 1.6 2.8 1.6 4.4Z" opacity={0.75} />
-    </svg>
-  );
-}
-
-const ICONES = { pilula: IconePilula, anestesista: IconeAnestesista } as const;
 
 /** Duas linhas com quebra so no desktop (as do print); no mobile, texto corrido. */
 function Linhas({ linhas }: { linhas: readonly string[] }) {
@@ -102,7 +71,6 @@ export function Sedacao() {
 
           <ul role="list" className="mt-11 grid max-w-[652px] gap-[14px] sm:grid-cols-2 sm:gap-5">
             {sedacao.modalidades.map((m, i) => {
-              const Icone = ICONES[m.icone];
               return (
                 <Reveal
                   as="li"
@@ -113,7 +81,7 @@ export function Sedacao() {
                   className="rounded-2xl border border-white/[.18] bg-white/10 px-[22px] pb-[26px] pt-[22px] backdrop-blur-[6px] transition-colors hover:bg-white/[.14] motion-reduce:transition-none"
                 >
                   <div className="flex items-start gap-3">
-                    <Icone className="h-[38px] w-[38px] shrink-0" />
+                    <Icone nome={m.icone} className="h-[38px] w-[38px] shrink-0" />
                     <h3 className="text-[14.5px] font-bold leading-[1.35] text-white">
                       <Linhas linhas={m.linhas} />
                     </h3>
@@ -130,9 +98,8 @@ export function Sedacao() {
             aria-labelledby="sedacao-cta-title"
             className="mx-auto w-full rounded-[22px] bg-white px-[26px] pb-[26px] pt-[22px] text-center shadow-[0_30px_60px_-20px_rgba(30,0,25,.45),0_8px_20px_-10px_rgba(30,0,25,.25)] transition-transform duration-[250ms] hover:-translate-y-[3px] motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:max-w-[380px] lg:max-w-none"
           >
-            <span aria-hidden="true" className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-[#F7E4F5]">
-              <IconeEquipeDente className="h-[30px] w-[30px] text-magenta" />
-            </span>
+            {/* O arquivo ja traz o circulo rosa-claro. */}
+            <Icone nome="equipe" className="mx-auto block h-16 w-16" />
             <h3 id="sedacao-cta-title" className="mt-[14px] text-[19px] font-bold leading-[1.35] text-ink">
               <Linhas linhas={conversa.linhas} />
             </h3>

@@ -10,7 +10,8 @@
     "verificar": "node scripts/verificar-build.mjs",
     "images": "node scripts/gen-images.mjs",
     "marca": "node scripts/gen-marca.mjs",
-    "hero": "node scripts/optimize-hero.mjs"
+    "hero": "node scripts/optimize-hero.mjs",
+    "icones": "node scripts/gen-icones.mjs"
   },
   "dependencies": {
     "@motionone/utils": "^10.18.0",

@@ -132,7 +132,9 @@ const ctasPrincipais = [...marcacao.matchAll(/<a\b[^>]*href="https:\/\/wa\.me\/[
   .filter(([, origem]) => !['flutuante', 'rodape', 'sedacao'].includes(origem));
 checar(
   'sedacao: CTA do print ("Quero conversar sobre isso") e sem foto',
-  secao('sedacao').includes('Quero conversar sobre isso') && !secao('sedacao').includes('<img'),
+  // "Sem foto": as unicas imagens permitidas sao os icones oficiais (/icones-lien/).
+  secao('sedacao').includes('Quero conversar sobre isso') &&
+    [...secao('sedacao').matchAll(/<img\b[^>]*>/g)].every(([tag]) => /src="\/icones-lien\//.test(tag)),
 );
 checar(
   'todo CTA principal da home diz "Agende sua consulta"',

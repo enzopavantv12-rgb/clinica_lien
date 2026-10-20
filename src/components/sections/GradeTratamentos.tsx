@@ -115,7 +115,7 @@ export function GradeTratamentos({ leituras }: { leituras: Record<string, Leitur
             >
               {/* Esquerda: topo do card, "Indicado para" e o botao. */}
               <div className="flex min-w-0 flex-col">
-                <TopoTratamento slug={t.slug} nome={t.nome} resumo={t.resumo} variante={v} Titulo="h2" tituloGrande={estaAberto} />
+                <TopoTratamento slug={t.slug} nome={t.nome} resumo={t.resumo} Titulo="h2" tituloGrande={estaAberto} />
                 <Colapso aberto={estaAberto}>
                   <div className="pt-6">
                     <Rotulo cor={cor}>{rotulos.indicado}</Rotulo>

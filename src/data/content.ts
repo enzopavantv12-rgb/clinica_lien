@@ -289,10 +289,11 @@ export const sobre = {
    * Mini-destaques do print, mantidos por decisao da clinica, sem caixas.
    * O print traz "100%" no 1o: a palavra e vocabulario proibido no projeto,
    * entao o titulo ficou "Personalizado" (decisao do usuario, out/2026).
+   * Icones oficiais da pasta NOSSA ESSENCIA: /icones-lien/essencia-<icone>.webp.
    */
   destaques: [
-    { icone: 'ClipboardList', cor: 'magenta', titulo: 'Personalizado', legenda: 'para cada caso' },
-    { icone: 'MapPin', cor: 'teal', titulo: 'Cruzeiro, BH', legenda: 'Localização privilegiada' },
+    { icone: 'personalizado', titulo: 'Personalizado', legenda: 'para cada caso' },
+    { icone: 'localizacao', titulo: 'Cruzeiro, BH', legenda: 'Localização privilegiada' },
   ],
   // Foto do print: consultorio com a cadeira e a vista de BH
   // (assets/fotos/consultorio/consultorio lien 1.png -> experiencia-consultorio).
@@ -610,12 +611,12 @@ export const cardapio = {
   link: 'Entenda esse cuidado',
   pergunta: 'Não sabe por onde começar?',
   cta: CTA_PRINCIPAL,
-  // `icone`: arquivo em /public/icones/<nome>.svg (originais em assets/icones/).
+  // `icone`: /public/icones-lien/comecar-<nome>.webp (originais em assets/ICONES_LIEN_SITE/ORIENTAÇAO-PERSONALIZADA/).
   itens: [
-    { texto: 'Minha prótese incomoda ou está antiga', href: '/tratamentos/#facetas-e-proteses', icone: 'instrumentos' },
-    { texto: 'Sinto dor ou estalos na mandíbula (DTM)', href: '/tratamentos/#dtm-e-dor-orofacial', icone: 'dente-localizacao' },
-    { texto: 'Quero melhorar meu sorriso (Estética)', href: '/tratamentos/#facetas-e-proteses', icone: 'dente-brilho' },
-    { texto: 'Tenho medo ou ansiedade de dentista', href: '/#sedacao', icone: 'cadeira-de-dentista' },
+    { texto: 'Minha prótese incomoda ou está antiga', href: '/tratamentos/#facetas-e-proteses', icone: 'protese' },
+    { texto: 'Sinto dor ou estalos na mandíbula (DTM)', href: '/tratamentos/#dtm-e-dor-orofacial', icone: 'mandibula' },
+    { texto: 'Quero melhorar meu sorriso (Estética)', href: '/tratamentos/#facetas-e-proteses', icone: 'sorriso' },
+    { texto: 'Tenho medo ou ansiedade de dentista', href: '/#sedacao', icone: 'medo' },
   ],
 } as const;
 
@@ -636,13 +637,13 @@ export const sedacao = {
     'O medo de dentista e a ansiedade não devem ser barreiras para a sua saúde e qualidade de vida. Na Lien, oferecemos protocolos seguros de controle da dor e relaxamento absoluto para que você realize seus tratamentos com serenidade.',
   modalidades: [
     {
-      icone: 'pilula',
+      icone: 'pilula', // /icones-lien/sedacao-pilula.webp
       linhas: ['Sedação', 'Consciente Oral'],
       texto:
         'Medicação pré-consulta administrada com total segurança para induzir um estado de profundo relaxamento e bem-estar.',
     },
     {
-      icone: 'anestesista',
+      icone: 'anestesista', // /icones-lien/sedacao-anestesista.webp
       linhas: ['Sedação Intravenosa', 'com Anestesista'],
       texto:
         'Acompanhamento de médico anestesista durante todo o procedimento, ideal para cirurgias complexas e pacientes altamente ansiosos.',

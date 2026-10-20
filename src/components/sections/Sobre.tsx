@@ -1,10 +1,7 @@
-import { ClipboardList, MapPin } from 'lucide-react';
 import { BrandImage } from '../ui/BrandImage';
 import { Etiqueta } from '../ui/Etiqueta';
 import { Reveal } from '../ui/Reveal';
 import { sobre } from '../../data/content';
-
-const ICONES = { ClipboardList, MapPin } as const;
 
 type Trecho = { texto: string; forte?: boolean };
 
@@ -75,13 +72,18 @@ export function Sobre() {
 
             <dl className="mt-9 flex flex-wrap gap-8 sm:gap-14">
               {sobre.destaques.map((d) => {
-                const Icone = ICONES[d.icone];
                 return (
                   <div key={d.titulo} className="flex items-start gap-[14px]">
-                    <Icone
+                    {/* Icone oficial (pasta NOSSA ESSENCIA, `npm run icones`). */}
+                    <img
+                      src={`/icones-lien/essencia-${d.icone}.webp`}
+                      width={128}
+                      height={128}
+                      alt=""
                       aria-hidden="true"
-                      strokeWidth={1.5}
-                      className={`h-10 w-10 shrink-0 ${d.cor === 'magenta' ? 'text-magenta' : 'text-teal'}`}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-10 w-10 shrink-0 object-contain"
                     />
                     <div>
                       <dt className="text-[22px] font-bold leading-[1.2] text-ink">{d.titulo}</dt>

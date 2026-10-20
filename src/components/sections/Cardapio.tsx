@@ -4,23 +4,18 @@ import { Reveal } from '../ui/Reveal';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
 import { cardapio } from '../../data/content';
 
-/** Icone SVG da clinica como mascara CSS: a cor vem do `currentColor`. */
+/** Icone oficial (pasta ORIENTACAO-PERSONALIZADA, `npm run icones`). Decorativo. */
 function IconeCard({ nome }: { nome: string }) {
-  const url = `url(/icones/${nome}.svg)`;
   return (
-    <span
+    <img
+      src={`/icones-lien/comecar-${nome}.webp`}
+      width={144}
+      height={144}
+      alt=""
       aria-hidden="true"
-      className="block size-11 bg-current"
-      style={{
-        WebkitMaskImage: url,
-        maskImage: url,
-        WebkitMaskSize: 'contain',
-        maskSize: 'contain',
-        WebkitMaskRepeat: 'no-repeat',
-        maskRepeat: 'no-repeat',
-        WebkitMaskPosition: 'left top',
-        maskPosition: 'left top',
-      }}
+      loading="lazy"
+      decoding="async"
+      className="block size-11 object-contain object-left-top"
     />
   );
 }
@@ -53,9 +48,7 @@ export function Cardapio() {
                 href={item.href}
                 className="group flex w-full flex-col rounded-2xl border border-brandgray/70 bg-white/90 px-6 pb-6 pt-[22px] shadow-[0_10px_24px_-16px_rgba(26,20,32,.12)] transition-[transform,border-color] duration-[250ms] ease-out hover:-translate-y-[3px] hover:border-magenta/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-magenta motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
-                <span className="text-magenta">
-                  <IconeCard nome={item.icone} />
-                </span>
+                <IconeCard nome={item.icone} />
                 <span className="mt-[18px] text-[15px] leading-[1.45] text-ink">{item.texto}</span>
                 <span className="mt-auto inline-flex items-center gap-1 pt-3 text-xs font-medium text-teal">
                   {cardapio.link}

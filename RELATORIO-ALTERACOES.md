@@ -827,3 +827,21 @@ Pedido da clínica: deixar o sorriso maior, trocar onde ele aparecia só como um
   - **Fundo:** nas laterais dos vídeos verticais (capítulos 01, 02 e 03), o fundo desfocado ficou com o tom mais forte (90%, blur maior).
   - **Degradê:** um degradê lateral (`.exp-laterais`) escurece em direção às bordas do player.
   - **Bordas:** as bordas do vídeo são esfumadas (`.exp-funde`, só antes do play) e se fundem com o fundo, então vídeo e fundo leem como uma peça só.
+
+---
+
+## Ícones oficiais do site (out/2026)
+
+Troca dos ícones pelos da pasta `assets/ICONES_LIEN_SITE/`, enviada pela clínica. Cada subpasta corresponde a uma seção pelo nome da tag dela. O novo `npm run icones` (`scripts/gen-icones.mjs`) gera as versões web em `public/icones-lien/`: apara as bordas, deixa cada ícone em ~3x o tamanho exibido e salva em webp, com até 10 KB cada.
+
+- **EXCELÊNCIA ODONTOLÓGICA → cards dos 10 tratamentos** (home e /tratamentos/).
+  - O arquivo já traz o quadrado tintado, então o quadrado do código saiu.
+  - As cores dos ícones seguem a mesma alternância magenta/teal dos botões.
+  - Os SVGs desenhados à mão (`IconesTratamento.tsx`) foram removidos.
+- **ORIENTAÇÃO PERSONALIZADA → "Por onde você quer começar?"**: Prótese, Mandíbula (DTM), Sorriso (Estética) e Medo. Os SVGs antigos de `public/icones/` foram removidos.
+- **NOSSA ESSÊNCIA → Sobre**: Personalizado e Localização, no lugar dos ícones do lucide.
+- **ACOLHIMENTO AVANÇADO → Sedação**:
+  - Sedação (pílula) e Anestesista entraram nas modalidades.
+  - No card "Converse com nossa equipe" entrou o Equipe_v02, que já vem com o círculo rosa-claro.
+  - O `Equipe.png` (sem círculo) ficou sem uso.
+- **Verificador:** a checagem "Sedação sem foto" passou a aceitar só os ícones de `/icones-lien/` como imagem.
