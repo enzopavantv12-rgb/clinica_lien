@@ -287,7 +287,7 @@ export const sobre = {
   ],
   // Carrossel de fotos do consultorio (assets/fotos/consultorio/, out/2026;
   // originais copiados para assets/fotos-originais/consultorio-*.png).
-  // `foco`: object-position no recorte vertical (a 1a foto e horizontal).
+  // `foco`: object-position no recorte (a 1a foto, horizontal, vai inteira).
   fotos: [
     {
       base: 'consultorio-vista',

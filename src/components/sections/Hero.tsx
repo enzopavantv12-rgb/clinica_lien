@@ -119,6 +119,12 @@ export function Hero() {
         </div>
       </div>
 
+      {/* Veu branco suave so a esquerda, sob o texto, para o contraste (pedido
+          da clinica, out/2026). Sem desfoque; zera antes do rosto. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-[1] hidden bg-[linear-gradient(90deg,rgba(255,255,255,.72),rgba(255,255,255,.55)_32%,rgba(255,255,255,.2)_48%,rgba(255,255,255,0)_58%)] hl:block"
+      />
       <HeroFoto />
     </section>
   );

@@ -952,3 +952,12 @@ Pedido da Dra. Natália, em vídeo: o texto do capítulo não deve sumir no play
 **Celular:** igual a antes. O vídeo fica centralizado, o texto na base, e o texto some no play, por falta de espaço lateral.
 
 **Testado** no Chrome em 1440px e em 375px: os 3 capítulos trocam e tocam com som, sem nenhum erro de requisição.
+
+---
+
+## Hero com véu branco à esquerda; 1ª foto do carrossel na horizontal (out/2026)
+
+- **Hero:** um véu branco suave cobre só o lado do texto. Ele começa em 72% de opacidade na borda esquerda e chega a zero em 58% da largura, antes do rosto. Não tem desfoque e só aparece no layout lado a lado; no celular, a foto fica abaixo do texto e o véu não entra. Serve para melhorar o contraste do texto sobre a foto.
+- **Carrossel "Nossa essência":**
+  - A 1ª foto (sala com a vista de BH) aparece inteira, na proporção horizontal original (1672×941). As duas verticais seguem em 4:5.
+  - A altura do quadro acompanha a foto ativa, com transição suave de 0,5s, sem transição se o visitante reduz animações. Assim não sobra espaço vazio sob a foto horizontal.

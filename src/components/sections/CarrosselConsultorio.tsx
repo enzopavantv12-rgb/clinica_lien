@@ -16,8 +16,8 @@ const seta =
  * Carrossel das fotos do consultorio na secao "Lien quer dizer vinculo."
  * (pedido da clinica, out/2026), no lugar da foto unica.
  *
- * - Uma foto por vez, em loop, recorte vertical 4:5 (as duas fotos novas sao
- *   verticais; a horizontal entra com o foco na cadeira e na janela).
+ * - Uma foto por vez, em loop: a 1a na proporcao horizontal original e as
+ *   verticais em 4:5; a altura do quadro acompanha a foto ativa.
  * - Passa sozinho a cada 5 s; pausa no hover e no foco (regiao inteira), e pelo botao
  *   (WCAG 2.2.2). Movimento reduzido: sem autoplay e troca instantanea.
  * - Setas sobre a foto, pontos abaixo; setas do teclado com o foco na regiao.
@@ -45,6 +45,26 @@ export function CarrosselConsultorio() {
     mql.addEventListener('change', aoMudar);
     return () => mql.removeEventListener('change', aoMudar);
   }, []);
+
+  // Fotos de proporcoes diferentes (1a horizontal): a altura do quadro
+  // acompanha a foto ativa, com transicao, em vez de ficar na da mais alta.
+  const [altura, setAltura] = useState<number | null>(null);
+  useEffect(() => {
+    if (!embla) return;
+    const medir = () => {
+      const slide = embla.slideNodes()[embla.selectedScrollSnap()];
+      const img = slide?.querySelector('img');
+      if (img) setAltura(img.getBoundingClientRect().height);
+    };
+    medir();
+    const obs = new ResizeObserver(medir);
+    embla.slideNodes().forEach((n) => obs.observe(n));
+    embla.on('select', medir);
+    return () => {
+      obs.disconnect();
+      embla.off('select', medir);
+    };
+  }, [embla]);
 
   useEffect(() => {
     if (!embla) return;
@@ -91,16 +111,18 @@ export function CarrosselConsultorio() {
       <div className="relative">
         <div
           ref={viewportRef}
-          className="overflow-hidden rounded-[24px] shadow-[0_20px_40px_-24px_rgba(26,20,32,.18)] lg:rounded-[28px]"
+          style={altura ? { height: altura } : undefined}
+          className="overflow-hidden rounded-[24px] shadow-[0_20px_40px_-24px_rgba(26,20,32,.18)] transition-[height] duration-500 ease-out motion-reduce:transition-none lg:rounded-[28px]"
         >
           {/* Respiro de 16px entre slides (-ml-4/pl-4): sem ele, o arredondamento
               subpixel mostrava 1px da foto vizinha na borda. */}
-          <ul className="-ml-4 flex touch-pan-y">
+          <ul className="-ml-4 flex items-start touch-pan-y">
             {fotos.map((f, i) => {
               const ws = LARGURAS[f.base] ?? [];
               const srcset = (ext: string) => ws.map((l) => `/img/${f.base}-${l}.${ext} ${l}w`).join(', ');
-              // Recorte 4:5 em cover: a foto horizontal precisa de ~2,2x a largura do quadro.
-              const sizes = f.width > f.height ? '(max-width: 1024px) 200vw, 1200px' : '(max-width: 1024px) 92vw, 540px';
+              // A 1a foto (horizontal) fica na proporcao original; as verticais, em 4:5.
+              const horizontal = f.width > f.height;
+              const sizes = '(max-width: 1024px) 92vw, 540px';
               return (
                 <li
                   key={f.base}
@@ -120,7 +142,7 @@ export function CarrosselConsultorio() {
                       loading={i === 0 ? 'eager' : 'lazy'}
                       decoding="async"
                       draggable={false}
-                      className="aspect-[4/5] w-full select-none object-cover"
+                      className={`w-full select-none object-cover ${horizontal ? 'aspect-[1672/941]' : 'aspect-[4/5]'}`}
                       style={{ objectPosition: f.foco }}
                     />
                   </picture>
