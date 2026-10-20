@@ -993,3 +993,14 @@ O rodapé foi refeito pelo print, em 4 colunas e sobre fundo branco.
 
 - **Clínica:** o ícone do rodapé, o `sameAs` do schema da clínica e o `llms.txt` passaram a usar o Instagram da clínica, `@clinica_lien` (https://www.instagram.com/clinica_lien/).
 - **Dra. Natália:** o perfil `@dra.nataliasimoes` ficou só no schema dela (Person), no campo novo `site.instagramDra`.
+
+---
+
+## Equipe: cabeçalho igual ao print (out/2026)
+
+O cabeçalho da Equipe deixou de usar o `SectionHeading`.
+
+- **Tag:** "Corpo clínico" em pílula magenta (`Etiqueta`).
+- **Título:** H2 maior, em 2 linhas: "Diferentes especialidades." / "Um só planejamento.". A quebra vale a partir de 640px.
+- **Subtítulo:** logo abaixo do título.
+- **Sorriso:** o símbolo que ficava sob o título saiu, como no print.

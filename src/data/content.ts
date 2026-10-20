@@ -806,6 +806,7 @@ export const equipe = {
   // usuario) com os textos anteriores.
   tag: 'Corpo clínico',
   h2: 'Diferentes especialidades. Um só planejamento.',
+  h2Linhas: ['Diferentes especialidades.', 'Um só planejamento.'],
   sub: 'Especialistas renomados trabalhando em perfeita sinergia para cuidar integralmente do seu sorriso.',
   membros: [
     {

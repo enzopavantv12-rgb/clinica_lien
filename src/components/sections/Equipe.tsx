@@ -1,6 +1,6 @@
 import { BrandImage } from '../ui/BrandImage';
 import { Reveal } from '../ui/Reveal';
-import { SectionHeading } from '../ui/SectionHeading';
+import { Etiqueta } from '../ui/Etiqueta';
 import { equipe } from '../../data/content';
 
 /**
@@ -15,7 +15,16 @@ export function Equipe() {
   return (
     <section id="equipe" className="bg-white py-20 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
-        <SectionHeading tag={equipe.tag} titulo={equipe.h2} subtitulo={equipe.sub} />
+        {/* Cabecalho do print (out/2026): tag em pilula, H2 em 2 linhas e
+            subtitulo, sem o sorriso. */}
+        <Reveal className="flex flex-col items-center text-center">
+          <Etiqueta>{equipe.tag}</Etiqueta>
+          <h2 className="mt-3 text-[clamp(30px,3.6vw,46px)] font-bold leading-[1.12] tracking-[-.01em] text-ink">
+            {equipe.h2Linhas[0]} <br className="hidden sm:inline" />
+            {equipe.h2Linhas[1]}
+          </h2>
+          <p className="mt-5 max-w-[720px] text-[clamp(16px,1.4vw,19px)] font-light leading-[1.6] text-ink-muted">{equipe.sub}</p>
+        </Reveal>
 
         <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {equipe.membros.map((membro, i) => (
