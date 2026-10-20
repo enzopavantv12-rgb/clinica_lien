@@ -28,7 +28,7 @@ function Texto({ trechos, forte }: { trechos: readonly Trecho[]; forte: string }
  * Texto a esquerda (52%) e o carrossel de fotos do consultorio a direita
  * (48%; CarrosselConsultorio, out/2026);
  * abaixo de 1024px, 1 coluna com a foto depois do texto. O quote (exigencia
- * do alinhamento) entra discreto, com borda teal, antes dos 2 destaques.
+ * do alinhamento) saiu com os textos do print da clinica (out/2026).
  * "vinculo" em italico: a Poppins italica nao e carregada, o navegador
  * inclina a regular (nao se importa fonte nova).
  */
@@ -67,10 +67,6 @@ export function Sobre() {
           </Reveal>
 
           <Reveal y={16} duracao={0.6} delay={0.18}>
-            <blockquote className="mt-7 border-l-[3px] border-teal pl-[18px] text-base font-medium italic leading-[1.6] text-ink">
-              &ldquo;{sobre.quote}&rdquo;
-            </blockquote>
-
             <dl className="mt-9 flex flex-wrap gap-8 sm:gap-14">
               {sobre.destaques.map((d) => {
                 return (

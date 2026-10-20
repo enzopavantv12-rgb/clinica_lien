@@ -13,7 +13,7 @@ export function ConteudosHome() {
   return (
     <section id="conteudos" className="bg-teal py-20 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
-        <SectionHeading tag={conteudos.tag} titulo={conteudos.h2} claro />
+        <SectionHeading tag={conteudos.tag} titulo={conteudos.h2} subtitulo={conteudos.sub} claro />
 
         <ul className="mt-14 grid gap-5 lg:grid-cols-3">
           {conteudos.destaques.map((c, i) => (

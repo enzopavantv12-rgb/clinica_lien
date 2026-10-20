@@ -30,6 +30,19 @@ export function SectionHeading({
   const corTag = claro ? 'text-white' : 'text-teal';
   const alinhamento = centralizado ? 'text-center mx-auto items-center' : 'text-left items-start';
 
+  // No FAQ (curvaGrande), o subtitulo vem antes do sorriso, como no print.
+  const subtituloEl = subtitulo && (
+    <Reveal delay={0.16}>
+      <p
+        className={`mt-5 max-w-prose text-sub sm:text-sub-lg ${corSub} ${
+          centralizado ? 'mx-auto' : ''
+        }`}
+      >
+        {subtitulo}
+      </p>
+    </Reveal>
+  );
+
   return (
     <div className={`flex flex-col ${alinhamento}`}>
       {tag && (
@@ -51,6 +64,7 @@ export function SectionHeading({
           {titulo}
         </h2>
       </Reveal>
+      {curvaGrande && subtituloEl}
       {comCurva && (
         <Reveal delay={0.12}>
           {/* Simbolo oficial, sem distorcer: so a largura e fixada. O
@@ -64,17 +78,7 @@ export function SectionHeading({
           )}
         </Reveal>
       )}
-      {subtitulo && (
-        <Reveal delay={0.16}>
-          <p
-            className={`mt-5 max-w-prose text-sub sm:text-sub-lg ${corSub} ${
-              centralizado ? 'mx-auto' : ''
-            }`}
-          >
-            {subtitulo}
-          </p>
-        </Reveal>
-      )}
+      {!curvaGrande && subtituloEl}
     </div>
   );
 }

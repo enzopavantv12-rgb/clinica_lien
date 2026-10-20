@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { ArrowRight, CalendarDays } from 'lucide-react';
+import { CalendarDays } from 'lucide-react';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
 import { hero } from '../../data/content';
 
@@ -78,7 +78,7 @@ function HeroFoto() {
  * `style="opacity:0"` no HTML estatico e atrasaria o LCP ate a hidratacao.
  *
  * Layout do print da clinica (out/2026): sem selo, sem sorriso e sem a nota
- * do Google; dois botoes — o CTA de WhatsApp e o convite para a Experiencia.
+ * do Google; um unico botao (WhatsApp).
  */
 export function Hero() {
   return (
@@ -102,8 +102,8 @@ export function Hero() {
             <Linhas linhas={hero.textoLinhas} destaque="font-medium text-ink" />
           </p>
 
-          {/* Dois botoes, como no print da clinica (out/2026): o CTA de conversao
-              (WhatsApp, com icone de agenda) e o convite para a Experiencia. */}
+          {/* CTA unico de conversao (WhatsApp, com icone de agenda). O 2o botao
+              do print ("Conheca a Experiencia Lien") saiu a pedido (out/2026). */}
           <div className="hero-entra mt-10 flex flex-col gap-4 sm:flex-row sm:items-center paisagem:mt-7" style={ordem(2)}>
             <WhatsAppButton
               origem="hero"
@@ -115,16 +115,6 @@ export function Hero() {
               <CalendarDays size={20} strokeWidth={2.2} aria-hidden="true" />
               {hero.cta}
             </WhatsAppButton>
-            <a
-              href={hero.cta2.href}
-              className="inline-flex h-14 w-full items-center justify-center gap-4 rounded-full bg-[linear-gradient(90deg,#0B6489,#118DAE)] px-7 text-center text-base font-semibold leading-[1.2] sm:px-8 sm:text-left sm:text-[1.0625rem] text-white shadow-[0_10px_30px_-12px_rgba(3,126,153,0.55)] transition-all duration-300 ease-brand hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal motion-safe:hover:-translate-y-0.5 sm:w-auto"
-            >
-              <span>
-                {hero.cta2.linhas[0]} <br className="hidden sm:inline" />
-                {hero.cta2.linhas[1]}
-              </span>
-              <ArrowRight size={20} strokeWidth={2.2} aria-hidden="true" />
-            </a>
           </div>
         </div>
       </div>

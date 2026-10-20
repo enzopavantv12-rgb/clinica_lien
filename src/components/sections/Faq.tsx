@@ -12,7 +12,7 @@ import { faq } from '@/data/content';
 
 /**
  * Duvidas frequentes (alinhamento final, 3.12): accordion simples, tudo
- * fechado, exatamente as 6 perguntas aprovadas. Sem "Esta resposta ajudou?",
+ * fechado, as 5 perguntas do print da clinica (out/2026). Sem "Esta resposta ajudou?",
  * sem CTA nas respostas e um unico "Agende sua consulta" no fim da secao.
  *
  * SEO/AEO: o Radix desmonta a resposta fechada por padrao. Aqui `forceMount`:
@@ -24,7 +24,7 @@ export function Faq() {
   return (
     <section id="duvidas" className="bg-white py-20 sm:py-24 lg:py-28">
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-10 px-5 sm:px-8">
-        <SectionHeading tag={faq.tag} titulo={faq.h2} curvaGrande />
+        <SectionHeading tag={faq.tag} titulo={faq.h2} subtitulo={faq.sub} curvaGrande />
 
         <Accordion type="single" collapsible className="flex flex-col gap-2">
           {faq.itens.map((item) => (

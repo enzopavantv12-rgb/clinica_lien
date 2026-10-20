@@ -1,4 +1,4 @@
-import { PadraoOndas, Simbolo } from '../ui/BrandGraphics';
+import { PadraoOndas } from '../ui/BrandGraphics';
 import { Etiqueta } from '../ui/Etiqueta';
 import { Reveal } from '../ui/Reveal';
 import { Cardapio } from './Cardapio';
@@ -55,10 +55,6 @@ export function MetodoLien() {
           ))}
         </ol>
 
-        <Reveal y={16} duracao={0.6} className="mt-10 flex flex-col items-center text-center">
-          <p className="text-base font-medium italic text-ink">{metodo.fechamento}</p>
-          <Simbolo className="mt-4 block h-auto w-24" />
-        </Reveal>
       </section>
 
       <Cardapio />

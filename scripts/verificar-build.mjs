@@ -91,8 +91,8 @@ checar(
   'experiencia: sem embed nem imagem do YouTube no HTML; cap. 01 com video proprio',
   !/<iframe[^>]*youtube|i\.ytimg\.com/.test(secao('experiencia')) && secao('experiencia').includes('/videos/experiencia-scanner-poster.webp'),
 );
-// Print da clinica (out/2026): 2o botao convida para a Experiencia (ancora, sem WhatsApp).
-checar('hero: 2o botao leva a Experiencia', /<a\b[^>]*href="\/#experiencia"[^>]*>[\s\S]*?Experiência Lien/.test(secao('inicio')));
+// Print da clinica (out/2026): um unico botao no hero, o de WhatsApp.
+checar('hero: um unico botao (o CTA de WhatsApp)', !secao('inicio').includes('href="/#experiencia"') && secao('inicio').includes('data-cta="hero"'));
 checar('faixa unica de prova rapida (sem a 2a faixa teal)', !marcacao.includes('bg-[#047E99]'));
 const linksTratamentosHome = [...secao('tratamentos').matchAll(/href="\/tratamentos\/#([a-z-]+)"/g)].map((m) => m[1]);
 checar(
@@ -151,10 +151,10 @@ const mensagens = linksWhats.map(([, href]) =>
   decodeURIComponent(href.split('?text=')[1].replace(/&amp;/g, '&')),
 );
 
-// --- FAQ: accordion fechado, exatamente 6 perguntas (alinhamento final 3.12) ---
+// --- FAQ: accordion fechado, as 5 perguntas do print da clinica (out/2026; eram 6 no alinhamento) ---
 // Radix com forceMount: toda resposta fica no HTML estatico, oculta por CSS.
 const itensFaq = contar(secao('duvidas'), /data-faq-item=""/g);
-checar('6 perguntas no FAQ', itensFaq === 6, `achou ${itensFaq}`);
+checar('5 perguntas no FAQ', itensFaq === 5, `achou ${itensFaq}`);
 checar('FAQ todo fechado de inicio', !/data-faq-item=""[^>]*data-state="open"|data-state="open"[^>]*data-faq-item=""/.test(secao('duvidas')));
 checar('sem "Esta resposta ajudou?"', !marcacao.includes('Esta resposta ajudou'));
 
@@ -180,7 +180,7 @@ checar('home com 3 blocos ld+json validos', blocos.length === 3 && schemas.lengt
 const tipos = schemas.flatMap((s) => [s['@type']].flat());
 for (const t of ['Dentist', 'LocalBusiness', 'FAQPage', 'Person']) checar(`schema ${t}`, tipos.includes(t));
 const faqSchema = schemas.find((s) => [s['@type']].flat().includes('FAQPage'));
-checar('FAQPage com 6 perguntas', faqSchema?.mainEntity?.length === 6, `achou ${faqSchema?.mainEntity?.length}`);
+checar('FAQPage com 5 perguntas', faqSchema?.mainEntity?.length === 5, `achou ${faqSchema?.mainEntity?.length}`);
 // Toda resposta do schema precisa estar visivel (no HTML) na secao de duvidas.
 const escaparHtml = (t) =>
   t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;');

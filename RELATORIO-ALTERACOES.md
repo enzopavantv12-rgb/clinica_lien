@@ -898,3 +898,41 @@ A clínica trocou os vídeos de `assets/vídeos/`. Cada um entrou no capítulo d
   - "Conheça a Experiência Lien →": cápsula em degradê teal, âncora para `/#experiencia`, sem WhatsApp.
 - **Menu:** o 1º item passou de "Início" para "Sobre" (`/#sobre`), como no print. O logo continua levando ao início.
 - **Verificador:** a checagem "prova social do Google no lugar do 2º botão" virou "2º botão leva à Experiência".
+
+---
+
+## Textos da home iguais aos prints da clínica (out/2026)
+
+O 2º botão do hero ("Conheça a Experiência Lien") saiu. O hero voltou a ter um único CTA, o do WhatsApp.
+
+Os textos foram trocados pelos dos prints enviados para cada seção:
+
+| Seção | O que mudou |
+|---|---|
+| **Resultados** | Tag "Casos reais & transformações"; H2 "Resultados que contam histórias" (sem ponto); novo subtítulo. |
+| **Depoimentos** | Contexto do 1º depoimento voltou a "Reabilitação Oral" (decisão do usuário). O resto já estava igual. |
+| **Sobre** | Abertura e parágrafo novos ("Derivado do francês, **Lien**… Fundada em 2024 pela **Dra. Natália Simões**…"); a citação saiu. |
+| **Método** | H2 "O Método Lien em 4 Etapas"; novo subtítulo; textos novos das 4 etapas; o fechamento "Sem pressa…" e o sorriso abaixo dele saíram. |
+| **Por onde começar** | O link virou "conhecer tratamento ↓". |
+| **Tratamentos (home)** | Tag "Excelência odontológica"; H2 "Tratamentos e Especialidades"; novo subtítulo. Os nomes passaram a "Implantodontia Digital", "Reabilitação Oral Completa" e "Harmonização Orofacial" (valem também em /tratamentos/). |
+| **Equipe** | Tag "Corpo clínico"; novo subtítulo. Natália, Alexander, Gabriela e Luiza ganharam os textos do print, nesta ordem, e os selos "Fundadora", "Mestre & Doutor" e "Especialista", com a especialidade em caixa alta. Maria Emília e Isabela foram mantidas com os textos anteriores (decisão do usuário). |
+| **Conteúdos** | Tag "Hub editorial"; novo subtítulo. Os 3 cards seguem com artigos reais, porque os títulos do print não existem (decisão do usuário). |
+| **FAQ** | Tag "Esclarecimentos"; H2 "Dúvidas Frequentes"; subtítulo novo, antes do sorriso; 5 perguntas com a redação do print e as respostas aprovadas. Saiu "Preciso saber qual tratamento preciso antes de agendar?". O schema FAQPage acompanha. |
+| **Sedação, Experiência e CTA final** | Já estavam iguais aos prints. |
+
+**Ajustes ao print (decisões do usuário):**
+- "100%" (Sobre) não entrou.
+- "garantir" (Método, duas vezes) virou "assegurar". As duas palavras são vocabulário proibido pelo CRO.
+
+**Erros de digitação do print corrigidos:**
+- "osdentes" → "os dentes";
+- "tratamento.." → "tratamento.";
+- a etapa 3 vem cortada no print ("…previsibilidade do"); completei com "tratamento."
+
+**Verificador:**
+- FAQ passou de 6 para 5 perguntas.
+- A checagem do hero agora exige um único botão.
+
+**Para a revisão CRO:**
+- "Especialistas renomados", "perfeita sinergia", "foco absoluto", "total segurança cirúrgica" e os selos "Especialista" / "Mestre & Doutor": a clínica precisa confirmar que os títulos estão registrados no CRO.
+- A Dra. Luiza passou a "Ortodontia & Alinhadores". Antes constava "Prótese Dentária | Dentística e Estética".

@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
 import { Etiqueta } from '../ui/Etiqueta';
 import { Reveal } from '../ui/Reveal';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
@@ -52,11 +52,11 @@ export function Cardapio() {
                 <span className="mt-[18px] text-[15px] leading-[1.45] text-ink">{item.texto}</span>
                 <span className="mt-auto inline-flex items-center gap-1 pt-3 text-xs font-medium text-teal">
                   {cardapio.link}
-                  <ArrowRight
+                  <ArrowDown
                     size={13}
                     strokeWidth={2}
                     aria-hidden="true"
-                    className="transition-transform duration-[250ms] motion-safe:group-hover:translate-x-0.5"
+                    className="transition-transform duration-[250ms] motion-safe:group-hover:translate-y-0.5"
                   />
                 </span>
               </a>

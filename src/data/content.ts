@@ -136,8 +136,6 @@ export const hero = {
     [{ texto: 'talvez ainda não tenha conhecido a Lien.', destaque: true }],
   ],
   cta: CTA_PRINCIPAL,
-  // 2o botao do print (out/2026): leva a secao Experiencia, sem WhatsApp.
-  cta2: { linhas: ['Conheça a', 'Experiência Lien'], href: '/#experiencia' },
   /**
    * Foto da hero. Variantes geradas por `npm run hero` (scripts/optimize-hero.mjs)
    * a partir do original em assets/hero/. O recorte mobile e vertical (3:4).
@@ -188,9 +186,10 @@ export const faixa = {
  * revisao etica/CRO antes de publicar]
  */
 export const resultados = {
-  tag: 'Resultados',
-  h2: 'Resultados que contam histórias.',
-  apoio: 'Cada tratamento parte de uma necessidade diferente e de um planejamento individual.',
+  // Textos do print da clinica (out/2026).
+  tag: 'Casos reais & transformações',
+  h2: 'Resultados que contam histórias',
+  apoio: 'Cada sorriso reabilitado devolve autoestima, função mastigatória e liberdade para sorrir sem receios.',
   autorizacao: 'Imagem publicada com autorização do paciente.',
   variacao: 'Os resultados variam de pessoa para pessoa e dependem de diagnóstico individual.',
   rotulos: ['Antes', 'Depois'] as [string, string],
@@ -255,36 +254,27 @@ export const sobre = {
   tag: 'Nossa essência',
   h2: 'Lien quer dizer vínculo.',
   tituloPartes: ['Lien quer dizer ', 'vínculo', '.'],
+  // Textos do print da clinica (out/2026): abertura + 1 paragrafo, sem quote.
   abertura: [
+    { texto: 'Derivado do francês, ' },
     { texto: 'Lien', forte: true },
     {
+      texto: ' significa laço, ligação e vínculo. Fundada em 2024 pela ',
+    },
+    { texto: 'Dra. Natália Simões', forte: true },
+    {
       texto:
-        ', em francês, significa laço, ligação, vínculo. Foi esse o nome escolhido porque acreditamos que a odontologia não deve ser apenas uma sequência de procedimentos: deve ser uma relação construída com confiança, escuta e cuidado.',
+        ' após anos de sólida experiência clínica, a clínica nasceu com o propósito de transformar a relação das pessoas com a odontologia.',
     },
   ],
   apoio: [
     [
-      { texto: 'Depois de cerca de oito anos atendendo em diferentes clínicas, a ' },
-      { texto: 'Dra. Natália Simões', forte: true },
       {
         texto:
-          ' percebeu que algumas queixas se repetiam: medo de dentista, atendimentos apressados, pouca clareza sobre o tratamento e a sensação de não ser realmente ouvido.',
-      },
-    ],
-    [
-      {
-        texto:
-          'Em 2024, ela decidiu criar uma clínica com identidade própria e uma forma diferente de cuidar: tempo para escutar, profundidade para diagnosticar, liberdade para planejar cada caso e atenção à experiência do paciente em todas as etapas.',
-      },
-    ],
-    [
-      {
-        texto:
-          'Assim nasceu a Lien - unindo excelência clínica, tecnologia e um cuidado que começa antes do procedimento. Aqui, cada tratamento é pensado para a necessidade real de quem confia a própria saúde aos nossos cuidados.',
+          'Aqui, acreditamos que nenhum tratamento de excelência acontece com pressa. Dedicamos tempo genuíno à escuta, ao diagnóstico aprofundado e a um planejamento rigoroso. Cada paciente é único, e cada sorriso construído é o reflexo de uma relação de confiança mútua e duradoura.',
       },
     ],
   ] as readonly (readonly { texto: string; forte?: boolean }[])[],
-  quote: 'Mais do que tratar dentes, queremos construir relações de confiança que façam sentido ao longo do tempo.',
   /**
    * Mini-destaques do print, mantidos por decisao da clinica, sem caixas.
    * O print traz "100%" no 1o: a palavra e vocabulario proibido no projeto,
@@ -334,28 +324,34 @@ export const sobre = {
 /** Metodo Lien — layout do Print 2 com o texto do Alinhamento (3.5). Literal. */
 export const metodo = {
   tag: 'Previsibilidade & Segurança',
-  h2: 'Cuidado que começa antes do tratamento.',
-  intro:
-    'Na Lien, cada caso é conduzido com escuta, diagnóstico, planejamento e acompanhamento. O tratamento não começa pelo procedimento - começa por entender você.',
+  // Textos do print da clinica (out/2026). "garantir" (vocabulario proibido)
+  // virou "assegurar", por decisao do usuario.
+  h2: 'O Método Lien em 4 Etapas',
+  intro: 'Um processo estruturado para assegurar que você compreenda cada passo do seu tratamento, sem surpresas.',
   etapas: [
-    { numero: '1', titulo: 'Escuta', texto: 'Entendemos sua história, necessidades, receios e objetivos.' },
+    {
+      numero: '1',
+      titulo: 'Escuta',
+      texto: 'Ouvimos suas queixas, desejos, entendemos sua história, suas necessidades, seus receios e o que você espera do tratamento.',
+    },
     {
       numero: '2',
       titulo: 'Diagnóstico',
-      texto: 'Exame clínico e recursos digitais quando indicados para compreender o caso por completo.',
+      texto: 'Utilizamos tecnologia digital avançada e exames precisos para compreender o caso por completo.',
     },
     {
       numero: '3',
       titulo: 'Planejamento',
-      texto: 'Definimos caminhos, etapas e prioridades com clareza e previsibilidade.',
+      // [PENDENTE: o print corta a frase em "previsibilidade do"; completei com "tratamento".]
+      texto:
+        'Definimos o melhor caminho para a sua necessidade real, explicando possibilidades, etapas, prioridades e previsibilidade do tratamento.',
     },
     {
       numero: '4',
       titulo: 'Acompanhamento',
-      texto: 'O cuidado continua durante e depois do tratamento, com foco em adaptação, conforto e manutenção.',
+      texto: 'Suporte contínuo, manutenções preventivas e cuidado de longo prazo para assegurar a longevidade do seu tratamento.',
     },
   ],
-  fechamento: 'Sem pressa. Sem excesso. Com clareza em cada etapa.',
 } as const;
 
 type Tratamento = {
@@ -383,9 +379,10 @@ type Tratamento = {
  * pagina /tratamentos/. O `slug` e a ancora (/tratamentos/#<slug>).
  */
 export const tratamentos = {
-  tag: 'Tratamentos',
-  h2: 'Cada tratamento começa pelo seu planejamento.',
-  sub: 'Conheça as especialidades da Lien. O melhor caminho para você é definido na consulta.',
+  // Cabecalho da home: textos do print da clinica (out/2026).
+  tag: 'Excelência odontológica',
+  h2: 'Tratamentos e Especialidades',
+  sub: 'Soluções completas integradas em um só lugar, executadas com rigor científico e tecnologia de ponta.',
   saibaMais: 'Saiba mais',
   fechar: 'Fechar',
   inicio: 'Início',
@@ -408,7 +405,7 @@ export const tratamentos = {
     {
       slug: 'implantodontia-digital',
       numero: '01',
-      nome: 'Implantodontia digital',
+      nome: 'Implantodontia Digital',
       icone: 'MonitorSmartphone',
       home: true,
       resumo: 'Reposição de dentes perdidos com planejamento digital para mais precisão e previsibilidade.',
@@ -432,7 +429,7 @@ export const tratamentos = {
     {
       slug: 'reabilitacao-oral-completa',
       numero: '02',
-      nome: 'Reabilitação oral completa',
+      nome: 'Reabilitação Oral Completa',
       icone: 'Layers',
       home: true,
       resumo:
@@ -493,7 +490,7 @@ export const tratamentos = {
     {
       slug: 'harmonizacao-orofacial',
       numero: '05',
-      nome: 'Harmonização orofacial',
+      nome: 'Harmonização Orofacial',
       icone: 'Sparkles',
       resumo: 'Procedimentos planejados para valorizar os traços do rosto e do sorriso, preservando naturalidade e equilíbrio.',
       oQueE:
@@ -636,7 +633,7 @@ export const cardapio = {
   tag: 'Orientação personalizada',
   h2: 'Por onde você quer começar?',
   sub: 'Selecione a sua principal necessidade para entendermos como podemos ajudar:',
-  link: 'Entenda esse cuidado',
+  link: 'conhecer tratamento',
   pergunta: 'Não sabe por onde começar?',
   cta: CTA_PRINCIPAL,
   // `icone`: /public/icones-lien/comecar-<nome>.webp (originais em assets/ICONES_LIEN_SITE/ORIENTAÇAO-PERSONALIZADA/).
@@ -788,6 +785,8 @@ type Membro = {
   especialidade: string;
   frase: string;
   cro: string | null;
+  /** Selo sobre a foto (print da clinica, out/2026). */
+  selo?: string;
   foto: { src: string; alt: string; pendente?: boolean };
 };
 
@@ -801,19 +800,60 @@ type Membro = {
  * "Especialista" nos demais cards (conflito C8).]
  */
 export const equipe = {
-  tag: 'Equipe',
+  // Textos e selos do print da clinica (out/2026) para Natalia, Alexander,
+  // Gabriela e Luiza, nesta ordem; Maria Emilia e Isabela mantidas (decisao do
+  // usuario) com os textos anteriores.
+  tag: 'Corpo clínico',
   h2: 'Diferentes especialidades. Um só planejamento.',
-  sub: 'Uma equipe multidisciplinar que trabalha de forma integrada para que cada etapa do tratamento seja conduzida com conhecimento, segurança e continuidade.',
+  sub: 'Especialistas renomados trabalhando em perfeita sinergia para cuidar integralmente do seu sorriso.',
   membros: [
     {
       nome: 'Dra. Natália Simões',
-      especialidade: 'Reabilitação Oral | Implantodontia, Prótese e Periodontia',
+      especialidade: 'Reabilitação Oral & Estética',
       frase:
-        'Fundadora e diretora clínica da Lien. Atua em reabilitações orais, implantes, próteses e cuidados periodontais, conduzindo o planejamento de forma integrada do início ao fim.',
+        'Fundadora da Lien em 2024. Especialista dedicada a transformar sorrisos com planejamento integrado e foco absoluto no acolhimento humano.',
+      selo: 'Fundadora',
       cro: 'CRO-MG 49.821',
       foto: {
         src: '/img/equipe-natalia-simoes.webp',
         alt: 'Dra. Natália Simões, fundadora e diretora clínica da Lien Reabilitação Oral em Belo Horizonte',
+      },
+    },
+    {
+      nome: 'Dr. Alexander Pedrosa',
+      especialidade: 'Cirurgião Bucomaxilofacial',
+      frase:
+        'Mestre e Doutor em Cirurgia. Especialista em cirurgias avançadas, implantes e casos complexos com total segurança cirúrgica.',
+      selo: 'Mestre & Doutor',
+      cro: 'CRO-MG 26.562',
+      foto: {
+        src: '/img/equipe-alexander-pedrosa.webp',
+        alt: 'Dr. Alexander Pedrosa, cirurgião bucomaxilofacial da Lien em Belo Horizonte',
+      },
+    },
+    {
+      nome: 'Dra. Gabriela Ribeiro',
+      especialidade: 'Dor Orofacial & DTM',
+      frase:
+        'Focada no diagnóstico e alívio de dores na face, bruxismo e disfunções da articulação temporomandibular (DTM).',
+      selo: 'Especialista',
+      cro: 'CRO-MG 65.103',
+      foto: {
+        src: '/img/equipe-gabriela-ribeiro.webp',
+        alt: 'Dra. Gabriela Ribeiro, de DTM e dor orofacial, da Lien em Belo Horizonte',
+      },
+    },
+    {
+      nome: 'Dra. Luiza Henriques',
+      especialidade: 'Ortodontia & Alinhadores',
+      frase:
+        'Especialista em alinhadores estéticos e ortodontia avançada para alinhamento e integração com a reabilitação oral.',
+      selo: 'Especialista',
+      // [PENDENTE: CRO da Dra. Luiza]
+      cro: null,
+      foto: {
+        src: '/img/equipe-luiza-henriques.webp',
+        alt: 'Dra. Luiza Henriques, de ortodontia e alinhadores, da Lien em Belo Horizonte',
       },
     },
     {
@@ -838,40 +878,6 @@ export const equipe = {
         alt: 'Dra. Isabela Guieiro, de harmonização orofacial e ortodontia, da Lien em Belo Horizonte',
       },
     },
-    {
-      nome: 'Dr. Alexander Pedrosa',
-      especialidade: 'Cirurgia e Traumatologia Bucomaxilofacial',
-      frase:
-        'Cirurgião bucomaxilofacial, mestre e doutor, com experiência em cirurgias complexas, reconstrução facial e procedimentos de maior complexidade.',
-      cro: 'CRO-MG 26.562',
-      foto: {
-        src: '/img/equipe-alexander-pedrosa.webp',
-        alt: 'Dr. Alexander Pedrosa, cirurgião bucomaxilofacial da Lien em Belo Horizonte',
-      },
-    },
-    {
-      nome: 'Dra. Luiza Henriques',
-      especialidade: 'Prótese Dentária | Dentística e Estética',
-      frase:
-        'Especialista em Prótese Dentária pela USP, com atuação em reabilitação oral e odontologia estética e restauradora, integrando função, naturalidade e planejamento digital.',
-      // [PENDENTE: CRO da Dra. Luiza]
-      cro: null,
-      foto: {
-        src: '/img/equipe-luiza-henriques.webp',
-        alt: 'Dra. Luiza Henriques, de prótese dentária e dentística, da Lien em Belo Horizonte',
-      },
-    },
-    {
-      nome: 'Dra. Gabriela Ribeiro',
-      especialidade: 'DTM e Dor Orofacial | Sono',
-      frase:
-        'Especialista em DTM e Dor Orofacial com ênfase em sono, com atuação baseada em evidências para investigar a origem da dor, recuperar função e melhorar a qualidade de vida.',
-      cro: 'CRO-MG 65.103',
-      foto: {
-        src: '/img/equipe-gabriela-ribeiro.webp',
-        alt: 'Dra. Gabriela Ribeiro, de DTM e dor orofacial, da Lien em Belo Horizonte',
-      },
-    },
   ],
 } as const satisfies { membros: readonly Membro[]; [k: string]: unknown };
 
@@ -881,8 +887,11 @@ export const equipe = {
  * content/artigos/*.md (src/lib/artigos.ts).
  */
 export const conteudos = {
-  tag: 'Conteúdos',
+  // Cabecalho da home: print da clinica (out/2026). Os 3 cards seguem com
+  // artigos reais (decisao do usuario: os titulos do print nao existem).
+  tag: 'Hub editorial',
   h2: 'Conteúdos em Saúde Bucal',
+  sub: 'Artigos e orientações elaboradas por nossos especialistas para esclarecer suas principais dúvidas.',
   lerConteudo: 'Ler conteúdo',
   verTodos: 'Ver todos os conteúdos',
   destaques: [
@@ -940,8 +949,11 @@ export const conteudos = {
  * tudo fechado, sem CTA nas respostas e um unico CTA no fim da secao.
  */
 export const faq = {
-  tag: 'Dúvidas',
-  h2: 'Dúvidas frequentes',
+  // Print da clinica (out/2026): 5 perguntas, com as respostas aprovadas.
+  // Saiu "Preciso saber qual tratamento preciso antes de agendar?".
+  tag: 'Esclarecimentos',
+  h2: 'Dúvidas Frequentes',
+  sub: 'Respostas claras para as principais barreiras e questionamentos dos nossos pacientes.',
   cta: CTA_PRINCIPAL,
   itens: [
     {
@@ -950,27 +962,22 @@ export const faq = {
         'Na Lien, a consulta começa à mesa, com tempo para ouvir você de verdade. Depois, unimos exame clínico, escaneamento, fotografias e exames quando indicados para enxergar sua saúde como um todo. Você não sai apenas com um diagnóstico, sai entendendo o que está acontecendo, o que precisa ser cuidado e qual caminho faz sentido para você.',
     },
     {
-      pergunta: 'Tenho medo de dentista. Como funciona o atendimento?',
-      resposta:
-        'Se você tem medo de dentista, a experiência na Lien é pensada de outro jeito. Antes de qualquer procedimento, entendemos o que te deixa inseguro e adaptamos o atendimento a você. Fones com isolamento de ruído, massagem, aromaterapia, pausas e, quando indicado, sedação oral ou intravenosa com anestesista fazem parte desse cuidado. Aqui, conforto não é detalhe: faz parte do tratamento.',
-    },
-    {
-      pergunta: 'Preciso saber qual tratamento preciso antes de agendar?',
-      resposta:
-        'Não. Você não precisa chegar à Lien com uma solução pronta, esse é justamente o papel da consulta. A partir da sua queixa, do exame e dos recursos de diagnóstico, organizamos o que realmente precisa de atenção e mostramos os caminhos possíveis. Aqui, o tratamento começa pelo entendimento, não pela pressa em indicar um procedimento.',
-    },
-    {
-      pergunta: 'Vocês atendem convênio?',
+      pergunta: 'A clínica atende convênios odontológicos?',
       resposta:
         'A Lien trabalha exclusivamente com atendimento particular porque isso nos permite conduzir cada consulta com tempo, profundidade e liberdade de planejamento. Sem protocolos padronizados ou limitações de cobertura, conseguimos indicar o que realmente faz sentido para cada paciente e acompanhar o tratamento com o cuidado que faz parte da nossa proposta.',
     },
     {
-      pergunta: 'Vocês atendem casos mais complexos ou que precisam de várias especialidades?',
+      pergunta: 'Tenho muito medo de dentista. Como vocês lidam com isso?',
+      resposta:
+        'Se você tem medo de dentista, a experiência na Lien é pensada de outro jeito. Antes de qualquer procedimento, entendemos o que te deixa inseguro e adaptamos o atendimento a você. Fones com isolamento de ruído, massagem, aromaterapia, pausas e, quando indicado, sedação oral ou intravenosa com anestesista fazem parte desse cuidado. Aqui, conforto não é detalhe: faz parte do tratamento.',
+    },
+    {
+      pergunta: 'Vocês atendem casos mais complexos?',
       resposta:
         'Sim, e essa integração é uma das bases da Lien. Quando um caso envolve diferentes áreas, os profissionais trabalham a partir de um mesmo planejamento, em vez de cada especialidade cuidar de uma parte isoladamente. Para você, isso significa mais continuidade, clareza e um tratamento pensado como um todo.',
     },
     {
-      pergunta: 'Onde fica a clínica?',
+      pergunta: 'Onde a clínica está localizada em Belo Horizonte?',
       resposta:
         'A Lien fica no bairro Cruzeiro, na região Centro-Sul de Belo Horizonte, em uma localização de fácil acesso. O endereço completo, mapa e orientações para chegada ficam disponíveis no rodapé do site e na confirmação do agendamento.',
     },

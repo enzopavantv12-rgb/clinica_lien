@@ -27,7 +27,7 @@ export function Tratamentos() {
         <h2 id="tratamentos-title" className="mt-3 text-[clamp(28px,3vw,34px)] font-bold leading-[1.15] text-ink">
           {tratamentos.h2}
         </h2>
-        <p className="mt-[14px] max-w-[470px] text-base font-light leading-[1.6] text-ink-muted">{tratamentos.sub}</p>
+        <p className="mt-[14px] max-w-[640px] text-base font-light leading-[1.6] text-ink-muted">{tratamentos.sub}</p>
       </Reveal>
 
       <ul
