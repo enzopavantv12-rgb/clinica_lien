@@ -15,6 +15,27 @@ const srcset = (ext: string) => imagem.larguras.map((l) => `${imagem.base}-${l}.
 export const MEDIA_EMPILHADO = '(max-width: 767px), (max-width: 1279px) and (orientation: portrait)';
 export const MEDIA_FUNDO = '(min-width: 1280px), (min-width: 768px) and (orientation: landscape)';
 
+/** Linhas do print: quebra so no layout lado a lado; no celular, texto corrido. */
+function Linhas({
+  linhas,
+  destaque,
+}: {
+  linhas: readonly (readonly { texto: string; destaque?: boolean }[])[];
+  destaque: string;
+}) {
+  return linhas.map((linha, i) => (
+    <span key={i}>
+      {i > 0 && (
+        <>
+          <br className="hidden hl:inline" />
+          <span className="hl:hidden"> </span>
+        </>
+      )}
+      {linha.map((p, j) => (p.destaque ? <span key={j} className={destaque}>{p.texto}</span> : p.texto))}
+    </span>
+  ));
+}
+
 /** Atraso da entrada em sequencia (ver .hero-entra no globals.css). */
 const ordem = (i: number) => ({ '--i': i }) as CSSProperties;
 
@@ -51,8 +72,8 @@ function HeroFoto() {
 
 /**
  * Hero: foto de fundo com a Dra. Natalia no terco direito e o texto a
- * esquerda, sobre a area clara (veu `.hero-veu` so ate ~60% da largura).
- * No mobile: texto em cima, foto embaixo.
+ * esquerda, direto sobre a parede clara da foto — sem veu nem desfoque, por
+ * pedido da clinica (out/2026). No mobile: texto em cima, foto embaixo.
  *
  * Sem `Reveal`: a entrada e CSS puro (@keyframes). O `Reveal` gravaria
  * `style="opacity:0"` no HTML estatico e atrasaria o LCP ate a hidratacao.
@@ -75,10 +96,8 @@ export function Hero() {
       id="inicio"
       className="relative isolate overflow-hidden bg-cream hl:flex hl:min-h-[clamp(640px,100svh,920px)] hl:items-center"
     >
-      <div aria-hidden="true" className="hero-veu pointer-events-none absolute inset-0 z-[1] hidden hl:block" />
-
       <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 pb-10 pt-[104px] sm:px-8 hl:pb-16 hl:pt-[120px] hlg:px-12 paisagem:pb-8 paisagem:pt-[96px]">
-        <div className="max-w-[560px] hl:max-w-[480px] hlg:max-w-[560px]">
+        <div className="max-w-[560px] hl:max-w-none">
           {/* Selo branco translucido: o teal da marca em corpo pequeno so passa
               AA (4,5:1) sobre branco — sobre o creme e a foto ficava em ~4,3. */}
           <p
@@ -92,8 +111,7 @@ export function Hero() {
             className="hero-entra mt-5 text-[2.125rem] font-bold leading-[1.08] text-ink hl:text-[2.625rem] hlg:text-[clamp(2.5rem,3.4vw,3.25rem)] paisagem:mt-4 paisagem:text-[clamp(1.875rem,3.4vw,3rem)]"
             style={ordem(1)}
           >
-            {hero.h1Partes[0]}
-            <span className="text-magenta">{hero.h1Partes[1]}</span>
+            <Linhas linhas={hero.h1Linhas} destaque="text-magenta" />
           </h1>
 
           {/* Simbolo oficial da Lien (o sorriso), sob o titulo. */}
@@ -102,20 +120,13 @@ export function Hero() {
           </span>
 
           <p
-            className="hero-entra mt-6 max-w-[46ch] text-[clamp(1rem,1.4vw,1.1875rem)] leading-[1.55] text-ink-muted paisagem:mt-4"
+            className="hero-entra mt-6 text-[clamp(1rem,1.4vw,1.1875rem)] leading-[1.55] text-ink-muted paisagem:mt-4"
             style={ordem(3)}
           >
-            {hero.sub}
+            <Linhas linhas={hero.textoLinhas} destaque="font-medium text-ink" />
           </p>
 
-          <p
-            className="hero-entra mt-4 max-w-[46ch] text-[clamp(1rem,1.3vw,1.125rem)] font-medium leading-[1.5] text-ink paisagem:mt-3"
-            style={ordem(4)}
-          >
-            {hero.apoio}
-          </p>
-
-          <div className="hero-entra mt-8 paisagem:mt-6" style={ordem(5)}>
+          <div className="hero-entra mt-8 paisagem:mt-6" style={ordem(4)}>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
               <WhatsAppButton
                 origem="hero"

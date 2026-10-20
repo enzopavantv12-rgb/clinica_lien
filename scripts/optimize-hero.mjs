@@ -1,7 +1,7 @@
 /**
  * Variantes da imagem da hero (Dra. Natalia com o arco ao fundo).
  *
- * Entrada:  assets/hero/Banner Natália.png  (1672x941, 16:9; out/2026)
+ * Entrada:  assets/hero/Retrato profissional na clínica iluminada.png  (1672x941, 16:9; out/2026)
  *           — fica em assets/, fora do deploy.
  * Saida:    public/img/hero-lien-{1672,1440,1024}.{avif,webp}   desktop/tablet
  *           (1672 = largura do original: nao ampliar)
@@ -16,7 +16,7 @@ import { mkdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import sharp from 'sharp';
 
-const ORIGINAL = 'assets/hero/Banner Natália.png';
+const ORIGINAL = 'assets/hero/Retrato profissional na clínica iluminada.png';
 const SAIDA = 'public/img';
 const CENTRO_ROSTO_X = 0.71;
 

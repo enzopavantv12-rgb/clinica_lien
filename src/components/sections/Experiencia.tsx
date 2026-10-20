@@ -18,6 +18,25 @@ function PosterPendente() {
 }
 
 /**
+ * Fundo das laterais do video vertical: o proprio quadro ampliado e desfocado,
+ * com o tom reforcado (90%) e um degrade escuro que cresce para as bordas do
+ * player. Junto com as bordas esfumadas do video (.exp-funde), video e fundo
+ * leem como uma peca so (pedido da clinica, out/2026).
+ */
+function FundoVertical({ src }: { src: string }) {
+  return (
+    <>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 scale-125 bg-cover bg-center opacity-90 blur-3xl"
+        style={{ backgroundImage: `url(${src})` }}
+      />
+      <div aria-hidden="true" className="exp-laterais absolute inset-0" />
+    </>
+  );
+}
+
+/**
  * Experiencia Lien — print aprovado (prompt "experiencia-lien", out/2026),
  * layout e copy do print por decisao da clinica: cabecalho centralizado e um
  * player escuro largo (1260px) com o texto do capitulo sobreposto e a barra
@@ -147,12 +166,7 @@ export function Experiencia() {
               </div>
             ) : (
               <div className="absolute inset-0">
-                {/* Fundo: a propria miniatura, ampliada e desfocada. */}
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 scale-110 bg-cover bg-center opacity-60 blur-2xl"
-                  style={{ backgroundImage: `url(${c.video.fundo})` }}
-                />
+                <FundoVertical src={c.video.fundo} />
                 <picture>
                   <source type="image/avif" srcSet={c.video.posterAvif} />
                   <img
@@ -162,20 +176,14 @@ export function Experiencia() {
                     height={960}
                     loading="lazy"
                     decoding="async"
-                    className="absolute left-1/2 top-0 h-full w-auto -translate-x-1/2 object-cover"
+                    className="exp-funde absolute left-1/2 top-0 h-full w-auto -translate-x-1/2 object-cover"
                   />
                 </picture>
               </div>
             )
           ) : c.video ? (
             <div className="absolute inset-0">
-              {c.video.vertical && c.video.fundo && (
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 scale-110 bg-cover bg-center opacity-60 blur-2xl"
-                  style={{ backgroundImage: `url(${c.video.fundo})` }}
-                />
-              )}
+              {c.video.vertical && c.video.fundo && <FundoVertical src={c.video.fundo} />}
               {/* Vertical: 9:16 centralizado; tocando, sobe para acima da barra
                   de abas (sm+) para os controles nativos ficarem visiveis. */}
               <div
@@ -189,7 +197,7 @@ export function Experiencia() {
                   ref={videoRef}
                   className={
                     c.video.vertical
-                      ? `aspect-[9/16] h-full w-auto object-cover ${tocando ? 'rounded-xl' : ''}`
+                      ? `aspect-[9/16] h-full w-auto object-cover ${tocando ? 'rounded-xl' : 'exp-funde'}`
                       : 'h-full w-full object-cover'
                   }
                   poster={c.video.poster}

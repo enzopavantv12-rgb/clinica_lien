@@ -119,12 +119,23 @@ export const header = {
 
 export const hero = {
   tag: 'Reabilitação oral · Belo Horizonte',
-  // Copy sugerida pela Dra. Natalia Simoes (set/2026). O trecho final do H1
-  // sai em magenta. Hero aprovada no alinhamento final: nao reabrir.
+  // Copy sugerida pela Dra. Natalia Simoes (set/2026). Quebras de linha e
+  // destaque em magenta ("excelência clínica,") do print da clinica (out/2026);
+  // as quebras valem a partir do layout lado a lado (no celular, texto corrido).
   h1: 'Reabilitação oral com excelência clínica, tecnologia e cuidado em cada detalhe.',
-  h1Partes: ['Reabilitação oral com excelência clínica, tecnologia e ', 'cuidado em cada detalhe.'],
-  sub: 'Planejamento personalizado e uma experiência pensada para quem valoriza segurança, conforto e previsibilidade em cada etapa.',
-  apoio: 'Se você tem medo de dentista, talvez ainda não tenha conhecido a Lien.',
+  h1Linhas: [
+    [{ texto: 'Reabilitação oral' }],
+    [{ texto: 'com ' }, { texto: 'excelência clínica,', destaque: true }],
+    [{ texto: 'tecnologia e cuidado' }],
+    [{ texto: 'em cada detalhe.' }],
+  ],
+  // Paragrafo unico do print: o apoio ("Se você tem medo...") em tinta escura.
+  textoLinhas: [
+    [{ texto: 'Planejamento personalizado e uma experiência pensada' }],
+    [{ texto: 'para quem valoriza segurança, conforto e previsibilidade' }],
+    [{ texto: 'em cada etapa. ' }, { texto: 'Se você tem medo de dentista,', destaque: true }],
+    [{ texto: 'talvez ainda não tenha conhecido a Lien.', destaque: true }],
+  ],
   cta: CTA_PRINCIPAL,
   microcopy: 'Atendimento particular · Cruzeiro, BH',
   /**
@@ -133,7 +144,7 @@ export const hero = {
    */
   imagem: {
     base: '/img/hero-lien',
-    // Foto "Banner Natalia" (assets/hero/, 1672x941; out/2026).
+    // Foto "Retrato profissional na clínica iluminada" (assets/hero/, 1672x941; out/2026).
     larguras: [1024, 1440, 1672],
     mobile: '/img/hero-lien-mobile-900',
     width: 1672,

@@ -813,3 +813,17 @@ Pedido da clínica: deixar o sorriso maior, trocar onde ele aparecia só como um
   - O `npm run marca` passou a gerar `public/marca/padronagem-ladrilho.webp`. É um período exato do desenho oficial (1787×907px no original), que repete sem emenda.
   - O fundo usa esse ladrilho com 200px de largura. Antes, o arquivo inteiro era esticado com `cover`, e o zoom crescia junto com a altura da seção.
   - A opacidade caiu de 5% para 3,5%.
+
+---
+
+## Hero com foto nova e texto do print; vídeos verticais fundidos ao fundo (out/2026)
+
+- **Foto:** `assets/hero/Retrato profissional na clínica iluminada.png` (1672×941). As variantes saem pelo `npm run hero`, com o mesmo recorte mobile em 71%.
+- **Hero só com a foto:** saiu o véu claro (`.hero-veu`) que ficava entre a foto e o texto, como pedido ("sem blur, só a imagem"). O texto fica direto sobre a parede clara da foto.
+- **Quebras de linha do print:** valem a partir do layout lado a lado; no celular o texto corre normalmente. Os textos estão em `hero.h1Linhas` e `hero.textoLinhas`.
+  - H1 em 4 linhas, com "excelência clínica," em magenta.
+  - O texto de apoio e o "Se você tem medo de dentista…" viraram um parágrafo só, e o "medo de dentista" fica em tinta escura.
+- **Experiência:**
+  - **Fundo:** nas laterais dos vídeos verticais (capítulos 01, 02 e 03), o fundo desfocado ficou com o tom mais forte (90%, blur maior).
+  - **Degradê:** um degradê lateral (`.exp-laterais`) escurece em direção às bordas do player.
+  - **Bordas:** as bordas do vídeo são esfumadas (`.exp-funde`, só antes do play) e se fundem com o fundo, então vídeo e fundo leem como uma peça só.

@@ -155,23 +155,34 @@
 }
 
 @layer components {
-  /*
-   * Hero com foto de fundo (Hero.tsx).
-   * Veu de legibilidade so na metade esquerda, entre a foto e o texto.
-   *
-   * Mais forte que o do prompt (92/78/35/0 em 0/28/46/58%): medido no canvas,
-   * o texto na ponta direita da coluna (~50% da largura) caia a 4,0-4,4:1
-   * sobre a sombra quente do arco. Estes valores passam AA (>= 4,5:1) em todo
-   * o texto e zeram em 56%, logo depois de onde a coluna termina (~51%).
-   */
-  .hero-veu {
+  /* Experiencia: degrade das laterais do video vertical (escurece para as
+     bordas do player, limpo no centro) e bordas do video esfumadas para
+     fundir com o fundo desfocado. Experiencia.tsx. */
+  .exp-laterais {
     background: linear-gradient(
       90deg,
-      rgba(250, 248, 246, 0.94) 0%,
-      rgba(250, 248, 246, 0.9) 30%,
-      rgba(250, 248, 246, 0.86) 44%,
-      rgba(250, 248, 246, 0.62) 50%,
-      rgba(250, 248, 246, 0) 56%
+      rgba(15, 17, 22, 0.85),
+      rgba(15, 17, 22, 0.5) 30%,
+      rgba(15, 17, 22, 0.12) 40%,
+      rgba(15, 17, 22, 0.12) 60%,
+      rgba(15, 17, 22, 0.5) 70%,
+      rgba(15, 17, 22, 0.85)
+    );
+  }
+  .exp-funde {
+    -webkit-mask-image: var(--exp-funde);
+    mask-image: var(--exp-funde);
+    /* Rampa suave (quase ease-in-out) para nao marcar o fim do esfumado. */
+    --exp-funde: linear-gradient(
+      90deg,
+      transparent,
+      rgba(0, 0, 0, 0.15) 8%,
+      rgba(0, 0, 0, 0.55) 18%,
+      #000 32%,
+      #000 68%,
+      rgba(0, 0, 0, 0.55) 82%,
+      rgba(0, 0, 0, 0.15) 92%,
+      transparent
     );
   }
 
