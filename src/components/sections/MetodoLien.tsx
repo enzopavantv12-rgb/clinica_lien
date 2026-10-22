@@ -10,7 +10,7 @@ import { metodo } from '../../data/content';
  *
  * As duas sao <section> irmas (ancoras #metodo e #comecar, ordem conferida
  * pelo verificador) sobre o mesmo fundo branco com a padronagem oficial de
- * ondas em magenta a 3,5%, em ladrilho de 200px (mais delicada e sem zoom,
+ * ondas em magenta a 3,5%, em ladrilho de 130px (traco mais fino) (mais delicada e sem zoom,
  * pedido da clinica em out/2026). O "Por onde comecar" e uma caixa propria, 96px
  * abaixo: o alinhamento exige a separacao entre Metodo e navegacao por queixa.
  *
@@ -20,7 +20,7 @@ import { metodo } from '../../data/content';
 export function MetodoLien() {
   return (
     <div className="relative isolate overflow-hidden bg-white py-[72px] lg:py-[112px]">
-      <PadraoOndas className="pointer-events-none absolute inset-0 -z-10 h-full w-full" cor="#9C1781" opacidade={0.035} ladrilho={200} />
+      <PadraoOndas className="pointer-events-none absolute inset-0 -z-10 h-full w-full" cor="#9C1781" opacidade={0.035} ladrilho={130} />
 
       <section id="metodo" aria-labelledby="metodo-title" className="mx-auto max-w-[1160px] px-6">
         <Reveal y={16} duracao={0.6} className="flex flex-col items-center text-center">

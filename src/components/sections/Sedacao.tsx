@@ -1,4 +1,5 @@
 import { Reveal } from '../ui/Reveal';
+import { SemQuebraNoHifen } from '../ui/SemQuebraNoHifen';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
 import { sedacao } from '../../data/content';
 
@@ -36,7 +37,7 @@ function Linhas({ linhas }: { linhas: readonly string[] }) {
  *
  * - H2 em Poppins 700 e textos em 500, como no print de diagramacao (out/2026).
  * - Textos com `text-wrap: pretty` (sem palavra sozinha na ultima linha) e
- *   "bem-estar" com word joiner (U+2060) para o hifen nao quebrar a linha.
+ *   palavras com hifen ("bem-estar") em nowrap, para nao partirem no hifen.
  * - Contraste (medido nos 3 pontos do degrade): paragrafo branco 7,9:1+, texto
  *   dos cards a 92% 5,8:1+, tag a 85% 4,6:1+.
  * - Botao com padding de 16px (e nao 22px) e sem quebra: com 22px o texto
@@ -88,7 +89,9 @@ export function Sedacao() {
                       <Linhas linhas={m.linhas} />
                     </h3>
                   </div>
-                  <p className="mt-[18px] text-pretty text-[13px] font-medium leading-[1.6] text-white/[.95]">{m.texto}</p>
+                  <p className="mt-[18px] text-pretty text-[13px] font-medium leading-[1.6] text-white/[.95]">
+                    <SemQuebraNoHifen texto={m.texto} />
+                  </p>
                 </Reveal>
               );
             })}

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { X } from 'lucide-react';
 import { PadraoOndas, Simbolo } from '../ui/BrandGraphics';
 import { Reveal } from '../ui/Reveal';
+import { SemQuebraNoHifen } from '../ui/SemQuebraNoHifen';
 import { experiencia } from '../../data/content';
 
 const { capitulos } = experiencia;
@@ -28,7 +29,7 @@ function FundoVertical({ src }: { src: string }) {
     <>
       <div
         aria-hidden="true"
-        className="absolute inset-0 scale-125 bg-cover bg-center opacity-90 blur-3xl"
+        className="absolute inset-0 scale-125 bg-cover bg-center blur-3xl"
         style={{ backgroundImage: `url(${src})` }}
       />
       <div aria-hidden="true" className="exp-laterais absolute inset-0" />
@@ -132,7 +133,7 @@ export function Experiencia() {
       aria-labelledby="exp-title"
       className="relative isolate overflow-hidden bg-white py-[72px] lg:py-[104px]"
     >
-      <PadraoOndas className="pointer-events-none absolute inset-0 -z-10 h-full w-full" cor="#9C1781" opacidade={0.035} ladrilho={200} />
+      <PadraoOndas className="pointer-events-none absolute inset-0 -z-10 h-full w-full" cor="#9C1781" opacidade={0.035} ladrilho={130} />
 
       <Reveal y={16} duracao={0.6} className="mx-auto max-w-[760px] px-6 text-center">
         <span className="inline-block rounded-full border border-[#DCEBEF] bg-white px-4 py-[7px] text-xs font-semibold uppercase leading-none tracking-[.14em] text-teal">
@@ -254,7 +255,7 @@ export function Experiencia() {
               texto continua na tela; no celular some no play. */}
           <div
             aria-hidden="true"
-            className={`pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(10,12,16,.78),rgba(10,12,16,.5)_38%,rgba(10,12,16,0)_60%),linear-gradient(0deg,rgba(10,12,16,.7),rgba(10,12,16,0)_38%)] transition-opacity duration-300 ${
+            className={`pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(10,12,16,.42),rgba(10,12,16,.22)_40%,rgba(10,12,16,0)_60%),linear-gradient(0deg,rgba(10,12,16,.55),rgba(10,12,16,0)_32%)] transition-opacity duration-300 ${
               tocando ? 'opacity-0 sm:opacity-100' : 'opacity-100'
             }`}
           />
@@ -299,8 +300,8 @@ export function Experiencia() {
               {c.titulo}
             </h3>
             <p className="mt-[18px] text-[13px] font-medium leading-[1.65] text-white/[.92] sm:text-[15px] lg:text-[17px]">
-              {c.linhas[0]} <br className="hidden sm:inline" />
-              {c.linhas[1]}
+              <SemQuebraNoHifen texto={c.linhas[0]} /> <br className="hidden sm:inline" />
+              <SemQuebraNoHifen texto={c.linhas[1]} />
             </p>
           </div>
 

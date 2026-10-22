@@ -1031,3 +1031,15 @@ O cabeçalho deixou de usar o `SectionHeading`.
 
 - **Parágrafo e cards:** passaram a usar `text-wrap: pretty` (`text-pretty`). O navegador redistribui as linhas para não deixar uma palavra sozinha no fim, como "serenidade." e "estar.".
 - **"bem-estar":** ganhou word joiners (U+2060) ao redor do hífen, para não quebrar a linha no meio da palavra.
+
+---
+
+## Hífen, padronagem mais fina e player na cor do vídeo (out/2026)
+
+- **Palavras com hífen:** "bem-estar" ainda quebrava no hífen (o Safari ignorava o word joiner). O novo `SemQuebraNoHifen` (`src/components/ui/`) envolve palavras com hífen em `nowrap`. Está aplicado nos cards da Sedação e no texto dos capítulos da Experiência, o que também corrige "pós-procedimento". O word joiner saiu do `content.ts`.
+- **Padronagem:** o ladrilho de ondas passou de 200px para 130px na Experiência e no Método. Com isso, o traço do símbolo fica mais fino, e a opacidade se manteve em 3,5%.
+- **Player da Experiência:** o fundo segue a paleta de cada vídeo.
+  - O desfoque do próprio quadro vai a 100%.
+  - O véu escuro de leitura caiu de 78% para 42% à esquerda.
+  - O degradê lateral (`.exp-laterais`) caiu de 90% para 30%.
+  - O texto branco segue legível sobre o tom do vídeo.
