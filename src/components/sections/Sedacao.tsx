@@ -34,7 +34,7 @@ function Linhas({ linhas }: { linhas: readonly string[] }) {
  * H2 em 2 linhas, paragrafo e 2 cards de vidro (as modalidades); a direita o
  * card branco "Converse com nossa equipe" com o WhatsApp.
  *
- * - H2 em Poppins 800 no prompt: o peso nao e carregado, o navegador usa o 900.
+ * - H2 em Poppins 700 e textos em 500, como no print de diagramacao (out/2026).
  * - Contraste (medido nos 3 pontos do degrade): paragrafo branco 7,9:1+, texto
  *   dos cards a 92% 5,8:1+, tag a 85% 4,6:1+.
  * - Botao com padding de 16px (e nao 22px) e sem quebra: com 22px o texto
@@ -50,7 +50,7 @@ export function Sedacao() {
       aria-labelledby="sedacao-title"
       className="bg-[linear-gradient(100deg,#8E1F7E,#82206F_45%,#6E1A63)] py-16 lg:py-[88px]"
     >
-      <div className="mx-auto grid max-w-[1080px] items-center gap-10 px-6 lg:grid-cols-[1fr_306px] lg:gap-14">
+      <div className="mx-auto grid max-w-[1160px] items-center gap-10 px-6 lg:grid-cols-[1fr_320px] lg:gap-16">
         <div>
           <Reveal y={16} duracao={0.6}>
             <span className="inline-block rounded-full bg-white/[.16] px-3 py-1.5 text-[10.5px] font-bold uppercase tracking-[.12em] text-white/85">
@@ -60,16 +60,16 @@ export function Sedacao() {
           <Reveal y={16} duracao={0.6} delay={0.08}>
             <h2
               id="sedacao-title"
-              className="mt-[14px] text-[clamp(32px,3.8vw,42px)] font-extrabold leading-[1.06] tracking-[-.01em] text-white"
+              className="mt-[14px] text-[clamp(32px,3.8vw,44px)] font-bold leading-[1.08] tracking-[-.01em] text-white"
             >
               <Linhas linhas={sedacao.h2Linhas} />
             </h2>
           </Reveal>
           <Reveal y={16} duracao={0.6} delay={0.16}>
-            <p className="mt-5 max-w-[610px] text-[15.5px] leading-[1.7] text-white">{sedacao.texto}</p>
+            <p className="mt-5 max-w-[680px] text-[16px] font-medium leading-[1.75] text-white">{sedacao.texto}</p>
           </Reveal>
 
-          <ul role="list" className="mt-11 grid max-w-[652px] gap-[14px] sm:grid-cols-2 sm:gap-5">
+          <ul role="list" className="mt-10 grid max-w-[680px] gap-[14px] sm:grid-cols-2 sm:gap-5">
             {sedacao.modalidades.map((m, i) => {
               return (
                 <Reveal
@@ -86,7 +86,7 @@ export function Sedacao() {
                       <Linhas linhas={m.linhas} />
                     </h3>
                   </div>
-                  <p className="mt-[18px] text-[12.5px] leading-[1.65] text-white/[.92]">{m.texto}</p>
+                  <p className="mt-[18px] text-[13px] font-medium leading-[1.6] text-white/[.95]">{m.texto}</p>
                 </Reveal>
               );
             })}

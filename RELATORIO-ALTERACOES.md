@@ -1015,3 +1015,12 @@ O cabeçalho deixou de usar o `SectionHeading`.
 - **Título e subtítulo:** H2 e subtítulo juntos, com o subtítulo a 12px do título.
 - **Sorriso:** saiu, como no print.
 - **Cor da pílula:** branco a 20% sobre o teal, em vez do azul-claro do print. Com o texto branco sobre o azul-claro, o contraste ficava abaixo de 3:1.
+
+---
+
+## Sedação: peso das letras e diagramação do print (out/2026)
+
+- **Título:** H2 em Poppins 700. Antes saía em 900, mais grosso que o print.
+- **Parágrafo:** em 500, mais largo (680px), e cai para 3 linhas no desktop, como no print.
+- **Cards:** os textos das modalidades passaram a 500.
+- **Largura:** o conteúdo foi para 1160px, com o card "Converse com nossa equipe" a 320px.
