@@ -1024,3 +1024,10 @@ O cabeçalho deixou de usar o `SectionHeading`.
 - **Parágrafo:** em 500, mais largo (680px), e cai para 3 linhas no desktop, como no print.
 - **Cards:** os textos das modalidades passaram a 500.
 - **Largura:** o conteúdo foi para 1160px, com o card "Converse com nossa equipe" a 320px.
+
+---
+
+## Sedação: sem palavras viúvas (out/2026)
+
+- **Parágrafo e cards:** passaram a usar `text-wrap: pretty` (`text-pretty`). O navegador redistribui as linhas para não deixar uma palavra sozinha no fim, como "serenidade." e "estar.".
+- **"bem-estar":** ganhou word joiners (U+2060) ao redor do hífen, para não quebrar a linha no meio da palavra.

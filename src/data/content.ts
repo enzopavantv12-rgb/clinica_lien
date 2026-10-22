@@ -666,7 +666,7 @@ export const sedacao = {
       icone: 'pilula', // /icones-lien/sedacao-pilula.webp
       linhas: ['Sedação', 'Consciente Oral'],
       texto:
-        'Medicação pré-consulta administrada com total segurança para induzir um estado de profundo relaxamento e bem-estar.',
+        'Medicação pré-consulta administrada com total segurança para induzir um estado de profundo relaxamento e bem\u2060-\u2060estar.',
     },
     {
       icone: 'anestesista', // /icones-lien/sedacao-anestesista.webp
