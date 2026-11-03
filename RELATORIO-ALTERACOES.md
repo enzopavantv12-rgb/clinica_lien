@@ -1106,3 +1106,4 @@ A pedido, os textos da equipe voltaram aos do alinhamento final (página 10 do P
 - **Frases dos 6 profissionais:** iguais ao PDF.
 - **Dr. Alexander:** "cirurgia ortognática" entrou no texto, a pedido: "…com experiência em cirurgia ortognática, cirurgias complexas, reconstrução facial e procedimentos de maior complexidade.". A versão anterior falava em "implantes".
 - **Mantidos:** os selos (Fundadora, Mestre & Doutor, Especialista), a ordem dos cards e os CROs.
+- **Dra. Natália (ajuste, nov/2026):** a pedido, "prótese" saiu da especialidade ("Reabilitação Oral | Implantodontia e Periodontia"), da frase ("…implantes e cuidados periodontais…") e do `knowsAbout` do schema dela.

@@ -119,7 +119,7 @@ export const schemaPerson = {
   },
   url: site.url,
   workLocation: { '@type': 'Place', address: endereco },
-  knowsAbout: ['Implantodontia', 'Reabilitação Oral', 'Prótese Dentária', 'Periodontia'],
+  knowsAbout: ['Implantodontia', 'Reabilitação Oral', 'Periodontia'],
   sameAs: [site.instagramDra.url],
 };
 

@@ -810,9 +810,9 @@ export const equipe = {
   membros: [
     {
       nome: 'Dra. Natália Simões',
-      especialidade: 'Reabilitação Oral | Implantodontia, Prótese e Periodontia',
+      especialidade: 'Reabilitação Oral | Implantodontia e Periodontia',
       frase:
-        'Fundadora e diretora clínica da Lien. Atua em reabilitações orais, implantes, próteses e cuidados periodontais, conduzindo o planejamento de forma integrada do início ao fim.',
+        'Fundadora e diretora clínica da Lien. Atua em reabilitações orais, implantes e cuidados periodontais, conduzindo o planejamento de forma integrada do início ao fim.',
       selo: 'Fundadora',
       cro: 'CRO-MG 49.821',
       foto: {
