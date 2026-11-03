@@ -1107,3 +1107,13 @@ A pedido, os textos da equipe voltaram aos do alinhamento final (página 10 do P
 - **Dr. Alexander:** "cirurgia ortognática" entrou no texto, a pedido: "…com experiência em cirurgia ortognática, cirurgias complexas, reconstrução facial e procedimentos de maior complexidade.". A versão anterior falava em "implantes".
 - **Mantidos:** os selos (Fundadora, Mestre & Doutor, Especialista), a ordem dos cards e os CROs.
 - **Dra. Natália (ajuste, nov/2026):** a pedido, "prótese" saiu da especialidade ("Reabilitação Oral | Implantodontia e Periodontia"), da frase ("…implantes e cuidados periodontais…") e do `knowsAbout` do schema dela.
+
+---
+
+## Hero: foto "Banner_Nat" e menu sem cobrir o rosto (nov/2026)
+
+- **Foto:** `assets/hero/Banner_Nat.png` (3344×1882), enviada pela clínica. Como o original é maior, as variantes voltaram a 1024/1440/2000. As de 1672px foram removidas. O recorte do celular segue centrado em 71%.
+- **Menu:**
+  - No desktop, a foto agora começa abaixo do menu flutuante (`top: 88px`). O topo dela esfuma no creme em 56px (`.hero-foto-desce`, só no layout lado a lado).
+  - Com isso, o menu não cobre mais a cabeça nem o rosto da doutora em 1280, 1440 e 1920px.
+- **Celular:** sem mudança. A foto continua abaixo do texto, com o topo em arco.

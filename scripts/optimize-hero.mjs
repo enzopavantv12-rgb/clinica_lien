@@ -1,10 +1,9 @@
 /**
  * Variantes da imagem da hero (Dra. Natalia com o arco ao fundo).
  *
- * Entrada:  assets/hero/Retrato profissional na clínica iluminada.png  (1672x941, 16:9; out/2026)
+ * Entrada:  assets/hero/Banner_Nat.png  (3344x1882, 16:9; nov/2026)
  *           — fica em assets/, fora do deploy.
- * Saida:    public/img/hero-lien-{1672,1440,1024}.{avif,webp}   desktop/tablet
- *           (1672 = largura do original: nao ampliar)
+ * Saida:    public/img/hero-lien-{2000,1440,1024}.{avif,webp}   desktop/tablet
  *           public/img/hero-lien-mobile-900.{avif,webp}          recorte 900x1200 (3:4)
  * Uso:      npm run hero
  *
@@ -16,7 +15,7 @@ import { mkdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import sharp from 'sharp';
 
-const ORIGINAL = 'assets/hero/Retrato profissional na clínica iluminada.png';
+const ORIGINAL = 'assets/hero/Banner_Nat.png';
 const SAIDA = 'public/img';
 const CENTRO_ROSTO_X = 0.71;
 
@@ -35,7 +34,7 @@ async function gravar(pipeline, nome) {
 const original = sharp(ORIGINAL);
 const { width, height } = await original.metadata();
 
-for (const largura of [1672, 1440, 1024]) {
+for (const largura of [2000, 1440, 1024]) {
   await gravar(original.clone().resize({ width: largura }), `hero-lien-${largura}`);
 }
 

@@ -40,9 +40,9 @@ const ordem = (i: number) => ({ '--i': i }) as CSSProperties;
 
 /**
  * Foto da hero. Uma unica <picture> para as duas composicoes:
- * - desktop e tablet deitado: camada de fundo absoluta, 16:9 em cover, presa
- *   em 70-72% / 10% (a foto tem pouco respiro acima da cabeca; com 30% na
- *   vertical, o topo da cabeca sumia em telas largas);
+ * - desktop e tablet deitado: camada de fundo absoluta, 16:9 em cover, que
+ *   comeca ABAIXO do menu flutuante (top 88px), para o menu nao cobrir o
+ *   rosto (nov/2026); o topo da foto esfuma no creme (.hero-foto-desce);
  * - celular e tablet em pe: recorte vertical 3:4 abaixo do texto, com o topo
  *   em arco.
  *
@@ -50,7 +50,7 @@ const ordem = (i: number) => ({ '--i': i }) as CSSProperties;
  */
 function HeroFoto() {
   return (
-    <div className="hero-arco relative mx-6 mb-14 aspect-[3/4] overflow-hidden sm:mx-8 sm:max-w-[520px] hl:absolute hl:inset-0 hl:m-0 hl:max-w-none hl:aspect-auto hl:rounded-none">
+    <div className="hero-arco hero-foto-desce relative mx-6 mb-14 aspect-[3/4] overflow-hidden sm:mx-8 sm:max-w-[520px] hl:absolute hl:inset-x-0 hl:bottom-0 hl:top-[88px] hl:m-0 hl:max-w-none hl:aspect-auto hl:rounded-none">
       <picture>
         <source media={MEDIA_EMPILHADO} type="image/avif" srcSet={`${imagem.mobile}.avif`} />
         <source media={MEDIA_EMPILHADO} type="image/webp" srcSet={`${imagem.mobile}.webp`} />

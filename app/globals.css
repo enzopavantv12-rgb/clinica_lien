@@ -170,6 +170,13 @@
 
   /* Foto do mobile: topo em arco (raio = metade da largura), eco do sorriso
      da marca. Numa caixa 3:4, metade da largura = 37,5% da altura. */
+  /* Hero (desktop): a foto comeca abaixo do menu e esfuma no creme no topo. */
+  @media (min-width: 1280px), (min-width: 768px) and (orientation: landscape) {
+    .hero-foto-desce {
+      -webkit-mask-image: linear-gradient(to bottom, transparent, #000 56px);
+      mask-image: linear-gradient(to bottom, transparent, #000 56px);
+    }
+  }
   .hero-arco {
     border-radius: 50% 50% 28px 28px / 37.5% 37.5% 28px 28px;
   }
