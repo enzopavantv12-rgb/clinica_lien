@@ -1145,3 +1145,28 @@ Vale para o celular e o tablet em pé, isto é, o layout empilhado. O desktop n�
   - Parágrafo de 14,4px no celular e 17px no tablet.
   - Botão largo, centralizado.
 - **Removido:** o topo em arco (`.hero-arco`), que deixou de ser usado.
+
+---
+
+## Resultados: 4 casos novos de antes e depois (nov/2026)
+
+As fotos enviadas pela clínica viraram 4 pares no carrossel, com o mesmo comparador arrastável e a mesma legenda de autorização.
+
+**Originais:** copiados para `assets/Depoimentos/`.
+- O RAW `IMG_3142.CR2` (6000×4000) foi convertido para JPEG e cortado em 4:3, para casar com o `IMG_7929.JPG`.
+- O sorriso ficou em JPEG, e não em PNG, porque o PNG passava de 80 MB.
+
+| Par | Antes | Depois | Tipo |
+|---|---|---|---|
+| 12 | Homem, camisa listrada | Homem, camisa cinza | Reabilitação oral |
+| 13 | Sorriso em close (CR2) | Sorriso em close (IMG_7929) | Lentes / estética |
+| 11 | Mulher, moletom | Mulher, brincos dourados | Harmonização orofacial |
+| 10 | Mulher com marcações faciais | Mulher, mãos no rosto | Harmonização orofacial |
+
+- **Alinhamento:** os pares entraram no `scripts/alinhar-antes-depois.mjs`, com olhos ou cantos da boca como referência, para o corte do comparador cair no mesmo ponto do rosto. As variantes foram geradas em 480/720 (avif/webp) e registradas no `imagens.json`.
+- **Ordem:** os novos entram depois dos 6 de antes. O carrossel passa de 6 para 10 casos.
+- **Verificador:** passou a aceitar de 4 a 12 casos. Eram de 4 a 6, pelo alinhamento.
+- **Atenção (CFO 196/2019):**
+  - Confirmar a autorização escrita de cada paciente.
+  - Os pares 10 e 11 são de harmonização. A clínica já tinha deixado de fora outros pares de harmonização, os 6 e 9. Vale confirmar se esses entram.
+  - O par 10 tem o mesmo rosto do par 6, que foi excluído, agora em estúdio.

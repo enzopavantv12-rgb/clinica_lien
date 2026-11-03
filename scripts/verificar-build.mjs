@@ -75,7 +75,8 @@ checar(
   `achou [${idsNaPagina.join(', ')}]`,
 );
 const legendasCfo = contar(secao('resultados'), /Imagem publicada com autorização do paciente\./g);
-checar('resultados: 4 a 6 casos, cada um com legenda de autorizacao', legendasCfo >= 4 && legendasCfo <= 6, `achou ${legendasCfo}`);
+// Eram 4 a 6 no alinhamento; o carrossel passou a 10 com os pares de nov/2026.
+checar('resultados: 4 a 12 casos, cada um com legenda de autorizacao', legendasCfo >= 4 && legendasCfo <= 12, `achou ${legendasCfo}`);
 checar('resultados: aviso de individualidade', secao('resultados').includes('Os resultados variam de pessoa para pessoa'));
 // Depoimentos do Google (prompt "depoimentos-lien"): 3 cards literais, sem CTA.
 checar(

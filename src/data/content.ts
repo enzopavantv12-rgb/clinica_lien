@@ -226,6 +226,26 @@ export const resultados = {
       id: '4',
       antes: { src: '/img/antes-depois-4-antes.webp', alt: 'Vista lateral dos dentes desalinhados antes do tratamento' },
       depois: { src: '/img/antes-depois-4-depois.webp', alt: 'A mesma vista lateral, com os dentes alinhados depois do tratamento' },
+    },    // Pares enviados em nov/2026 (estudio, fundo preto).
+    {
+      id: '12',
+      antes: { src: '/img/antes-depois-12-antes.webp', alt: 'Paciente sorrindo, com dentes desgastados, antes da reabilitação oral' },
+      depois: { src: '/img/antes-depois-12-depois.webp', alt: 'O mesmo paciente sorrindo depois da reabilitação oral na Lien' },
+    },
+    {
+      id: '13',
+      antes: { src: '/img/antes-depois-13-antes.webp', alt: 'Sorriso em close antes do tratamento estético' },
+      depois: { src: '/img/antes-depois-13-depois.webp', alt: 'O mesmo sorriso em close depois das lentes de contato dental na Lien' },
+    },
+    {
+      id: '11',
+      antes: { src: '/img/antes-depois-11-antes.webp', alt: 'Paciente de frente, com o rosto em repouso, antes da harmonização orofacial' },
+      depois: { src: '/img/antes-depois-11-depois.webp', alt: 'A mesma paciente de frente depois da harmonização orofacial na Lien' },
+    },
+    {
+      id: '10',
+      antes: { src: '/img/antes-depois-10-antes.webp', alt: 'Paciente com marcações faciais antes da harmonização orofacial' },
+      depois: { src: '/img/antes-depois-10-depois.webp', alt: 'A mesma paciente depois da harmonização orofacial na Lien' },
     },
   ],
 } as const;

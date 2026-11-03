@@ -43,6 +43,16 @@ const PARES = [
     a: [[37, 42.4], [58, 42.4]], b: [[41.6, 36.6], [58, 36.6]] },
   { n: 9, antes: 'Retrato restaurado com joias delicadas.png', depois: 'Retrato restaurado com joias douradas.png',
     a: [[36.4, 38.8], [58, 38.8]], b: [[39, 40], [58, 40]] },
+  // Pares enviados em nov/2026 (fundo preto, estudio). O 13 e o RAW
+  // IMG_3142.CR2 (antes) e o IMG_7929.JPG (depois), ambos em 4:3.
+  { n: 10, antes: 'Harmonizacao marcacoes antes.png', depois: 'Harmonizacao depois.png',
+    a: [[39, 24], [60, 24]], b: [[38, 30], [59.6, 30]] },
+  { n: 11, antes: 'Mulher moletom antes.png', depois: 'Mulher brincos dourados depois.png',
+    a: [[35.6, 36.8], [63.6, 36.8]], b: [[34, 41.2], [61, 41.2]] },
+  { n: 12, antes: 'Homem camisa listrada antes.png', depois: 'Homem camisa cinza depois.png',
+    a: [[35, 38], [63.6, 38]], b: [[31, 30], [60, 30]] },
+  { n: 13, antes: 'Sorriso close antes.jpg', depois: 'Sorriso close depois.jpg',
+    a: [[9.9, 39], [90.2, 39]], b: [[12, 41], [72, 41]] },
 ];
 
 /**
