@@ -152,6 +152,8 @@ export function Experiencia() {
       className="relative isolate overflow-hidden bg-white py-[72px] lg:py-[104px]"
     >
       <PadraoOndas className="pointer-events-none absolute inset-0 -z-10 h-full w-full" cor="#9C1781" opacidade={0.035} ladrilho={130} />
+      {/* Virada suave para o branco da Equipe: as ondas somem aos poucos. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-40 bg-[linear-gradient(0deg,#FFFFFF,rgba(255,255,255,0))]" />
 
       <Reveal y={16} duracao={0.6} className="mx-auto max-w-[760px] px-6 text-center">
         <span className="inline-block rounded-full border border-[#DCEBEF] bg-white px-4 py-[7px] text-xs font-semibold uppercase leading-none tracking-[.14em] text-teal">

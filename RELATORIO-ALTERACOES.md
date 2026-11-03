@@ -1117,3 +1117,13 @@ A pedido, os textos da equipe voltaram aos do alinhamento final (página 10 do P
   - No desktop, a foto agora começa abaixo do menu flutuante (`top: 88px`). O topo dela esfuma no creme em 56px (`.hero-foto-desce`, só no layout lado a lado).
   - Com isso, o menu não cobre mais a cabeça nem o rosto da doutora em 1280, 1440 e 1920px.
 - **Celular:** sem mudança. A foto continua abaixo do texto, com o topo em arco.
+
+---
+
+## Viradas de seção com degradê (nov/2026)
+
+As passagens para os fundos com ondas tinham corte reto. Agora entra um degradê de 160px em cada uma:
+
+- **Sobre → Método:** no topo do Método, o cinza-claro do fim do Sobre (#F9FAFB) vai sumindo sobre as ondas.
+- **Método/Por onde começar → Tratamentos:** na base, as ondas somem no branco do início de Tratamentos.
+- **Experiência → Equipe:** na base, as ondas somem no branco da Equipe.

@@ -21,6 +21,10 @@ export function MetodoLien() {
   return (
     <div className="relative isolate overflow-hidden bg-white py-[72px] lg:py-[112px]">
       <PadraoOndas className="pointer-events-none absolute inset-0 -z-10 h-full w-full" cor="#9C1781" opacidade={0.035} ladrilho={130} />
+      {/* Viradas suaves: no topo, do cinza-claro do fim do Sobre (#F9FAFB) para
+          o fundo com ondas; na base, de volta ao branco do inicio de Tratamentos. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-40 bg-[linear-gradient(180deg,#F9FAFB,rgba(249,250,251,0))]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-40 bg-[linear-gradient(0deg,#FFFFFF,rgba(255,255,255,0))]" />
 
       <section id="metodo" aria-labelledby="metodo-title" className="mx-auto max-w-[1160px] px-6">
         <Reveal y={16} duracao={0.6} className="flex flex-col items-center text-center">
