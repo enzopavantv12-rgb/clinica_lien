@@ -43,14 +43,14 @@ const ordem = (i: number) => ({ '--i': i }) as CSSProperties;
  * - desktop e tablet deitado: camada de fundo absoluta, 16:9 em cover, que
  *   comeca ABAIXO do menu flutuante (top 88px), para o menu nao cobrir o
  *   rosto (nov/2026); o topo da foto esfuma no creme (.hero-foto-desce);
- * - celular e tablet em pe: recorte vertical 3:4 abaixo do texto, com o topo
- *   em arco.
+ * - celular e tablet em pe: foto vertical propria (3:4) em tela cheia, abaixo
+ *   do menu, com o texto centralizado sobre um veu creme na base (nov/2026).
  *
  * E o LCP: fetchPriority alto, sem lazy, e preload no <head> (app/page.tsx).
  */
 function HeroFoto() {
   return (
-    <div className="hero-arco hero-foto-desce relative mx-6 mb-14 aspect-[3/4] overflow-hidden sm:mx-8 sm:max-w-[520px] hl:absolute hl:inset-x-0 hl:bottom-0 hl:top-[88px] hl:m-0 hl:max-w-none hl:aspect-auto hl:rounded-none">
+    <div className="hero-foto-desce absolute inset-x-0 bottom-0 top-14 overflow-hidden hl:top-[88px]">
       <picture>
         <source media={MEDIA_EMPILHADO} type="image/avif" srcSet={`${imagem.mobile}.avif`} />
         <source media={MEDIA_EMPILHADO} type="image/webp" srcSet={`${imagem.mobile}.webp`} />
@@ -62,7 +62,7 @@ function HeroFoto() {
           width={imagem.width}
           height={imagem.height}
           fetchPriority="high"
-          className="hero-foto h-full w-full object-cover object-[50%_20%] hl:object-[72%_10%] hlg:object-[70%_10%]"
+          className="hero-foto h-full w-full object-cover object-[50%_0%] hl:object-[72%_10%] hlg:object-[70%_10%]"
         />
       </picture>
     </div>
@@ -71,8 +71,8 @@ function HeroFoto() {
 
 /**
  * Hero: foto de fundo com a Dra. Natalia no terco direito e o texto a
- * esquerda, direto sobre a parede clara da foto — sem veu nem desfoque, por
- * pedido da clinica (out/2026). No mobile: texto em cima, foto embaixo.
+ * esquerda, com um veu branco suave so sob o texto. No mobile: foto vertical
+ * em tela cheia e o texto centralizado na base, sobre um veu creme.
  *
  * Sem `Reveal`: a entrada e CSS puro (@keyframes). O `Reveal` gravaria
  * `style="opacity:0"` no HTML estatico e atrasaria o LCP ate a hidratacao.
@@ -84,19 +84,19 @@ export function Hero() {
   return (
     <section
       id="inicio"
-      className="relative isolate overflow-hidden bg-cream hl:flex hl:min-h-[clamp(640px,100svh,920px)] hl:items-center"
+      className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden bg-cream hl:min-h-[clamp(640px,100svh,920px)] hl:flex-row hl:items-center hl:justify-start"
     >
-      <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 pb-10 pt-[104px] sm:px-8 hl:pb-16 hl:pt-[120px] hlg:px-12 paisagem:pb-8 paisagem:pt-[96px]">
-        <div className="max-w-[560px] hl:max-w-none">
+      <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 pb-8 pt-[max(38svh,330px)] text-center sm:px-8 hl:pb-16 hl:pt-[120px] hl:text-left hlg:px-12 paisagem:pb-8 paisagem:pt-[96px]">
+        <div className="mx-auto max-w-[560px] hl:mx-0 hl:max-w-none">
           <h1
-            className="hero-entra text-[2.125rem] font-bold leading-[1.08] text-ink hl:text-[2.75rem] hlg:text-[clamp(2.75rem,3.9vw,3.5rem)] paisagem:text-[clamp(1.875rem,3.6vw,3.25rem)]"
+            className="hero-entra text-[1.75rem] font-bold leading-[1.12] text-ink sm:text-[2.5rem] hl:text-[2.75rem] hlg:text-[clamp(2.75rem,3.9vw,3.5rem)] paisagem:text-[clamp(1.875rem,3.6vw,3.25rem)]"
             style={ordem(0)}
           >
             <Linhas linhas={hero.h1Linhas} destaque="text-magenta" />
           </h1>
 
           <p
-            className="hero-entra mt-8 text-[clamp(1rem,1.4vw,1.25rem)] font-light leading-[1.45] text-ink-muted paisagem:mt-5"
+            className="hero-entra mt-4 text-[0.9rem] font-light leading-[1.55] sm:text-[1.0625rem] text-ink-muted hl:mt-8 hl:text-[clamp(1rem,1.4vw,1.25rem)] hl:leading-[1.45] paisagem:mt-5"
             style={ordem(1)}
           >
             <Linhas linhas={hero.textoLinhas} destaque="font-medium text-ink" />
@@ -104,7 +104,7 @@ export function Hero() {
 
           {/* CTA unico de conversao (WhatsApp, com icone de agenda). O 2o botao
               do print ("Conheca a Experiencia Lien") saiu a pedido (out/2026). */}
-          <div className="hero-entra mt-10 flex flex-col gap-4 sm:flex-row sm:items-center paisagem:mt-7" style={ordem(2)}>
+          <div className="hero-entra mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center hl:mt-10 hl:justify-start paisagem:mt-7" style={ordem(2)}>
             <WhatsAppButton
               origem="hero"
               variante="capsula"
@@ -124,6 +124,12 @@ export function Hero() {
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-[1] hidden bg-[linear-gradient(90deg,rgba(255,255,255,.72),rgba(255,255,255,.55)_32%,rgba(255,255,255,.2)_48%,rgba(255,255,255,0)_58%)] hl:block"
+      />
+      {/* Mobile: veu creme na base, sob o texto centralizado (claro e limpo,
+          sem desfoque); o rosto, no alto, fica livre. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(250,248,246,0)_34%,rgba(250,248,246,.72)_52%,rgba(250,248,246,.93)_68%,#FAF8F6_86%)] hl:hidden"
       />
       <HeroFoto />
     </section>

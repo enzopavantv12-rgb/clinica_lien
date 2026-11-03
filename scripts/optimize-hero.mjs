@@ -4,20 +4,18 @@
  * Entrada:  assets/hero/Banner_Nat.png  (3344x1882, 16:9; nov/2026)
  *           — fica em assets/, fora do deploy.
  * Saida:    public/img/hero-lien-{2000,1440,1024}.{avif,webp}   desktop/tablet
- *           public/img/hero-lien-mobile-900.{avif,webp}          recorte 900x1200 (3:4)
+ *           public/img/hero-lien-mobile-900.{avif,webp}          900x1200 (3:4), de
+ *           assets/hero/hero-mobile.png (foto vertical propria, nov/2026)
  * Uso:      npm run hero
  *
- * O recorte mobile e centrado em x = 71% da largura (rosto e ombros da
- * doutora) e ocupa a altura inteira da foto. Ao trocar a imagem, confira
- * CENTRO_ROSTO_X e rode de novo.
  */
 import { mkdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import sharp from 'sharp';
 
 const ORIGINAL = 'assets/hero/Banner_Nat.png';
+const ORIGINAL_MOBILE = 'assets/hero/hero-mobile.png';
 const SAIDA = 'public/img';
-const CENTRO_ROSTO_X = 0.71;
 
 mkdirSync(SAIDA, { recursive: true });
 
@@ -32,22 +30,9 @@ async function gravar(pipeline, nome) {
 }
 
 const original = sharp(ORIGINAL);
-const { width, height } = await original.metadata();
-
 for (const largura of [2000, 1440, 1024]) {
   await gravar(original.clone().resize({ width: largura }), `hero-lien-${largura}`);
 }
 
-// Recorte vertical 3:4 com a altura inteira da foto.
-const larguraRecorte = Math.round((height * 3) / 4);
-const esquerda = Math.min(
-  width - larguraRecorte,
-  Math.max(0, Math.round(width * CENTRO_ROSTO_X - larguraRecorte / 2)),
-);
-await gravar(
-  original
-    .clone()
-    .extract({ left: esquerda, top: 0, width: larguraRecorte, height })
-    .resize({ width: 900, height: 1200 }),
-  'hero-lien-mobile-900',
-);
+// Celular e tablet em pe: foto vertical propria (3:4), enviada pela clinica.
+await gravar(sharp(ORIGINAL_MOBILE).resize({ width: 900, height: 1200, fit: 'cover', position: 'top' }), 'hero-lien-mobile-900');

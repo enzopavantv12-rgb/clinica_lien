@@ -1127,3 +1127,21 @@ As passagens para os fundos com ondas tinham corte reto. Agora entra um degradê
 - **Sobre → Método:** no topo do Método, o cinza-claro do fim do Sobre (#F9FAFB) vai sumindo sobre as ondas.
 - **Método/Por onde começar → Tratamentos:** na base, as ondas somem no branco do início de Tratamentos.
 - **Experiência → Equipe:** na base, as ondas somem no branco da Equipe.
+
+---
+
+## Hero mobile: foto vertical própria, texto centralizado e véu creme (nov/2026)
+
+Vale para o celular e o tablet em pé, isto é, o layout empilhado. O desktop não mudou.
+
+- **Foto:** `assets/hero/hero-mobile.png` ("Retrato elegante em ambiente acolhedor", 1086×1448, 3:4) virou o `hero-lien-mobile-900` pelo `npm run hero` (900×1200, cortado a partir do topo). O recorte da foto de desktop deixou de ser usado no celular.
+- **Layout:**
+  - A foto ocupa a tela inteira, a partir de 56px, abaixo do menu, com o topo esfumado (`.hero-foto-desce`, agora em todos os tamanhos).
+  - O hero tem `100svh`, e o texto fica centralizado na base.
+  - O topo do texto fica em `max(38svh, 330px)`, para não cobrir o rosto em telas baixas.
+- **Véu:** creme (#FAF8F6), de transparente em 34% a 93% em 68% e opaco em 86%. Não tem desfoque e deixa o rosto livre.
+- **Tipografia:**
+  - H1 de 28px no celular e 40px no tablet.
+  - Parágrafo de 14,4px no celular e 17px no tablet.
+  - Botão largo, centralizado.
+- **Removido:** o topo em arco (`.hero-arco`), que deixou de ser usado.
