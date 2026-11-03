@@ -1043,3 +1043,34 @@ O cabeçalho deixou de usar o `SectionHeading`.
   - O véu escuro de leitura caiu de 78% para 42% à esquerda.
   - O degradê lateral (`.exp-laterais`) caiu de 90% para 30%.
   - O texto branco segue legível sobre o tom do vídeo.
+
+---
+
+## Experiência: slider com crossfade e vídeos na vertical original (nov/2026)
+
+O player virou um slider no padrão "fade" pedido pela clínica, sem biblioteca.
+
+**Estrutura**
+- **Slides:** os 3 capítulos ficam empilhados (`absolute inset-0`). A troca é só por opacidade, em 0,8s ease-in-out, sem deslizar.
+- **Slides inativos:** `opacity-0`, `pointer-events-none`, `aria-hidden` e `inert`.
+- **Vídeos:** aparecem inteiros na vertical, no formato original 9:16. Não há mais corte nem a máscara de bordas esfumadas (`.exp-funde`, removida do CSS). Têm cantos arredondados, à direita a partir de 640px e no topo do card no celular.
+
+**Autoplay**
+- Passa ao capítulo seguinte a cada 5s, em loop.
+- Só roda com a seção na tela (IntersectionObserver a 35%).
+- Pausa no hover, no foco, com a aba oculta (`visibilitychange`) e enquanto um vídeo toca.
+- Com `prefers-reduced-motion`, não há autoplay e a troca é instantânea.
+
+**Navegação**
+- Abas no desktop e pills no celular.
+- As setas ← → funcionam com o foco em qualquer ponto do slider.
+- O container tem `role="region"` e `aria-roledescription="carrossel"`.
+
+**Barra rosa da aba:** mostra o tempo do autoplay (`.exp-timer`, para junto com ele) ou o progresso do vídeo quando ele toca.
+
+**Vídeos**
+- Cada slide tem o seu `<video>`.
+- Ao trocar de capítulo, só os que já tocaram são recarregados, para voltar ao pôster.
+- Ao terminar, o vídeo passa ao capítulo seguinte sem tocar.
+
+**Testado** no Chrome em 1440px e 375px: a troca automática ocorre aos 5s, o hover pausa, o play toca o vídeo certo, o slider não troca durante o vídeo, os pôsteres estão corretos e não há nenhum erro de requisição.

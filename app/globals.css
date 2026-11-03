@@ -185,21 +185,17 @@
       );
     }
   }
-  .exp-funde {
-    -webkit-mask-image: var(--exp-funde);
-    mask-image: var(--exp-funde);
-    /* Rampa suave (quase ease-in-out) para nao marcar o fim do esfumado. */
-    --exp-funde: linear-gradient(
-      90deg,
-      transparent,
-      rgba(0, 0, 0, 0.15) 8%,
-      rgba(0, 0, 0, 0.55) 18%,
-      #000 32%,
-      #000 68%,
-      rgba(0, 0, 0, 0.55) 82%,
-      rgba(0, 0, 0, 0.15) 92%,
-      transparent
-    );
+  /* Barra do autoplay da Experiencia: enche de 0 a 100% no intervalo. */
+  .exp-timer {
+    width: 0;
+    animation-name: exp-timer;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+  }
+  @keyframes exp-timer {
+    to {
+      width: 100%;
+    }
   }
 
   /* Foto do mobile: topo em arco (raio = metade da largura), eco do sorriso
