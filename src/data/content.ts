@@ -847,15 +847,15 @@ export const equipe = {
     },
     {
       nome: 'Dra. Luiza Henriques',
-      especialidade: 'Ortodontia & Alinhadores',
+      // Texto enviado pela clinica (nov/2026). Paragrafos separados por \n\n.
+      especialidade: 'Prótese Dentária & Dentística',
       frase:
-        'Especialista em alinhadores estéticos e ortodontia avançada para alinhamento e integração com a reabilitação oral.',
+        'Cirurgiã-dentista especialista em Prótese Dentária pela USP e pós-graduada em Dentística, com atuação voltada à reabilitação oral e à odontologia estética e restauradora.\n\nConduz cada caso de forma personalizada, integrando planejamento, função, estética e longevidade dos tratamentos, sempre respeitando as características e necessidades individuais de cada paciente.\n\nUtiliza recursos de odontologia digital para proporcionar diagnósticos mais precisos, maior previsibilidade e resultados naturais, aliando tecnologia, excelência técnica e cuidado humanizado em todas as etapas do tratamento.',
       selo: 'Especialista',
-      // [PENDENTE: CRO da Dra. Luiza]
-      cro: null,
+      cro: 'CRO-MG 64.936',
       foto: {
         src: '/img/equipe-luiza-henriques.webp',
-        alt: 'Dra. Luiza Henriques, de ortodontia e alinhadores, da Lien em Belo Horizonte',
+        alt: 'Dra. Luiza Henriques, de prótese dentária e dentística, da Lien em Belo Horizonte',
       },
     },
     {

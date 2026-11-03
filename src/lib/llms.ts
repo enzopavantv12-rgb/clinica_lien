@@ -118,7 +118,7 @@ export function llmsCompleto() {
     ...equipe.membros.flatMap((m) => [
       `### ${m.nome}`,
       m.especialidade,
-      m.frase,
+      m.frase.split('\n\n').join(' '),
       ...(m.cro ? [m.cro] : []),
       '',
     ]),

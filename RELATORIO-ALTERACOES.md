@@ -1085,3 +1085,12 @@ Pedido da clínica: tirar o retângulo largo e deixar só o vídeo, com as abas 
 - **Vídeo:** card vertical 9:16, centralizado, com 280px de largura no celular e 360px a partir de 640px. Os 3 vídeos ficam empilhados e trocam por opacidade (0,8s), com o mesmo autoplay, as mesmas pausas e a mesma navegação de antes.
 - **Abas:** a barra escura de 3 abas fica logo abaixo do vídeo, com até 1100px. No celular, as pills.
 - **Texto do capítulo:** os títulos aparecem nas abas. A frase de apoio de cada capítulo saiu da tela, mas continua no nome acessível do vídeo (`aria-label`) e no `llms.txt`.
+
+---
+
+## Equipe: Dra. Luiza Henriques (nov/2026)
+
+- **Texto:** a bio enviada pela clínica entrou literal, em 3 parágrafos. O `Equipe.tsx` agora separa a `frase` em parágrafos por `\n\n`, e o `llms.txt` junta os parágrafos numa linha só.
+- **Especialidade:** voltou a "Prótese Dentária & Dentística", coerente com a bio. O print anterior dizia "Ortodontia & Alinhadores".
+- **Alt da foto:** acompanha a nova especialidade.
+- **CRO:** **CRO-MG 64.936**. Era o último CRO pendente da equipe.

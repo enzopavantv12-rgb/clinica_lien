@@ -58,7 +58,11 @@ export function Equipe() {
                   >
                     {membro.especialidade}
                   </p>
-                  <p className="mt-3.5 text-body text-ink-muted">{membro.frase}</p>
+                  {membro.frase.split('\n\n').map((paragrafo, j) => (
+                    <p key={j} className={`${j === 0 ? 'mt-3.5' : 'mt-2.5'} text-body text-ink-muted`}>
+                      {paragrafo}
+                    </p>
+                  ))}
                   {membro.cro && <p className="mt-auto pt-4 text-legend text-ink-muted">{membro.cro}</p>}
                 </div>
               </article>
