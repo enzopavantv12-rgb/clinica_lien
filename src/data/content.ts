@@ -801,19 +801,18 @@ type Membro = {
  * "Especialista" nos demais cards (conflito C8).]
  */
 export const equipe = {
-  // Textos e selos do print da clinica (out/2026) para Natalia, Alexander,
-  // Gabriela e Luiza, nesta ordem; Maria Emilia e Isabela mantidas (decisao do
-  // usuario) com os textos anteriores.
+  // Textos do alinhamento final (pagina 10 do PDF), reaplicados a pedido
+  // (nov/2026); selos e ordem do print de out/2026.
   tag: 'Corpo clínico',
   h2: 'Diferentes especialidades. Um só planejamento.',
   h2Linhas: ['Diferentes especialidades.', 'Um só planejamento.'],
-  sub: 'Especialistas renomados trabalhando em perfeita sinergia para cuidar integralmente do seu sorriso.',
+  sub: 'Uma equipe multidisciplinar que trabalha de forma integrada para que cada etapa do tratamento seja conduzida com conhecimento, segurança e continuidade.',
   membros: [
     {
       nome: 'Dra. Natália Simões',
-      especialidade: 'Reabilitação Oral & Estética',
+      especialidade: 'Reabilitação Oral | Implantodontia, Prótese e Periodontia',
       frase:
-        'Fundadora da Lien em 2024. Especialista dedicada a transformar sorrisos com planejamento integrado e foco absoluto no acolhimento humano.',
+        'Fundadora e diretora clínica da Lien. Atua em reabilitações orais, implantes, próteses e cuidados periodontais, conduzindo o planejamento de forma integrada do início ao fim.',
       selo: 'Fundadora',
       cro: 'CRO-MG 49.821',
       foto: {
@@ -823,9 +822,10 @@ export const equipe = {
     },
     {
       nome: 'Dr. Alexander Pedrosa',
-      especialidade: 'Cirurgião Bucomaxilofacial',
+      especialidade: 'Cirurgia e Traumatologia Bucomaxilofacial',
+      // "cirurgia ortognatica" no lugar de implantes, a pedido (nov/2026).
       frase:
-        'Mestre e Doutor em Cirurgia. Especialista em cirurgias avançadas, implantes e casos complexos com total segurança cirúrgica.',
+        'Cirurgião bucomaxilofacial, mestre e doutor, com experiência em cirurgia ortognática, cirurgias complexas, reconstrução facial e procedimentos de maior complexidade.',
       selo: 'Mestre & Doutor',
       cro: 'CRO-MG 26.562',
       foto: {
@@ -835,9 +835,9 @@ export const equipe = {
     },
     {
       nome: 'Dra. Gabriela Ribeiro',
-      especialidade: 'Dor Orofacial & DTM',
+      especialidade: 'DTM e Dor Orofacial | Sono',
       frase:
-        'Focada no diagnóstico e alívio de dores na face, bruxismo e disfunções da articulação temporomandibular (DTM).',
+        'Especialista em DTM e Dor Orofacial com ênfase em sono, com atuação baseada em evidências para investigar a origem da dor, recuperar função e melhorar a qualidade de vida.',
       selo: 'Especialista',
       cro: 'CRO-MG 65.103',
       foto: {
@@ -847,10 +847,9 @@ export const equipe = {
     },
     {
       nome: 'Dra. Luiza Henriques',
-      // Resumo do texto enviado pela clinica (nov/2026), no tamanho dos demais.
-      especialidade: 'Prótese Dentária & Dentística',
+      especialidade: 'Prótese Dentária | Dentística e Estética',
       frase:
-        'Especialista em Prótese Dentária pela USP e pós-graduada em Dentística, atua em reabilitação oral e odontologia estética com planejamento digital e resultados naturais.',
+        'Especialista em Prótese Dentária pela USP, com atuação em reabilitação oral e odontologia estética e restauradora, integrando função, naturalidade e planejamento digital.',
       selo: 'Especialista',
       cro: 'CRO-MG 64.936',
       foto: {

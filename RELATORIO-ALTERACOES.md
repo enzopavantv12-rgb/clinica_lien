@@ -1095,3 +1095,14 @@ Pedido da clínica: tirar o retângulo largo e deixar só o vídeo, com as abas 
 - **Alt da foto:** acompanha a nova especialidade.
 - **CRO:** **CRO-MG 64.936**. Era o último CRO pendente da equipe.
 - **Texto (ajuste):** a pedido, a bio foi resumida para o tamanho das demais: "Especialista em Prótese Dentária pela USP e pós-graduada em Dentística, atua em reabilitação oral e odontologia estética com planejamento digital e resultados naturais.". O suporte a parágrafos (`\n\n`) segue no `Equipe.tsx`.
+
+---
+
+## Equipe: textos do alinhamento final, com cirurgia ortognática (nov/2026)
+
+A pedido, os textos da equipe voltaram aos do alinhamento final (página 10 do PDF).
+
+- **Subtítulo e especialidades:** iguais ao PDF, com os acentos corrigidos ("Simões", "início", "Dentária").
+- **Frases dos 6 profissionais:** iguais ao PDF.
+- **Dr. Alexander:** "cirurgia ortognática" entrou no texto, a pedido: "…com experiência em cirurgia ortognática, cirurgias complexas, reconstrução facial e procedimentos de maior complexidade.". A versão anterior falava em "implantes".
+- **Mantidos:** os selos (Fundadora, Mestre & Doutor, Especialista), a ordem dos cards e os CROs.
