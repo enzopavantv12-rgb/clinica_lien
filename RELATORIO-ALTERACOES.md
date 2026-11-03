@@ -1074,3 +1074,14 @@ O player virou um slider no padrão "fade" pedido pela clínica, sem biblioteca.
 - Ao terminar, o vídeo passa ao capítulo seguinte sem tocar.
 
 **Testado** no Chrome em 1440px e 375px: a troca automática ocorre aos 5s, o hover pausa, o play toca o vídeo certo, o slider não troca durante o vídeo, os pôsteres estão corretos e não há nenhum erro de requisição.
+
+---
+
+## Experiência: só o vídeo vertical, sem o painel (nov/2026)
+
+Pedido da clínica: tirar o retângulo largo e deixar só o vídeo, com as abas embaixo, trocando em crossfade.
+
+- **Saiu:** o painel largo, com o fundo desfocado, o véu de leitura e o texto do capítulo sobreposto. Saíram também o `FundoVertical` e o CSS `.exp-laterais`.
+- **Vídeo:** card vertical 9:16, centralizado, com 280px de largura no celular e 360px a partir de 640px. Os 3 vídeos ficam empilhados e trocam por opacidade (0,8s), com o mesmo autoplay, as mesmas pausas e a mesma navegação de antes.
+- **Abas:** a barra escura de 3 abas fica logo abaixo do vídeo, com até 1100px. No celular, as pills.
+- **Texto do capítulo:** os títulos aparecem nas abas. A frase de apoio de cada capítulo saiu da tela, mas continua no nome acessível do vídeo (`aria-label`) e no `llms.txt`.

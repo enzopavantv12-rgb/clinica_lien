@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { PadraoOndas, Simbolo } from '../ui/BrandGraphics';
 import { Reveal } from '../ui/Reveal';
-import { SemQuebraNoHifen } from '../ui/SemQuebraNoHifen';
 import { experiencia } from '../../data/content';
 
 const { capitulos } = experiencia;
@@ -17,34 +16,15 @@ function PosterPendente() {
   );
 }
 
-/**
- * Fundo do slide: o proprio quadro do video ampliado e desfocado (a paleta
- * do video ocupa o player inteiro) e um degrade leve nas laterais.
- */
-function FundoVertical({ src }: { src: string }) {
-  return (
-    <>
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 scale-125 bg-cover bg-center blur-3xl"
-        style={{ backgroundImage: `url(${src})` }}
-      />
-      <div aria-hidden="true" className="exp-laterais absolute inset-0" />
-    </>
-  );
-}
-
 const INTERVALO = 5000;
 
 /**
- * Experiencia Lien — cabecalho centralizado e um player largo com os 3
- * capitulos e a barra de abas na base.
+ * Experiencia Lien — cabecalho centralizado, o video do capitulo e as abas.
  *
- * Slider com crossfade (pedido da clinica, nov/2026): os 3 slides ficam
- * empilhados e a troca e so por opacidade (0,8s), sem deslizar. Cada slide
- * tem o fundo desfocado do proprio video, o texto do capitulo a esquerda e o
- * video na VERTICAL, no formato original (9:16 inteiro, sem corte nem bordas
- * esfumadas), a direita.
+ * Slider com crossfade (pedido da clinica, nov/2026): so os 3 videos, na
+ * VERTICAL e no formato original (9:16 inteiro), empilhados e trocando so
+ * por opacidade (0,8s), com as abas dos capitulos logo abaixo. Sem o painel
+ * largo, o fundo desfocado e o texto sobreposto de antes.
  *
  * - Autoplay: passa ao proximo capitulo a cada 5s, em loop, so com a secao na
  *   tela. Pausa no hover, no foco, com a aba oculta e enquanto um video toca.
@@ -199,11 +179,13 @@ export function Experiencia() {
             if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFoco(false);
           }}
         >
+          {/* So o video, na vertical (9:16), sem o painel em volta (pedido da
+              clinica, nov/2026); as abas ficam logo abaixo. */}
           <div
             id="exp-panel"
             role="tabpanel"
             aria-labelledby={`exp-tab-${ativo}`}
-            className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/[.08] bg-[#0F1116] shadow-[0_30px_70px_-30px_rgba(26,20,32,.45)] sm:aspect-video lg:aspect-[16/7.6] lg:rounded-[18px]"
+            className="relative mx-auto aspect-[9/16] w-full max-w-[280px] overflow-hidden rounded-2xl bg-[#0F1116] shadow-[0_30px_70px_-30px_rgba(26,20,32,.45)] sm:max-w-[360px]"
           >
             {capitulos.map((cap, i) => {
               const sel = i === ativo;
@@ -217,16 +199,6 @@ export function Experiencia() {
                 >
                   {video ? (
                     <>
-                      {video.fundo && <FundoVertical src={video.fundo} />}
-                      {/* Leitura: escurece de leve a esquerda e a base. */}
-                      <div
-                        aria-hidden="true"
-                        className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(10,12,16,.42),rgba(10,12,16,.22)_40%,rgba(10,12,16,0)_60%),linear-gradient(0deg,rgba(10,12,16,.55),rgba(10,12,16,0)_32%)]"
-                      />
-                      {/* Video na vertical, inteiro (9:16), a direita a partir de
-                          640px e no topo do card no celular. */}
-                      <div className="absolute left-1/2 top-4 h-[calc(62%-16px)] -translate-x-1/2 sm:bottom-[98px] sm:left-auto sm:right-[7%] sm:top-6 sm:h-auto sm:translate-x-0">
-                        <div className="relative aspect-[9/16] h-full overflow-hidden rounded-xl shadow-[0_20px_50px_-20px_rgba(0,0,0,.6)] ring-1 ring-white/10">
                           <video
                             ref={(el) => {
                               videosRef.current[i] = el;
@@ -265,33 +237,22 @@ export function Experiencia() {
                               </button>
                             </div>
                           )}
-                        </div>
-                      </div>
                     </>
                   ) : (
                     <PosterPendente />
                   )}
 
-                  {/* Texto do capitulo: a esquerda a partir de 640px; no celular, na base. */}
-                  <div className="pointer-events-none absolute bottom-5 left-5 right-5 sm:bottom-[98px] sm:left-8 sm:right-auto sm:top-0 sm:flex sm:w-[50%] sm:flex-col sm:justify-center lg:left-12 lg:w-[46%]">
-                    <span className="text-[13px] font-bold tracking-[.04em] text-white sm:text-sm">{cap.numero}</span>
-                    <h3 className="mt-2 text-[22px] font-bold leading-[1.15] text-white sm:mt-2.5 sm:text-[28px] lg:text-[clamp(30px,3vw,42px)]">
-                      {cap.titulo}
-                    </h3>
-                    <p className="mt-3 text-[13px] font-medium leading-[1.6] text-white/[.92] sm:mt-[18px] sm:text-[15px] lg:text-[17px]">
-                      <SemQuebraNoHifen texto={cap.linhas[0]} /> <br className="hidden sm:inline" />
-                      <SemQuebraNoHifen texto={cap.linhas[1]} />
-                    </p>
-                  </div>
                 </div>
               );
             })}
 
-            {/* Barra de abas sobreposta (a partir de 640px). */}
-            <div
+          </div>
+
+          {/* Barra de abas abaixo do video (a partir de 640px). */}
+          <div
               role="tablist"
               aria-label={experiencia.abas}
-              className="absolute bottom-4 left-4 right-4 z-[2] hidden grid-cols-3 overflow-hidden rounded-xl border border-white/10 bg-[rgba(14,18,24,.72)] backdrop-blur-[10px] sm:grid"
+              className="mx-auto mt-6 hidden max-w-[1100px] grid-cols-3 overflow-hidden rounded-xl border border-white/10 bg-[#14181F] shadow-[0_18px_40px_-24px_rgba(26,20,32,.5)] sm:grid"
             >
               {capitulos.map((t, i) => {
                 const sel = i === ativo;
@@ -337,13 +298,12 @@ export function Experiencia() {
                 );
               })}
             </div>
-          </div>
 
-          {/* Celular: abas como pills abaixo do player. */}
+          {/* Celular: abas como pills abaixo do video. */}
           <div
             role="tablist"
             aria-label={experiencia.abas}
-            className="mt-3 flex snap-x gap-2 overflow-x-auto pb-1 [scrollbar-width:none] sm:hidden [&::-webkit-scrollbar]:hidden"
+            className="mt-4 flex snap-x gap-2 overflow-x-auto pb-1 [scrollbar-width:none] sm:hidden [&::-webkit-scrollbar]:hidden"
           >
             {capitulos.map((t, i) => {
               const sel = i === ativo;
