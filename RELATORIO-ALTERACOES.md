@@ -1094,3 +1094,4 @@ Pedido da clínica: tirar o retângulo largo e deixar só o vídeo, com as abas 
 - **Especialidade:** voltou a "Prótese Dentária & Dentística", coerente com a bio. O print anterior dizia "Ortodontia & Alinhadores".
 - **Alt da foto:** acompanha a nova especialidade.
 - **CRO:** **CRO-MG 64.936**. Era o último CRO pendente da equipe.
+- **Texto (ajuste):** a pedido, a bio foi resumida para o tamanho das demais: "Especialista em Prótese Dentária pela USP e pós-graduada em Dentística, atua em reabilitação oral e odontologia estética com planejamento digital e resultados naturais.". O suporte a parágrafos (`\n\n`) segue no `Equipe.tsx`.

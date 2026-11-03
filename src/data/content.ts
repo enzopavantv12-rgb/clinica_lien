@@ -847,10 +847,10 @@ export const equipe = {
     },
     {
       nome: 'Dra. Luiza Henriques',
-      // Texto enviado pela clinica (nov/2026). Paragrafos separados por \n\n.
+      // Resumo do texto enviado pela clinica (nov/2026), no tamanho dos demais.
       especialidade: 'Prótese Dentária & Dentística',
       frase:
-        'Cirurgiã-dentista especialista em Prótese Dentária pela USP e pós-graduada em Dentística, com atuação voltada à reabilitação oral e à odontologia estética e restauradora.\n\nConduz cada caso de forma personalizada, integrando planejamento, função, estética e longevidade dos tratamentos, sempre respeitando as características e necessidades individuais de cada paciente.\n\nUtiliza recursos de odontologia digital para proporcionar diagnósticos mais precisos, maior previsibilidade e resultados naturais, aliando tecnologia, excelência técnica e cuidado humanizado em todas as etapas do tratamento.',
+        'Especialista em Prótese Dentária pela USP e pós-graduada em Dentística, atua em reabilitação oral e odontologia estética com planejamento digital e resultados naturais.',
       selo: 'Especialista',
       cro: 'CRO-MG 64.936',
       foto: {
