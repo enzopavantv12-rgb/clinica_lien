@@ -52,8 +52,10 @@ const PARES = [
     a: [[33.75, 38], [60.9, 38]], b: [[32, 29.7], [57, 29.7]], dy: 7, px: true },
   { n: 14, antes: 'Mulher blusa bege antes.png', depois: 'Mulher camiseta preta depois.png',
     a: [[37.8, 33], [55.8, 33]], b: [[41.4, 33.35], [56.6, 33.35]], dy: 6, px: true },
-  { n: 13, antes: 'Sorriso close antes.jpg', depois: 'Sorriso close depois.jpg',
-    a: [[9.9, 39], [90.2, 39]], b: [[12, 41], [72, 41]], px: true },
+  // Antes trocado pelo IMG_0814 (mesma paciente e angulo, luz parecida com a
+  // do depois), a pedido (nov/2026). O CR2 fica em "Sorriso close antes.jpg".
+  { n: 13, antes: 'Sorriso close antes 0814.jpg', depois: 'Sorriso close depois.jpg',
+    a: [[38.7, 50], [62.5, 50]], b: [[37, 47], [54, 47]], px: true },
 ];
 
 /**

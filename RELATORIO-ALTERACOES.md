@@ -1187,3 +1187,7 @@ As fotos enviadas pela clínica viraram 4 pares no carrossel, com o mesmo compar
   - O `IMG_0815.jpeg` enviado agora é a mesma foto do `IMG_7929`, numa versão menor. Por isso não houve par novo, só a mudança de posição.
 - **Limpeza:** os arquivos dos pares 1 e 3 saíram de `public/img/`, de `assets/fotos-originais/`, do `imagens.json` e do script de alinhamento. Os originais continuam em `assets/Depoimentos/`.
 - **Total:** o carrossel passou de 10 para 9 casos.
+- **Par 13 (sorriso em close), ajuste:**
+  - **Antes trocado:** a pedido, o antes passou a ser o `IMG_0814` (`Sorriso close antes 0814.jpg`), da mesma paciente e no mesmo ângulo do depois, no lugar do CR2.
+  - **Alinhamento:** pelos incisivos centrais. A linha média e o tamanho dos dentes coincidem nas duas fotos.
+  - **De fora:** o `IMG_0816` (retrato do rosto, 640px) não entrou. O enquadramento dele não casa com o close, e a boca teria de ser ampliada cerca de 12×.
