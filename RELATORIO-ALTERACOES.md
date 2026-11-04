@@ -1170,3 +1170,7 @@ As fotos enviadas pela clínica viraram 4 pares no carrossel, com o mesmo compar
   - Confirmar a autorização escrita de cada paciente.
   - Os pares 10 e 11 são de harmonização. A clínica já tinha deixado de fora outros pares de harmonização, os 6 e 9. Vale confirmar se esses entram.
   - O par 10 tem o mesmo rosto do par 6, que foi excluído, agora em estúdio.
+- **Correção do enquadramento (nov/2026):**
+  - **O problema:** nos pares novos o recorte ficava torto e baixo demais. Em foto vertical, o cálculo em % misturava largura e altura e prendia o quadrado no topo, cortando o queixo.
+  - **A correção:** o `alinhar-antes-depois.mjs` ganhou uma versão em pixels (`px: true`) e um `dy` que desce o centro do recorte para o meio do rosto. As pupilas foram remedidas com zoom.
+  - **Escopo:** valem só para os pares 10–13. Os 9 anteriores não mudaram.
