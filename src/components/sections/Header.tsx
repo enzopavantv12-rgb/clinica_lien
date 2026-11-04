@@ -148,11 +148,11 @@ export function Header({ paginaAtiva }: { paginaAtiva?: string } = {}) {
         <a
           href="/#inicio"
           aria-label={`${site.nome} — início`}
-          className={`shrink-0 rounded-2xl ${focoVisivel}`}
+          className={`flex shrink-0 items-center self-stretch rounded-2xl ${focoVisivel}`}
         >
           <Logo
             variante="colorida"
-            className={`transition-[height] duration-300 ${rolou ? 'h-[50px] lg:h-12' : 'h-[50px] lg:h-[54px]'}`}
+            className={`block transition-[height] duration-300 ${rolou ? 'h-[58px] lg:h-[56px]' : 'h-[60px] lg:h-[64px]'}`}
           />
         </a>
 

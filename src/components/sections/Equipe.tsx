@@ -38,16 +38,6 @@ export function Equipe() {
                     proporcao="aspect-square"
                     className="rounded-none rounded-t-3xl object-[50%_30%]"
                   />
-                  {/* Selo do print da clinica (out/2026), na cor alternada do card. */}
-                  {'selo' in membro && membro.selo && (
-                    <span
-                      className={`absolute bottom-3.5 right-3.5 rounded-full px-3 py-1 text-[0.8125rem] font-semibold text-white shadow-[0_4px_12px_-4px_rgba(26,20,32,.35)] ${
-                        i % 2 === 0 ? 'bg-magenta' : 'bg-teal'
-                      }`}
-                    >
-                      {membro.selo}
-                    </span>
-                  )}
                 </div>
                 <div className="flex flex-1 flex-col p-6">
                   <h3 className="text-h3 sm:text-h3-lg font-semibold text-ink">{membro.nome}</h3>

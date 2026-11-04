@@ -1192,3 +1192,13 @@ As fotos enviadas pela clínica viraram 4 pares no carrossel, com o mesmo compar
   - **Alinhamento:** pelos incisivos centrais. A linha média e o tamanho dos dentes coincidem nas duas fotos.
   - **De fora:** o `IMG_0816` (retrato do rosto, 640px) não entrou. O enquadramento dele não casa com o close, e a boca teria de ser ampliada cerca de 12×.
 - **Par 15 (nov/2026):** a paciente de camisa verde (antes) e de camisa laranja (depois), em reabilitação oral. O par foi alinhado em pixels pelas pupilas, com `dy` de 10%, e entra antes dos pares de harmonização. O carrossel ficou com 10 casos.
+
+---
+
+## Ajustes: hífen, logo do menu, selos da equipe e Dra. Luiza (nov/2026)
+
+- **Conteúdos:** o card de implante passou a "Quando é indicado e quando pode exigir preparo antes", sem o hífen.
+- **Menu:** o logo ficou maior, com a cápsula de 64px no desktop e 60px no celular (antes 54px e 50px). O link agora é `flex items-center self-stretch`, o que centraliza o logo na altura da cápsula. Ao rolar a página, a cápsula fica em 56px e 58px.
+- **Equipe:**
+  - Os selos sobre as fotos (Fundadora, Mestre & Doutor, Especialista) foram removidos. Saíram o campo `selo` e o JSX do selo.
+  - Dra. Luiza: a especialidade passou a "Dentística e Estética", sem "Prótese Dentária". A frase segue com a credencial "Especialista em Prótese Dentária pela USP".

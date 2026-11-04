@@ -806,8 +806,6 @@ type Membro = {
   especialidade: string;
   frase: string;
   cro: string | null;
-  /** Selo sobre a foto (print da clinica, out/2026). */
-  selo?: string;
   foto: { src: string; alt: string; pendente?: boolean };
 };
 
@@ -822,7 +820,7 @@ type Membro = {
  */
 export const equipe = {
   // Textos do alinhamento final (pagina 10 do PDF), reaplicados a pedido
-  // (nov/2026); selos e ordem do print de out/2026.
+  // (nov/2026); ordem do print de out/2026. Selos sobre as fotos removidos (nov/2026).
   tag: 'Corpo clínico',
   h2: 'Diferentes especialidades. Um só planejamento.',
   h2Linhas: ['Diferentes especialidades.', 'Um só planejamento.'],
@@ -833,7 +831,6 @@ export const equipe = {
       especialidade: 'Reabilitação Oral | Implantodontia e Periodontia',
       frase:
         'Fundadora e diretora clínica da Lien. Atua em reabilitações orais, implantes e cuidados periodontais, conduzindo o planejamento de forma integrada do início ao fim.',
-      selo: 'Fundadora',
       cro: 'CRO-MG 49.821',
       foto: {
         src: '/img/equipe-natalia-simoes.webp',
@@ -846,7 +843,6 @@ export const equipe = {
       // "cirurgia ortognatica" no lugar de implantes, a pedido (nov/2026).
       frase:
         'Cirurgião bucomaxilofacial, mestre e doutor, com experiência em cirurgia ortognática, cirurgias complexas, reconstrução facial e procedimentos de maior complexidade.',
-      selo: 'Mestre & Doutor',
       cro: 'CRO-MG 26.562',
       foto: {
         src: '/img/equipe-alexander-pedrosa.webp',
@@ -858,7 +854,6 @@ export const equipe = {
       especialidade: 'DTM e Dor Orofacial | Sono',
       frase:
         'Especialista em DTM e Dor Orofacial com ênfase em sono, com atuação baseada em evidências para investigar a origem da dor, recuperar função e melhorar a qualidade de vida.',
-      selo: 'Especialista',
       cro: 'CRO-MG 65.103',
       foto: {
         src: '/img/equipe-gabriela-ribeiro.webp',
@@ -867,10 +862,9 @@ export const equipe = {
     },
     {
       nome: 'Dra. Luiza Henriques',
-      especialidade: 'Prótese Dentária | Dentística e Estética',
+      especialidade: 'Dentística e Estética',
       frase:
         'Especialista em Prótese Dentária pela USP, com atuação em reabilitação oral e odontologia estética e restauradora, integrando função, naturalidade e planejamento digital.',
-      selo: 'Especialista',
       cro: 'CRO-MG 64.936',
       foto: {
         src: '/img/equipe-luiza-henriques.webp',
@@ -918,7 +912,7 @@ export const conteudos = {
   destaques: [
     {
       rotulo: 'Implante dentário',
-      titulo: 'Quando é indicado - e quando pode exigir preparo antes',
+      titulo: 'Quando é indicado e quando pode exigir preparo antes',
       descricao:
         'Entenda em quais situações o implante pode ser uma opção e por que alguns casos precisam de etapas prévias de planejamento.',
       href: '/implante-dentario-belo-horizonte/',
