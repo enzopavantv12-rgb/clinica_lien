@@ -1191,3 +1191,4 @@ As fotos enviadas pela clínica viraram 4 pares no carrossel, com o mesmo compar
   - **Antes trocado:** a pedido, o antes passou a ser o `IMG_0814` (`Sorriso close antes 0814.jpg`), da mesma paciente e no mesmo ângulo do depois, no lugar do CR2.
   - **Alinhamento:** pelos incisivos centrais. A linha média e o tamanho dos dentes coincidem nas duas fotos.
   - **De fora:** o `IMG_0816` (retrato do rosto, 640px) não entrou. O enquadramento dele não casa com o close, e a boca teria de ser ampliada cerca de 12×.
+- **Par 15 (nov/2026):** a paciente de camisa verde (antes) e de camisa laranja (depois), em reabilitação oral. O par foi alinhado em pixels pelas pupilas, com `dy` de 10%, e entra antes dos pares de harmonização. O carrossel ficou com 10 casos.

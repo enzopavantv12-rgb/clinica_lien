@@ -238,6 +238,11 @@ export const resultados = {
       depois: { src: '/img/antes-depois-11-depois.webp', alt: 'A mesma paciente de frente depois da harmonização orofacial na Lien' },
     },
     {
+      id: '15',
+      antes: { src: '/img/antes-depois-15-antes.webp', alt: 'Paciente sorrindo, com falhas nos dentes, antes da reabilitação oral' },
+      depois: { src: '/img/antes-depois-15-depois.webp', alt: 'A mesma paciente sorrindo depois da reabilitação oral na Lien' },
+    },
+    {
       id: '10',
       antes: { src: '/img/antes-depois-10-antes.webp', alt: 'Paciente com marcações faciais antes da harmonização orofacial' },
       depois: { src: '/img/antes-depois-10-depois.webp', alt: 'A mesma paciente depois da harmonização orofacial na Lien' },
