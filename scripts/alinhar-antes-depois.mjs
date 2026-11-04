@@ -24,13 +24,10 @@ const SAIDA = 'assets/fotos-originais';
 const LADO = 1200;
 
 /** Pontos [x, y] em % da foto. a = antes, b = depois. */
+// Pares 1 e 3 sairam do site em nov/2026 (substituidos pelos 14 e 13).
 const PARES = [
-  { n: 1, antes: 'Antes mulher.png', depois: 'Depois mulher.png',
-    a: [[36.6, 44.4], [56.6, 44.4]], b: [[39, 42.6], [58, 42.6]] },
   { n: 2, antes: 'Retrato fiel de homem em camiseta cinza.png', depois: 'Retrato de homem sorrindo com camiseta preta.png',
     a: [[41, 36], [58, 36]], b: [[40.4, 39.4], [57.4, 39.4]] },
-  { n: 3, antes: 'Arcada dentária antes do tratamento.png', depois: 'Close extremo do sorriso natural.png',
-    a: [[14, 50], [93, 50]], b: [[13, 40], [93, 40]] },
   { n: 4, antes: 'Restauração de fotografia odontológica lateral.png', depois: 'Restauração do arco dentário lateral.png',
     a: [[12, 47], [88, 47]], b: [[14, 46], [92, 46]] },
   { n: 5, antes: 'Restauração da arcada superior em alta definição.png', depois: 'Arco dental inferior restaurado.png',
@@ -53,6 +50,8 @@ const PARES = [
     a: [[36.25, 36.6], [62.5, 36.6]], b: [[33.75, 41.1], [60.3, 41.1]], dy: 9, px: true },
   { n: 12, antes: 'Homem camisa listrada antes.png', depois: 'Homem camisa cinza depois.png',
     a: [[33.75, 38], [60.9, 38]], b: [[32, 29.7], [57, 29.7]], dy: 7, px: true },
+  { n: 14, antes: 'Mulher blusa bege antes.png', depois: 'Mulher camiseta preta depois.png',
+    a: [[37.8, 33], [55.8, 33]], b: [[41.4, 33.35], [56.6, 33.35]], dy: 6, px: true },
   { n: 13, antes: 'Sorriso close antes.jpg', depois: 'Sorriso close depois.jpg',
     a: [[9.9, 39], [90.2, 39]], b: [[12, 41], [72, 41]], px: true },
 ];

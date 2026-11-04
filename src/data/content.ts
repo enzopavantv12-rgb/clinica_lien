@@ -203,9 +203,9 @@ export const resultados = {
       depois: { src: '/img/antes-depois-2-depois.webp', alt: 'O mesmo paciente sorrindo depois do tratamento na Lien' },
     },
     {
-      id: '1',
-      antes: { src: '/img/antes-depois-1-antes.webp', alt: 'Paciente sorrindo antes do tratamento na Lien' },
-      depois: { src: '/img/antes-depois-1-depois.webp', alt: 'A mesma paciente sorrindo depois do tratamento na Lien' },
+      id: '14',
+      antes: { src: '/img/antes-depois-14-antes.webp', alt: 'Paciente sorrindo, com dentes amarelados, antes do tratamento' },
+      depois: { src: '/img/antes-depois-14-depois.webp', alt: 'A mesma paciente sorrindo depois do tratamento estético na Lien' },
     },
     {
       id: '8',
@@ -213,9 +213,9 @@ export const resultados = {
       depois: { src: '/img/antes-depois-8-depois.webp', alt: 'O mesmo paciente sorrindo depois do tratamento na Lien' },
     },
     {
-      id: '3',
-      antes: { src: '/img/antes-depois-3-antes.webp', alt: 'Sorriso com dentes ausentes e desgastados antes da reabilitação oral' },
-      depois: { src: '/img/antes-depois-3-depois.webp', alt: 'O mesmo sorriso depois da reabilitação oral na Lien' },
+      id: '13',
+      antes: { src: '/img/antes-depois-13-antes.webp', alt: 'Sorriso em close antes do tratamento estético' },
+      depois: { src: '/img/antes-depois-13-depois.webp', alt: 'O mesmo sorriso em close depois das lentes de contato dental na Lien' },
     },
     {
       id: '5',
@@ -231,11 +231,6 @@ export const resultados = {
       id: '12',
       antes: { src: '/img/antes-depois-12-antes.webp', alt: 'Paciente sorrindo, com dentes desgastados, antes da reabilitação oral' },
       depois: { src: '/img/antes-depois-12-depois.webp', alt: 'O mesmo paciente sorrindo depois da reabilitação oral na Lien' },
-    },
-    {
-      id: '13',
-      antes: { src: '/img/antes-depois-13-antes.webp', alt: 'Sorriso em close antes do tratamento estético' },
-      depois: { src: '/img/antes-depois-13-depois.webp', alt: 'O mesmo sorriso em close depois das lentes de contato dental na Lien' },
     },
     {
       id: '11',

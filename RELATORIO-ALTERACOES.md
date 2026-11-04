@@ -1174,3 +1174,16 @@ As fotos enviadas pela clínica viraram 4 pares no carrossel, com o mesmo compar
   - **O problema:** nos pares novos o recorte ficava torto e baixo demais. Em foto vertical, o cálculo em % misturava largura e altura e prendia o quadrado no topo, cortando o queixo.
   - **A correção:** o `alinhar-antes-depois.mjs` ganhou uma versão em pixels (`px: true`) e um `dy` que desce o centro do recorte para o meio do rosto. As pupilas foram remedidas com zoom.
   - **Escopo:** valem só para os pares 10–13. Os 9 anteriores não mudaram.
+
+---
+
+## Resultados: troca de 2 casos (nov/2026)
+
+- **Saiu o caso 1** (a paciente de cabelo curto em fundo claro). Entrou o **par 14**, a mesma paciente em estúdio de fundo preto:
+  - antes: `Mulher blusa bege antes.png`;
+  - depois: `Mulher camiseta preta depois.png`.
+  - O par foi alinhado em pixels pelas pupilas, com `dy` de 6%, e ocupa a mesma posição no carrossel (2º).
+- **Saiu o caso 3** (arcada em close, foto de celular). O sorriso em close de estúdio (par 13: `IMG_3142.CR2` antes, `IMG_7929` depois) passou para a posição dele, que é a 4ª.
+  - O `IMG_0815.jpeg` enviado agora é a mesma foto do `IMG_7929`, numa versão menor. Por isso não houve par novo, só a mudança de posição.
+- **Limpeza:** os arquivos dos pares 1 e 3 saíram de `public/img/`, de `assets/fotos-originais/`, do `imagens.json` e do script de alinhamento. Os originais continuam em `assets/Depoimentos/`.
+- **Total:** o carrossel passou de 10 para 9 casos.
