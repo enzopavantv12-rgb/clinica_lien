@@ -3,6 +3,7 @@ import { Etiqueta } from '../ui/Etiqueta';
 import { Reveal } from '../ui/Reveal';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
 import { cardapio } from '../../data/content';
+import { semViuva } from '../../lib/semViuva';
 
 /** Icone oficial (pasta ORIENTACAO-PERSONALIZADA, `npm run icones`). Decorativo. */
 function IconeCard({ nome }: { nome: string }) {
@@ -49,7 +50,7 @@ export function Cardapio() {
                 className="group flex w-full flex-col rounded-2xl border border-brandgray/70 bg-white/90 px-6 pb-6 pt-[22px] shadow-[0_10px_24px_-16px_rgba(26,20,32,.12)] transition-[transform,border-color] duration-[250ms] ease-out hover:-translate-y-[3px] hover:border-magenta/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-magenta motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
                 <IconeCard nome={item.icone} />
-                <span className="mt-[18px] text-[15px] leading-[1.45] text-ink">{item.texto}</span>
+                <span className="mt-[18px] text-[15px] leading-[1.45] text-ink">{semViuva(item.texto)}</span>
                 <span className="mt-auto inline-flex items-center gap-1 pt-3 text-xs font-medium text-teal">
                   {cardapio.link}
                   <ArrowDown
@@ -69,9 +70,9 @@ export function Cardapio() {
             <p className="text-[15px] text-ink">{cardapio.pergunta}</p>
             <WhatsAppButton
               origem="comecar"
-              variante="capsula"
+              variante="capsulaTeal"
               tamanho="capsulaMenu"
-              className="w-full shadow-[0_10px_30px_-10px_rgba(156,23,129,0.55)] sm:w-auto"
+              className="w-full shadow-[0_10px_30px_-10px_rgba(3,126,153,0.55)] sm:w-auto"
             >
               {cardapio.cta}
             </WhatsAppButton>

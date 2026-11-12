@@ -186,7 +186,8 @@ checar('FAQPage com 5 perguntas', faqSchema?.mainEntity?.length === 5, `achou ${
 const escaparHtml = (t) =>
   t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;');
 const respostasFora = (faqSchema?.mainEntity ?? []).filter(
-  (q) => !secao('duvidas').includes(escaparHtml(q.acceptedAnswer.text)),
+  // O HTML une as 2 ultimas palavras com espaco nao separavel (semViuva).
+  (q) => !secao('duvidas').replace(/\u00A0/g, ' ').includes(escaparHtml(q.acceptedAnswer.text)),
 );
 checar('todas as respostas do FAQ no HTML', respostasFora.length === 0, `faltam ${respostasFora.length}`);
 const jsonLd = blocos.join('\n');

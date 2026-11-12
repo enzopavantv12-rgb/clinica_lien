@@ -2,6 +2,7 @@ import { Etiqueta } from '../ui/Etiqueta';
 import { Reveal } from '../ui/Reveal';
 import { TratamentoCardLink } from '../ui/TratamentoCard';
 import { tratamentos } from '../../data/content';
+import { semViuva } from '../../lib/semViuva';
 
 const destaques = tratamentos.lista.filter((t) => 'home' in t && t.home);
 
@@ -25,7 +26,7 @@ export function Tratamentos() {
       <Reveal y={16} duracao={0.6} className="mx-auto flex max-w-[1000px] flex-col items-center px-6 text-center">
         <Etiqueta cor="teal">{tratamentos.tag}</Etiqueta>
         <h2 id="tratamentos-title" className="mt-3 text-[clamp(28px,3vw,34px)] font-bold leading-[1.15] text-ink">
-          {tratamentos.h2}
+          {semViuva(tratamentos.h2, 3)}
         </h2>
         <p className="mt-[14px] max-w-[640px] text-base font-light leading-[1.6] text-ink-muted">{tratamentos.sub}</p>
       </Reveal>
@@ -59,7 +60,7 @@ export function Tratamentos() {
       <div className="mt-12 text-center">
         <a
           href="/tratamentos/"
-          className="inline-flex h-12 items-center rounded-full border-[1.5px] border-magenta px-7 text-[15px] font-medium text-magenta transition-colors hover:bg-[#F7E4F5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta"
+          className="inline-flex h-12 items-center rounded-full border-[1.5px] border-teal px-7 text-[15px] font-medium text-teal transition-colors hover:bg-[#E3F1F4] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal"
         >
           {tratamentos.verTodos}
         </a>

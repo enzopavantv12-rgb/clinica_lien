@@ -2,6 +2,7 @@ import { BrandImage } from '../ui/BrandImage';
 import { Reveal } from '../ui/Reveal';
 import { Etiqueta } from '../ui/Etiqueta';
 import { equipe } from '../../data/content';
+import { semViuva } from '../../lib/semViuva';
 
 /**
  * Equipe (alinhamento final, 3.10): foto grande + nome + especialidade +
@@ -40,17 +41,17 @@ export function Equipe() {
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-6">
-                  <h3 className="text-h3 sm:text-h3-lg font-semibold text-ink">{membro.nome}</h3>
+                  <h3 className="text-h3 sm:text-h3-lg font-semibold text-ink">{semViuva(membro.nome, 3)}</h3>
                   <p
                     className={`mt-1.5 text-legend sm:text-legend-lg font-semibold uppercase tracking-[0.08em] ${
                       i % 2 === 0 ? 'text-magenta' : 'text-teal'
                     }`}
                   >
-                    {membro.especialidade}
+                    {semViuva(membro.especialidade)}
                   </p>
                   {membro.frase.split('\n\n').map((paragrafo, j) => (
                     <p key={j} className={`${j === 0 ? 'mt-3.5' : 'mt-2.5'} text-body text-ink-muted`}>
-                      {paragrafo}
+                      {semViuva(paragrafo)}
                     </p>
                   ))}
                   {membro.cro && <p className="mt-auto pt-4 text-legend text-ink-muted">{membro.cro}</p>}

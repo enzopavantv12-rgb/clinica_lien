@@ -1202,3 +1202,39 @@ As fotos enviadas pela clínica viraram 4 pares no carrossel, com o mesmo compar
 - **Equipe:**
   - Os selos sobre as fotos (Fundadora, Mestre & Doutor, Especialista) foram removidos. Saíram o campo `selo` e o JSX do selo.
   - Dra. Luiza: a especialidade passou a "Dentística e Estética", sem "Prótese Dentária". A frase segue com a credencial "Especialista em Prótese Dentária pela USP".
+
+---
+
+## Revisão de palavras viúvas e cores dos CTAs (nov/2026)
+
+**Viúvas.** Um detector (puppeteer) varreu a home, /tratamentos/, /conteudos/, /privacidade/ e os 14 artigos em 360, 390, 768, 1024, 1280, 1440 e 1920px. Ele procurava qualquer texto cuja última linha tivesse uma palavra só: achou 27 casos no site e 3 nos artigos.
+
+- **CSS global (`globals.css`, layer base):** `text-wrap: balance` em h1–h4 e `text-wrap: pretty` em p, li, dd, dt, figcaption e blockquote.
+- **`src/lib/semViuva.ts`:** une as duas últimas palavras com espaço não separável. O `pretty` sozinho não resolve: o Chrome aplica só em parte e o Safari anterior ao 26 ignora. Aplicado em:
+  - resumos de tratamento, etapas do Método, itens do "Por onde começar", respostas do FAQ;
+  - nome, especialidade e frase da Equipe;
+  - rótulo, título e descrição dos cards de Conteúdos, e cards de /conteudos/;
+  - "Próximo passo", parágrafos e itens de lista dos artigos;
+  - títulos de /tratamentos/ e /privacidade/, e o H2 "Tratamentos e Especialidades".
+- **CTA final:** "consulta cuidadosa." agora fica sempre na mesma linha.
+- **Resultado:** de 27 + 3 caiu para 2 casos. Os dois foram mantidos de propósito, porque a última palavra é longa demais para dividir a linha com outra:
+  - "Cirurgia e Traumatologia / Bucomaxilofacial", no card estreito de /tratamentos/;
+  - o e-mail no fim de um parágrafo da /privacidade/, a 390px.
+- **Verificador:** a checagem "respostas do FAQ no HTML" agora normaliza o espaço não separável.
+
+**CTAs.** Duas variantes novas no `WhatsAppButton`, com texto branco:
+
+| Variante | Cor | Contraste do texto |
+|---|---|---|
+| `capsulaTeal` | teal #037E99 | 4,7:1 |
+| `capsulaDegrade` | degradê magenta → teal | pior ponto 4,7:1 |
+
+| Onde | Antes | Agora |
+|---|---|---|
+| "Não sabe por onde começar?" (home) | magenta | teal |
+| Card aberto de cada tratamento (/tratamentos/) | magenta | teal |
+| FAQ | magenta | degradê magenta → teal |
+| "Próximo passo" dos artigos | magenta | degradê magenta → teal |
+| "Ver todos os tratamentos" (contorno) | magenta | teal |
+
+O hero, o menu, a Sedação e o CTA final continuam como estavam. Assim o magenta segue como cor principal da conversão.

@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { IconeTratamento } from './IconesTratamento';
+import { semViuva } from '../../lib/semViuva';
 
 /**
  * Card de tratamento no estilo do print aprovado (prompt "tratamentos-lien",
@@ -54,7 +55,7 @@ export function TopoTratamento({
         {nome}
       </Titulo>
       {/* Peso 400, e nao 300: a 13px a Poppins Light fica fina demais. */}
-      <p className="mt-3 text-[13px] leading-[1.6] text-ink-muted">{resumo}</p>
+      <p className="mt-3 text-[13px] leading-[1.6] text-ink-muted">{semViuva(resumo)}</p>
     </>
   );
 }

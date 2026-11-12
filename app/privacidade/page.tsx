@@ -3,6 +3,7 @@ import { Header } from '@/components/sections/Header';
 import { Footer } from '@/components/sections/Footer';
 import { FloatingWhatsApp } from '@/components/ui/FloatingWhatsApp';
 import { privacidade, site } from '@/data/content';
+import { semViuva } from '@/lib/semViuva';
 
 /*
  * [PENDENTE: revisao juridica] Rascunho LGPD escrito a partir do briefing — a
@@ -23,7 +24,7 @@ export default function Privacidade() {
 
       <main className="bg-white pb-20 pt-32 sm:pb-24 sm:pt-36">
         <article className="mx-auto max-w-[760px] px-5 sm:px-8">
-          <h1 className="text-h2 sm:text-h2-lg font-bold text-ink">{privacidade.titulo}</h1>
+          <h1 className="text-h2 sm:text-h2-lg font-bold text-ink">{semViuva(privacidade.titulo, 3)}</h1>
           <p className="mt-3 text-legend sm:text-legend-lg text-ink-muted">{privacidade.atualizacao}</p>
           <p className="mt-8 max-w-prose text-body sm:text-body-lg text-ink">{privacidade.intro}</p>
 

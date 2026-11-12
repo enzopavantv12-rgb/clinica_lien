@@ -3,6 +3,7 @@ import { Etiqueta } from '../ui/Etiqueta';
 import { Reveal } from '../ui/Reveal';
 import { Cardapio } from './Cardapio';
 import { metodo } from '../../data/content';
+import { semViuva } from '../../lib/semViuva';
 
 /**
  * Metodo Lien + "Por onde voce quer comecar?" — layout do Print 2 (prompt
@@ -53,7 +54,7 @@ export function MetodoLien() {
                   {e.numero}
                 </span>
                 <h3 className="mt-[22px] text-lg font-bold text-ink">{e.titulo}</h3>
-                <p className="mt-[14px] text-[13.5px] leading-[1.65] text-ink-muted">{e.texto}</p>
+                <p className="mt-[14px] text-[13.5px] leading-[1.65] text-ink-muted">{semViuva(e.texto)}</p>
               </article>
             </Reveal>
           ))}

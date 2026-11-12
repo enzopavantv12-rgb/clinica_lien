@@ -17,6 +17,7 @@ import {
   todosArtigos,
   type Bloco,
 } from '@/lib/artigos';
+import { semViuva } from '@/lib/semViuva';
 
 /**
  * Template dos 14 artigos (alinhamento final, 5.3), cada um na URL exata do
@@ -73,7 +74,7 @@ function Corpo({ blocos }: { blocos: Bloco[] }) {
         if (b.tipo === 'p') {
           return (
             <p key={i} className="text-body sm:text-body-lg leading-[1.75] text-ink">
-              {b.texto}
+              {semViuva(b.texto)}
             </p>
           );
         }
@@ -89,7 +90,7 @@ function Corpo({ blocos }: { blocos: Bloco[] }) {
                     {j + 1}.
                   </span>
                 )}
-                <span>{item}</span>
+                <span className="[text-wrap:pretty]">{semViuva(item)}</span>
               </li>
             ))}
           </Lista>
@@ -181,13 +182,13 @@ export default async function Artigo({ params }: Props) {
             <h2 id="proximo-passo" className="mt-4 text-h3 sm:text-h3-lg font-semibold text-ink">
               {rotulos.proximoPasso}
             </h2>
-            <p className="mt-3 text-body sm:text-body-lg text-ink">{artigo.proximoPasso}</p>
+            <p className="mt-3 text-body sm:text-body-lg text-ink">{semViuva(artigo.proximoPasso)}</p>
             <WhatsAppButton
               origem={`artigo-${artigo.slug}`}
               mensagem={mensagemArtigo(artigo.title)}
-              variante="capsula"
+              variante="capsulaDegrade"
               tamanho="capsula"
-              className="mt-8 w-full shadow-[0_10px_30px_-10px_rgba(156,23,129,0.55)] sm:w-auto"
+              className="mt-8 w-full shadow-[0_10px_30px_-10px_rgba(80,60,140,0.5)] sm:w-auto"
             >
               {CTA_PRINCIPAL}
             </WhatsAppButton>

@@ -9,6 +9,7 @@ import { JsonLd } from '@/components/ui/JsonLd';
 import { site, tratamentos } from '@/data/content';
 import { schemaBreadcrumb } from '@/data/schema';
 import { todosArtigos } from '@/lib/artigos';
+import { semViuva } from '@/lib/semViuva';
 
 const { pagina } = tratamentos;
 const URL = `${site.url}/tratamentos/`;
@@ -72,7 +73,7 @@ export default function Tratamentos() {
 
           <header className="mt-10 flex flex-col items-center text-center">
             <Etiqueta cor="teal">{tratamentos.tag}</Etiqueta>
-            <h1 className="mt-3 text-[clamp(28px,3vw,34px)] font-bold leading-[1.15] text-ink">{pagina.h1}</h1>
+            <h1 className="mt-3 text-[clamp(28px,3vw,34px)] font-bold leading-[1.15] text-ink">{semViuva(pagina.h1, 3)}</h1>
             <p className="mt-[14px] max-w-[470px] text-base font-light leading-[1.6] text-ink-muted">{tratamentos.sub}</p>
           </header>
 

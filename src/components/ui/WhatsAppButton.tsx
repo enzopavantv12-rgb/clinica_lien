@@ -6,7 +6,7 @@ import { whatsappUrlPor } from '../../lib/whatsapp';
 import { trackWhatsAppClick } from '../../lib/tracking';
 import type { OrigemWhatsApp } from '../../data/content';
 
-type Variante = 'magenta' | 'branco' | 'outline' | 'pilula' | 'capsula';
+type Variante = 'magenta' | 'branco' | 'outline' | 'pilula' | 'capsula' | 'capsulaTeal' | 'capsulaDegrade';
 
 const variantes: Record<Variante, string> = {
   magenta:
@@ -19,6 +19,11 @@ const variantes: Record<Variante, string> = {
   pilula: 'lien-cta bg-white text-magenta uppercase tracking-[0.06em] focus-visible:outline-magenta',
   // Hero e menu glass: capsula magenta. A sombra fica a cargo de quem usa.
   capsula: 'bg-magenta text-white font-semibold hover:bg-[#8A1472] focus-visible:outline-magenta-light',
+  // Variacoes da identidade (nov/2026), para alternar com o magenta em alguns
+  // CTAs. Texto branco: teal 4,7:1; no degrade, o pior ponto e o teal (4,7:1).
+  capsulaTeal: 'bg-teal text-white font-semibold hover:bg-[#026A82] focus-visible:outline-teal',
+  capsulaDegrade:
+    'bg-[linear-gradient(90deg,#9C1781,#037E99)] text-white font-semibold hover:brightness-110 focus-visible:outline-magenta',
 };
 
 const tamanhos = {
@@ -66,7 +71,7 @@ export function WhatsAppButton({
       onClick={() => trackWhatsAppClick(origem, pagina)}
       data-cta={origem}
       data-page={pagina}
-      className={`inline-flex items-center justify-center gap-2.5 ${variante === 'pilula' || variante === 'capsula' ? 'rounded-full' : 'rounded-2xl'} font-medium transition-all duration-300 ease-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 motion-safe:hover:-translate-y-0.5 ${variantes[variante]} ${tamanhos[tamanho]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2.5 ${variante === 'pilula' || variante.startsWith('capsula') ? 'rounded-full' : 'rounded-2xl'} font-medium transition-all duration-300 ease-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 motion-safe:hover:-translate-y-0.5 ${variantes[variante]} ${tamanhos[tamanho]} ${className}`}
     >
       {comIcone && <WhatsAppIcon size={20} />}
       {children}

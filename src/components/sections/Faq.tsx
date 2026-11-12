@@ -9,6 +9,7 @@ import {
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { faq } from '@/data/content';
+import { semViuva } from '@/lib/semViuva';
 
 /**
  * Duvidas frequentes (alinhamento final, 3.12): accordion simples, tudo
@@ -38,7 +39,7 @@ export function Faq() {
                 {item.pergunta}
               </AccordionTrigger>
               <AccordionContent forceMount className="px-5 pb-5 text-ink-muted">
-                <p className="max-w-prose text-body sm:text-body-lg">{item.resposta}</p>
+                <p className="max-w-prose text-body sm:text-body-lg">{semViuva(item.resposta)}</p>
               </AccordionContent>
             </AccordionItem>
           ))}
@@ -47,9 +48,9 @@ export function Faq() {
         <div className="flex justify-center">
           <WhatsAppButton
             origem="duvidas"
-            variante="capsula"
+            variante="capsulaDegrade"
             tamanho="capsula"
-            className="w-full shadow-[0_10px_30px_-10px_rgba(156,23,129,0.55)] sm:w-auto"
+            className="w-full shadow-[0_10px_30px_-10px_rgba(80,60,140,0.5)] sm:w-auto"
           >
             {faq.cta}
           </WhatsAppButton>

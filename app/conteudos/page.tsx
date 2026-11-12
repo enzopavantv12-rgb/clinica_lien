@@ -9,6 +9,7 @@ import { Simbolo } from '@/components/ui/BrandGraphics';
 import { conteudos, site } from '@/data/content';
 import { schemaBreadcrumb } from '@/data/schema';
 import { todosArtigos } from '@/lib/artigos';
+import { semViuva } from '@/lib/semViuva';
 
 const { pagina, categorias } = conteudos;
 const URL = `${site.url}/conteudos/`;
@@ -75,7 +76,7 @@ export default function Conteudos() {
                     >
                       <p className="text-legend font-semibold uppercase tracking-[0.14em] text-teal">{a.category}</p>
                       <h3 className="mt-3 text-h3 font-semibold text-ink">{a.title}</h3>
-                      <p className="mt-3 text-body text-ink-muted">{a.metaDescription}</p>
+                      <p className="mt-3 text-body text-ink-muted">{semViuva(a.metaDescription)}</p>
                       <span className="mt-auto inline-flex items-center gap-1.5 pt-6 text-[0.9375rem] font-medium text-magenta underline-offset-4 group-hover:underline">
                         {conteudos.lerConteudo}
                         <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />

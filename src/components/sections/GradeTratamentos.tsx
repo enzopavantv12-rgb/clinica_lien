@@ -187,9 +187,9 @@ export function GradeTratamentos({ leituras }: { leituras: Record<string, Leitur
                   <p className="max-w-[62ch] text-[13px] font-light italic leading-[1.6] text-ink-muted">{t.nota}</p>
                   <WhatsAppButton
                     origem={`tratamento-${t.slug}`}
-                    variante="capsula"
+                    variante="capsulaTeal"
                     tamanho="capsulaMenu"
-                    className="w-full shrink-0 shadow-[0_10px_30px_-10px_rgba(156,23,129,0.55)] sm:w-auto"
+                    className="w-full shrink-0 shadow-[0_10px_30px_-10px_rgba(3,126,153,0.55)] sm:w-auto"
                   >
                     {tratamentos.cta}
                   </WhatsAppButton>

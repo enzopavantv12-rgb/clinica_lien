@@ -39,7 +39,7 @@ export function CtaFinal() {
               className="mx-auto max-w-[640px] text-[clamp(28px,3vw,38px)] font-extrabold leading-[1.18] tracking-[-.01em] text-white"
             >
               {inicio} <br className="hidden md:inline" />
-              {uma} <em className="italic">{destaque}</em>
+              {uma} <em className="whitespace-nowrap italic">{destaque}</em>
             </h2>
           </Reveal>
           <Reveal y={16} duracao={0.6} delay={0.18} className="relative">
