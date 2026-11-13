@@ -50,7 +50,7 @@ const ordem = (i: number) => ({ '--i': i }) as CSSProperties;
  */
 function HeroFoto() {
   return (
-    <div className="hero-foto-desce absolute inset-x-0 bottom-0 top-14 overflow-hidden hl:top-[88px]">
+    <div className="hero-foto-desce absolute inset-x-0 top-14 aspect-[3/4] overflow-hidden hl:bottom-0 hl:top-[88px] hl:aspect-auto">
       <picture>
         <source media={MEDIA_EMPILHADO} type="image/avif" srcSet={`${imagem.mobile}.avif`} />
         <source media={MEDIA_EMPILHADO} type="image/webp" srcSet={`${imagem.mobile}.webp`} />
@@ -86,7 +86,7 @@ export function Hero() {
       id="inicio"
       className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden bg-cream hl:min-h-[clamp(640px,100svh,920px)] hl:flex-row hl:items-center hl:justify-start"
     >
-      <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 pb-8 pt-[max(38svh,330px)] text-center sm:px-8 hl:pb-16 hl:pt-[120px] hl:text-left hlg:px-12 paisagem:pb-8 paisagem:pt-[96px]">
+      <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 pb-8 pt-[max(56svh,410px)] text-center sm:px-8 hl:pb-16 hl:pt-[120px] hl:text-left hlg:px-12 paisagem:pb-8 paisagem:pt-[96px]">
         <div className="mx-auto max-w-[560px] hl:mx-0 hl:max-w-none">
           <h1
             className="hero-entra text-[1.75rem] font-bold leading-[1.12] text-ink sm:text-[2.5rem] hl:text-[2.75rem] hlg:text-[clamp(2.75rem,3.9vw,3.5rem)] paisagem:text-[clamp(1.875rem,3.6vw,3.25rem)]"
@@ -96,10 +96,10 @@ export function Hero() {
           </h1>
 
           <p
-            className="hero-entra mt-4 text-[0.9rem] font-light leading-[1.55] sm:text-[1.0625rem] text-ink-muted hl:mt-8 hl:text-[clamp(1rem,1.4vw,1.25rem)] hl:leading-[1.45] paisagem:mt-5"
+            className="hero-entra mt-4 text-[0.9rem] leading-[1.55] sm:text-[1.0625rem] text-ink hl:mt-8 hl:text-[clamp(1rem,1.4vw,1.25rem)] hl:leading-[1.45] paisagem:mt-5"
             style={ordem(1)}
           >
-            <Linhas linhas={hero.textoLinhas} destaque="font-medium text-ink" />
+            <Linhas linhas={hero.textoLinhas} destaque="font-semibold" />
           </p>
 
           {/* CTA unico de conversao (WhatsApp, com icone de agenda). O 2o botao
@@ -129,7 +129,7 @@ export function Hero() {
           sem desfoque); o rosto, no alto, fica livre. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(250,248,246,0)_34%,rgba(250,248,246,.72)_52%,rgba(250,248,246,.93)_68%,#FAF8F6_86%)] hl:hidden"
+        className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(250,248,246,0)_44%,rgba(250,248,246,.8)_58%,rgba(250,248,246,.95)_70%,#FAF8F6_84%)] hl:hidden"
       />
       <HeroFoto />
     </section>

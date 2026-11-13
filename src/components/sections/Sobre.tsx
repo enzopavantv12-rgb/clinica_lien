@@ -57,10 +57,10 @@ export function Sobre() {
             <p className="mt-6 max-w-[56ch] text-[17px] leading-[1.65] text-ink">
               <Texto trechos={sobre.abertura} forte="font-semibold" />
             </p>
-            <div className="mt-[18px] max-w-[60ch] space-y-[18px] text-[15px] font-light leading-[1.75] text-ink-muted">
+            <div className="mt-[18px] max-w-[56ch] space-y-[18px] text-[17px] leading-[1.65] text-ink">
               {sobre.apoio.map((p, i) => (
                 <p key={i}>
-                  <Texto trechos={p} forte="font-medium text-ink" />
+                  <Texto trechos={p} forte="font-semibold" />
                 </p>
               ))}
             </div>

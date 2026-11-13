@@ -108,12 +108,10 @@ export function Testimonials() {
                 >
                   {t.name.charAt(0)}
                 </span>
-                {/* Altura de nome + 2 linhas de contexto: os divisores dos 3 cards
-                    ficam na mesma linha mesmo quando o contexto cabe em uma. */}
-                <span className="flex min-h-[55px] flex-col justify-center">
+                <span className="flex flex-col justify-center">
                   <strong className="text-[15px] font-semibold leading-[1.3] text-[#1A1420]">{t.name}</strong>
                   <span className="text-[12.5px] leading-[1.4] text-[#6B6470]">
-                    Paciente {t.context} · {depoimentos.fonte}
+                    {depoimentos.fonte}
                   </span>
                 </span>
               </figcaption>

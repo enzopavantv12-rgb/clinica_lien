@@ -197,6 +197,23 @@ export const resultados = {
   rotuloComparar: 'Comparar antes e depois',
   instrucao: 'Arraste para comparar',
   casos: [
+    // Ordem (nov/2026, pedido da Dra. Natalia): os pais dela primeiro (12 e
+    // 15), depois reabilitacao, estetica e harmonizacao; ortodontia por ultimo.
+    {
+      id: '12',
+      antes: { src: '/img/antes-depois-12-antes.webp', alt: 'Paciente sorrindo, com dentes desgastados, antes da reabilitação oral' },
+      depois: { src: '/img/antes-depois-12-depois.webp', alt: 'O mesmo paciente sorrindo depois da reabilitação oral na Lien' },
+    },
+    {
+      id: '15',
+      antes: { src: '/img/antes-depois-15-antes.webp', alt: 'Paciente sorrindo, com falhas nos dentes, antes da reabilitação oral' },
+      depois: { src: '/img/antes-depois-15-depois.webp', alt: 'A mesma paciente sorrindo depois da reabilitação oral na Lien' },
+    },
+    {
+      id: '8',
+      antes: { src: '/img/antes-depois-8-antes.webp', alt: 'Paciente sorrindo, com falhas nos dentes, antes do tratamento' },
+      depois: { src: '/img/antes-depois-8-depois.webp', alt: 'O mesmo paciente sorrindo depois do tratamento na Lien' },
+    },
     {
       id: '2',
       antes: { src: '/img/antes-depois-2-antes.webp', alt: 'Paciente sorrindo antes do tratamento na Lien' },
@@ -208,14 +225,19 @@ export const resultados = {
       depois: { src: '/img/antes-depois-14-depois.webp', alt: 'A mesma paciente sorrindo depois do tratamento estético na Lien' },
     },
     {
-      id: '8',
-      antes: { src: '/img/antes-depois-8-antes.webp', alt: 'Paciente sorrindo, com falhas nos dentes, antes do tratamento' },
-      depois: { src: '/img/antes-depois-8-depois.webp', alt: 'O mesmo paciente sorrindo depois do tratamento na Lien' },
-    },
-    {
       id: '13',
       antes: { src: '/img/antes-depois-13-antes.webp', alt: 'Sorriso em close antes do tratamento estético' },
       depois: { src: '/img/antes-depois-13-depois.webp', alt: 'O mesmo sorriso em close depois das lentes de contato dental na Lien' },
+    },
+    {
+      id: '11',
+      antes: { src: '/img/antes-depois-11-antes.webp', alt: 'Paciente de frente, com o rosto em repouso, antes da harmonização orofacial' },
+      depois: { src: '/img/antes-depois-11-depois.webp', alt: 'A mesma paciente de frente depois da harmonização orofacial na Lien' },
+    },
+    {
+      id: '10',
+      antes: { src: '/img/antes-depois-10-antes.webp', alt: 'Paciente com marcações faciais antes da harmonização orofacial' },
+      depois: { src: '/img/antes-depois-10-depois.webp', alt: 'A mesma paciente depois da harmonização orofacial na Lien' },
     },
     {
       id: '5',
@@ -226,26 +248,6 @@ export const resultados = {
       id: '4',
       antes: { src: '/img/antes-depois-4-antes.webp', alt: 'Vista lateral dos dentes desalinhados antes do tratamento' },
       depois: { src: '/img/antes-depois-4-depois.webp', alt: 'A mesma vista lateral, com os dentes alinhados depois do tratamento' },
-    },    // Pares enviados em nov/2026 (estudio, fundo preto).
-    {
-      id: '12',
-      antes: { src: '/img/antes-depois-12-antes.webp', alt: 'Paciente sorrindo, com dentes desgastados, antes da reabilitação oral' },
-      depois: { src: '/img/antes-depois-12-depois.webp', alt: 'O mesmo paciente sorrindo depois da reabilitação oral na Lien' },
-    },
-    {
-      id: '11',
-      antes: { src: '/img/antes-depois-11-antes.webp', alt: 'Paciente de frente, com o rosto em repouso, antes da harmonização orofacial' },
-      depois: { src: '/img/antes-depois-11-depois.webp', alt: 'A mesma paciente de frente depois da harmonização orofacial na Lien' },
-    },
-    {
-      id: '15',
-      antes: { src: '/img/antes-depois-15-antes.webp', alt: 'Paciente sorrindo, com falhas nos dentes, antes da reabilitação oral' },
-      depois: { src: '/img/antes-depois-15-depois.webp', alt: 'A mesma paciente sorrindo depois da reabilitação oral na Lien' },
-    },
-    {
-      id: '10',
-      antes: { src: '/img/antes-depois-10-antes.webp', alt: 'Paciente com marcações faciais antes da harmonização orofacial' },
-      depois: { src: '/img/antes-depois-10-depois.webp', alt: 'A mesma paciente depois da harmonização orofacial na Lien' },
     },
   ],
 } as const;
@@ -263,7 +265,8 @@ export const depoimentos = {
   // "Nota", e nao "Avaliacao": o verificador bloqueia a palavra no HTML.
   estrelas: 'Nota 5 de 5 estrelas',
   trilho: 'Depoimentos de pacientes',
-  fonte: 'Google Reviews',
+  // So a fonte, sem o tratamento do paciente (pedido da clinica, nov/2026).
+  fonte: 'Google',
 } as const;
 
 /**

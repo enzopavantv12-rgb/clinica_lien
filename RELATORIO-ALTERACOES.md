@@ -1238,3 +1238,22 @@ As fotos enviadas pela clínica viraram 4 pares no carrossel, com o mesmo compar
 | "Ver todos os tratamentos" (contorno) | magenta | teal |
 
 O hero, o menu, a Sedação e o CTA final continuam como estavam. Assim o magenta segue como cor principal da conversão.
+
+---
+
+## Ajustes pedidos pela Dra. Natália (nov/2026)
+
+- **Hero no celular:**
+  - A foto vertical aparece inteira, em 3:4 e sem zoom, a partir do menu. A base dela esfuma no creme.
+  - O texto desce: o topo fica em `max(56svh, 410px)`, antes `max(38svh, 330px)`. Com isso a cabeça não é mais cortada e aparece mais do tronco.
+  - O parágrafo ficou todo em tinta escura (`text-ink`). O "Se você tem medo de dentista…" segue só em negrito.
+- **Sobre:** o 2º parágrafo passou de cinza claro (15px light) para o mesmo estilo do 1º (17px, `text-ink`).
+- **Depoimentos:** saiu "Paciente {tratamento} · Google Reviews". A informação não era verdadeira e podia constranger o paciente. Agora aparece só "Google", e o campo `context` saiu do `testimonials.ts`.
+- **Experiência:**
+  - **Abas:** a barra de abas (desktop) e as pills (celular) deixaram o preto (#14181F) e passaram ao azul escuro da paleta: teal #037E99. A aba ativa fica em #025F73.
+  - **Texto:** passou a branco cheio, o que dá 4,7:1 de contraste.
+- **Antes e depois, nova ordem:**
+  - 12 e 15, os pais da Dra. Natália;
+  - 8, 2, 14 e 13, reabilitação e estética;
+  - 11 e 10, harmonização;
+  - 5 e 4, ortodontia, por último.

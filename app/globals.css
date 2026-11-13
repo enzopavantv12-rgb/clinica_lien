@@ -191,6 +191,14 @@
     -webkit-mask-image: linear-gradient(to bottom, transparent, #000 56px);
     mask-image: linear-gradient(to bottom, transparent, #000 56px);
   }
+  /* Celular e tablet em pe: a foto vertical inteira (sem zoom) termina no meio
+     da tela; a base dela tambem esfuma no creme, sem linha de corte. */
+  @media (max-width: 767px), (max-width: 1279px) and (orientation: portrait) {
+    .hero-foto-desce {
+      -webkit-mask-image: linear-gradient(to bottom, transparent, #000 56px, #000 72%, transparent);
+      mask-image: linear-gradient(to bottom, transparent, #000 56px, #000 72%, transparent);
+    }
+  }
 
   /* Entrada em sequencia: --i e a posicao do elemento (atraso de 80ms cada). */
   @keyframes hero-entra {

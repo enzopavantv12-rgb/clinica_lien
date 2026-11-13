@@ -254,7 +254,7 @@ export function Experiencia() {
           <div
               role="tablist"
               aria-label={experiencia.abas}
-              className="mx-auto mt-6 hidden max-w-[1100px] grid-cols-3 overflow-hidden rounded-xl border border-white/10 bg-[#14181F] shadow-[0_18px_40px_-24px_rgba(26,20,32,.5)] sm:grid"
+              className="mx-auto mt-6 hidden max-w-[1100px] grid-cols-3 overflow-hidden rounded-xl border border-white/10 bg-teal shadow-[0_18px_40px_-24px_rgba(3,126,153,.6)] sm:grid"
             >
               {capitulos.map((t, i) => {
                 const sel = i === ativo;
@@ -274,10 +274,10 @@ export function Experiencia() {
                     onKeyDown={(e) => aoTeclarAba(e, i, 'd')}
                     className={`relative flex min-h-[66px] items-center gap-2.5 px-[18px] text-left transition-colors ${
                       i > 0 ? 'border-l border-white/[.12]' : ''
-                    } ${sel ? 'bg-white/[.06]' : 'hover:bg-white/[.05]'} ${focoAba}`}
+                    } ${sel ? 'bg-[#025F73]' : 'hover:bg-[#026E86]'} ${focoAba}`}
                   >
                     <span className="text-[13px] font-bold text-white">{t.numero}</span>
-                    <span className={`text-[14.5px] font-semibold ${sel ? 'text-white' : 'text-white/80'}`}>{t.aba}</span>
+                    <span className={`text-[14.5px] font-semibold text-white`}>{t.aba}</span>
                     {sel &&
                       (tocando ? (
                         <span
@@ -322,8 +322,8 @@ export function Experiencia() {
                   tabIndex={sel ? 0 : -1}
                   onClick={() => setAtivo(i)}
                   onKeyDown={(e) => aoTeclarAba(e, i, 'm')}
-                  className={`min-h-11 shrink-0 snap-start rounded-full border bg-[#14181F] px-4 py-2.5 text-[13px] font-semibold ${
-                    sel ? 'border-[#F0B6F2] text-white' : 'border-transparent text-white/80'
+                  className={`min-h-11 shrink-0 snap-start rounded-full border px-4 py-2.5 text-[13px] font-semibold text-white ${
+                    sel ? 'border-[#F0B6F2] bg-[#025F73]' : 'border-transparent bg-teal'
                   } focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta`}
                 >
                   <span className="mr-1.5 font-bold text-white">{t.numero}</span>
