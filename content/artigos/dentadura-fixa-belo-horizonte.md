@@ -15,7 +15,7 @@
 }
 ---
 
-“Dentadura fixa” é um termo popular usado por quem procura uma prótese que não precise ser removida diariamente. Na odontologia, normalmente estamos falando de uma prótese de arcada completa fixada sobre implantes.
+“Dentadura fixa” é um termo popular usado por quem procura uma prótese que não precise ser removida diariamente. Na odontologia, normalmente estamos falando de uma prótese de arcada completa fixada sobre [implantes](/implante-dentario-belo-horizonte/).
 
 #### Como funciona?
 

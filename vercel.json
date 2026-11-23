@@ -38,5 +38,18 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "clinica-lien.vercel.app"
+        }
+      ],
+      "destination": "https://lienreabilitacao.com.br/:path*",
+      "permanent": true
+    }
   ]
 }

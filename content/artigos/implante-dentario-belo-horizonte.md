@@ -3,8 +3,8 @@
   "numero": 1,
   "slug": "implante-dentario-belo-horizonte",
   "title": "Implante dentário: quando é indicado - e quando pode exigir preparo antes",
-  "metaTitle": "Implante Dentário em Belo Horizonte: quando é indicado? | Lien",
-  "metaDescription": "Entenda quando o implante dentário pode ser indicado, quais condições precisam ser avaliadas antes da cirurgia e como funciona o planejamento na Lien, em Belo Horizonte.",
+  "metaTitle": "Implante Dentário em BH: quando é indicado? | Lien",
+  "metaDescription": "Quando o implante dentário pode ser indicado, o que precisa ser tratado antes da cirurgia e como funciona o planejamento digital. Clínica no Cruzeiro, em BH.",
   "keyword": "implante dentário Belo Horizonte",
   "author": "Dra. Natália Simões - Especialista em Implantodontia e Prótese Dentária | Aperfeiçoamento em Periodontia",
   "category": "Implantes e Reabilitação",
@@ -32,7 +32,7 @@ O objetivo não é apenas “colocar um parafuso”, mas reconstruir função, e
 
 #### Quando é necessário preparar o caso antes?
 
-Nem todo paciente está pronto para receber um implante na primeira etapa. Volume ósseo insuficiente, doença periodontal ativa, condições sistêmicas descompensadas, tabagismo e alterações locais podem exigir tratamento prévio ou mudança de estratégia. A idade, o desenvolvimento ósseo e os medicamentos em uso também fazem parte da decisão.
+Nem todo paciente está pronto para receber um implante na primeira etapa. Volume ósseo insuficiente, [doença periodontal](/doenca-periodontal-belo-horizonte/) ativa, condições sistêmicas descompensadas, tabagismo e alterações locais podem exigir tratamento prévio ou mudança de estratégia. A idade, o desenvolvimento ósseo e os medicamentos em uso também fazem parte da decisão.
 
 #### Como o planejamento digital ajuda?
 
@@ -40,8 +40,8 @@ Tomografia, escaneamento intraoral e recursos digitais podem ser utilizados para
 
 #### Implante dói? E quanto tempo leva?
 
-O procedimento é realizado com anestesia e existem recursos para controle de ansiedade, inclusive sedação quando indicada. O desconforto e o tempo de recuperação variam conforme extensão da cirurgia, necessidade de enxertos e resposta individual. O tratamento completo também varia de caso para caso; algumas etapas podem ocorrer juntas e outras exigem períodos de cicatrização.
+O procedimento é realizado com anestesia e existem recursos para controle de ansiedade, inclusive sedação quando indicada. O desconforto e o tempo de recuperação variam conforme extensão da cirurgia, necessidade de [enxertos](/enxerto-osseo-dentario-bh/) e resposta individual. O tratamento completo também varia de caso para caso; algumas etapas podem ocorrer juntas e outras exigem períodos de cicatrização.
 
 #### Quanto tempo um implante pode durar?
 
-Implantes apresentam altas taxas de sobrevivência quando bem indicados e acompanhados, mas não são “para sempre” por definição. Higiene, controle periodontal, manutenção, tabagismo, bruxismo, condição sistêmica e desenho protético influenciam o resultado ao longo dos anos.
+Implantes apresentam altas taxas de sobrevivência quando bem indicados e acompanhados, mas não são “para sempre” por definição. Higiene, controle periodontal, manutenção, tabagismo, [bruxismo](/dor-mastigar-estalos-dtm-bh/), condição sistêmica e desenho protético influenciam o resultado ao longo dos anos.

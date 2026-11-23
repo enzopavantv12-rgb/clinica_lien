@@ -24,9 +24,9 @@ O enxerto ósseo costuma gerar receio porque o nome sugere um procedimento sempr
 #### Quando pode ser indicado?
 
 - Perda dentária antiga com reabsorção óssea.
-- Defeitos associados a infecção ou doença periodontal.
+- Defeitos associados a infecção ou [doença periodontal](/doenca-periodontal-belo-horizonte/).
 - Traumas e fraturas.
-- Necessidade de reconstrução antes do implante.
+- Necessidade de reconstrução antes do [implante](/implante-dentario-belo-horizonte/).
 - Levantamento de seio maxilar em casos selecionados.
 
 #### Quais materiais podem ser utilizados?

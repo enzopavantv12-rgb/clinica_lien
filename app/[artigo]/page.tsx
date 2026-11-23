@@ -18,6 +18,7 @@ import {
   type Bloco,
 } from '@/lib/artigos';
 import { semViuva } from '@/lib/semViuva';
+import { dataGit } from '@/lib/dataGit';
 
 /**
  * Template dos 14 artigos (alinhamento final, 5.3), cada um na URL exata do
@@ -60,6 +61,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+/**
+ * Links internos no texto aprovado: `[termo](/slug/)` no .md vira link, sem
+ * mudar uma palavra do texto (auditoria SEO, nov/2026).
+ */
+function comLinks(texto: string) {
+  const partes = texto.split(/(\[[^\]]+\]\(\/[^)\s]+\))/g);
+  return partes.map((p, i) => {
+    const m = p.match(/^\[([^\]]+)\]\((\/[^)\s]+)\)$/);
+    return m ? (
+      <a key={i} href={m[2]} className="font-medium text-magenta underline decoration-magenta/40 underline-offset-2 hover:decoration-magenta">
+        {m[1]}
+      </a>
+    ) : (
+      p
+    );
+  });
+}
+
 function Corpo({ blocos }: { blocos: Bloco[] }) {
   return (
     <div className="flex flex-col gap-5">
@@ -74,7 +93,7 @@ function Corpo({ blocos }: { blocos: Bloco[] }) {
         if (b.tipo === 'p') {
           return (
             <p key={i} className="text-body sm:text-body-lg leading-[1.75] text-ink">
-              {semViuva(b.texto)}
+              {comLinks(semViuva(b.texto))}
             </p>
           );
         }
@@ -90,7 +109,7 @@ function Corpo({ blocos }: { blocos: Bloco[] }) {
                     {j + 1}.
                   </span>
                 )}
-                <span className="[text-wrap:pretty]">{semViuva(item)}</span>
+                <span className="[text-wrap:pretty]">{comLinks(semViuva(item))}</span>
               </li>
             ))}
           </Lista>
@@ -113,6 +132,7 @@ export default async function Artigo({ params }: Props) {
     .map((s) => tratamentoPorSlug(s))
     .filter((t): t is NonNullable<typeof t> => Boolean(t));
   const leituras = relacionados(artigo);
+  const modificado = dataGit([`content/artigos/${artigo.slug}.md`], DATA_PUBLICACAO);
 
   return (
     <>
@@ -123,6 +143,7 @@ export default async function Artigo({ params }: Props) {
             descricao: artigo.metaDescription,
             url,
             data: DATA_PUBLICACAO,
+            modificado,
             palavraChave: artigo.keyword,
           }),
           schemaBreadcrumb([
@@ -165,10 +186,16 @@ export default async function Artigo({ params }: Props) {
             <h1 className="mt-3 text-h2 sm:text-h2-lg font-bold text-ink">{artigo.title}</h1>
             <div className="mt-6 flex flex-col gap-1 border-l-2 border-magenta pl-4 text-legend sm:text-legend-lg text-ink-muted">
               <p>
-                <span className="font-semibold text-ink">Autoria:</span> {artigo.author}
+                <span className="font-semibold text-ink">Autoria:</span> {artigo.author} · {site.cro}
               </p>
               <p>
                 {rotulos.publicado} <time dateTime={DATA_PUBLICACAO}>{dataPorExtenso(DATA_PUBLICACAO)}</time>
+                {modificado !== DATA_PUBLICACAO && (
+                  <>
+                    {' '}
+                    · Atualizado em <time dateTime={modificado}>{dataPorExtenso(modificado)}</time>
+                  </>
+                )}
               </p>
             </div>
           </header>
@@ -183,6 +210,11 @@ export default async function Artigo({ params }: Props) {
               {rotulos.proximoPasso}
             </h2>
             <p className="mt-3 text-body sm:text-body-lg text-ink">{semViuva(artigo.proximoPasso)}</p>
+            {/* Referencia local fixa (auditoria SEO, nov/2026): o texto aprovado
+                dos artigos nao cita a cidade. */}
+            <p className="mt-3 text-legend sm:text-legend-lg text-ink-muted">
+              {site.nome} · {site.enderecoCurto}
+            </p>
             <WhatsAppButton
               origem={`artigo-${artigo.slug}`}
               mensagem={mensagemArtigo(artigo.title)}

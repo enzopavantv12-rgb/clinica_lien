@@ -1311,3 +1311,45 @@ O hero, o menu, a Sedação e o CTA final continuam como estavam. Assim o magent
 
 - **Home no celular:** o que resta é o LCP simulado (~2,8–3,0s em 4G lento). Com rede real limitada (throttling devtools), o LCP medido é 1,8s, com nota 96.
 - **Limite:** o teto vem do JS fixo do framework (React + Next, ~100 KB comprimidos) e da foto do hero.
+
+---
+
+## Auditoria SEO completa (skill claude-seo, nov/2026)
+
+Auditoria nos 4 pilares (técnico, on-page, off-page e local), com especialistas de schema, IA/GEO e agentes. O relatório completo está em `seo/lienreabilitacao.com.br-audit/`: `FULL-AUDIT-REPORT.md`, `ACTION-PLAN.md`, `audit-data.json` e `findings/`. A nota de saúde SEO estimada sobe de ~74 para ~80 com o que foi feito no código. O resto depende de conteúdo novo e de ações da clínica.
+
+**Feito no código**
+- **Técnico:**
+  - Headers de segurança e redirect 301 de `www` para o domínio raiz, em `next.config.mjs`. Conferir depois do deploy na Hostinger.
+  - Redirect 301 de `clinica-lien.vercel.app` para o domínio oficial (`vercel.json`).
+  - Robots.txt em grupos, com os bloqueios repetidos em cada um.
+  - Sitemap com `lastmod` real tirado do git (`src/lib/dataGit.ts`).
+  - Página 404 (`app/not-found.tsx`) com noindex e sem canonical.
+  - `public/favicon.ico`.
+- **Schema:**
+  - `WebSite` novo.
+  - No bloco da clínica: `geo` (OpenStreetMap, ainda a confirmar), foto real, `logo` como ImageObject, `hasOfferCatalog` com os 10 tratamentos sem preço, `employee` com os 6 CROs e `founder` apontando para o `@id` da Dra. Natália.
+  - Person da Dra. Natália: `image` e `hasCredential`.
+  - `Article`: `image`, autor com url e CRO, `dateModified` real e `isPartOf`.
+- **On-page:**
+  - `public/og-image.jpg` (1200×630), antes dava 404.
+  - Títulos e metas dos artigos e páginas ajustados para até 60 e 160 caracteres.
+  - Links internos no corpo dos artigos com a sintaxe `[termo](/slug/)` nos `.md`, sem mudar o texto aprovado.
+  - "Leia também" em rodízio.
+  - CRO, "Atualizado em" e endereço na autoria dos artigos.
+- **GEO:**
+  - `llms.txt` refeito: fatos-chave, links por tratamento, Método em 4 etapas, equipe com CRO e agendamento.
+  - `llms-full.txt` com o texto integral dos 14 artigos.
+  - O verificador deixou a seção de artigos do `llms-full` fora da busca de vocabulário da home e passou a esperar 4 blocos de JSON-LD.
+- **Content-Signal:** testado no robots.txt e removido, porque o Lighthouse o trata como diretiva desconhecida e a nota de SEO cairia para 92.
+
+**Lighthouse (local):** Acessibilidade, Práticas recomendadas e SEO em 100 nas 5 páginas, no celular e no desktop.
+
+**Pendente com a clínica:** a lista completa está no `ACTION-PLAN.md`.
+- Search Console.
+- Google Business Profile e o link do perfil.
+- Confirmar `geo`, sala e telefone.
+- Rotina de avaliações.
+- Páginas por serviço e aprofundamento dos artigos.
+- Citações e links fora do site.
+- Revisão dos termos com o CRO-MG.

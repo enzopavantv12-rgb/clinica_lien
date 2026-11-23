@@ -3,7 +3,7 @@
   "numero": 13,
   "slug": "hormonios-saude-gengival-bh",
   "title": "Hormônios e saúde gengival: por que a gengiva pode mudar em diferentes fases da vida",
-  "metaTitle": "Hormônios e Saúde Gengival: relação com ciclo, gravidez e menopausa | Lien",
+  "metaTitle": "Hormônios e Gengiva: ciclo, gravidez e menopausa | Lien",
   "metaDescription": "Entenda como mudanças hormonais podem modificar a resposta da gengiva durante ciclo menstrual, gravidez e menopausa e quando procurar cuidado periodontal.",
   "keyword": "hormônios saúde gengival Belo Horizonte",
   "author": "Dra. Natália Simões - Especialista em Implantodontia e Prótese Dentária | Aperfeiçoamento em Periodontia",
@@ -19,7 +19,7 @@ Algumas mulheres percebem mudanças na gengiva em fases de maior oscilação hor
 
 #### Ciclo menstrual
 
-Em algumas pessoas, a gengiva pode ficar mais sensível ou apresentar maior tendência ao sangramento em determinados momentos do ciclo. Isso não significa que os hormônios “criem” doença periodontal sozinhos: a presença de inflamação local continua sendo central.
+Em algumas pessoas, a gengiva pode ficar mais sensível ou apresentar maior tendência ao [sangramento](/sangramento-gengiva-belo-horizonte/) em determinados momentos do ciclo. Isso não significa que os hormônios “criem” [doença periodontal](/doenca-periodontal-belo-horizonte/) sozinhos: a presença de inflamação local continua sendo central.
 
 #### Gravidez
 

@@ -40,4 +40,4 @@ A investigação inclui história dos sintomas, exame dos músculos e articulaç
 
 #### Quais tratamentos podem fazer parte?
 
-Dependendo do diagnóstico, podem ser consideradas medidas de autocuidado, fisioterapia, manejo medicamentoso, placas oclusais, viscossuplementação em indicações específicas e outros recursos. Procedimentos invasivos ou irreversíveis exigem indicação criteriosa. Quando há perda dentária ou desgaste importante concomitante, a reabilitação oral pode ser planejada para função e estrutura - não como “cura” genérica da DTM.
+Dependendo do diagnóstico, podem ser consideradas medidas de autocuidado, fisioterapia, manejo medicamentoso, placas oclusais, viscossuplementação em indicações específicas e outros recursos. Procedimentos invasivos ou irreversíveis exigem indicação criteriosa. Quando há perda dentária ou desgaste importante concomitante, a [reabilitação oral](/reabilitacao-oral-belo-horizonte/) pode ser planejada para função e estrutura - não como “cura” genérica da DTM.

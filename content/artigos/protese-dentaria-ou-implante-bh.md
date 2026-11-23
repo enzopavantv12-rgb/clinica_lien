@@ -16,7 +16,7 @@
 }
 ---
 
-Quando um dente é perdido, “implante ou prótese?” é uma das dúvidas mais comuns. Não existe uma resposta única: a melhor solução depende da quantidade de dentes ausentes, condição dos dentes vizinhos, volume ósseo, saúde gengival, mordida, hábitos e expectativas.
+Quando um dente é perdido, “[implante](/implante-dentario-belo-horizonte/) ou prótese?” é uma das dúvidas mais comuns. Não existe uma resposta única: a melhor solução depende da quantidade de dentes ausentes, condição dos dentes vizinhos, volume ósseo, saúde gengival, mordida, hábitos e expectativas.
 
 #### Quais são as principais opções?
 

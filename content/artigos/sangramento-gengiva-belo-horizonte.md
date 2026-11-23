@@ -3,7 +3,7 @@
   "numero": 11,
   "slug": "sangramento-gengiva-belo-horizonte",
   "title": "Gengiva que sangra: quando é sinal de alerta?",
-  "metaTitle": "Gengiva Sangrando em Belo Horizonte: quando se preocupar? | Lien",
+  "metaTitle": "Gengiva Sangrando em BH: quando se preocupar? | Lien",
   "metaDescription": "Entenda por que a gengiva pode sangrar, quando o sintoma sugere inflamação e por que sangramento recorrente merece investigação periodontal.",
   "keyword": "gengiva sangrando Belo Horizonte",
   "author": "Dra. Natália Simões - Especialista em Implantodontia e Prótese Dentária | Aperfeiçoamento em Periodontia",

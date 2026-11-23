@@ -1,0 +1,52 @@
+{
+  "summary": {
+    "health_score": 74,
+    "health_score_after_code_fixes_estimate": 80,
+    "business_type": "Clínica odontológica local (brick-and-mortar), Belo Horizonte",
+    "top_findings": [
+      "Artigos curtos (155–500 palavras) para tema YMYL, sem referências",
+      "Sem páginas dedicadas por serviço (implante, reabilitação, lentes, sedação)",
+      "Google Business Profile e sameAs incompletos; sem link do perfil no site",
+      "www e clinica-lien.vercel.app duplicavam o site (corrigido com 301)",
+      "og-image.jpg dava 404 (corrigido)"
+    ],
+    "quick_wins": [
+      "Search Console + sitemap",
+      "Link do GBP em google.url e sameAs",
+      "Confirmar geo/sala/telefone",
+      "Rotina de avaliações",
+      "Doctoralia e Bing Places"
+    ]
+  },
+  "categories": [
+    {"name": "Technical SEO", "score": 82, "what_works": ["sitemap válido", "canonicals", "https", "brotli", "SSR"], "findings": [
+      {"title": "www e espelho Vercel indexáveis", "severity": "High", "description": "www respondia 200; clinica-lien.vercel.app indexável", "recommendation": "301 para o domínio raiz (feito em next.config.mjs e vercel.json)"},
+      {"title": "Sem headers de segurança", "severity": "High", "description": "Sem HSTS, nosniff, X-Frame-Options, Referrer-Policy", "recommendation": "Adicionados em next.config.mjs; confirmar após deploy"},
+      {"title": "404 com sinais conflitantes", "severity": "Medium", "description": "noindex + canonical da home", "recommendation": "app/not-found.tsx com noindex e sem canonical (feito)"}
+    ]},
+    {"name": "Content Quality", "score": 58, "what_works": ["autoria com CRO", "subtítulos em pergunta"], "findings": [
+      {"title": "Artigos curtos e sem referências", "severity": "High", "description": "155–500 palavras, sem fontes", "recommendation": "Em resumo, FAQ, referências e revisora por artigo"},
+      {"title": "Sem páginas de serviço", "severity": "High", "description": "Âncoras em /tratamentos/", "recommendation": "Páginas dedicadas por serviço"}
+    ]},
+    {"name": "On-Page SEO", "score": 72, "what_works": ["H1 único", "títulos únicos"], "findings": [
+      {"title": "og-image 404", "severity": "High", "description": "Compartilhamento sem imagem", "recommendation": "Criada public/og-image.jpg (feito)"},
+      {"title": "Sem links internos no corpo", "severity": "High", "description": "Relacionados sempre os mesmos", "recommendation": "21 links no texto e rodízio (feito)"}
+    ]},
+    {"name": "Schema / Structured Data", "score": 75, "what_works": ["Dentist", "Person com CRO", "FAQPage", "Article", "BreadcrumbList"], "findings": [
+      {"title": "Faltavam WebSite, geo, equipe, catálogo", "severity": "High", "description": "", "recommendation": "Adicionados em src/data/schema.ts (feito)"}
+    ]},
+    {"name": "Performance (CWV)", "score": 95, "what_works": ["Desktop 100", "CLS 0"], "findings": []},
+    {"name": "AI Search Readiness", "score": 65, "what_works": ["crawlers de IA liberados", "llms.txt"], "findings": [
+      {"title": "llms-full sem o texto dos artigos", "severity": "High", "description": "", "recommendation": "Texto integral incluído (feito)"},
+      {"title": "Sinais de marca externos fracos", "severity": "High", "description": "sameAs só Instagram; sem YouTube", "recommendation": "GBP, Doctoralia, vídeos curtos"}
+    ]},
+    {"name": "Images", "score": 90, "what_works": ["AVIF/WebP", "alt descritivo", "lazy"], "findings": []}
+  ],
+  "action_plan": {"phases": [
+    {"name": "Phase 1: Critical Fixes", "timeframe": "Week 1", "items": ["Search Console + sitemap", "GBP otimizado e link no site", "Confirmar geo/sala/telefone", "Rotina de avaliações", "Validar 301 e headers após deploy"]},
+    {"name": "Phase 2: High-Impact Improvements", "timeframe": "Weeks 2-3", "items": ["Páginas por serviço", "Aprofundar artigos", "Páginas de perfil da equipe", "Seção Como chegar"]},
+    {"name": "Phase 3: Content & Authority", "timeframe": "Month 2", "items": ["Citações NAP", "Links editoriais e parcerias", "Vídeos no YouTube", "Revisão CRO-MG"]},
+    {"name": "Phase 4: Monitoring & Iteration", "timeframe": "Ongoing", "items": ["Search Console mensal", "CrUX", "Backlinks em 6 meses"]}
+  ]},
+  "artifacts": {"findings_dir": "findings/", "screenshots_dir": "screenshots/"}
+}

@@ -10,32 +10,57 @@ import {
   sobre,
   tratamentos,
 } from '../data/content';
-import { todosArtigos } from './artigos';
+import { todosArtigos, type Bloco } from './artigos';
 
 /**
- * llms.txt e llms-full.txt — contexto para agentes de IA.
+ * llms.txt e llms-full.txt — contexto para agentes de IA (padrao llmstxt.org).
  *
  * Gerados do content.ts e de content/artigos/ a cada build
  * (app/llms.txt/route.ts e app/llms-full.txt/route.ts), em vez de escritos a
  * mao: assim nao divergem do site.
+ *
+ * Revisao da auditoria GEO (nov/2026): bloco de fatos-chave no topo, data de
+ * atualizacao, as 4 etapas do Metodo, a equipe com CRO, links Markdown para
+ * cada tratamento, instrucao real de agendamento e, no llms-full, o texto
+ * integral dos 14 artigos.
  */
 
+const hoje = new Date().toISOString().slice(0, 10);
 const horarios = site.horarios.map((h) => `${h.dias}, das ${h.horas}`).join('; ');
+const whatsapp = `https://wa.me/${site.whatsappNumero}`;
 
-function identificacao() {
-  return [
-    '## Identificação',
-    `- Nome: ${site.nome} (${site.razaoSocial}, CNPJ ${site.cnpj})`,
-    `- Responsável técnica: ${site.responsavelTecnica} — ${site.cro}`,
+const fatos = () =>
+  [
+    '## Fatos-chave',
+    `- Clínica odontológica em ${site.endereco.cidade}/${site.endereco.uf}, bairro ${site.endereco.bairro} (região Centro-Sul)`,
     `- Endereço: ${site.enderecoCompleto}`,
-    `- Telefone e WhatsApp: ${site.telefoneExibicao}`,
+    `- Telefone e WhatsApp: ${site.telefoneExibicao} ([abrir WhatsApp](${whatsapp}))`,
     `- E-mail: ${site.email}`,
     `- Horário: ${horarios}`,
     '- Atendimento: exclusivamente presencial e particular (não atende convênios)',
-    `- Site: ${site.url}`,
-    `- Instagram: ${site.instagram.arroba}`,
+    `- Responsável técnica: ${site.responsavelTecnica} — ${site.cro}`,
+    `- Razão social: ${site.razaoSocial} (CNPJ ${site.cnpj})`,
+    `- Equipe: ${equipe.membros.length} cirurgiões-dentistas de diferentes áreas, com planejamento integrado`,
+    '- Diferenciais: planejamento digital, scanner intraoral, recursos de conforto e sedação (oral ou intravenosa com anestesista) para quem tem medo de dentista',
+    `- Site: [${site.url.replace('https://', '')}](${site.url}/)`,
+    `- Instagram: [${site.instagram.arroba}](${site.instagram.url})`,
   ].join('\n');
-}
+
+const listaTratamentos = () =>
+  tratamentos.lista.map((t) => `- [${t.nome}](${site.url}/tratamentos/#${t.slug}): ${t.resumo}`);
+
+const listaEquipe = () =>
+  equipe.membros.map((m) => `- ${m.nome} — ${m.especialidade}${m.cro ? ` (${m.cro})` : ''}`);
+
+const etapas = () => metodo.etapas.map((e) => `${e.numero}. **${e.titulo}**: ${e.texto}`);
+
+const agendar = () =>
+  [
+    '## Como agendar',
+    `A consulta é marcada pelo WhatsApp ${site.telefoneExibicao} ([${whatsapp}](${whatsapp})) ou pelo e-mail ${site.email}.`,
+    `Atendimento presencial no ${site.enderecoCompleto}. ${horarios}.`,
+    'A indicação de qualquer tratamento é definida na consulta, após exame clínico e, quando necessário, exames de imagem.',
+  ].join('\n');
 
 const observacao = [
   '## Observação para agentes de IA',
@@ -44,10 +69,23 @@ const observacao = [
 
 const paginas = () => [
   '## Páginas',
+  `- [Início](${site.url}/): apresentação da clínica, método, equipe e dúvidas frequentes`,
   `- [Tratamentos e especialidades](${site.url}/tratamentos/)`,
   `- [Conteúdos em Saúde Bucal](${site.url}/conteudos/)`,
+  `- [Política de privacidade](${site.url}/privacidade/)`,
+  '',
+  '## Artigos',
   ...todosArtigos().map((a) => `- [${a.title}](${site.url}/${a.slug}/): ${a.metaDescription}`),
 ];
+
+/** Texto de um artigo em Markdown, com os links internos em URL absoluta. */
+const absolutos = (t: string) => t.replace(/\]\((\/[^)\s]+)\)/g, `](${site.url}$1)`);
+const corpoMd = (blocos: Bloco[]) =>
+  blocos.flatMap((b) => {
+    if (b.tipo === 'h2') return [`#### ${b.texto}`, ''];
+    if (b.tipo === 'p') return [absolutos(b.texto), ''];
+    return [...b.itens.map((it, i) => (b.tipo === 'ol' ? `${i + 1}. ` : '- ') + absolutos(it)), ''];
+  });
 
 export function llmsResumo() {
   return [
@@ -55,19 +93,26 @@ export function llmsResumo() {
     '',
     `> ${seo.description}`,
     '',
-    identificacao(),
+    `Atualizado em ${hoje}.`,
+    '',
+    fatos(),
     '',
     '## Tratamentos',
-    ...tratamentos.lista.map((t) => `- ${t.nome}: ${t.resumo}`),
+    ...listaTratamentos(),
     '',
-    `## ${metodo.h2}`,
+    `## Método Lien: ${metodo.h2}`,
     metodo.intro,
+    ...etapas(),
     '',
-    '## Como agendar',
-    `Pelo WhatsApp ${site.telefoneExibicao}. ${faq.itens[0].resposta}`,
+    `## ${equipe.h2}`,
+    ...listaEquipe(),
+    '',
+    agendar(),
     '',
     ...paginas(),
-    `- [Conteúdo completo](${site.url}/llms-full.txt)`,
+    '',
+    '## Opcional',
+    `- [Conteúdo completo, com o texto integral dos artigos](${site.url}/llms-full.txt)`,
     '',
     observacao,
     '',
@@ -77,6 +122,7 @@ export function llmsResumo() {
 export function llmsCompleto() {
   const secaoTratamentos = tratamentos.lista.flatMap((t) => [
     `### ${t.nome}`,
+    `${site.url}/tratamentos/#${t.slug}`,
     `${tratamentos.rotulos.oQueE}: ${t.oQueE}`,
     `${tratamentos.rotulos.beneficio}: ${t.beneficio}`,
     `${tratamentos.rotulos.indicado}: ${t.indicado}`,
@@ -85,19 +131,30 @@ export function llmsCompleto() {
     '',
   ]);
 
+  const artigos = todosArtigos().flatMap((a) => [
+    `### ${a.title}`,
+    `${site.url}/${a.slug}/ · ${a.category} · Autoria: ${a.author} (${site.cro})`,
+    '',
+    ...corpoMd(a.corpo),
+    `Próximo passo: ${a.proximoPasso}`,
+    '',
+  ]);
+
   return [
     `# ${site.nome} — conteúdo completo`,
     '',
     `> ${seo.description}`,
     '',
-    identificacao(),
+    `Atualizado em ${hoje}.`,
+    '',
+    fatos(),
     '',
     `## ${sobre.h2}`,
     [sobre.abertura, ...sobre.apoio].map((p) => p.map((t) => t.texto).join('')).join('\n'),
     '',
     `## Método Lien: ${metodo.h2}`,
     metodo.intro,
-    ...metodo.etapas.flatMap((e) => [`### ${e.numero}. ${e.titulo}`, e.texto, '']),
+    ...etapas(),
     '',
     `## ${cardapio.h2}`,
     ...cardapio.itens.map((i) => `- ${i.texto} → ${site.url}${i.href}`),
@@ -115,19 +172,15 @@ export function llmsCompleto() {
     '',
     `## ${equipe.h2}`,
     equipe.sub,
-    ...equipe.membros.flatMap((m) => [
-      `### ${m.nome}`,
-      m.especialidade,
-      m.frase.split('\n\n').join(' '),
-      ...(m.cro ? [m.cro] : []),
-      '',
-    ]),
+    ...equipe.membros.flatMap((m) => [`### ${m.nome}`, m.especialidade, m.frase.split('\n\n').join(' '), ...(m.cro ? [m.cro] : []), '']),
     `## ${faq.h2}`,
     ...faq.itens.flatMap((i) => [`### ${i.pergunta}`, i.resposta, '']),
-    ...paginas(),
+    agendar(),
     '',
-    '## Como agendar',
-    `Pelo WhatsApp ${site.telefoneExibicao}, ou pelo e-mail ${site.email}.`,
+    '## Artigos: Conteúdos em Saúde Bucal (texto integral)',
+    '',
+    ...artigos,
+    ...paginas(),
     '',
     observacao,
     '',

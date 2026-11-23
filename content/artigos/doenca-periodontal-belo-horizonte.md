@@ -3,7 +3,7 @@
   "numero": 12,
   "slug": "doenca-periodontal-belo-horizonte",
   "title": "Doença periodontal: por que ela pode avançar sem dor",
-  "metaTitle": "Doença Periodontal em Belo Horizonte: sintomas e tratamento | Lien",
+  "metaTitle": "Doença Periodontal em BH: sintomas e tratamento | Lien",
   "metaDescription": "Entenda o que é periodontite, por que pode progredir com poucos sintomas e como diagnóstico e manutenção ajudam a preservar os dentes.",
   "keyword": "doença periodontal Belo Horizonte",
   "author": "Dra. Natália Simões - Especialista em Implantodontia e Prótese Dentária | Aperfeiçoamento em Periodontia",
@@ -15,7 +15,7 @@
 }
 ---
 
-A periodontite pode avançar com poucos sintomas dolorosos. Por isso, sangramento, retração gengival, mobilidade dentária e alterações radiográficas não devem ser ignorados. O diagnóstico precoce ajuda a controlar a doença e preservar suporte dentário.
+A periodontite pode avançar com poucos sintomas dolorosos. Por isso, [sangramento](/sangramento-gengiva-belo-horizonte/), retração gengival, mobilidade dentária e alterações radiográficas não devem ser ignorados. O diagnóstico precoce ajuda a controlar a doença e preservar suporte dentário.
 
 #### O que é periodontite?
 

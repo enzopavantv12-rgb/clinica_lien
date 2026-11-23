@@ -61,10 +61,9 @@ export const site = {
 export const seo = {
   title: 'Implantes Dentários e Reabilitação Oral em BH | Lien — Cruzeiro',
   description:
-    'Implantodontia digital, reabilitação oral e próteses com planejamento individual e atendimento acolhedor, inclusive para quem tem medo de dentista. Cruzeiro, Belo Horizonte.',
+    'Clínica odontológica no Cruzeiro, em BH: implantes com planejamento digital, reabilitação oral, lentes de contato e acolhimento para quem tem medo de dentista.',
   canonical: `${site.url}/`,
-  // [PENDENTE: og-image.jpg 1200x630 com foto real da clinica — o arquivo ainda
-  // nao existe, entao o compartilhamento em redes sai sem imagem]
+  // public/og-image.jpg (1200x630): foto do hero com a logo (nov/2026).
   ogImage: `${site.url}/og-image.jpg`,
   ogImageAlt: 'Lien Reabilitação Oral — implantes e reabilitação oral no Cruzeiro, Belo Horizonte',
   themeColor: '#9C1781',
@@ -414,9 +413,9 @@ export const tratamentos = {
   cta: CTA_PRINCIPAL,
   pagina: {
     h1: 'Tratamentos e especialidades',
-    title: 'Tratamentos e especialidades em Belo Horizonte | Lien',
+    title: 'Tratamentos Odontológicos no Cruzeiro, BH | Lien',
     description:
-      'Implantodontia digital, reabilitação oral, facetas e próteses, periodontia, harmonização orofacial, DTM, cirurgia, ortodontia, endodontia e clínica geral na Lien, no Cruzeiro, em Belo Horizonte.',
+      'Implantes, reabilitação oral, facetas e lentes, periodontia, DTM, cirurgia, ortodontia, canal e clínica geral, com equipe multidisciplinar no Cruzeiro, em BH.',
   },
   rotulos: {
     oQueE: 'O que é',

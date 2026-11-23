@@ -15,7 +15,7 @@
 }
 ---
 
-Quem perdeu todos ou quase todos os dentes pode conviver com insegurança para mastigar, falar ou sorrir. A prótese protocolo é uma das alternativas para reabilitar uma arcada com uma prótese fixa apoiada em implantes.
+Quem perdeu todos ou quase todos os dentes pode conviver com insegurança para mastigar, falar ou sorrir. A prótese protocolo é uma das alternativas para reabilitar uma arcada com uma prótese fixa apoiada em [implantes](/implante-dentario-belo-horizonte/).
 
 #### O que é prótese protocolo?
 

@@ -92,7 +92,10 @@ export function relacionados(artigo: Artigo, quantos = 3): Artigo[] {
   const proximos = outros
     .map((a) => ({ a, p: pontos(a) }))
     .filter((x) => x.p > 0)
-    .sort((x, y) => y.p - x.p || x.a.numero - y.a.numero)
+    // Desempate em rodizio (a partir do numero do artigo atual), e nao sempre
+    // pelos de numero menor: distribui os links internos entre os 14 artigos
+    // (auditoria SEO, nov/2026).
+    .sort((x, y) => y.p - x.p || ((x.a.numero - artigo.numero + 100) % 100) - ((y.a.numero - artigo.numero + 100) % 100))
     .slice(0, quantos)
     .map((x) => x.a);
   // Artigo sozinho na categoria (ex.: semaglutida): completa com os de

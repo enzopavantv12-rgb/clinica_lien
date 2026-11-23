@@ -3,7 +3,7 @@
   "numero": 4,
   "slug": "reabilitacao-oral-belo-horizonte",
   "title": "Reabilitação oral completa: quando ela pode ser necessária?",
-  "metaTitle": "Reabilitação Oral em Belo Horizonte: quando é indicada? | Lien",
+  "metaTitle": "Reabilitação Oral em BH: quando é indicada? | Lien",
   "metaDescription": "Entenda o que é reabilitação oral, quais sinais podem indicar necessidade de planejamento integrado e como funciona o processo na Lien.",
   "keyword": "reabilitação oral Belo Horizonte",
   "author": "Dra. Natália Simões - Especialista em Implantodontia e Prótese Dentária | Aperfeiçoamento em Periodontia",
@@ -27,7 +27,7 @@ Reabilitação oral não é um procedimento isolado. É uma forma de organizar o
 - Desgaste dentário generalizado.
 - Próteses antigas ou desconfortáveis.
 - Dificuldade para mastigar.
-- Problemas gengivais ou perda óssea associados a outras necessidades.
+- Problemas gengivais ou [perda óssea](/perda-ossea-dentaria-implante-bh/) associados a outras necessidades.
 - Mudanças significativas na mordida ou no aspecto do sorriso.
 
 #### Como funciona?
@@ -36,7 +36,7 @@ A consulta começa com escuta, exame clínico e levantamento de prioridades. Exa
 
 #### Quanto tempo leva?
 
-O tempo varia amplamente. Casos simples podem ser resolvidos em poucas etapas; casos com implantes, enxertos, ortodontia ou várias especialidades podem exigir meses. O cronograma só deve ser definido depois do diagnóstico.
+O tempo varia amplamente. Casos simples podem ser resolvidos em poucas etapas; casos com implantes, [enxertos](/enxerto-osseo-dentario-bh/), ortodontia ou várias especialidades podem exigir meses. O cronograma só deve ser definido depois do diagnóstico.
 
 #### Por que integração importa?
 

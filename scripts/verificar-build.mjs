@@ -182,7 +182,8 @@ try {
 } catch (erro) {
   falhas.push(`ld+json invalido — ${erro.message}`);
 }
-checar('home com 3 blocos ld+json validos', blocos.length === 3 && schemas.length === 3, `achou ${blocos.length}`);
+// WebSite + Dentist + Person (layout) e FAQPage (home); WebSite entrou em nov/2026.
+checar('home com 4 blocos ld+json validos', blocos.length === 4 && schemas.length === 4, `achou ${blocos.length}`);
 const tipos = schemas.flatMap((s) => [s['@type']].flat());
 for (const t of ['Dentist', 'LocalBusiness', 'FAQPage', 'Person']) checar(`schema ${t}`, tipos.includes(t));
 const faqSchema = schemas.find((s) => [s['@type']].flat().includes('FAQPage'));
@@ -265,7 +266,10 @@ const fontesInternas = {
 // No llms, as linhas de artigo sao o texto aprovado; o resto segue a regra da home.
 const linhaDeArtigo = (l) => ARTIGOS.some((a) => l.includes(`/${a.slug}/`));
 fontes['llms.txt'] = llms.split('\n').filter((l) => !linhaDeArtigo(l)).join('\n');
-fontes['llms-full.txt'] = llmsCompleto.split('\n').filter((l) => !linhaDeArtigo(l)).join('\n');
+// O llms-full traz o texto integral dos artigos (nov/2026), que segue a regra
+// das paginas internas: sai da busca de vocabulario da home.
+const semArtigos = llmsCompleto.replace(/## Artigos: Conteúdos em Saúde Bucal \(texto integral\)[\s\S]*?(?=\n## Páginas)/, '');
+fontes['llms-full.txt'] = semArtigos.split('\n').filter((l) => !linhaDeArtigo(l)).join('\n');
 for (const [regex, rotulo] of PROIBIDOS) {
   const onde = Object.entries(fontes)
     .filter(([, texto]) => regex.test(texto))

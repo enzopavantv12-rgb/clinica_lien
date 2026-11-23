@@ -4,7 +4,7 @@
   "slug": "semaglutida-ozempic-wegovy-saude-bucal-bh",
   "title": "Semaglutida, Ozempic e Wegovy: o que já se sabe sobre saúde bucal",
   "metaTitle": "Semaglutida, Ozempic e Saúde Bucal: o que já se sabe | Lien",
-  "metaDescription": "Boca seca, náuseas, refluxo e vômitos podem repercutir na saúde bucal de pessoas em uso de agonistas de GLP-1. Veja cuidados práticos e o que a evidência ainda não permite afirmar.",
+  "metaDescription": "Boca seca, refluxo e vômitos podem afetar dentes e gengiva de quem usa semaglutida (Ozempic, Wegovy). Veja cuidados práticos e o que a evidência ainda não diz.",
   "keyword": "semaglutida saúde bucal Belo Horizonte",
   "author": "Dra. Natália Simões - Especialista em Implantodontia e Prótese Dentária | Aperfeiçoamento em Periodontia",
   "category": "Prevenção e saúde bucal",

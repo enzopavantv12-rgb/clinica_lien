@@ -19,7 +19,7 @@ Dentes mais curtos, bordas afinadas, sensibilidade e mudança progressiva do sor
 
 #### Principais causas
 
-Bruxismo e apertamento podem contribuir para desgaste mecânico. Ácidos de origem alimentar ou gástrica podem provocar erosão. Escovação traumática e outros hábitos também podem participar. Muitas vezes, mais de um fator está presente.
+[Bruxismo](/dor-mastigar-estalos-dtm-bh/) e apertamento podem contribuir para desgaste mecânico. Ácidos de origem alimentar ou gástrica podem provocar erosão. Escovação traumática e outros hábitos também podem participar. Muitas vezes, mais de um fator está presente.
 
 #### Sinais que merecem investigação
 
@@ -31,7 +31,7 @@ Bruxismo e apertamento podem contribuir para desgaste mecânico. Ácidos de orig
 
 #### Como é feita a recuperação?
 
-Casos leves podem ser manejados com medidas preventivas e restaurações conservadoras. Desgastes moderados podem exigir restaurações adesivas, onlays, coroas ou facetas, conforme a estrutura remanescente. Casos generalizados podem precisar de planejamento de reabilitação oral para reorganizar função e estética.
+Casos leves podem ser manejados com medidas preventivas e restaurações conservadoras. Desgastes moderados podem exigir restaurações adesivas, onlays, coroas ou [facetas](/facetas-lentes-contato-dental-bh/), conforme a estrutura remanescente. Casos generalizados podem precisar de planejamento de [reabilitação oral](/reabilitacao-oral-belo-horizonte/) para reorganizar função e estética.
 
 #### E o bruxismo?
 

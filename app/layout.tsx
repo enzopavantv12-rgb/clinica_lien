@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { preload } from 'react-dom';
 import { seo, site } from '@/data/content';
-import { schemaDentist, schemaPerson } from '@/data/schema';
+import { schemaDentist, schemaPerson, schemaWebSite } from '@/data/schema';
 import { JsonLd } from '@/components/ui/JsonLd';
 import './globals.css';
 
@@ -87,7 +87,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         {/* Dados da clinica, validos em qualquer pagina. O FAQPage fica so na
             home (app/page.tsx): o Google exige que schema de FAQ corresponda
             a perguntas visiveis na propria pagina. */}
-        <JsonLd schemas={[schemaDentist, schemaPerson]} />
+        <JsonLd schemas={[schemaWebSite, schemaDentist, schemaPerson]} />
         {children}
       </body>
     </html>

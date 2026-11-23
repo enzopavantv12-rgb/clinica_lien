@@ -1,34 +1,33 @@
 import { site } from '@/data/content';
-import { todosArtigos } from '@/lib/artigos';
+import { DATA_PUBLICACAO, todosArtigos } from '@/lib/artigos';
+import { dataGit } from '@/lib/dataGit';
 
 /**
- * sitemap.xml, gerado no build: dominio de `site.url` e `lastmod` = data do
- * build. Substitui o arquivo estatico e o script que atualizava o lastmod.
+ * sitemap.xml, gerado no build a partir de `site.url`.
  *
- * URLs sempre com barra final: next.config.mjs usa trailingSlash: true, e a
- * URL sem barra responde 301.
- *
- * Paginas: home, /tratamentos/, /conteudos/, os 14 artigos (URLs do PDF, na
- * raiz) e a privacidade.
+ * `lastmod` real de cada pagina (auditoria SEO, nov/2026): a data do ultimo
+ * commit que mexeu nos arquivos dela (git log). Sem git no build (ou com clone
+ * raso), cai na data de publicacao dos artigos ou na data do build. Sem
+ * changefreq/priority: o Google ignora os dois.
  */
 export const dynamic = 'force-static';
 
+const hoje = new Date().toISOString().slice(0, 10);
+
 const paginas = [
-  { caminho: '/', frequencia: 'weekly', prioridade: '1.0' },
-  { caminho: '/tratamentos/', frequencia: 'monthly', prioridade: '0.9' },
-  { caminho: '/conteudos/', frequencia: 'weekly', prioridade: '0.8' },
-  ...todosArtigos().map((a) => ({ caminho: `/${a.slug}/`, frequencia: 'monthly', prioridade: '0.7' })),
-  { caminho: '/privacidade/', frequencia: 'yearly', prioridade: '0.3' },
+  { caminho: '/', lastmod: dataGit(['app/page.tsx', 'src/data/content.ts', 'src/components/sections'], hoje) },
+  { caminho: '/tratamentos/', lastmod: dataGit(['app/tratamentos', 'src/data/content.ts', 'src/components/sections/GradeTratamentos.tsx'], hoje) },
+  { caminho: '/conteudos/', lastmod: dataGit(['app/conteudos', 'content/artigos'], hoje) },
+  ...todosArtigos().map((a) => ({
+    caminho: `/${a.slug}/`,
+    lastmod: dataGit([`content/artigos/${a.slug}.md`], DATA_PUBLICACAO),
+  })),
+  { caminho: '/privacidade/', lastmod: dataGit(['app/privacidade'], hoje) },
 ];
 
 export function GET() {
-  const hoje = new Date().toISOString().slice(0, 10);
   const urls = paginas
-    .map(
-      (p) =>
-        `  <url>\n    <loc>${site.url}${p.caminho}</loc>\n    <lastmod>${hoje}</lastmod>\n` +
-        `    <changefreq>${p.frequencia}</changefreq>\n    <priority>${p.prioridade}</priority>\n  </url>`,
-    )
+    .map((p) => `  <url>\n    <loc>${site.url}${p.caminho}</loc>\n    <lastmod>${p.lastmod}</lastmod>\n  </url>`)
     .join('\n');
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;

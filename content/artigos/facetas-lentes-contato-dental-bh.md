@@ -34,7 +34,7 @@ O termo costuma ser usado para laminados cerâmicos muito finos. Eles podem exig
 
 #### O que deve ser avaliado antes?
 
-Saúde gengival, quantidade de esmalte, posição dos dentes, mordida, hábitos como bruxismo e expectativas estéticas. Muitas vezes, clareamento, ortodontia ou restaurações conservadoras podem alcançar o objetivo com menor intervenção.
+Saúde gengival, quantidade de esmalte, posição dos dentes, mordida, hábitos como [bruxismo](/dor-mastigar-estalos-dtm-bh/) e expectativas estéticas. Muitas vezes, clareamento, ortodontia ou restaurações conservadoras podem alcançar o objetivo com menor intervenção.
 
 #### Quanto duram?
 

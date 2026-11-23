@@ -9,9 +9,8 @@ import { equipe, faq, seo, site, tratamentos } from './content';
  *
  * Atualizado pelo briefing oficial (set/2026):
  * - horario, CEP, Instagram e nome completo da responsavel tecnica corrigidos;
- * - `geo` REMOVIDO ate as coordenadas serem confirmadas. Um placeholder em
- *   latitude/longitude invalida o bloco inteiro — melhor sem o campo.
- *   [PENDENTE: latitude e longitude do Edificio Asteca]
+ * - `geo` (nov/2026): coordenadas do OpenStreetMap para "Avenida do Contorno,
+ *   5351, Cruzeiro" (casa a casa). [PENDENTE: a clinica confirmar no GBP]
  * - `priceRange` REMOVIDO: o briefing proibe qualquer referencia a preco.
  * - sem `aggregateRating`: autoavaliacao em schema proprio contraria a
  *   politica do Google (briefing, secao 7).
@@ -29,6 +28,31 @@ const natalia = equipe.membros[0];
 const cargoNatalia = 'Especialista em Implantodontia e Prótese Dentária; Aperfeiçoamento em Periodontia';
 
 const logo = `${site.url}/marca/logo-rgb.png`;
+const logoImagem = { '@type': 'ImageObject', url: logo, width: 600, height: 302 };
+/** Foto real da clinica (sala com a vista de BH) e a da Dra. Natalia. */
+const fotoClinica = `${site.url}/img/consultorio-vista-1672.webp`;
+const fotoNatalia = `${site.url}/img/equipe-natalia-simoes-640.webp`;
+const idSite = `${site.url}/#website`;
+const idNatalia = `${site.url}/#natalia-simoes`;
+const slug = (nome: string) =>
+  nome
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/^dra?\.\s*/, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+const cro = (texto: string) => ({ '@type': 'PropertyValue', propertyID: 'CRO-MG', value: texto.replace('CRO-MG ', '') });
+
+/** Os 6 profissionais da equipe, com CRO, ligados a clinica. */
+const equipeSchema = equipe.membros.map((m, i) => ({
+  '@type': 'Person',
+  '@id': i === 0 ? idNatalia : `${site.url}/#${slug(m.nome)}`,
+  name: m.nome,
+  jobTitle: i === 0 ? cargoNatalia : m.especialidade,
+  image: `${site.url}${m.foto.src.replace(/\.webp$/, '-640.webp')}`,
+  ...(m.cro ? { identifier: cro(m.cro) } : {}),
+}));
 
 const endereco = {
   '@type': 'PostalAddress',
@@ -42,8 +66,20 @@ const endereco = {
 const servicos = tratamentos.lista.map((t) => ({
   '@type': 'MedicalProcedure',
   name: t.nome,
+  description: t.resumo,
   url: `${site.url}/tratamentos/#${t.slug}`,
 }));
+
+/** WebSite: a entidade do site, publicada pela clinica. */
+export const schemaWebSite = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': idSite,
+  url: `${site.url}/`,
+  name: site.nome,
+  inLanguage: 'pt-BR',
+  publisher: { '@id': idClinica },
+};
 
 export const schemaDentist = {
   '@context': 'https://schema.org',
@@ -55,9 +91,9 @@ export const schemaDentist = {
   url: site.url,
   telephone: site.telefoneE164,
   email: site.email,
-  // [PENDENTE: foto real da clinica — ate la, a logo oficial]
-  image: logo,
-  logo,
+  image: [fotoClinica, logo],
+  logo: logoImagem,
+  geo: { '@type': 'GeoCoordinates', latitude: -19.93936, longitude: -43.92694 },
   address: endereco,
   hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.enderecoMaps)}`,
   openingHoursSpecification: [
@@ -75,13 +111,16 @@ export const schemaDentist = {
     },
   ],
   areaServed: { '@type': 'City', name: 'Belo Horizonte' },
-  medicalSpecialty: 'Dentistry',
+  medicalSpecialty: 'https://schema.org/Dentistry',
   availableService: servicos,
-  founder: {
-    '@type': 'Person',
-    name: site.responsavelTecnica,
-    jobTitle: cargoNatalia,
+  // Catalogo de tratamentos, sem preco (o briefing proibe preco).
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Tratamentos',
+    itemListElement: servicos.map((s) => ({ '@type': 'Offer', itemOffered: s })),
   },
+  founder: { '@id': idNatalia },
+  employee: equipeSchema,
   sameAs: [site.instagram.url, ...(site.tiktok.exibir ? [site.tiktok.url] : [])],
 };
 
@@ -102,22 +141,25 @@ export const schemaFaq = {
 export const schemaPerson = {
   '@context': 'https://schema.org',
   '@type': 'Person',
-  '@id': `${site.url}/#natalia-simoes`,
+  '@id': idNatalia,
   name: site.responsavelTecnica,
+  image: fotoNatalia,
   honorificPrefix: 'Dra.',
   jobTitle: cargoNatalia,
   description: `Fundadora e responsável técnica da ${site.nome}, em Belo Horizonte. ${natalia.frase}`,
-  identifier: {
-    '@type': 'PropertyValue',
-    propertyID: 'CRO-MG',
-    value: site.cro.replace('CRO-MG ', ''),
+  identifier: cro(site.cro),
+  hasCredential: {
+    '@type': 'EducationalOccupationalCredential',
+    credentialCategory: 'Registro profissional',
+    recognizedBy: { '@type': 'Organization', name: 'Conselho Regional de Odontologia de Minas Gerais (CRO-MG)' },
+    identifier: site.cro,
   },
   worksFor: {
     '@type': ['Dentist', 'LocalBusiness', 'MedicalBusiness'],
     '@id': idClinica,
     name: site.nome,
   },
-  url: site.url,
+  url: `${site.url}/#equipe`,
   workLocation: { '@type': 'Place', address: endereco },
   knowsAbout: ['Implantodontia', 'Reabilitação Oral', 'Periodontia'],
   sameAs: [site.instagramDra.url],
@@ -141,17 +183,28 @@ export const schemaArtigo = (a: {
   descricao: string;
   url: string;
   data: string;
+  modificado?: string;
   palavraChave: string;
+  imagem?: string;
 }) => ({
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: a.titulo,
   description: a.descricao,
   datePublished: a.data,
-  dateModified: a.data,
+  dateModified: a.modificado ?? a.data,
   inLanguage: 'pt-BR',
   keywords: a.palavraChave,
+  image: a.imagem ?? `${site.url}/og-image.jpg`,
+  isPartOf: { '@id': idSite },
   mainEntityOfPage: { '@type': 'WebPage', '@id': a.url },
-  author: { '@type': 'Person', '@id': `${site.url}/#natalia-simoes`, name: site.responsavelTecnica, jobTitle: cargoNatalia },
-  publisher: { '@type': ['Dentist', 'LocalBusiness', 'MedicalBusiness'], '@id': idClinica, name: site.nome, logo },
+  author: {
+    '@type': 'Person',
+    '@id': idNatalia,
+    name: site.responsavelTecnica,
+    jobTitle: cargoNatalia,
+    url: `${site.url}/#equipe`,
+    identifier: cro(site.cro),
+  },
+  publisher: { '@type': ['Dentist', 'LocalBusiness', 'MedicalBusiness'], '@id': idClinica, name: site.nome, logo: logoImagem },
 });
