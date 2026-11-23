@@ -30,6 +30,16 @@ const MARCAS = [
   ['LIEN_simbolo_negativo.png', 'simbolo-negativo.png', 480],
 ];
 
+// Logo do menu e do rodape em WebP leve (exibido com ~130px de largura; 320px
+// cobre 2x). O PNG segue para o schema e como fallback.
+for (const [original, saida] of [
+  ['LIEN_logo_rgb.png', 'logo-rgb-320.webp'],
+  ['Logo Lien Branca.png', 'logo-branca-320.webp'],
+]) {
+  const info = await sharp(join(ENTRADA, original)).trim().resize({ width: 320 }).webp({ quality: 90, alphaQuality: 100 }).toFile(join(SAIDA, saida));
+  console.log(`  ok  ${saida.padEnd(22)} ${info.width}x${info.height}  ${(info.size / 1024).toFixed(1)}KB`);
+}
+
 for (const [original, saida, largura] of MARCAS) {
   const info = await sharp(join(ENTRADA, original))
     .trim()

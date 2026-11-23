@@ -10,6 +10,11 @@ const nextConfig = {
   output: 'export',
   // URLs sempre com barra final (/tratamentos/, /<artigo>/).
   trailingSlash: true,
+  experimental: {
+    // CSS embutido no HTML (~13 KB): tira a folha de estilo do caminho
+    // critico, que bloqueava a renderizacao do hero no celular (Lighthouse).
+    inlineCss: true,
+  },
 };
 
 export default nextConfig;

@@ -49,7 +49,7 @@ export default function Conteudos() {
       <main className="bg-cream pb-20 pt-32 sm:pb-24 sm:pt-36">
         <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
           <header className="flex flex-col items-start">
-            <p className="text-tag sm:text-tag-lg font-semibold uppercase tracking-[0.18em] text-teal">{conteudos.tag}</p>
+            <p className="text-tag sm:text-tag-lg font-semibold uppercase tracking-[0.18em] text-[#026A82]">{conteudos.tag}</p>
             <h1 className="mt-3 text-h2 sm:text-h2-lg font-bold text-ink">{pagina.h1}</h1>
             <Simbolo variante="rgb" carregamento="eager" className="mt-5 block h-auto w-24" />
           </header>

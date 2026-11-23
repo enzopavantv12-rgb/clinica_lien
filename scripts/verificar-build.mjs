@@ -44,8 +44,13 @@ const checar = (nome, condicao, detalhe = '') => {
 // Tambem sem comentarios HTML: o React insere `<!-- -->` entre fragmentos de
 // texto adjacentes, e uma frase como "Responsavel tecnica: {nome}" sairia
 // partida. As checagens comparam texto, nao bytes.
+// <style> tambem sai: desde nov/2026 o CSS vem embutido no HTML (inlineCss) e
+// os valores dele (100%, opacity:0 de animacao) nao sao texto lido pelo publico.
 const semScripts = (h) =>
-  h.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<!--[\s\S]*?-->/g, '');
+  h
+    .replace(/<script[\s\S]*?<\/script>/g, '')
+    .replace(/<style[\s\S]*?<\/style>/g, '')
+    .replace(/<!--[\s\S]*?-->/g, '');
 const marcacao = semScripts(html);
 const contar = (texto, regex) => (texto.match(regex) ?? []).length;
 
@@ -90,7 +95,7 @@ checar(
 // em out/2026; se um Short voltar, o embed so pode entrar no clique).
 checar(
   'experiencia: sem embed nem imagem do YouTube no HTML; cap. 01 com video proprio',
-  !/<iframe[^>]*youtube|i\.ytimg\.com/.test(secao('experiencia')) && secao('experiencia').includes('/videos/experiencia-scanner-poster.webp'),
+  !/<iframe[^>]*youtube|i\.ytimg\.com/.test(secao('experiencia')) && secao('experiencia').includes('/videos/experiencia-scanner.mp4'), // o poster so entra perto da secao (nov/2026)
 );
 // Print da clinica (out/2026): um unico botao no hero, o de WhatsApp.
 checar('hero: um unico botao (o CTA de WhatsApp)', !secao('inicio').includes('href="/#experiencia"') && secao('inicio').includes('data-cta="hero"'));
@@ -311,8 +316,10 @@ checar('zero emoji no HTML', !/[\u{1F300}-\u{1FAFF}]/u.test(marcacao));
 
 // --- A folha de estilo existe e tem CSS de verdade ---
 // Um site sem Tailwind compilado passaria em todas as assertions de conteudo.
-const css = marcacao.match(/<link rel="stylesheet" href="([^"]+\.css)"/)?.[1];
-const cssTamanho = css && existsSync(`out${css}`) ? statSync(`out${css}`).size : 0;
+// Com o inlineCss (nov/2026) o CSS vai num <style> no HTML; vale o link ou o embutido.
+const css = html.match(/<link rel="stylesheet" href="([^"]+\.css)"/)?.[1];
+const cssEmbutido = [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].reduce((t, m) => t + m[1].length, 0);
+const cssTamanho = css && existsSync(`out${css}`) ? statSync(`out${css}`).size : cssEmbutido;
 checar('folha de estilo presente e nao trivial', cssTamanho > 10240, `${cssTamanho} bytes`);
 
 // --- O elemento LCP nao pode sair com opacidade zero ---

@@ -70,10 +70,20 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     type: 'font/woff2',
     crossOrigin: 'anonymous',
   });
+  // 400: o texto corrido de todas as paginas (evita a troca tardia de fonte).
+  preload('/fonts/poppins-latin-400-normal.woff2', {
+    as: 'font',
+    type: 'font/woff2',
+    crossOrigin: 'anonymous',
+  });
 
   return (
     <html lang="pt-BR">
       <body>
+        {/* Sem JS, o conteudo com entrada animada (.reveal) aparece direto. */}
+        <noscript>
+          <style>{'.reveal{opacity:1!important;transform:none!important}'}</style>
+        </noscript>
         {/* Dados da clinica, validos em qualquer pagina. O FAQPage fica so na
             home (app/page.tsx): o Google exige que schema de FAQ corresponda
             a perguntas visiveis na propria pagina. */}

@@ -15,8 +15,8 @@ const ARQUIVOS = {
   // width/height sao as dimensoes dos arquivos gerados. So servem para o
   // navegador reservar o espaco antes do carregamento — a proporcao exibida e
   // sempre a do arquivo, entao nao ha distorcao se ele for regerado.
-  colorida: { src: '/marca/logo-rgb.png', width: 600, height: 302 },
-  branca: { src: '/marca/logo-branca.png', width: 600, height: 283 },
+  colorida: { src: '/marca/logo-rgb.png', webp: '/marca/logo-rgb-320.webp', width: 600, height: 302 },
+  branca: { src: '/marca/logo-branca.png', webp: '/marca/logo-branca-320.webp', width: 600, height: 283 },
 } as const;
 
 export function Logo({
@@ -31,14 +31,18 @@ export function Logo({
   return (
     // p-[10px] garante o respiro digital minimo exigido pelo manual.
     <span className={`inline-block p-[10px] ${className}`}>
-      <img
-        src={arquivo.src}
-        width={arquivo.width}
-        height={arquivo.height}
-        alt="Lien Reabilitação Oral"
-        className="h-full w-auto"
-        decoding="async"
-      />
+      {/* WebP de 320px (~5 KB) para a tela; o PNG de 600px fica de fallback. */}
+      <picture className="block h-full">
+        <source type="image/webp" srcSet={arquivo.webp} />
+        <img
+          src={arquivo.src}
+          width={arquivo.width}
+          height={arquivo.height}
+          alt="Lien Reabilitação Oral"
+          className="h-full w-auto"
+          decoding="async"
+        />
+      </picture>
     </span>
   );
 }

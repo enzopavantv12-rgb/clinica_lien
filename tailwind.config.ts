@@ -67,7 +67,9 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        // 'Poppins Fallback' (globals.css): Arial com as metricas da Poppins, para
+        // o texto nao pular quando a fonte carrega (CLS).
+        sans: ['Poppins', 'Poppins Fallback', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         // Escala do prompt mestre (mobile -> desktop via clamp)
@@ -117,21 +119,10 @@ export default {
           from: { transform: 'translateY(0)' },
           to: { transform: 'translateY(calc(-100% - var(--gap)))' },
         },
-        // Accordion do shadcn (Radix mede a altura em --radix-accordion-content-height).
-        'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
-        },
-        'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
-        },
       },
       animation: {
         marquee: 'marquee var(--duration) linear infinite',
         'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
-        'accordion-down': 'accordion-down 0.25s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
       },
     },
   },

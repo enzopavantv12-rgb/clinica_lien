@@ -1271,3 +1271,43 @@ O hero, o menu, a Sedação e o CTA final continuam como estavam. Assim o magent
 - **Pendente:**
   - cadastrar o domínio no Google Search Console e enviar o sitemap;
   - decidir se a Vercel fica como espelho. O canonical já aponta para o domínio próprio, então não há conteúdo duplicado para o Google.
+
+---
+
+## Lighthouse: desempenho, acessibilidade, práticas e SEO (nov/2026)
+
+**Antes, no site no ar (home):**
+- Celular: 89 / 87 / 100 / 100.
+- Desktop: 100 / 87 / 100 / 100.
+
+**Acessibilidade, 87 → 100:**
+- **Carrosséis de Resultados e do Consultório:** os slides eram `<li role="group">`, papel não permitido em item de lista. Viraram `<div>`.
+- **Pontinhos dos carrosséis:** ganharam área de toque de 24px (WCAG 2.5.8). O ponto visível continua com 8px.
+- **"Personalizado / Cruzeiro, BH" (Sobre):** usavam `<dl>` com `<div>` e ícone dentro, estrutura inválida. Viraram lista (`<ul>`).
+- **/conteudos/:** a tag "Conteúdos" em teal sobre o creme dava 4,46:1. Passou ao teal escuro #026A82.
+
+**Desempenho:**
+- **Sem motion/framer-motion no carregamento** (~45 KB de JS):
+  - o `Reveal` virou CSS + um IntersectionObserver compartilhado (`.reveal`);
+  - a faixa de prova rápida virou animação CSS (`.marquee-trilho`, `faixa-desliza`);
+  - o comparador de antes e depois (`ComparadorLazy`) mostra no HTML o mesmo primeiro quadro estático e só baixa o componente interativo perto da tela.
+- **FAQ com `<details name="faq">` nativo:** saiu o Radix Accordion (~24 KB). As respostas seguem no HTML. Foram removidos os pacotes `@radix-ui/react-accordion`, `react-tabs`, `react-slot`, `framer-motion` e `@motionone/utils`.
+- **CSS embutido no HTML** (`experimental.inlineCss`): sem folha de estilo bloqueando a renderização.
+- **Imagens abaixo da dobra só perto da tela:** os 20 arquivos do antes e depois, as 3 fotos do consultório e os pôsteres dos vídeos. Antes o Chrome baixava tudo isso junto com o hero, o que atrasava o LCP no celular.
+- **Logo do menu e do rodapé:** passou a WebP de 320px, com o PNG como fallback.
+- **Fontes:** 'Poppins Fallback' (Arial com as métricas da Poppins) evita o pulo de layout quando a fonte carrega. A Poppins 400 passou a ter preload.
+
+**Verificador:**
+- ignora o conteúdo de `<style>`, agora embutido, nas buscas de vocabulário;
+- aceita o CSS embutido na checagem de folha de estilo;
+- confere o vídeo do capítulo 01 pelo mp4, porque o pôster agora só carrega perto da seção.
+
+**Resultado (build local, Lighthouse 12.8, celular / desktop):**
+
+| Página | Celular | Desktop |
+|---|---|---|
+| Home | 93–95 / 100 / 100 / 100 | 100 / 100 / 100 / 100 |
+| /tratamentos/, /conteudos/, artigos, /privacidade/ | 98–99 / 100 / 100 / 100 | 100 / 100 / 100 / 100 |
+
+- **Home no celular:** o que resta é o LCP simulado (~2,8–3,0s em 4G lento). Com rede real limitada (throttling devtools), o LCP medido é 1,8s, com nota 96.
+- **Limite:** o teto vem do JS fixo do framework (React + Next, ~100 KB comprimidos) e da foto do hero.

@@ -206,7 +206,9 @@ export function Experiencia() {
                               videosRef.current[i] = el;
                             }}
                             className="h-full w-full object-cover"
-                            poster={video.poster}
+                            // Poster so perto da secao: sem isso o navegador baixava
+                            // os 3 (~140 KB) junto com o hero (LCP no celular).
+                            poster={perto ? video.poster : undefined}
                             playsInline
                             preload={perto ? 'metadata' : 'none'}
                             controls={sel && tocando}

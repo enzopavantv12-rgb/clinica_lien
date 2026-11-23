@@ -1,11 +1,4 @@
-'use client';
-
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/faq-14-utils/accordion';
+import { ChevronDown } from 'lucide-react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { faq } from '@/data/content';
@@ -16,10 +9,11 @@ import { semViuva } from '@/lib/semViuva';
  * fechado, as 5 perguntas do print da clinica (out/2026). Sem "Esta resposta ajudou?",
  * sem CTA nas respostas e um unico "Agende sua consulta" no fim da secao.
  *
- * SEO/AEO: o Radix desmonta a resposta fechada por padrao. Aqui `forceMount`:
- * toda resposta fica no HTML estatico, oculta por CSS quando fechada
- * (`[data-faq-item] > [role=region][data-state=closed]`, globals.css). O
- * schema FAQPage sai do mesmo objeto `faq`.
+ * <details>/<summary> nativos (nov/2026, desempenho): zero JS (o Radix
+ * Accordion custava ~24 KB) e toda resposta fica no HTML estatico (SEO/AEO).
+ * `name="faq"`: abrir uma fecha as outras, como antes (navegadores atuais; nos
+ * antigos, varias podem ficar abertas). Teclado e leitor de tela vem do
+ * proprio elemento. O schema FAQPage sai do mesmo objeto `faq`.
  */
 export function Faq() {
   return (
@@ -27,23 +21,27 @@ export function Faq() {
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-10 px-5 sm:px-8">
         <SectionHeading tag={faq.tag} titulo={faq.h2} subtitulo={faq.sub} curvaGrande />
 
-        <Accordion type="single" collapsible className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2">
           {faq.itens.map((item) => (
-            <AccordionItem
+            <details
               key={item.pergunta}
-              value={item.pergunta}
+              name="faq"
               data-faq-item=""
-              className="rounded-2xl border border-brandgray bg-white transition-all duration-200 data-[state=open]:border-transparent data-[state=open]:bg-cream data-[state=open]:shadow-soft"
+              className="group rounded-2xl border border-brandgray bg-white transition-colors duration-200 open:border-transparent open:bg-cream open:shadow-soft"
             >
-              <AccordionTrigger className="gap-4 rounded-2xl px-5 py-4 text-left text-[1.0625rem] font-semibold leading-snug text-ink hover:no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta sm:text-h3 [&>svg]:size-5 [&>svg]:text-teal">
-                {item.pergunta}
-              </AccordionTrigger>
-              <AccordionContent forceMount className="px-5 pb-5 text-ink-muted">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-2xl px-5 py-4 text-left text-[1.0625rem] font-semibold leading-snug text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta sm:text-h3 [&::-webkit-details-marker]:hidden">
+                <h3 className="text-[inherit] font-[inherit] leading-[inherit]">{item.pergunta}</h3>
+                <ChevronDown
+                  aria-hidden="true"
+                  className="size-5 shrink-0 text-teal transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none"
+                />
+              </summary>
+              <div className="px-5 pb-5 text-ink-muted">
                 <p className="max-w-prose text-body sm:text-body-lg">{semViuva(item.resposta)}</p>
-              </AccordionContent>
-            </AccordionItem>
+              </div>
+            </details>
           ))}
-        </Accordion>
+        </div>
 
         <div className="flex justify-center">
           <WhatsAppButton

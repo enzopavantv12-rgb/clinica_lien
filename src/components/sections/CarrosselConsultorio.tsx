@@ -8,6 +8,8 @@ import larguras from '@/data/imagens.json';
 import { sobre } from '@/data/content';
 
 const LARGURAS = larguras as Record<string, number[]>;
+/** GIF transparente de 1px: segura o lugar (e o alt) sem baixar nada. */
+const VAZIO = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
 const seta =
   'grid h-10 w-10 place-items-center rounded-full border border-white/50 bg-white/80 text-ink shadow-[0_6px_18px_-8px_rgba(26,20,32,.35)] backdrop-blur-sm transition-colors hover:bg-white hover:text-magenta focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta';
@@ -37,6 +39,28 @@ export function CarrosselConsultorio() {
   // passagem automatica pulava duas fotos.
   const [hover, setHover] = useState(false);
   const [foco, setFoco] = useState(false);
+  // Fotos so a 300px da tela: com loading="lazy" o Chrome baixava as 3 (~170 KB)
+  // junto com o hero e atrasava o LCP no celular (Lighthouse, nov/2026).
+  const regiaoRef = useRef<HTMLDivElement>(null);
+  const [ver, setVer] = useState(false);
+  useEffect(() => {
+    const el = regiaoRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setVer(true);
+      return;
+    }
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setVer(true);
+          obs.disconnect();
+        }
+      },
+      { rootMargin: '300px 0px' },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   useEffect(() => {
     const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -97,6 +121,7 @@ export function CarrosselConsultorio() {
 
   return (
     <div
+      ref={regiaoRef}
       role="region"
       aria-roledescription="carrossel"
       aria-label={carrossel.rotulo}
@@ -116,7 +141,7 @@ export function CarrosselConsultorio() {
         >
           {/* Respiro de 16px entre slides (-ml-4/pl-4): sem ele, o arredondamento
               subpixel mostrava 1px da foto vizinha na borda. */}
-          <ul className="-ml-4 flex items-start touch-pan-y">
+          <div className="-ml-4 flex items-start touch-pan-y">
             {fotos.map((f, i) => {
               const ws = LARGURAS[f.base] ?? [];
               const srcset = (ext: string) => ws.map((l) => `/img/${f.base}-${l}.${ext} ${l}w`).join(', ');
@@ -124,7 +149,7 @@ export function CarrosselConsultorio() {
               const horizontal = f.width > f.height;
               const sizes = '(max-width: 1024px) 92vw, 540px';
               return (
-                <li
+                <div
                   key={f.base}
                   role="group"
                   aria-roledescription="slide"
@@ -132,24 +157,24 @@ export function CarrosselConsultorio() {
                   className="min-w-0 shrink-0 grow-0 basis-full pl-4"
                 >
                   <picture>
-                    <source type="image/avif" srcSet={srcset('avif')} sizes={sizes} />
-                    <source type="image/webp" srcSet={srcset('webp')} sizes={sizes} />
+                    {ver && <source type="image/avif" srcSet={srcset('avif')} sizes={sizes} />}
+                    {ver && <source type="image/webp" srcSet={srcset('webp')} sizes={sizes} />}
                     <img
-                      src={`/img/${f.base}-${ws[Math.floor(ws.length / 2)]}.webp`}
+                      src={ver ? `/img/${f.base}-${ws[Math.floor(ws.length / 2)]}.webp` : VAZIO}
                       alt={f.alt}
                       width={f.width}
                       height={f.height}
-                      loading={i === 0 ? 'eager' : 'lazy'}
+                      loading="lazy"
                       decoding="async"
                       draggable={false}
                       className={`w-full select-none object-cover ${horizontal ? 'aspect-[1672/941]' : 'aspect-[4/5]'}`}
                       style={{ objectPosition: f.foco }}
                     />
                   </picture>
-                </li>
+                </div>
               );
             })}
-          </ul>
+          </div>
         </div>
 
         <div className="pointer-events-none absolute inset-x-4 top-1/2 flex -translate-y-1/2 justify-between">
@@ -163,7 +188,7 @@ export function CarrosselConsultorio() {
       </div>
 
       <div className="mt-5 flex items-center justify-center gap-3">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center">
           {fotos.map((f, i) => (
             <button
               key={f.base}
@@ -171,10 +196,15 @@ export function CarrosselConsultorio() {
               onClick={() => irPara(i)}
               aria-label={`${carrossel.irPara} ${i + 1} de ${fotos.length}`}
               aria-current={i === selecionado ? 'true' : undefined}
-              className={`relative h-2 rounded-full transition-all duration-300 after:absolute after:-inset-2.5 after:content-[''] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta ${
-                i === selecionado ? 'w-6 bg-magenta' : 'w-2 bg-brandgray hover:bg-ink-muted/50'
-              }`}
-            />
+              className="group grid h-6 min-w-6 place-items-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta"
+            >
+              {/* Area de toque de 24px (WCAG 2.5.8); o ponto visivel segue com 8px. */}
+              <span
+                className={`block h-2 rounded-full transition-all duration-300 ${
+                  i === selecionado ? 'w-6 bg-magenta' : 'w-2 bg-brandgray group-hover:bg-ink-muted/50'
+                }`}
+              />
+            </button>
           ))}
         </div>
         {!reduzir && (

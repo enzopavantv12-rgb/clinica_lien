@@ -4,19 +4,28 @@ import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from 're
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { ChevronLeft, ChevronRight, MoveHorizontal, Pause, Play } from 'lucide-react';
-import ImageCompare from '@/components/ui/image-compare';
+import { ComparadorLazy } from '@/components/ui/ComparadorLazy';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import larguras from '@/data/imagens.json';
 import { resultados } from '@/data/content';
 
 const LARGURAS = larguras as Record<string, number[]>;
 
-/** Foto do caso com srcset AVIF/WebP (variantes de `npm run images`). */
-function Foto({ src, alt }: { src: string; alt: string }) {
+/** GIF transparente de 1px: segura o lugar (e o alt) sem baixar nada. */
+const VAZIO = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+/**
+ * Foto do caso com srcset AVIF/WebP (variantes de `npm run images`).
+ * `ver`: so baixa a foto quando o carrossel chega perto da tela. Com o
+ * loading="lazy" nativo o Chrome baixava os 20 arquivos junto com o hero e
+ * atrasava o LCP no celular (Lighthouse, nov/2026).
+ */
+function Foto({ src, alt, ver }: { src: string; alt: string; ver: boolean }) {
   const base = src.replace(/^\/img\//, '').replace(/\.[^.]+$/, '');
   const ws = LARGURAS[base] ?? [];
   const srcset = (ext: string) => ws.map((w) => `/img/${base}-${w}.${ext} ${w}w`).join(', ');
   const sizes = '(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 380px';
+  if (!ver) return <img src={VAZIO} alt={alt} width={720} height={720} draggable={false} />;
   return (
     <picture>
       <source type="image/avif" srcSet={srcset('avif')} sizes={sizes} />
@@ -66,6 +75,7 @@ export function Resultados() {
   const { casos, rotulos, instrucao } = resultados;
   const regiaoRef = useRef<HTMLDivElement>(null);
   const [reduzir, setReduzir] = useState(false);
+  const [ver, setVer] = useState(false);
   const podeLoop = casos.length >= 4;
 
   const autoplay = useRef(
@@ -154,6 +164,26 @@ export function Resultados() {
     [reavaliar],
   );
 
+  // Fotos: baixa quando o carrossel fica a 300px da tela.
+  useEffect(() => {
+    const regiao = regiaoRef.current;
+    if (!regiao || typeof IntersectionObserver === 'undefined') {
+      setVer(true);
+      return;
+    }
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setVer(true);
+          obs.disconnect();
+        }
+      },
+      { rootMargin: '300px 0px' },
+    );
+    obs.observe(regiao);
+    return () => obs.disconnect();
+  }, []);
+
   // Fora da tela e aba oculta.
   useEffect(() => {
     const regiao = regiaoRef.current;
@@ -232,9 +262,10 @@ export function Resultados() {
             onPointerUpCapture={() => retomar('comparando')}
             onPointerCancelCapture={() => retomar('comparando')}
           >
-            <ul className={`flex touch-pan-y gap-4 lg:gap-6 ${podeLoop ? '' : 'justify-center'}`}>
+            {/* div, e nao ul/li: slide com role="group" nao e item de lista (a11y). */}
+            <div className={`flex touch-pan-y gap-4 lg:gap-6 ${podeLoop ? '' : 'justify-center'}`}>
               {casos.map((caso, i) => (
-                <li
+                <div
                   key={caso.id}
                   role="group"
                   aria-roledescription="slide"
@@ -244,9 +275,9 @@ export function Resultados() {
                   {/* Card de antes e depois, igual ao da grade anterior. */}
                   <figure className="rounded-[1.75rem] border border-brandgray bg-white p-2.5 shadow-soft">
                     <div data-compare-area="">
-                      <ImageCompare
-                        before={<Foto {...caso.antes} />}
-                        after={<Foto {...caso.depois} />}
+                      <ComparadorLazy
+                        before={<Foto {...caso.antes} ver={ver} />}
+                        after={<Foto {...caso.depois} ver={ver} />}
                         labels={rotulos}
                         label={`${resultados.rotuloComparar}, caso ${i + 1}`}
                         aspectRatio="1 / 1"
@@ -254,9 +285,9 @@ export function Resultados() {
                     </div>
                     <figcaption className="px-2 pb-1 pt-3 text-legend text-ink-muted">{resultados.autorizacao}</figcaption>
                   </figure>
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
 
           <div className="mt-8 flex items-center justify-center gap-4">
@@ -270,7 +301,7 @@ export function Resultados() {
               <ChevronLeft size={18} strokeWidth={2} aria-hidden="true" />
             </button>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center">
               {snaps.map((_, i) => (
                 <button
                   key={i}
@@ -278,10 +309,15 @@ export function Resultados() {
                   onClick={() => irPara(i)}
                   aria-label={`Ir para o caso ${i + 1} de ${snaps.length}`}
                   aria-current={i === selecionado ? 'true' : undefined}
-                  className={`relative h-2 rounded-full transition-all duration-300 after:absolute after:-inset-2.5 after:content-[''] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta ${
-                    i === selecionado ? 'w-6 bg-magenta' : 'w-2 bg-brandgray hover:bg-ink-muted/50'
-                  }`}
-                />
+                  className="group grid h-6 min-w-6 place-items-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magenta"
+                >
+                  {/* Area de toque de 24px (WCAG 2.5.8); o ponto visivel segue com 8px. */}
+                  <span
+                    className={`block h-2 rounded-full transition-all duration-300 ${
+                      i === selecionado ? 'w-6 bg-magenta' : 'w-2 bg-brandgray group-hover:bg-ink-muted/50'
+                    }`}
+                  />
+                </button>
               ))}
             </div>
 

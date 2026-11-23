@@ -1,12 +1,36 @@
 'use client';
 
-import { motion, useReducedMotion } from 'motion/react';
+import { useEffect, useRef } from 'react';
 
 /**
  * Animacao de entrada: fade-in + translate-Y sutil, uma unica vez.
- * `prefers-reduced-motion` desativa completamente o movimento — requisito de
- * acessibilidade do prompt mestre.
+ *
+ * Sem biblioteca (nov/2026, desempenho): CSS (.reveal no globals.css) + um
+ * IntersectionObserver compartilhado. Antes era o motion/react, ~45 KB de JS
+ * so para isso. `prefers-reduced-motion` desativa o movimento (CSS), e sem
+ * JS o conteudo aparece (<noscript> no layout).
  */
+let observador: IntersectionObserver | null = null;
+function observar(el: Element) {
+  if (typeof IntersectionObserver === 'undefined') {
+    el.classList.add('is-in');
+    return () => {};
+  }
+  observador ??= new IntersectionObserver(
+    (entradas) => {
+      for (const e of entradas) {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-in');
+          observador?.unobserve(e.target);
+        }
+      }
+    },
+    { rootMargin: '0px 0px -64px 0px' },
+  );
+  observador.observe(el);
+  return () => observador?.unobserve(el);
+}
+
 export function Reveal({
   children,
   delay = 0,
@@ -27,21 +51,21 @@ export function Reveal({
   /** Escala inicial (ex.: 1.04 para a imagem assentar ao entrar). */
   escala?: number;
 }) {
-  const reduzir = useReducedMotion();
-  const Componente = motion[as];
-
-  if (reduzir) {
-    const Estatico = as;
-    return <Estatico className={className}>{children}</Estatico>;
-  }
-
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => (ref.current ? observar(ref.current) : undefined), []);
+  const Componente = as as 'div';
   return (
     <Componente
-      className={className}
-      initial={{ opacity: 0, y, ...(escala ? { scale: escala } : {}) }}
-      whileInView={{ opacity: 1, y: 0, ...(escala ? { scale: 1 } : {}) }}
-      viewport={{ once: true, margin: '-64px' }}
-      transition={{ duration: duracao, delay, ease: [0.22, 1, 0.36, 1] }}
+      ref={ref as React.RefObject<HTMLDivElement>}
+      className={`reveal ${className}`}
+      style={
+        {
+          '--reveal-y': `${y}px`,
+          '--reveal-s': escala ?? 1,
+          '--reveal-dur': `${duracao}s`,
+          '--reveal-delay': `${delay}s`,
+        } as React.CSSProperties
+      }
     >
       {children}
     </Componente>

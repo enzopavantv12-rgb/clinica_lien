@@ -6,6 +6,17 @@
  * o arquivo que o CSS usa (Vite nao renomeia o que esta em /public).
  * Pesos: os 5 autorizados pelo manual de marca.
  */
+/* Fallback com as metricas da Poppins (mesmos valores que o next/font gera):
+   enquanto a fonte carrega, o Arial ocupa o mesmo espaco e nada pula (CLS). */
+@font-face {
+  font-family: 'Poppins Fallback';
+  src: local('Arial');
+  size-adjust: 112.16%;
+  ascent-override: 93.62%;
+  descent-override: 31.21%;
+  line-gap-override: 8.92%;
+}
+
 @font-face {
   font-family: 'Poppins';
   font-style: normal;
@@ -172,6 +183,42 @@
 }
 
 @layer components {
+  /* Reveal (Reveal.tsx): entrada sem biblioteca. Some so com JS; sem JS o
+     <noscript> do layout desliga. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(var(--reveal-y, 18px)) scale(var(--reveal-s, 1));
+    transition:
+      opacity var(--reveal-dur, 0.55s) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+      transform var(--reveal-dur, 0.55s) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s);
+  }
+  .reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Faixa de prova rapida (TrustMarquee): desliza uma das 4 copias. */
+  .marquee-trilho {
+    transform: translateX(-20%);
+    animation: faixa-desliza 31.25s linear infinite;
+  }
+  @keyframes faixa-desliza {
+    to {
+      transform: translateX(-45%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .marquee-trilho {
+      animation: none;
+    }
+  }
+
   /* Barra do autoplay da Experiencia: enche de 0 a 100% no intervalo. */
   .exp-timer {
     width: 0;
@@ -374,18 +421,6 @@
       --glass-bg: #fff;
       --glass-borda: #1a1420;
     }
-  }
-}
-
-@layer components {
-  /*
-   * FAQ (Faq.tsx): o accordion usa `forceMount` para toda resposta ficar no
-   * HTML (SEO/AEO). Com isso o Radix para de aplicar `hidden` na resposta
-   * fechada — oculta aqui pelo estado. O className do AccordionContent do
-   * shadcn vai para a div interna, entao a regra mira o elemento do Radix.
-   */
-  [data-faq-item] > [role='region'][data-state='closed'] {
-    display: none;
   }
 }
 
