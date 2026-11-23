@@ -7,7 +7,7 @@
  */
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 
-const URL_SITE = 'https://clinica-lien.vercel.app';
+const URL_SITE = 'https://lienreabilitacao.com.br';
 const DOMINIO_ANTIGO = 'lienreabilitacaooral';
 const NUMERO_WHATSAPP = '5531985070448';
 

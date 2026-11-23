@@ -1257,3 +1257,17 @@ O hero, o menu, a Sedação e o CTA final continuam como estavam. Assim o magent
   - 8, 2, 14 e 13, reabilitação e estética;
   - 11 e 10, harmonização;
   - 5 e 4, ortodontia, por último.
+
+---
+
+## Domínio oficial lienreabilitacao.com.br (nov/2026)
+
+- **Domínio:** ligado à hospedagem Hostinger do site. Foi registrado na conta da cliente e verificado por TXT.
+- **Conferido em 23/nov:**
+  - os dois IPs do `@` e o `www` respondem 200, com certificado Let's Encrypt válido (CN=lienreabilitacao.com.br);
+  - o http redireciona (301) para o https.
+- **O `ERR_SSL_PROTOCOL_ERROR` do primeiro acesso** veio de o certificado ainda estar sendo emitido logo após a ligação. Já está resolvido.
+- **Código:** `site.url` e o `URL_SITE` do verificador passaram a `https://lienreabilitacao.com.br`. Com isso, o canonical, o sitemap, o robots, o schema, o Open Graph e o `llms.txt` apontam para o domínio próprio.
+- **Pendente:**
+  - cadastrar o domínio no Google Search Console e enviar o sitemap;
+  - decidir se a Vercel fica como espelho. O canonical já aponta para o domínio próprio, então não há conteúdo duplicado para o Google.

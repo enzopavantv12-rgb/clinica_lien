@@ -20,9 +20,9 @@ export const site = {
   nome: 'Lien Reabilitação Oral',
   razaoSocial: 'Lien Reabilitação Oral Ltda.',
   cnpj: '60.080.536/0001-96',
-  // Dominio de producao. E o unico lugar a trocar quando o dominio proprio
-  // (lienreabilitacao.com.br, registrado segundo o briefing) for apontado.
-  url: 'https://clinica-lien.vercel.app',
+  // Dominio de producao (nov/2026: dominio proprio ligado na Hostinger; antes
+  // clinica-lien.vercel.app). Canonical, sitemap, robots, schema e llms.txt.
+  url: 'https://lienreabilitacao.com.br',
   // [PENDENTE: confirmar se este e o numero unico de atendimento]
   telefoneExibicao: '(31) 98507-0448',
   telefoneE164: '+5531985070448',
